@@ -1,0 +1,142 @@
+# Copyright (C) 2023 Hefestus
+#
+# This file is part of Bolinho.
+#
+# Bolinho is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Bolinho is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+
+site_name: Educa UTF
+site_dir: documentacao
+
+repo_url: https://github.com/ZRafaF/educa-utf
+repo_name: ZRafaF/educa-utf
+copyright: Copyright &copy; 2023 Rafael Farias
+edit_uri: edit/main/docs/
+
+theme:
+    name: material
+    # logo: resources/LogoBolinho512.png
+    # favicon: resources/LogoBolinho512.png
+    palette:
+        # Palette toggle for light mode
+        - scheme: default
+          primary: deep orange
+          accent: orange
+          toggle:
+              icon: material/brightness-7
+              name: Mudar para o modo escuro
+
+        # Palette toggle for dark mode
+        - scheme: slate
+          primary: deep orange
+          accent: orange
+          toggle:
+              icon: material/brightness-4
+              name: Mudar para o modo claro
+
+    locale: pt
+    language: pt-BR # lingua do mkdocs-material
+
+    features:
+        - navigation.sections
+        - navigation.tabs
+        - navigation.top
+        - navigation.tracking
+        - navigation.path
+        - navigation.indexes
+        - navigation.footer
+        - search.highlight
+        - search.share
+        - search.suggest
+        - toc.follow
+        - content.code.copy
+        - content.code.annotate
+        - content.action.edit
+        - content.action.view
+
+        # - content.tabs.link           # Para criar Tabs de código
+    icon:
+        admonition:
+            admonition-windows: simple/windows
+            admonition-linux: simple/linux
+            admonition-raspi: simple/raspberrypi
+            admonition-pc: fontawesome/solid/computer
+            return: material/keyboard-return
+
+#docs_dir: 'docsSrc'
+#site_dir: 'docs'
+
+extra_css:
+    - stylesheets/extra.css
+    - stylesheets/pygments.css
+
+plugins:
+    - search:
+          separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+    - with-pdf:
+          author: Rafael Farias
+          cover_subtitle: Documentação completa
+          copyright: Copyright &copy; 2023 Rafael Farias.
+          toc_title: Índice
+          enabled_if_env: ENABLE_PDF_EXPORT
+          toc_level: 2
+          custom_template_path: docs/templates
+
+          # two_columns_level: 3                # Exporta o PDF como duas colunas
+          #custom_template_path: docs/styles.scss
+          #render_js: true
+    - pdf-export:
+          enabled_if_env: ENABLE_PDF_EXPORT
+    - git-revision-date-localized:
+          enable_creation_date: true
+
+markdown_extensions:
+    - pymdownx.highlight:
+          anchor_linenums: true
+          use_pygments: true # Renderiza todos os códigos durante a build ao inves de no runtime
+          auto_title: true
+    - codehilite
+    #- pymdownx.tabbed:         # Para criar Tabs de código
+    #    alternate_style: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences:
+          custom_fences:
+              - name: mermaid
+                class: mermaid
+                format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.critic
+    - pymdownx.caret
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+    - attr_list
+    - pymdownx.emoji:
+          emoji_index: !!python/name:materialx.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
+    - toc:
+          permalink: true
+
+nav:
+    - Inicio:
+          - Inicio: index.md
+    - Criar Conteúdo:
+          - Criar Conteúdo: criar-conteudo/index.md
+    - Desenvolvimento:
+          - Desenvolvimento: desenvolvimento/index.md
+          - Setup: desenvolvimento/setup.md
+          - Front-end: desenvolvimento/front-end.md
+          - Backend: desenvolvimento/backend.md
+          - Documentação: desenvolvimento/documentacao.md

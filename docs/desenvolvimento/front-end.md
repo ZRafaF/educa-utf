@@ -1,0 +1,10 @@
+<!--
+ Copyright (c) 2023 Rafael Farias
+ 
+ This software is released under the MIT License.
+ https://opensource.org/licenses/MIT
+-->
+
+# Front-end
+
+Esta página apresentará todas as informações relacionadas ao front-end da aplicação.
