@@ -2,3 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import PocketBase from "pocketbase";
+
+const pb = new PocketBase(process.env.PB_URL);
+
+export default pb;

@@ -5,3 +5,14 @@ npm-debug.log
 README.md
 .next
 .git
+
+# NEW
+
+.env.local
+.prettierignore
+docs
+documentacao
+.vscode
+.github
+venv
+pocketbase

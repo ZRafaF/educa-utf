@@ -91,3 +91,11 @@ Para compilar a documentação temos duas opções:
 
     Você pode alterar o arquivo `mkdocs.yml` e remover esta linha se preferir.
 
+
+## Integração Pocketbase
+
+Para gerar os Bindings do pocket base está sendo usado a biblioteca [pocketbase-typegen](https://github.com/patmood/pocketbase-typegen). Para gerar os tipos execute:
+
+`yarn typegen`
+
+O *output* está localizado em `/src/types/pocketbase-types.ts`.
