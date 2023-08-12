@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+    next:
+        environment:
+            - PB_URL=http://127.0.0.1:8090
+        image: nextjs-docker
+        restart: unless-stopped
+        ports:
+            - 3000:3000
+
+    pocketbase:
+        image: augustodelg/pocketbase:latest
+        restart: unless-stopped
+        ports:
+            - 8090:8090
+        volumes:
+            - pocketbase-data:/pb_data
+volumes:
+    pocketbase-data:
