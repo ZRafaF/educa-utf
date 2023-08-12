@@ -21,21 +21,16 @@ jobs:
               with:
                   python-version: 3.x
             - name: Install dependencies
-              run: |
-                  npm install
-                  pip install -r docs/requirements.txt
+              run: pip install -r docs/requirements.txt
             - uses: actions/cache@v2
               with:
                   key: ${{ github.ref }}
                   path: .cache
-            - name: Build
-              run: |
-                  npm run build
             - name: Build documentation
               run: |
                   mkdocs build
                   ls
-                  mv -v ./documentacao ./build/
+                  mv -v ./documentacao/* ./build/
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3
               # If you're changing the branch from main,
