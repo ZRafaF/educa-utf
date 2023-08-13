@@ -32,4 +32,4 @@ jobs:
                   ls
                   mv -v ./documentacao/* ./build/
             - name: Deploy
-            - run: mkdocs gh-deploy --force
+              run: mkdocs gh-deploy --force
