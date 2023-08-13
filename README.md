@@ -1,7 +1,7 @@
 ## Links
 * [Educa UTF](https://zrafaf.github.io/educa-utf/)
 * [Documentação](https://zrafaf.github.io/educa-utf/documentacao)
-* [PDF](https://zrafaf.github.io/educa-utf/documentacao/pdf/document.pdf)
+* [PDF](https://zrafaf.github.io/educa-utf/pdf/document.pdf)
 
 ## Dependências
 

@@ -8,7 +8,7 @@
 		"start": "next start",
 		"lint": "next lint",
 		"typegen": "pocketbase-typegen --db ./pocketbase/pb_data/data.db -o ./src/types/pocketbase-types.ts",
-		"startDb": "./pocketbase/pocketbase serve --http=\"127.0.0.1:3000\""
+		"startDb": "./pocketbase/pocketbase serve"
 	},
 	"dependencies": {
 		"@emotion/cache": "^11.11.0",
