@@ -6,4 +6,5 @@ import PocketBase from "pocketbase";
 
 const pb = new PocketBase(process.env.PB_URL);
 
+console.log(pb.baseUrl);
 export default pb;
