@@ -29,7 +29,5 @@ jobs:
             - name: Build documentation
               run: |
                   mkdocs build
-                  ls
-                  mv -v ./documentacao/* ./build/
             - name: Deploy
               run: mkdocs gh-deploy --force
