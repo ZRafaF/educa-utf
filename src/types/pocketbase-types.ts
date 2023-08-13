@@ -53,14 +53,32 @@ export type PostsRecord = {
 	visible?: boolean
 	document?: string
 	liked_by?: RecordIdString[]
+	tags?: string
 }
 
+export enum UsersCampusOptions {
+	"Apucarana" = "Apucarana",
+	"Campo Mourão" = "Campo Mourão",
+	"Cornélio Procópio" = "Cornélio Procópio",
+	"Curitiba" = "Curitiba",
+	"Dois Vizinhos" = "Dois Vizinhos",
+	"Francisco Beltrão" = "Francisco Beltrão",
+	"Guarapuava" = "Guarapuava",
+	"Londrina" = "Londrina",
+	"Medianeira" = "Medianeira",
+	"Pato Branco" = "Pato Branco",
+	"Ponta Grossa" = "Ponta Grossa",
+	"Santa Helena" = "Santa Helena",
+	"Toledo" = "Toledo",
+}
 export type UsersRecord = {
-	name?: string
+	name: string
 	avatar?: string
 	favorite_posts?: RecordIdString[]
 	favorite_chapters?: RecordIdString[]
 	uploaded_images?: RecordIdString[]
+	course?: string
+	campus?: UsersCampusOptions
 }
 
 // Response types include system fields and match responses from the PocketBase API

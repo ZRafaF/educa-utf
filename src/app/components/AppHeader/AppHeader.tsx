@@ -10,8 +10,8 @@ import DarkModeTheme from "../DarkModeTheme/DarkModeTheme";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import TopButtons from "./TopButtons/TopButtons";
 import SearchBar from "./SearchBar/SearchBar";
-import NextLink from "next/link";
 import Link from "next/link";
+import educaUtfLogoImage from "@/resources/logo-utf-sm.png";
 
 interface AppHeaderProps {}
 
@@ -21,14 +21,20 @@ const AppHeader: FunctionComponent<AppHeaderProps> = () => {
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
-						<Typography
-							variant="h6"
-							noWrap
-							component={Link}
-							href={"/"}
-						>
-							EducaUTF
-						</Typography>
+						<Link href={"/"}>
+							<Box
+								component="img"
+								sx={{
+									height: 30,
+									maxHeight: { xs: 20, md: 30 },
+									objectFit: "contain",
+
+									aspectRatio: "540/107",
+								}}
+								alt="The house from the offer."
+								src={educaUtfLogoImage.src}
+							/>
+						</Link>
 						<SearchBar />
 						<Box sx={{ flexGrow: 1 }} />
 						<TopButtons />

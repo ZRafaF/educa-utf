@@ -12,7 +12,7 @@ import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { AccountCircle } from "@mui/icons-material";
 import React from "react";
-
+import GuestMenuContents from "./GuestMenuContents";
 interface TopButtonsProps {}
 
 const TopButtons: FunctionComponent<TopButtonsProps> = () => {
@@ -57,8 +57,7 @@ const TopButtons: FunctionComponent<TopButtonsProps> = () => {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 		>
-			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			<GuestMenuContents handleClose={handleMenuClose} />
 		</Menu>
 	);
 
@@ -118,7 +117,7 @@ const TopButtons: FunctionComponent<TopButtonsProps> = () => {
 
 	return (
 		<React.Fragment>
-			<Box sx={{ display: { xs: "none", md: "flex" } }}>
+			<Box sx={{ display: { xs: "none", sm: "flex" } }}>
 				<Tooltip title="PLACE HOLDER" arrow>
 					<IconButton
 						size="large"
@@ -153,10 +152,10 @@ const TopButtons: FunctionComponent<TopButtonsProps> = () => {
 						<AccountCircle />
 					</IconButton>
 				</Tooltip>
-				{renderMenu}
 				{renderMobileMenu}
+				{renderMenu}
 			</Box>
-			<Box sx={{ display: { xs: "flex", md: "none" } }}>
+			<Box sx={{ display: { xs: "flex", sm: "none" } }}>
 				<IconButton
 					size="large"
 					aria-label="show more"

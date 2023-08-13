@@ -3,8 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { getListOfPosts, getPostById } from "@/lib/PocketBase/dbApi";
-import { PostsResponse } from "@/types/pocketbase-types";
+import { getListOfPosts, getPostById } from "@/lib/dbApi";
 import { GetStaticPaths } from "next";
 import { FunctionComponent } from "react";
 
@@ -16,18 +15,18 @@ interface PageProps {
 
 export const revalidate = 10;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	const staticParams = await generateStaticParams();
+// export const getStaticPaths: GetStaticPaths = async () => {
+// 	const staticParams = await generateStaticParams();
 
-	const paths = staticParams.map((params) => ({
-		params: { postId: params.postId },
-	}));
+// 	const paths = staticParams.map((params) => ({
+// 		params: { postId: params.postId },
+// 	}));
 
-	return {
-		paths,
-		fallback: false, // false or "blocking"
-	};
-};
+// 	return {
+// 		paths,
+// 		fallback: false, // false or "blocking"
+// 	};
+// };
 
 export async function generateStaticParams() {
 	const posts = await getListOfPosts();

@@ -1,83 +1,23 @@
-// Copyright 2023 Rafael Farias
+// Copyright (c) 2023 Rafael Farias
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-"use client";
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 import { FunctionComponent } from "react";
 
-import Link from "next/link";
+import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 
-import {
-	Avatar,
-	Button,
-	CssBaseline,
-	TextField,
-	FormControlLabel,
-	Checkbox,
-	Box,
-	Grid,
-	Paper,
-	Typography,
-} from "@mui/material";
+import bgImage from "@/resources/utf-bg.jpg";
+//import utfLogoImage from "@/resources/logo-utf-lg.png";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import { toast, ToastContainer } from "react-toastify";
-import pb from "@/lib/PocketBase/pocketbase";
-import { UsersRecord, UsersResponse } from "@/types/pocketbase-types";
+import LoginFormSender from "./LoginFormSender/LoginFormSender";
+import LoginFormContent from "./LoginFormContent/LoginFormContent";
 
-// limitations under the License.
 interface LoginPageProps {}
 
 const LoginPage: FunctionComponent<LoginPageProps> = () => {
-	/*
-
-	const [signInWithEmailAndPassword, userSign, loadingSign, errorSign] =
-		useSignInWithEmailAndPassword(auth);
-
-	useRedirectIfAuthenticated();
-	*/
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data: FormData = new FormData(event.currentTarget);
-		const submitEmail = data.get("email")?.toString();
-		const submitPassword = data.get("password")?.toString();
-		const submitRemember = data.get("remember")?.toString();
-		if (submitEmail === undefined) {
-			toast.error("Invalid email.");
-			return;
-		}
-		if (submitPassword === undefined) {
-			toast.error("Invalid password.");
-			return;
-		}
-		console.log(submitEmail);
-
-		if (submitRemember) {
-			//setPersistence(auth, browserSessionPersistence);
-		}
-		// example create data
-
-		pb.collection("users")
-			.create({
-				email: submitEmail,
-				password: submitPassword,
-				passwordConfirm: submitPassword,
-			})
-			.then((record) => {
-				// (optional) send an email verification request
-				//pb.collection("users").requestVerification(submitEmail);
-			});
-	};
-
 	return (
 		<Grid
 			container
@@ -87,23 +27,39 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 				height: "stretch",
 			}}
 		>
-			<CssBaseline />
 			<Grid
 				item
 				xs={false}
 				sm={4}
 				md={7}
 				sx={{
-					backgroundImage: "url(https://source.unsplash.com/random)",
+					backgroundImage: `url(${bgImage.src})`,
 					backgroundRepeat: "no-repeat",
-					backgroundColor: (t) =>
-						t.palette.mode === "light"
-							? t.palette.grey[50]
-							: t.palette.grey[900],
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 				}}
-			/>
+			>
+				{/*
+					<Box
+						sx={{
+							backgroundImage: {
+								xs: "none",
+								sm: `url(${utfLogoImage.src})`,
+							},
+							position: "absolute",
+							backgroundRepeat: "no-repeat",
+							backgroundSize: "cover",
+							bottom: "20px",
+							left: "20px",
+							height: "5%",
+							aspectRatio: "540/107",
+
+							backgroundPosition: "center",
+						}}
+					/>
+					*/}
+			</Grid>
+
 			<Grid
 				item
 				xs={12}
@@ -128,70 +84,11 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 					<Typography component="h1" variant="h5">
 						Login
 					</Typography>
-					<Box
-						component="form"
-						onSubmit={handleSubmit}
-						sx={{ mt: 1 }}
-					>
-						<TextField
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							label="Email Address"
-							name="email"
-							type="email"
-							autoComplete="email"
-							autoFocus
-						/>
-						<TextField
-							margin="normal"
-							required
-							fullWidth
-							inputProps={{
-								minlength: 8,
-								maxLength: 72,
-							}}
-							name="password"
-							label="Password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-						/>
-						<FormControlLabel
-							control={
-								<Checkbox
-									value="remember"
-									color="primary"
-									name="remember"
-									id="remember"
-								/>
-							}
-							label="Remember me"
-						/>
-						<Button
-							type="submit"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-						>
-							Login
-						</Button>
-						{/*<OcRegisterWithGoogle />*/}
-						<Grid container>
-							<Grid item xs>
-								<Link href="#">Forgot password?</Link>
-							</Grid>
-							<Grid item>
-								<Link href="/register">
-									{"Don't have an account? Register!"}
-								</Link>
-							</Grid>
-						</Grid>
-					</Box>
+					<LoginFormSender>
+						<LoginFormContent />
+					</LoginFormSender>
 				</Box>
 			</Grid>
-			<ToastContainer />
 		</Grid>
 	);
 };
