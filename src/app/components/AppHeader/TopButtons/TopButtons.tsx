@@ -44,18 +44,18 @@ const TopButtons: FunctionComponent<TopButtonsProps> = () => {
 	const renderMenu = (
 		<Menu
 			anchorEl={anchorEl}
-			anchorOrigin={{
-				vertical: "top",
-				horizontal: "right",
-			}}
 			id={menuId}
 			keepMounted
+			open={isMenuOpen}
+			onClose={handleMenuClose}
+			anchorOrigin={{
+				vertical: "top",
+				horizontal: "left",
+			}}
 			transformOrigin={{
 				vertical: "top",
 				horizontal: "right",
 			}}
-			open={isMenuOpen}
-			onClose={handleMenuClose}
 		>
 			<GuestMenuContents handleClose={handleMenuClose} />
 		</Menu>
@@ -65,16 +65,8 @@ const TopButtons: FunctionComponent<TopButtonsProps> = () => {
 	const renderMobileMenu = (
 		<Menu
 			anchorEl={mobileMoreAnchorEl}
-			anchorOrigin={{
-				vertical: "top",
-				horizontal: "right",
-			}}
 			id={mobileMenuId}
 			keepMounted
-			transformOrigin={{
-				vertical: "top",
-				horizontal: "right",
-			}}
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 		>
@@ -98,7 +90,7 @@ const TopButtons: FunctionComponent<TopButtonsProps> = () => {
 				>
 					<NoteAddIcon />
 				</IconButton>
-				<p>Notifications</p>
+				<p>Novo Post</p>
 			</MenuItem>
 			<MenuItem onClick={handleProfileMenuOpen}>
 				<IconButton
