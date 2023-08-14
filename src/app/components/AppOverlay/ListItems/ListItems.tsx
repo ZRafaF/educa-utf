@@ -4,7 +4,8 @@
 // https://opensource.org/licenses/MIT
 
 import { FunctionComponent } from "react";
-import { Divider, List } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import QueueIcon from "@mui/icons-material/Queue";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";

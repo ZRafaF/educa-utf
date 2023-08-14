@@ -5,9 +5,9 @@
 "use client";
 
 import { OverlayControllerContext } from "@/app/contexts/OverlayControllerProvider";
-import { IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import { FunctionComponent, useContext } from "react";
-import { ChevronLeft } from "@mui/icons-material";
+import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 
 interface ToggleButtonProps {}

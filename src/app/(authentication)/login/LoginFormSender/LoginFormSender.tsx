@@ -5,9 +5,9 @@
 "use client";
 
 import { FunctionComponent, ReactNode } from "react";
-import { toast } from "react-toastify";
 import pb from "@/lib/PocketBase/pocketbase";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
+//import { toast } from "react-toastify";
 
 interface LoginFormSenderProps {
 	children: ReactNode;
@@ -23,11 +23,11 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		const submitPassword = data.get("password")?.toString();
 		const submitRemember = data.get("remember")?.toString();
 		if (submitEmail === undefined) {
-			toast.error("Invalid email.");
+			//toast.error("Invalid email.");
 			return;
 		}
 		if (submitPassword === undefined) {
-			toast.error("Invalid password.");
+			//toast.error("Invalid password.");
 			return;
 		}
 		console.log(submitEmail);

@@ -5,16 +5,19 @@
 
 import { FunctionComponent } from "react";
 
-import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
-
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import bgImage from "@/resources/utf-bg.jpg";
-import utfLogoImage from "@/resources/logo-utf-lg.png";
+//import utfLogoImage from "@/resources/logo-utf-lg.png";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import LoginFormSender from "./LoginFormSender/LoginFormSender";
 import LoginFormContent from "./LoginFormContent/LoginFormContent";
-import Link from "next/link";
+//import Link from "next/link";
 import Image from "next/image";
 
 interface LoginPageProps {}

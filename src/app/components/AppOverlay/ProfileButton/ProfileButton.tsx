@@ -3,19 +3,18 @@
 // This software is released under the MIT License.
 "use client";
 
-import {
-	IconButton,
-	Tooltip,
-	MenuItem,
-	ListItemIcon,
-	ListItemText,
-	ListItem,
-	Divider,
-	Typography,
-	Menu,
-} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+
 import { FunctionComponent, useState } from "react";
-import { AccountCircle } from "@mui/icons-material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import React from "react";
 import Link from "next/link";
 import LoginIcon from "@mui/icons-material/Login";

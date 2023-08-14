@@ -5,7 +5,7 @@
 "use client";
 
 import { FunctionComponent } from "react";
-import { InputBase } from "@mui/material";
+import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
 
 import SearchIcon from "@mui/icons-material/Search";

@@ -3,12 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import {
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	Tooltip,
-} from "@mui/material";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Tooltip from "@mui/material/Tooltip";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { FunctionComponent, ReactNode } from "react";

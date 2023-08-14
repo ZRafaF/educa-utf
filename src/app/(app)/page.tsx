@@ -1,16 +1,14 @@
-import {
-	Avatar,
-	Card,
-	CardActionArea,
-	CardActions,
-	CardContent,
-	CardHeader,
-	Chip,
-	Container,
-	IconButton,
-	Stack,
-	Typography,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Chip from "@mui/material/Chip";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import ShareIcon from "@mui/icons-material/Share";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Link from "next/link";
