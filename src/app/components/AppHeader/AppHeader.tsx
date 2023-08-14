@@ -19,15 +19,21 @@ const AppHeader: FunctionComponent<AppHeaderProps> = () => {
 	return (
 		<DarkModeTheme>
 			<Box sx={{ flexGrow: 1 }}>
-				<AppBar position="static">
+				<AppBar
+					position="fixed"
+					sx={{
+						width: { md: `calc(100% - 240px)` },
+					}}
+				>
 					<Toolbar>
 						<Link href={"/"}>
 							<Box
 								component="img"
 								sx={{
-									height: 30,
-									maxHeight: { xs: 20, md: 30 },
+									height: 25,
+									maxHeight: { xs: 20, sm: 25 },
 									objectFit: "contain",
+									display: { sm: "block", md: "none" },
 
 									aspectRatio: "540/107",
 								}}

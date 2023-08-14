@@ -17,3 +17,7 @@ export async function getPostById(id: string) {
 export function getUser() {
 	return pb.authStore;
 }
+
+export function isLoggedIn() {
+	return pb.authStore.isValid;
+}

@@ -13,13 +13,15 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { AccountCircle } from "@mui/icons-material";
 import React from "react";
 import GuestMenuContents from "./GuestMenuContents";
+import { isLoggedIn } from "@/lib/dbApi";
 interface TopButtonsProps {}
 
 const TopButtons: FunctionComponent<TopButtonsProps> = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
 		useState<null | HTMLElement>(null);
-
+	const [isLogged] = useState(isLoggedIn());
+	console.log(isLoggedIn());
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
