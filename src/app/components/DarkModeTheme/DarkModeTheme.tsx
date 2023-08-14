@@ -7,18 +7,7 @@
 
 import { FunctionComponent, ReactNode } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-const darkTheme = createTheme({
-	palette: {
-		mode: "dark",
-		primary: {
-			main: "#ffc107",
-		},
-		secondary: {
-			main: "#f50057",
-		},
-	},
-});
+import { darkTheme } from "../Themes";
 
 interface DarkModeThemeProps {
 	children: ReactNode;
