@@ -8,12 +8,13 @@ import { FunctionComponent } from "react";
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 
 import bgImage from "@/resources/utf-bg.jpg";
-//import utfLogoImage from "@/resources/logo-utf-lg.png";
+import utfLogoImage from "@/resources/logo-utf-lg.png";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import LoginFormSender from "./LoginFormSender/LoginFormSender";
 import LoginFormContent from "./LoginFormContent/LoginFormContent";
+import Link from "next/link";
 
 interface LoginPageProps {}
 
@@ -39,7 +40,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 					backgroundPosition: "center",
 				}}
 			>
-				{/*
+				<Link href={"/"}>
 					<Box
 						sx={{
 							backgroundImage: {
@@ -57,7 +58,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 							backgroundPosition: "center",
 						}}
 					/>
-					*/}
+				</Link>
 			</Grid>
 
 			<Grid
