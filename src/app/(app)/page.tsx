@@ -61,10 +61,13 @@ export default function Home() {
 						title={<Link href={"/login"}>Joãozinho Lima</Link>}
 						subheader="14 de setembro de 2016"
 						action={[
-							<IconButton aria-label="add to favorites">
+							<IconButton
+								aria-label="add to favorites"
+								key={"favorite-post"}
+							>
 								<FavoriteIcon />
 							</IconButton>,
-							<IconButton aria-label="share">
+							<IconButton aria-label="share" key={"share-post"}>
 								<ShareIcon />
 							</IconButton>,
 						]}
