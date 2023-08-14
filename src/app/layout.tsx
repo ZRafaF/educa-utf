@@ -1,7 +1,11 @@
+// Copyright (c) 2023 Rafael Farias
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 import "./globals.css";
 import type { Metadata } from "next";
 import ToastProvider from "@/app/components/ToastProvider/ToastProvider";
-import AppHeader from "./components/AppHeader/AppHeader";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./contexts/AuthProvider";
 
@@ -16,13 +20,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
+		<html lang="pt-br">
 			<body>
 				<ToastProvider>
-					<AuthProvider>
-						<AppHeader />
-						{children}
-					</AuthProvider>
+					<AuthProvider>{children}</AuthProvider>
 				</ToastProvider>
 			</body>
 		</html>

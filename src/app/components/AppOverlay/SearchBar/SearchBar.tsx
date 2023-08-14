@@ -17,7 +17,7 @@ const Search = styled("div")(({ theme }) => ({
 	"&:hover": {
 		backgroundColor: alpha(theme.palette.common.white, 0.25),
 	},
-	marginRight: theme.spacing(0.5),
+	marginRight: theme.spacing(2),
 	marginLeft: theme.spacing(2),
 }));
 
@@ -37,11 +37,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 		padding: theme.spacing(1, 1, 1, 0),
 		// vertical padding + font size from searchIcon
 		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-		transition: theme.transitions.create("width"),
 		width: "100%",
-		[theme.breakpoints.up("md")]: {
-			width: "20ch",
-		},
 	},
 }));
 
@@ -54,8 +50,8 @@ const SearchBar: FunctionComponent<SearchBarProps> = () => {
 				<SearchIcon />
 			</SearchIconWrapper>
 			<StyledInputBase
-				placeholder="Search…"
-				inputProps={{ "aria-label": "search" }}
+				placeholder="Buscar"
+				inputProps={{ "aria-label": "buscar" }}
 			/>
 		</Search>
 	);

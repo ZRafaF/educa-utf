@@ -35,7 +35,7 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				required
 				fullWidth
 				inputProps={{
-					minlength: 8,
+					minLength: 8,
 					maxLength: 72,
 				}}
 				name="password"
