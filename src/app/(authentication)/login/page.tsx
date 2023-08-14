@@ -15,6 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LoginFormSender from "./LoginFormSender/LoginFormSender";
 import LoginFormContent from "./LoginFormContent/LoginFormContent";
 import Link from "next/link";
+import Image from "next/image";
 
 interface LoginPageProps {}
 
@@ -34,13 +35,16 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 				sm={4}
 				md={7}
 				sx={{
-					backgroundImage: `url(${bgImage.src})`,
-					backgroundRepeat: "no-repeat",
-					backgroundSize: "cover",
-					backgroundPosition: "center",
+					height: "stretch",
+					overflow: "hidden",
+					display: { xs: "none", sm: "block" },
 				}}
 			>
-				<Link href={"/"}>
+				<div style={{ position: "relative", height: "100%" }}>
+					<Image src={bgImage} alt="campus utfpr" fill />
+				</div>
+
+				{/*<Link href={"/"}>
 					<Box
 						sx={{
 							backgroundImage: {
@@ -58,7 +62,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 							backgroundPosition: "center",
 						}}
 					/>
-				</Link>
+					</Link>*/}
 			</Grid>
 
 			<Grid
