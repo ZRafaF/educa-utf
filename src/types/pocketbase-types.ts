@@ -47,8 +47,9 @@ export type ImagesRecord = {
 }
 
 export type PostsRecord = {
-	title?: string
-	user?: RecordIdString
+	title: string
+	slug: string
+	user: RecordIdString
 	rating?: number
 	visible?: boolean
 	document?: string

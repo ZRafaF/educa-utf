@@ -1,4 +1,3 @@
-import "react-toastify/dist/ReactToastify.css";
 import AppOverlay from "../components/AppOverlay/AppOverlay";
 
 export default function RootLayout({

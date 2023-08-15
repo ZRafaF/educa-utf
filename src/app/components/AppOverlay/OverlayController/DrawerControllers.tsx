@@ -9,6 +9,7 @@ import { FunctionComponent, ReactNode, useContext } from "react";
 import drawerWidth from "../drawerWidth";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
+import { createTheme } from "@mui/material/";
 
 interface ControllerProps {
 	children: ReactNode;
@@ -18,7 +19,7 @@ const Drawer = styled(MuiDrawer, {
 	shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
 	"& .MuiDrawer-paper": {
-		position: "relative",
+		position: "fixed",
 		whiteSpace: "nowrap",
 		width: drawerWidth,
 		transition: theme.transitions.create("width", {
@@ -33,8 +34,9 @@ const Drawer = styled(MuiDrawer, {
 				duration: theme.transitions.duration.leavingScreen,
 			}),
 			width: theme.spacing(7),
-			[theme.breakpoints.up("sm")]: {
-				width: theme.spacing(7.5),
+
+			[theme.breakpoints.down("sm")]: {
+				width: theme.spacing(0),
 			},
 		}),
 	},

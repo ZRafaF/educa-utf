@@ -15,7 +15,7 @@ import {
 
 export const OverlayControllerContext = createContext<
 	[boolean, Dispatch<SetStateAction<boolean>>]
->([true, () => {}]);
+>([false, () => {}]);
 
 interface OverlayControllerProps {
 	children: ReactNode;
@@ -24,7 +24,7 @@ interface OverlayControllerProps {
 const OverlayControllerProvider: FunctionComponent<OverlayControllerProps> = ({
 	children,
 }) => {
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 	return (
 		<OverlayControllerContext.Provider value={[open, setOpen]}>
 			{children}

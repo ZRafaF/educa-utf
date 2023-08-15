@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 
 import { FunctionComponent } from "react";
-
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -12,13 +11,10 @@ import Typography from "@mui/material/Typography";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import LoginFormSender from "./LoginFormSender/LoginFormSender";
-import LoginFormContent from "./LoginFormContent/LoginFormContent";
 import Link from "next/link";
+interface pageProps {}
 
-interface LoginPageProps {}
-
-const LoginPage: FunctionComponent<LoginPageProps> = () => {
+const page: FunctionComponent<pageProps> = () => {
 	return (
 		<Box
 			sx={{
@@ -33,21 +29,15 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 				<LockOutlinedIcon />
 			</Avatar>
 			<Typography component="h1" variant="h5">
-				Login
+				Registrar
 			</Typography>
-			<LoginFormSender>
-				<LoginFormContent />
-			</LoginFormSender>
 			<Grid container>
-				<Grid item xs>
-					<Link href="#">Esqueci minha senha</Link>
-				</Grid>
 				<Grid item>
-					<Link href="/register">{"Registre-se aqui!"}</Link>
+					<Link href="/login">{"Já tem uma conta? Login aqui!"}</Link>
 				</Grid>
 			</Grid>
 		</Box>
 	);
 };
 
-export default LoginPage;
+export default page;

@@ -62,16 +62,6 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				Login
 			</Button>
 			{/*<OcRegisterWithGoogle />*/}
-			<Grid container>
-				<Grid item xs>
-					<Link href="#">Esqueci minha senha</Link>
-				</Grid>
-				<Grid item>
-					<Link href="/register">
-						{"Não possui uma conta? Registre aqui!"}
-					</Link>
-				</Grid>
-			</Grid>
 		</React.Fragment>
 	);
 };

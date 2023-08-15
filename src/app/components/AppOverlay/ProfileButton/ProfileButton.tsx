@@ -56,16 +56,14 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 					<ListItemText>Login</ListItemText>
 				</MenuItem>
 			</Link>
-			<MenuItem
-				onClick={handleMenuClose}
-				LinkComponent={Link}
-				href={"/login"}
-			>
-				<ListItemIcon>
-					<PersonAddIcon fontSize="small" />
-				</ListItemIcon>
-				<ListItemText>Registrar</ListItemText>
-			</MenuItem>
+			<Link href={"/register"}>
+				<MenuItem onClick={handleMenuClose}>
+					<ListItemIcon>
+						<PersonAddIcon fontSize="small" />
+					</ListItemIcon>
+					<ListItemText>Registrar</ListItemText>
+				</MenuItem>
+			</Link>
 		</Menu>
 	);
 

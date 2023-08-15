@@ -15,19 +15,20 @@ interface PageProps {
 
 export const revalidate = 10;
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-// 	const staticParams = await generateStaticParams();
+/*
+export const getStaticPaths: GetStaticPaths = async () => {
+	const staticParams = await generateStaticParams();
 
-// 	const paths = staticParams.map((params) => ({
-// 		params: { postId: params.postId },
-// 	}));
+	const paths = staticParams.map((params, idx) => ({
+		params: { postId: params.slug },
+	}));
 
-// 	return {
-// 		paths,
-// 		fallback: false, // false or "blocking"
-// 	};
-// };
-
+	return {
+		paths,
+		fallback: false, // false or "blocking"
+	};
+};
+*/
 export async function generateStaticParams() {
 	const posts = await getListOfPosts();
 
@@ -37,11 +38,12 @@ export async function generateStaticParams() {
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
-	const post = await getPostById(params.postId);
+	const postId = params.postId;
+	const post = await getPostById(postId);
 	return (
 		<div>
-			{params.postId}
-			<div>{post.created}</div>
+			{postId}
+			<div>{post.title}</div>
 		</div>
 	);
 };
