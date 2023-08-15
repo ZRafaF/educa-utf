@@ -51,6 +51,7 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 								flexGrow: 1,
 								height: "100vh",
 								overflow: "auto",
+								ml: { xs: 0, sm: 7 },
 							}}
 						>
 							<Toolbar />

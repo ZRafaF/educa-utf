@@ -9,39 +9,42 @@ import { FunctionComponent } from "react";
 
 interface PageProps {
 	params: {
-		postId: string;
+		slug: string;
 	};
 }
 
 export const revalidate = 10;
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-// 	const staticParams = await generateStaticParams();
+/*
+export const getStaticPaths: GetStaticPaths = async () => {
+	const staticParams = await generateStaticParams();
 
-// 	const paths = staticParams.map((params) => ({
-// 		params: { postId: params.postId },
-// 	}));
+	const paths = staticParams.map((params, idx) => ({
+		params: { postId: params.slug },
+	}));
 
-// 	return {
-// 		paths,
-// 		fallback: false, // false or "blocking"
-// 	};
-// };
-
+	return {
+		paths,
+		fallback: false, // false or "blocking"
+	};
+};
+*/
 export async function generateStaticParams() {
 	const posts = await getListOfPosts();
 
 	return posts.map((post) => ({
-		postId: post.id,
+		slug: post.slug,
 	}));
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
-	const post = await getPostById(params.postId);
+	const parts = params.slug.split("-");
+	const postId = parts[parts.length - 1];
+	const post = await getPostById(postId);
 	return (
 		<div>
-			{params.postId}
-			<div>{post.created}</div>
+			{params.slug}
+			<div>{post.title}</div>
 		</div>
 	);
 };
