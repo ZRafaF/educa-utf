@@ -3,7 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { PostsRecord, PostsResponse } from "@/types/pocketbase-types";
+import {
+	ChaptersResponse,
+	PostsRecord,
+	PostsResponse,
+} from "@/types/pocketbase-types";
 import pb from "./PocketBase/pocketbase";
 import { formatString } from "./helper";
 
@@ -13,6 +17,16 @@ export async function getListOfPosts() {
 
 export async function getPostById(id: string) {
 	return pb.collection("posts").getOne<PostsResponse>(id);
+}
+
+export async function getListOfChapters() {
+	return pb.collection("chapters").getFullList<ChaptersResponse>();
+}
+
+export async function getChapterById(id: string, expand: boolean = false) {
+	return pb
+		.collection("chapters")
+		.getOne(id, expand ? { expand: "posts" } : {});
 }
 
 function createPost(newPost: PostsRecord) {

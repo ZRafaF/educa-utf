@@ -9,7 +9,7 @@ import { FunctionComponent } from "react";
 
 interface PageProps {
 	params: {
-		slug: string;
+		postId: string;
 	};
 }
 
@@ -33,17 +33,16 @@ export async function generateStaticParams() {
 	const posts = await getListOfPosts();
 
 	return posts.map((post) => ({
-		slug: post.slug,
+		postId: post.id,
 	}));
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
-	const parts = params.slug.split("-");
-	const postId = parts[parts.length - 1];
+	const postId = params.postId;
 	const post = await getPostById(postId);
 	return (
 		<div>
-			{params.slug}
+			{postId}
 			<div>{post.title}</div>
 		</div>
 	);
