@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import { getChapterById, getListOfChapters } from "@/lib/dbApi";
+import { ChaptersResponse } from "@/types/pocketbase-types";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -35,7 +36,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 */
 export async function generateStaticParams() {
-	const chapters = await getListOfChapters();
+	const chapters = await getListOfChapters().catch((error) => {
+		return [] as ChaptersResponse[];
+	});
 
 	return chapters.map((chapter) => ({
 		chapterId: chapter.id,
@@ -44,31 +47,30 @@ export async function generateStaticParams() {
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const chapterId = params.chapterId;
-	try {
-		const chapter = await getChapterById(chapterId, true);
-		const posts = chapter.expand.posts;
-		return (
-			<div>
-				<h1>{chapter.title}</h1>
-				Chapter id: {chapterId}
-				<List></List>
-				<ul>
-					{posts.map((post: any) => (
-						<Link href={`/chapter/${chapter.id}/post/${post.id}`}>
-							<ListItem>
-								<ListItemButton>
-									<ListItemText primary={post.id} />
-								</ListItemButton>
-							</ListItem>
-						</Link>
-					))}
-				</ul>
-			</div>
-		);
-	} catch (error) {
-		console.error(error);
-		return <h1>Essa página não existe</h1>;
-	}
+	const chapter = await getChapterById(chapterId, true);
+	const posts = chapter.expand.posts;
+
+	return (
+		<div>
+			<h1>{chapter.title}</h1>
+			Chapter id: {chapterId}
+			<List></List>
+			<ul>
+				{posts.map((post: any) => (
+					<Link
+						href={`/chapter/${chapter.id}/post/${post.id}`}
+						key={"link_to_post" + post.id}
+					>
+						<ListItem>
+							<ListItemButton>
+								<ListItemText primary={post.id} />
+							</ListItemButton>
+						</ListItem>
+					</Link>
+				))}
+			</ul>
+		</div>
+	);
 };
 
 export default Page;

@@ -37,16 +37,16 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		}
 		// example create data
 
-		pb.collection("users")
-			.create({
-				email: submitEmail,
-				password: submitPassword,
-				passwordConfirm: submitPassword,
-			})
-			.then((record) => {
-				// (optional) send an email verification request
-				//pb.collection("users").requestVerification(submitEmail);
-			});
+		// pb.collection("users")
+		// 	.create({
+		// 		email: submitEmail,
+		// 		password: submitPassword,
+		// 		passwordConfirm: submitPassword,
+		// 	})
+		// 	.then((record) => {
+		// 		// (optional) send an email verification request
+		// 		//pb.collection("users").requestVerification(submitEmail);
+		// 	});
 	};
 
 	return (

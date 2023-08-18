@@ -76,6 +76,7 @@ const PostCard: FunctionComponent<PostCardProps> = () => {
 						<FavoriteIcon />
 					</IconButton>,
 					<ShareButton
+						key={"share-button"}
 						shareData={{
 							title: "Educa UTF",
 							text: "Dê uma olhada nesse link que eu achei!",

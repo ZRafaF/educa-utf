@@ -25,10 +25,12 @@ interface AuthProviderProps {
 
 const AuthProvider: FunctionComponent<AuthProviderProps> = ({ children }) => {
 	const [auth, setAuth] = useState<string>("1 mm");
+	/*
 	pb.authStore.onChange(() => {
 		console.log(getUser());
 	});
 	console.log(getUser());
+	*/
 	return (
 		<AuthContext.Provider value={[auth, setAuth]}>
 			{children}

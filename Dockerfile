@@ -32,6 +32,9 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+ENV PB_URL http://127.0.0.1:8090
+ENV ANALYZE false
+
 RUN yarn build
 
 # If using npm comment out above and use below instead

@@ -16,3 +16,5 @@ documentacao
 .github
 venv
 pocketbase
+.docker-compose.yml
+mkdocs.yml
