@@ -7,7 +7,7 @@ name: Release container
 on:
     push:
         branches:
-            - main
+            - release
 jobs:
     publish-container:
         runs-on: ubuntu-latest
@@ -23,9 +23,9 @@ jobs:
               run: docker build -t educa_utf_nextjs .
             - name: Add tags to image
               run: |
-                  docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs
                   docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs:v0.2.${{ github.run_number }}
+                  docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs
             - name: Push Docker image
               run: |
+                  docker push zrafaf/educa_utf_nextjs:${{ github.event.pull_request.title }}
                   docker push zrafaf/educa_utf_nextjs
-                  docker push zrafaf/educa_utf_nextjs:v0.2.${{ github.run_number }}

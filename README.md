@@ -21,6 +21,8 @@ pnpm dev
 
 ## Using Docker
 
+Repositório no Docker-hub[https://hub.docker.com/r/zrafaf/educa_utf_nextjs](https://hub.docker.com/r/zrafaf/educa_utf_nextjs)
+
 1. [Install Docker](https://docs.docker.com/get-docker/) on your machine.
 1. Build your container: `docker build -t educa_utf_nextjs .`.
 1. Run your container: `docker run -p 3000:3000 educa_utf_nextjs`.
