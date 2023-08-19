@@ -30,7 +30,7 @@ export default function LoginLayout({
 				container
 				sx={{
 					position: "absolute",
-					height: "stretch",
+					height: "100%",
 				}}
 			>
 				<Grid
@@ -39,7 +39,7 @@ export default function LoginLayout({
 					sm={4}
 					md={7}
 					sx={{
-						height: "stretch",
+						height: "100%",
 						overflow: "hidden",
 						display: { xs: "none", sm: "block" },
 					}}
@@ -47,7 +47,6 @@ export default function LoginLayout({
 					<div style={{ position: "relative", height: "100%" }}>
 						<Image src={bgImage} alt="campus utfpr" fill />
 					</div>
-
 					{/*<Link href={"/"}>
 			<Box
 				sx={{

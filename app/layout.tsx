@@ -5,7 +5,7 @@
 
 import "./globals.css";
 import type { Metadata } from "next";
-import ToastProvider from "@/app/components/ToastProvider/ToastProvider";
+import ToastProvider from "@/components/ToastProvider/ToastProvider";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./contexts/AuthProvider";
 

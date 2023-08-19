@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 "use client";
 
-import { OverlayControllerContext } from "@/app/contexts/OverlayControllerProvider";
+import { OverlayControllerContext } from "@/contexts/OverlayControllerProvider";
 import IconButton from "@mui/material/IconButton";
 import { FunctionComponent, useContext } from "react";
 import ChevronLeft from "@mui/icons-material/ChevronLeft";

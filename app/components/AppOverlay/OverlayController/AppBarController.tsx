@@ -4,11 +4,11 @@
 // https://opensource.org/licenses/MIT
 "use client";
 
-import { OverlayControllerContext } from "@/app/contexts/OverlayControllerProvider";
 import { FunctionComponent, ReactNode, useContext } from "react";
 import drawerWidth from "../drawerWidth";
 import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import { OverlayControllerContext } from "@/contexts/OverlayControllerProvider";
 
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
