@@ -29,4 +29,5 @@ A integração continua com o Docker-hub é realizada no momento que ocorre uma 
 !!! attention
     A `tag` da release é o **titulo do *Pull Request***.
     Por isso preste atenção no momento que fizer um PR de outra *branch* para a *branch* `release`.
+    Por convenção o titulo deve obedecer "vx.x.x". Por exemplo "v0.1.2"
 
