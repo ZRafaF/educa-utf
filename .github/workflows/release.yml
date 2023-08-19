@@ -19,11 +19,14 @@ jobs:
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Get sanitized title
+              id: title
+              run: echo "::set-output name=title::$(echo ${{ github.event.pull_request.title }} | tr -cd '[:alnum:]._-')"
             - name: Build Docker image
               run: docker build -t educa_utf_nextjs .
             - name: Add tags to image
               env:
-                  TITLE: ${{ github.event.pull_request.title }}
+                  TITLE: ${{ steps.title.outputs.title }}
               run: |
                   docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs:$TITLE
                   docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs
