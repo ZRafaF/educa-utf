@@ -12,12 +12,12 @@ jobs:
     publish-container:
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
             - name: Get pr
               uses: 8BitJonny/gh-get-current-pr@2.2.0
               id: PR
               run: echo "Your PR number is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
-            - name: Checkout code
-              uses: actions/checkout@v2
             - name: Login to Docker Hub
               uses: docker/login-action@v2
               with:
