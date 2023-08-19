@@ -12,12 +12,12 @@ on:
 jobs:
     title_check:
         runs-on: ubuntu-latest
-
+        env:
+            ACTIONS_STEP_DEBUG: true
         steps:
             - name: Check PR Title
               env:
                   TITLE: ${{ github.event.pull_request.title }}
-
               run: |
                   echo The Title of your PR is $TITLE
 
