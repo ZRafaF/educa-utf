@@ -7,7 +7,7 @@ name: Release container
 on:
     push:
         branches:
-            - main
+            - release
 jobs:
     publish-container:
         runs-on: ubuntu-latest
