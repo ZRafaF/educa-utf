@@ -15,10 +15,8 @@ jobs:
         env:
             ACTIONS_STEP_DEBUG: true
         steps:
-            - name: Check PR Title
-              env:
-                  TITLE: ${{ github.event.pull_request.title }}
+            - uses: actions/checkout@v1
             - uses: dylanvann/check-pull-request-title@v1
               with:
                   # Match pull request titles in the form UI-1234 - Message.
-                  pattern: 'v\d+\.\d+\.\d+'
+                  pattern: '^UI-\d* - '
