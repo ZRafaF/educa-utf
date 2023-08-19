@@ -5,13 +5,11 @@
 
 import React from "react";
 
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import bgImage from "@/resources/utf-bg.jpg";
-//import utfLogoImage from "@/resources/logo-utf-lg.png";
+import utfLogoImage from "@/resources/logo-utf-sm.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 //import Link from "next/link";
 import Image from "next/image";
@@ -45,27 +43,32 @@ export default function LoginLayout({
 					}}
 				>
 					<div style={{ position: "relative", height: "100%" }}>
-						<Image src={bgImage} alt="campus utfpr" fill />
+						<Image
+							src={bgImage}
+							alt="campus utfpr"
+							layout={"fill"}
+							objectFit={"cover"}
+						/>
 					</div>
-					{/*<Link href={"/"}>
-			<Box
-				sx={{
-					backgroundImage: {
-						xs: "none",
-						sm: `url(${utfLogoImage.src})`,
-					},
-					position: "absolute",
-					backgroundRepeat: "no-repeat",
-					backgroundSize: "cover",
-					bottom: "20px",
-					left: "20px",
-					height: "5%",
-					aspectRatio: "540/107",
+					<Link href={"/"}>
+						<Box
+							sx={{
+								backgroundImage: {
+									xs: "none",
+									sm: `url(${utfLogoImage.src})`,
+								},
+								position: "absolute",
+								backgroundRepeat: "no-repeat",
+								backgroundSize: "cover",
+								bottom: "20px",
+								left: "20px",
+								height: "5%",
+								aspectRatio: "540/107",
 
-					backgroundPosition: "center",
-				}}
-			/>
-			</Link>*/}
+								backgroundPosition: "center",
+							}}
+						/>
+					</Link>
 				</Grid>
 
 				<Grid

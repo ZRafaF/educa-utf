@@ -35,5 +35,7 @@ USER nextjs
 EXPOSE 3000
 
 ENV PORT 3000
+ENV PB_URL http://127.0.0.1:8090
+ENV ANALYZE false
 
 CMD ["yarn", "start"]
