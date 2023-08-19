@@ -3,11 +3,11 @@
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
 
-name: Publish container
+name: Release container
 on:
     push:
         branches:
-            - release
+            - main
 jobs:
 build-project:
     name: Build container
