@@ -12,6 +12,8 @@ on:
             - release
 
 jobs:
+    if_merged:
+        if: github.event.pull_request.merged == true
     publish-container:
         runs-on: ubuntu-latest
         steps:

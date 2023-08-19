@@ -82,7 +82,7 @@ export default function LoginLayout({
 				>
 					<Link href={"/"}>
 						<Tooltip
-							title={"Voltar ao inicio"}
+							title={"Voltar ao início"}
 							arrow
 							placement="right"
 						>
@@ -95,7 +95,7 @@ export default function LoginLayout({
 								}}
 							>
 								<ArrowBackIcon />
-								Voltar
+								Início
 							</Fab>
 						</Tooltip>
 					</Link>
