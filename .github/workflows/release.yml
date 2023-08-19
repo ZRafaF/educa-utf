@@ -27,5 +27,5 @@ jobs:
                   docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs
             - name: Push Docker image
               run: |
-                  docker push zrafaf/educa_utf_nextjs:v0.2.${{ github.run_number }}
+                  docker push zrafaf/educa_utf_nextjs:${{ github.event.pull_request.title }}
                   docker push zrafaf/educa_utf_nextjs
