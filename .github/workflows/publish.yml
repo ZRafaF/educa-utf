@@ -7,7 +7,7 @@ name: Publish container
 on:
     push:
         branches:
-            - latest
+            - release
 
 jobs:
 build-project:
