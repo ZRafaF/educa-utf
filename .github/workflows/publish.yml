@@ -1,0 +1,33 @@
+# Copyright (c) 2023 Rafael Farias
+#
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
+name: Publish container
+on:
+    push:
+        branches:
+            - latest
+
+jobs:
+build-project:
+    name: Build container
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+          env:
+              DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+              DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          run: |
+              docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        - name: Build Docker image
+          run: docker build -t educa_utf_nextjs .
+        - name: Add tags to image
+          run: |
+              docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs
+              docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs:v0.2.${{ github.run_number }}
+        - name: Push Docker image
+          run: |
+              docker push zrafaf/educa_utf_nextjs
+              docker push zrafaf/educa_utf_nextjs:v0.2.${{ github.run_number }}

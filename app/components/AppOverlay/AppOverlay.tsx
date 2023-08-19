@@ -12,7 +12,7 @@ import Link from "next/link";
 import ProfileButton from "./ProfileButton/ProfileButton";
 import SearchBar from "./SearchBar/SearchBar";
 import { darkTheme, lightTheme } from "../Themes";
-import OverlayControllerProvider from "@/app/contexts/OverlayControllerProvider";
+import OverlayControllerProvider from "@/contexts/OverlayControllerProvider";
 import ToggleDrawerButton from "./OverlayController/TogglerDrawerButton";
 import DrawerController from "./OverlayController/DrawerControllers";
 import AppBarController from "./OverlayController/AppBarController";
