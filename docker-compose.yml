@@ -15,7 +15,7 @@ services:
         ports:
             - 8090:8090
         volumes:
-            - pocketbase-volume:/pb_data
-            - pocketbase-volume:/pb_hooks
+            - pocketbase-data:/pb_data
+            - pocketbase-data:/pb_hooks
 volumes:
-    pocketbase-volume:
+    pocketbase-data:

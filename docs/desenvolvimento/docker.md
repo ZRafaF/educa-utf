@@ -27,20 +27,22 @@ Rode `docker build -t educa_utf_nextjs .` na root do projeto.
 2. Crie uma nova tag para sua imagem com `docker tag educa_utf_nextjs [username]/educa_utf_nextjs:[version]`
 3. Faça o push com `docker push [username]/educa_utf_nextjs:[version]`
 
-> Exemplo: Fazendo `push` de uma imagem como `latest`
-> 1. `docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs`
-> 2. `docker push zrafaf/educa_utf_nextjs`
+!!! info "Fazendo `push` de uma imagem como `latest`"
+    1. `docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs`
+    2. `docker push zrafaf/educa_utf_nextjs`
 
 
 > A qualquer momento você pode encontrar suas imagens através de `docker images`
 
 ## Iniciando os Containers
 
+
+
 ### Docker compose
 
 Para iniciar os containers você pode utilizar o seguinte docker-compose
 
-``` yml
+``` yaml
 version: "3.7"
 
 services:
@@ -67,3 +69,17 @@ volumes:
 
 Você pode iniciar os containers com `docker compose up`.
 
+### Atualizando a imagem `educa_utf_nextjs`
+
+Para atualizar para a ultima versão disponivel será necessário **apagar** a imagem defasada.
+
+Para ver as imagens atuais execute `docker images`. Você deve ver algo parecido com:
+
+``` bash
+REPOSITORY                TAG       IMAGE ID       CREATED          SIZE
+zrafaf/educa_utf_nextjs   latest    ffb4489371c3   15 minutes ago   818MB
+```
+
+Para deletar a imagem defasada **FORÇADO** você pode executar: `docker rmi [id] -f`.
+
+> No caso da imagem a cima seria necessário executar `docker rmi ffb4489371c3 -f`
