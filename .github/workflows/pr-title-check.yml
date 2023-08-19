@@ -10,7 +10,7 @@ on:
             - release
 
 jobs:
-    title_check:
+    title-check:
         runs-on: ubuntu-latest
         env:
             ACTIONS_STEP_DEBUG: true
