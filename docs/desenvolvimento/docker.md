@@ -27,9 +27,16 @@ Rode `docker build -t educa_utf_nextjs .` na root do projeto.
 2. Crie uma nova tag para sua imagem com `docker tag educa_utf_nextjs [username]/educa_utf_nextjs:[version]`
 3. Faça o push com `docker push [username]/educa_utf_nextjs:[version]`
 
+> Exemplo: Fazendo `push` de uma imagem como `latest`
+> 1. `docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs`
+> 2. `docker push zrafaf/educa_utf_nextjs`
+
+
 > A qualquer momento você pode encontrar suas imagens através de `docker images`
 
 ## Iniciando os Containers
+
+### Docker compose
 
 Para iniciar os containers você pode utilizar o seguinte docker-compose
 
@@ -57,3 +64,6 @@ volumes:
     pocketbase-volume:
 
 ```
+
+Você pode iniciar os containers com `docker compose up`.
+
