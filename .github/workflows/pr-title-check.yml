@@ -15,8 +15,11 @@ jobs:
         env:
             ACTIONS_STEP_DEBUG: true
         steps:
-            - uses: actions/checkout@v1
-            - uses: dylanvann/check-pull-request-title@v0
+            - name: Check PR Title
+              env:
+                  TITLE: ${{ github.event.pull_request.title }}
+            - uses: actions-ecosystem/action-regex-match@v2
+              id: regex-match
               with:
-                  # Match pull request titles in the form UI-1234 - Message.
-                  pattern: 'v\d+\.\d+\.\d+'
+                  text: ${{ github.event.pull_request.title }} # e.g. "Test: AB#16845 try to return PR number"
+                  regex: 'v\d+\.\d+\.\d+'
