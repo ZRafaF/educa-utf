@@ -1,0 +1,30 @@
+# Copyright (c) 2023 Rafael Farias
+#
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
+name: PR Title Check
+
+on:
+    pull_request:
+        types:
+            - opened
+            - synchronize
+            - edited
+
+        branches:
+            - release
+
+jobs:
+    title_check:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Check PR Title
+              uses: Slashgear/action-check-pr-title@v4.3.0
+              with:
+                  regexp: "v\d+\.\d+\.\d+" # Regex the title should match.
+                  helpMessage: "Example: 'v0.1.2'"
