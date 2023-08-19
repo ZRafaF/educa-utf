@@ -19,14 +19,15 @@ jobs:
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
-            - name: Get sanitized title
-              id: title
-              run: echo "::set-output name=title::$(echo ${{ github.event.pull_request.title }} | tr -cd '[:alnum:]._-')"
+            - name: Get pr
+            - uses: 8BitJonny/gh-get-current-pr@2.2.0
+              id: PR
+            - run: echo "Your PR number is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
             - name: Build Docker image
               run: docker build -t educa_utf_nextjs .
             - name: Add tags to image
               env:
-                  TITLE: ${{ steps.title.outputs.title }}
+                  TITLE: ${{ steps.PR.outputs.pr_title }}
               run: |
                   docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs:$TITLE
                   docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs
