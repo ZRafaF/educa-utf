@@ -9,22 +9,25 @@ on:
         branches:
             - latest
 
-runs-on: ubuntu-latest
-steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Push to Docker Hub
-      uses: docker/build-push-action@v1
-      with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: msusdev/webnext
-          tags: latest, ${{ github.run_number }}
-    - name: Publish to GitHub Packages
-      uses: docker/build-push-action@v1
-      with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: ${{ github.repository }}/webnext
-          tags: latest, ${{ github.run_number }}
+jobs:
+build-project:
+    name: Build container
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+          env:
+              DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+              DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          run: |
+              docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        - name: Build Docker image
+          run: docker build -t educa_utf_nextjs .
+        - name: Add tags to image
+          run: |
+              docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs
+              docker tag educa_utf_nextjs zrafaf/educa_utf_nextjs:v0.2.${{ github.run_number }}
+        - name: Push Docker image
+          run: |
+              docker push zrafaf/educa_utf_nextjs
+              docker push zrafaf/educa_utf_nextjs:v0.2.${{ github.run_number }}
