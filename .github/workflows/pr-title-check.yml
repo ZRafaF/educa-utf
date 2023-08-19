@@ -15,9 +15,6 @@ jobs:
         env:
             ACTIONS_STEP_DEBUG: true
         steps:
-            - name: Check PR Title
-              env:
-                  TITLE: ${{ github.event.pull_request.title }}
             - uses: actions-ecosystem/action-regex-match@v2
               id: regex-match
               with:
