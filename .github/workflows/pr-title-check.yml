@@ -18,13 +18,7 @@ jobs:
               env:
                   TITLE: ${{ github.event.pull_request.title }}
 
-              run: |
-                  echo The Title of your PR is $TITLE
-
-                  PR_TITLE=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
-                  if [[ $PR_TITLE =~ ^v\d+\.\d+\.\d+$ ]]; then
-                    echo "PR title is valid."
-                  else
-                    echo "PR title is not valid. It should match the pattern vx.y.z, eg. 'v0.1.2'"
-                    exit 1
-                  fi
+            - uses: Slashgear/action-check-pr-title@v4.3.0
+              with:
+                  regexp: "v\d+\.\d+\.\d+" # Regex the title should match.
+                  helpMessage: "Example: 'feat: example of title'"
