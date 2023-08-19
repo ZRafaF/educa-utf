@@ -5,7 +5,8 @@
 
 name: Check Release
 on:
-    pull-request:
+    pull_request:
+        types: [opened, synchronize]
         branches:
             - release
 jobs:
