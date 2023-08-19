@@ -48,7 +48,10 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 				</Typography>
 			</ListItem>
 			<Divider />
-			<Link href={"/login"}>
+			<Link
+				href={"/login"}
+				style={{ textDecoration: "none", color: "white" }}
+			>
 				<MenuItem onClick={handleMenuClose}>
 					<ListItemIcon>
 						<LoginIcon fontSize="small" />
@@ -56,7 +59,10 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 					<ListItemText>Login</ListItemText>
 				</MenuItem>
 			</Link>
-			<Link href={"/register"}>
+			<Link
+				href={"/register"}
+				style={{ textDecoration: "none", color: "white" }}
+			>
 				<MenuItem onClick={handleMenuClose}>
 					<ListItemIcon>
 						<PersonAddIcon fontSize="small" />

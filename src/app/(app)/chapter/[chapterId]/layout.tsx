@@ -3,8 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { getListOfChapters } from "@/lib/dbApi";
-
 export default async function RootLayout({
 	children,
 }: {

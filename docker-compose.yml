@@ -4,7 +4,7 @@ services:
     next:
         environment:
             - PB_URL=http://127.0.0.1:8090
-        image: nextjs-docker
+        image: zrafaf/educa_utf_nextjs:latest
         restart: unless-stopped
         ports:
             - 3000:3000
@@ -15,6 +15,7 @@ services:
         ports:
             - 8090:8090
         volumes:
-            - pocketbase-data:/pb_data
+            - pocketbase-volume:/pb_data
+            - pocketbase-volume:/pb_hooks
 volumes:
-    pocketbase-data:
+    pocketbase-volume:
