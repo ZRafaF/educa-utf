@@ -14,11 +14,13 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v2
-
             - name: Check PR Title
+              env:
+                  TITLE: ${{ github.event.pull_request.title }}
+
               run: |
+                  echo The Title of your PR is $TITLE
+
                   PR_TITLE=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
                   if [[ $PR_TITLE =~ ^v\d+\.\d+\.\d+$ ]]; then
                     echo "PR title is valid."
