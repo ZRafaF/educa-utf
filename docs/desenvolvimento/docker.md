@@ -52,22 +52,31 @@ services:
         image: zrafaf/educa_utf_nextjs:latest
         restart: unless-stopped
         ports:
-            - 3000:3000
+            - 80:3000
 
     pocketbase:
-        image: augustodelg/pocketbase:latest
+        image: zrafaf/educa_utf_pocketbase:latest
         restart: unless-stopped
         ports:
             - 8090:8090
         volumes:
-            - pocketbase-volume:/pb_data
-            - pocketbase-volume:/pb_hooks
+            - ~/pocketbase-data:/pb_data
 volumes:
-    pocketbase-volume:
-
+    pocketbase-data:
 ```
 
 Você pode iniciar os containers com `docker compose up`.
+
+!!! info
+    Se algo der errado você pode tentar criar o volume manualmente com:
+    ``` bash
+    mkdir -p ~/pocketbase-data
+    chown -R $USER:$USER ~/pocketbase-data
+    ```
+    Você também pode checar se o usuário tem permissão de leitura e escrita com 
+    ``` bash
+    chmod -R 755 ~/pocketbase-data
+    ```
 
 ### Atualizando a imagem `educa_utf_nextjs`
 
