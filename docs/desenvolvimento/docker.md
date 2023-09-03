@@ -13,7 +13,7 @@
 
 Cheque a configuração do arquivo `Dockerfile`, a versão contida no repositório foi gerada apartir do projeto [nextjs-with-docker](https://github.com/vercel/next.js/tree/canary/examples/with-docker)
 
-**ATENÇÃO** As variáveis de ambiente `ENV` definidas na `Dockerfile`, principalmente `PB_URL` essa variável defini a URL do backend
+**ATENÇÃO** As variáveis de ambiente `ENV` definidas na `Dockerfile`, principalmente `PB_URL` essa variável define a URL do backend
 
 ### Criando a imagem
 
@@ -47,8 +47,8 @@ version: "3.7"
 
 services:
     next:
-        environment:
-            - PB_URL=http://127.0.0.1:8090
+        depends_on:
+          - pocketbase
         image: zrafaf/educa_utf_nextjs:latest
         restart: unless-stopped
         ports:
@@ -60,9 +60,7 @@ services:
         ports:
             - 8090:8090
         volumes:
-            - ~/pocketbase-data:/pb_data
-volumes:
-    pocketbase-data:
+            - "./pocketbase-data:/pb_data"
 ```
 
 Você pode iniciar os containers com `docker compose up`.
