@@ -12,7 +12,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
-ENV PB_URL http://127.0.0.1:8090
+ENV PB_URL http://educautf.td.utfpr.edu.br:8090
 ENV ANALYZE false
 
 RUN yarn build

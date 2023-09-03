@@ -13,7 +13,7 @@
 
 Cheque a configuração do arquivo `Dockerfile`, a versão contida no repositório foi gerada apartir do projeto [nextjs-with-docker](https://github.com/vercel/next.js/tree/canary/examples/with-docker)
 
-**ATENÇÃO** As variáveis de ambiente `ENV` definidas na `Dockerfile`, principalmente `PB_URL` essa variável defini a URL do backend
+**ATENÇÃO** As variáveis de ambiente `ENV` definidas na `Dockerfile`, principalmente `PB_URL` essa variável define a URL do backend
 
 ### Criando a imagem
 
@@ -47,27 +47,34 @@ version: "3.7"
 
 services:
     next:
-        environment:
-            - PB_URL=http://127.0.0.1:8090
+        depends_on:
+          - pocketbase
         image: zrafaf/educa_utf_nextjs:latest
         restart: unless-stopped
         ports:
-            - 3000:3000
+            - 80:3000
 
     pocketbase:
-        image: augustodelg/pocketbase:latest
+        image: zrafaf/educa_utf_pocketbase:latest
         restart: unless-stopped
         ports:
             - 8090:8090
         volumes:
-            - pocketbase-volume:/pb_data
-            - pocketbase-volume:/pb_hooks
-volumes:
-    pocketbase-volume:
-
+            - "./pocketbase-data:/pb_data"
 ```
 
 Você pode iniciar os containers com `docker compose up`.
+
+!!! info
+    Se algo der errado você pode tentar criar o volume manualmente com:
+    ``` bash
+    mkdir -p ~/pocketbase-data
+    chown -R $USER:$USER ~/pocketbase-data
+    ```
+    Você também pode checar se o usuário tem permissão de leitura e escrita com 
+    ``` bash
+    chmod -R 755 ~/pocketbase-data
+    ```
 
 ### Atualizando a imagem `educa_utf_nextjs`
 
