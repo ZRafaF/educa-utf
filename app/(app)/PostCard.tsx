@@ -88,14 +88,17 @@ const PostCard: FunctionComponent<PostCardProps> = () => {
 					pb: 1,
 				}}
 			/>
-			<CardActionArea>
+			<CardActionArea
+				LinkComponent={Link}
+				href={"/chapter/mqh0krz00lk7b2i"}
+			>
 				<CardContent
 					sx={{
 						pt: 1,
 					}}
 				>
 					<Typography gutterBottom variant="h5" component="div">
-						Camada de valência
+						Camada de valência (Capitulo)
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
 						A Camada de Valência é a última camada de distribuição
