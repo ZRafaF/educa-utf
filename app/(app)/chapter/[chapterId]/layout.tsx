@@ -3,6 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import Container from "@mui/material/Container/Container";
+
 export default async function RootLayout({
 	children,
 }: {
@@ -10,7 +12,7 @@ export default async function RootLayout({
 }) {
 	return (
 		<section>
-			<div>{children}</div>
+			<Container>{children}</Container>
 		</section>
 	);
 }

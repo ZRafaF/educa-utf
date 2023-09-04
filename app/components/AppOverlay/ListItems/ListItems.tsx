@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 
 import { FunctionComponent } from "react";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
+import Divider from "@mui/material/Divider/Divider";
+import List from "@mui/material/List/List";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import QueueIcon from "@mui/icons-material/Queue";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
@@ -39,9 +39,7 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					href="/chapters"
 				/>
 			</List>
-
 			<Divider />
-
 			<List>
 				<LinkItem
 					title="Novo post"

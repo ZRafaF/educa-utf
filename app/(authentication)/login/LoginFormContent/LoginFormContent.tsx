@@ -5,12 +5,10 @@
 
 import React from "react";
 import { FunctionComponent } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
-import Link from "next/link";
+import Button from "@mui/material/Button/Button";
+import TextField from "@mui/material/TextField/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox/Checkbox";
 
 interface LoginFormContentProps {}
 

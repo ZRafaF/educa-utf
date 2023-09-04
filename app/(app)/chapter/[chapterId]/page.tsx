@@ -5,11 +5,10 @@
 
 import { getChapterById, getListOfChapters } from "@/lib/dbApi";
 import { ChaptersResponse } from "@/types/pocketbase-types";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import { GetStaticPaths } from "next";
+import List from "@mui/material/List/List";
+import ListItem from "@mui/material/ListItem/ListItem";
+import ListItemButton from "@mui/material/ListItemButton/ListItemButton";
+import ListItemText from "@mui/material/ListItemText/ListItemText";
 import Link from "next/link";
 import { FunctionComponent } from "react";
 

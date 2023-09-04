@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import ToastProvider from "@/components/ToastProvider/ToastProvider";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./contexts/AuthProvider";
+import AppOverlay from "./components/AppOverlay/AppOverlay";
 
 export const metadata: Metadata = {
 	title: "Educa UTF",
@@ -23,7 +24,9 @@ export default function RootLayout({
 		<html lang="pt-br">
 			<body style={{ margin: 0 }}>
 				<ToastProvider>
-					<AuthProvider>{children}</AuthProvider>
+					<AuthProvider>
+						<AppOverlay>{children}</AppOverlay>
+					</AuthProvider>
 				</ToastProvider>
 			</body>
 		</html>

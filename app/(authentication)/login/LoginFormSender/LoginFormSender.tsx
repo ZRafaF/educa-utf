@@ -5,8 +5,7 @@
 "use client";
 
 import { FunctionComponent, ReactNode } from "react";
-import pb from "@/lib/PocketBase/pocketbase";
-import Box from "@mui/material/Box";
+import Box from "@mui/material/Box/Box";
 //import { toast } from "react-toastify";
 
 interface LoginFormSenderProps {
