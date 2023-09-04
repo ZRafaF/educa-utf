@@ -8,8 +8,8 @@ import { FunctionComponent, ReactNode, useContext } from "react";
 import drawerWidth from "../drawerWidth";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import { createTheme } from "@mui/material/";
 import { OverlayControllerContext } from "@/contexts/OverlayControllerProvider";
+import Backdrop from "@mui/material/Backdrop";
 
 interface ControllerProps {
 	children: ReactNode;
@@ -43,10 +43,16 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const DrawerController: FunctionComponent<ControllerProps> = ({ children }) => {
-	const [open] = useContext(OverlayControllerContext);
+	const [open, setOpen] = useContext(OverlayControllerContext);
 
 	return (
 		<Drawer variant="permanent" open={open}>
+			<Backdrop
+				open={open}
+				onClick={() => {
+					setOpen(false);
+				}}
+			/>
 			{children}
 		</Drawer>
 	);

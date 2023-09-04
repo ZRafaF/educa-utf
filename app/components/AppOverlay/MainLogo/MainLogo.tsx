@@ -5,7 +5,7 @@
 
 import { FunctionComponent } from "react";
 import educaUtfLogoImage from "@/resources/logo-utf-sm.png";
-import Box from "@mui/material/Box";
+import Box from "@mui/material/Box/Box";
 import Image from "next/image";
 
 interface MainLogoProps {}

@@ -1,17 +1,19 @@
 // Copyright (c) 2023 Rafael Farias
 //
 // This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 "use client";
 
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+import IconButton from "@mui/material/IconButton/IconButton";
+import Tooltip from "@mui/material/Tooltip/Tooltip";
+import MenuItem from "@mui/material/MenuItem/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText/ListItemText";
+import ListItem from "@mui/material/ListItem/ListItem";
+import Divider from "@mui/material/Divider/Divider";
+import Typography from "@mui/material/Typography/Typography";
+import Menu from "@mui/material/Menu/Menu";
 
 import { FunctionComponent, useState } from "react";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -20,7 +22,6 @@ import Link from "next/link";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-// https://opensource.org/licenses/MIT
 interface ProfileButtonProps {}
 
 const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {

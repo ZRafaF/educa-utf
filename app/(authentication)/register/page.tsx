@@ -4,14 +4,15 @@
 // https://opensource.org/licenses/MIT
 
 import { FunctionComponent } from "react";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar/Avatar";
+import Box from "@mui/material/Box/Box";
+import Grid from "@mui/material/Grid/Grid";
+import Typography from "@mui/material/Typography/Typography";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import Link from "next/link";
+
 interface pageProps {}
 
 const page: FunctionComponent<pageProps> = () => {

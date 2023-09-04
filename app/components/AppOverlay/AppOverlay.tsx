@@ -3,9 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { ThemeProvider } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import Box from "@mui/material/Box/Box";
+import Toolbar from "@mui/material/Toolbar/Toolbar";
 import { FunctionComponent, ReactNode } from "react";
 import ListItems from "./ListItems/ListItems";
 import Link from "next/link";
@@ -35,7 +35,6 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 								<MainLogo />
 							</Link>
 							<SearchBar />
-							<Box sx={{ flexGrow: 1 }} />
 							<ProfileButton />
 						</Toolbar>
 					</AppBarController>

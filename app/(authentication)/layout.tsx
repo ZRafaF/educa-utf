@@ -5,11 +5,9 @@
 
 import React from "react";
 
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import bgImage from "@/resources/utf-bg.jpg";
-import utfLogoImage from "@/resources/logo-utf-sm.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 //import Link from "next/link";
 import Image from "next/image";
@@ -28,7 +26,8 @@ export default function LoginLayout({
 				container
 				sx={{
 					position: "absolute",
-					height: "100%",
+					height: "stretch",
+					width: "stretch",
 				}}
 			>
 				<Grid
@@ -37,7 +36,7 @@ export default function LoginLayout({
 					sm={4}
 					md={7}
 					sx={{
-						height: "100%",
+						height: "stretch",
 						overflow: "hidden",
 						display: { xs: "none", sm: "block" },
 					}}
@@ -50,25 +49,6 @@ export default function LoginLayout({
 							objectFit={"cover"}
 						/>
 					</div>
-					<Link href={"/"}>
-						<Box
-							sx={{
-								backgroundImage: {
-									xs: "none",
-									sm: `url(${utfLogoImage.src})`,
-								},
-								position: "absolute",
-								backgroundRepeat: "no-repeat",
-								backgroundSize: "cover",
-								bottom: "20px",
-								left: "20px",
-								height: "5%",
-								aspectRatio: "540/107",
-
-								backgroundPosition: "center",
-							}}
-						/>
-					</Link>
 				</Grid>
 
 				<Grid
