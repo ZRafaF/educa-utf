@@ -22,7 +22,13 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="pt-br">
-			<body style={{ margin: 0 }}>
+			<body
+				style={{
+					margin: 0,
+					backgroundColor: "#f2f2f2",
+					minHeight: "100vh",
+				}}
+			>
 				<ToastProvider>
 					<AuthProvider>
 						<AppOverlay>{children}</AppOverlay>

@@ -11,10 +11,6 @@ export function formatString(input: string): string {
 	return sanitized;
 }
 
-export async function waitMillisecond(time: number = 1000): Promise<boolean> {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			resolve(true);
-		}, time); // 1000 milliseconds = 1 second
-	});
+export async function waitSeconds(time: number = 1) {
+	await fetch(`https://hub.dummyapis.com/delay?seconds=${time}`);
 }

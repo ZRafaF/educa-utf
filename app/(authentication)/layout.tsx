@@ -8,12 +8,10 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import bgImage from "@/resources/utf-bg.jpg";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-//import Link from "next/link";
 import Image from "next/image";
+import MainLogoInverted from "@/components/AppOverlay/MainLogo/MainLogoInverted";
+import Box from "@mui/material/Box/Box";
 import Link from "next/link";
-import Fab from "@mui/material/Fab";
-import Tooltip from "@mui/material/Tooltip";
 
 export default function LoginLayout({
 	children,
@@ -36,7 +34,7 @@ export default function LoginLayout({
 					sm={4}
 					md={7}
 					sx={{
-						height: "stretch",
+						height: "100%",
 						overflow: "hidden",
 						display: { xs: "none", sm: "block" },
 					}}
@@ -60,25 +58,19 @@ export default function LoginLayout({
 					elevation={6}
 					square
 				>
-					<Link href={"/"}>
-						<Tooltip
-							title={"Voltar ao início"}
-							arrow
-							placement="right"
-						>
-							<Fab
-								aria-label="voltar para o inicio"
-								variant="extended"
-								sx={{
-									position: "absolute",
-									m: 2,
-								}}
-							>
-								<ArrowBackIcon />
-								Início
-							</Fab>
-						</Tooltip>
-					</Link>
+					<Box
+						sx={{
+							mt: 8,
+							mb: 6,
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+						}}
+					>
+						<Link href={"/"}>
+							<MainLogoInverted height={40} />
+						</Link>
+					</Box>
 					{children}
 				</Grid>
 			</Grid>

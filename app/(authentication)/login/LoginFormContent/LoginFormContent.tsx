@@ -9,6 +9,7 @@ import Button from "@mui/material/Button/Button";
 import TextField from "@mui/material/TextField/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
+import Typography from "@mui/material/Typography/Typography";
 
 interface LoginFormContentProps {}
 
@@ -55,7 +56,7 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				type="submit"
 				fullWidth
 				variant="contained"
-				sx={{ mt: 3, mb: 2 }}
+				sx={{ mt: 3, mb: 2, fontWeight: "bold" }}
 			>
 				Login
 			</Button>

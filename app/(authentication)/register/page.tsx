@@ -26,12 +26,10 @@ const page: FunctionComponent<pageProps> = () => {
 				alignItems: "center",
 			}}
 		>
-			<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-				<LockOutlinedIcon />
-			</Avatar>
-			<Typography component="h1" variant="h5">
-				Registrar
+			<Typography component="h1" variant="h5" width={"100%"}>
+				Fazer Registro
 			</Typography>
+
 			<Grid container>
 				<Grid item>
 					<Link href="/login">{"Já tem uma conta? Login aqui!"}</Link>

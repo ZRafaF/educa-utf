@@ -32,7 +32,6 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	isExpanded = true,
 	myPost,
 }) => {
-	console.log(myPost);
 	return (
 		<Card sx={{ maxWidth: 345 }} variant="outlined">
 			<CardActionArea

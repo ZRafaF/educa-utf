@@ -5,7 +5,14 @@ import { Box } from "@mui/material";
 
 export default function Home() {
 	return (
-		<Container>
+		<Container
+			sx={{
+				bgcolor: "white",
+				minHeight: "100vh",
+				boxShadow: 1,
+				py: 4,
+			}}
+		>
 			<Suspense fallback={<Box>Loading...</Box>}>
 				<BestPosts />
 			</Suspense>
