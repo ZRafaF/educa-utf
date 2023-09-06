@@ -10,8 +10,8 @@ import { darkTheme } from "../Themes";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import Grid from "@mui/material/Unstable_Grid2/Grid2"; // Grid version 2
 import Button from "@mui/material/Button/Button";
-import Container from "@mui/material/Container/Container";
 import NewPostsCarousel from "./NewPostsCarousel/NewPostsCarousel";
+import { bannerFaderSize } from "@/lib/helper";
 
 interface BannerSomethingNewProps {}
 
@@ -19,31 +19,30 @@ const BannerSomethingNew: FunctionComponent<BannerSomethingNewProps> = () => {
 	return (
 		<Box
 			width={"100%"}
-			bgcolor={"#427AA1"}
-			mx={{ xs: -2, sm: -3 }}
-			px={{ xs: 2, sm: 3 }}
+			sx={{
+				background:
+					"linear-gradient(180deg, #121212  100%, rgba(81, 73, 90, 0.00) 100%)",
+			}}
 			mb={3}
-			py={3}
-			boxShadow={5}
+			pb={3}
+			pt={3}
 		>
 			<Grid
 				container
 				spacing={2}
 				width={"100%"}
-				alignItems="center"
+				alignItems={"center"}
 				justifyContent="center"
+				pl={{ xs: 2, sm: 2, md: 4, lg: 10 }}
+				pr={{ xs: 0, sm: 2, md: 2, lg: 8 }}
 			>
-				<Grid py={3} xs={14} sm={10} md={4}>
+				<Grid xs={14} sm={10} md={5} lg={4}>
 					<ThemeProvider theme={darkTheme}>
-						<Box pl={2}>
+						<Box>
 							<Typography
-								variant="h3"
+								variant="h2"
 								color="text.primary"
 								fontWeight={700}
-								sx={{
-									textShadow:
-										"0px 4px 4px rgba(0, 0, 0, 0.25)",
-								}}
 							>
 								Descubra algo novo
 							</Typography>
@@ -53,24 +52,23 @@ const BannerSomethingNew: FunctionComponent<BannerSomethingNewProps> = () => {
 								color="text.secondary"
 								mb={3}
 							>
-								Encontre seu novo conhecimento!
+								Encontre seu próximo conhecimento agora!
 							</Typography>
-							<Container>
-								<Button
-									variant="contained"
-									sx={{ fontWeight: "bold" }}
-									color="secondary"
-								>
-									Me surpreenda
-								</Button>
-							</Container>
+							<Button
+								variant="contained"
+								sx={{ fontWeight: "bold" }}
+								color="secondary"
+							>
+								Me surpreenda
+							</Button>
 						</Box>
 					</ThemeProvider>
 				</Grid>
-				<Grid mr={-3} sm={20} md>
+				<Grid sm={20} md pt={6}>
 					<NewPostsCarousel />
 				</Grid>
 			</Grid>
+			<Box height={bannerFaderSize} />
 		</Box>
 	);
 };

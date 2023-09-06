@@ -8,7 +8,7 @@ import PostCard from "@/components/PostCard/PostCard";
 import { defaultPostResponse } from "@/lib/helper";
 import { FunctionComponent, RefObject, useRef, useState } from "react";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, EffectCoverflow } from "swiper/modules";
+import { Pagination, EffectCoverflow } from "swiper/modules";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
 
@@ -58,18 +58,18 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 					isExpanded={true}
 					isClickable={imActive}
 				/>
+				<div
+					style={{
+						position: "absolute",
+						background:
+							"radial-gradient(50% 30% at 50% 50%, #fff -700%, rgba(0, 0, 0, 0.0) 100%)",
+						height: "100px",
+						width: "100%",
+						bottom: "-80px",
+						zIndex: -1,
+					}}
+				/>
 			</div>
-			<div
-				style={{
-					position: "absolute",
-					background:
-						"radial-gradient(50% 50% at 50% 50%, #000 -50%, rgba(2, 2, 2, 0.0) 80%)",
-					height: "100px",
-					width: "100%",
-					bottom: "-50px",
-					zIndex: -1,
-				}}
-			/>
 		</>
 	);
 };
@@ -78,7 +78,10 @@ interface NewPostsCarouselProps {}
 
 const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 	const theme = useTheme();
-	const isSmallScreen = useMediaQuery(theme.breakpoints.only("xs"));
+	const isExtraSmallScreen = useMediaQuery(theme.breakpoints.only("xs"));
+	const isSmallScreen = useMediaQuery(theme.breakpoints.only("sm"));
+	const isMediumScreen = useMediaQuery(theme.breakpoints.only("md"));
+	const isLargeScreen = useMediaQuery(theme.breakpoints.only("lg"));
 	const [currentId, setCurrentId] = useState<number>(0);
 	const sliderRef = useRef<SwiperRef>(null);
 
@@ -101,13 +104,30 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 			style={{
 				position: "relative",
 			}}
+			className={isExtraSmallScreen ? "" : "faded-edges"}
 		>
 			<Swiper
 				effect={"coverflow"}
-				spaceBetween={5}
-				modules={[Navigation, Pagination, EffectCoverflow]}
+				spaceBetween={
+					isExtraSmallScreen
+						? -20
+						: isSmallScreen
+						? -50
+						: isMediumScreen
+						? -80
+						: -150
+				}
+				modules={[Pagination, EffectCoverflow]}
 				centeredSlides={true}
-				slidesPerView={isSmallScreen ? 1 : 2}
+				slidesPerView={
+					isExtraSmallScreen
+						? 1
+						: isSmallScreen || isMediumScreen
+						? 1.7
+						: isLargeScreen
+						? 3
+						: 3.5
+				}
 				loop
 				speed={750}
 				onSlideChange={(swiper) => {
@@ -118,17 +138,16 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 					setCurrentId(swiper.realIndex);
 				}}
 				style={{
-					paddingBottom: "50px",
+					paddingBottom: "75px",
 				}}
 				coverflowEffect={{
 					rotate: 0,
-					stretch: 80,
+					stretch: 20,
 					scale: 0.7,
 					depth: 100,
-					modifier: isSmallScreen ? 0 : 1,
+					modifier: isExtraSmallScreen ? 0 : 1,
 					slideShadows: true,
 				}}
-				navigation={!isSmallScreen}
 				pagination={{ clickable: true }}
 				ref={sliderRef}
 			>
@@ -143,14 +162,15 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 					</SwiperSlide>
 				))}
 			</Swiper>
+
 			<div
 				style={{
 					position: "absolute",
 					background:
-						"radial-gradient(50% 50% at 50% 50%, #000 -50%, rgba(0, 0, 0, 0.00) 100%)",
-					height: "100px",
+						"radial-gradient(50% 30% at 50% 50%, #fff -500%, rgba(0, 0, 0, 0.00) 100%)",
+					height: "200px",
 					width: "100%",
-					bottom: "-10px",
+					bottom: "0px",
 				}}
 			/>
 		</div>
