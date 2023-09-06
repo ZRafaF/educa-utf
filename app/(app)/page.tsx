@@ -11,7 +11,6 @@ export default function Home() {
 				bgcolor: "white",
 				minHeight: "100vh",
 				boxShadow: 1,
-				py: 4,
 			}}
 		>
 			<BannerSomethingNew />

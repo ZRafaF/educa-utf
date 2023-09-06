@@ -49,43 +49,59 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 		":3",
 	];
 	return (
-		<Swiper
-			effect={"coverflow"}
-			spaceBetween={0}
-			modules={[Navigation, Pagination, EffectCoverflow]}
-			centeredSlides={true}
-			slidesPerView={isSmallScreen ? 1 : 2}
-			loop
-			onSlideChange={(swiper) => {
-				if (swiper.realIndex == myPosts.length) {
-					setCurrentId(0);
-					return;
-				}
-				setCurrentId(swiper.realIndex);
-			}}
+		<div
 			style={{
-				paddingBottom: "50px",
+				position: "relative",
 			}}
-			coverflowEffect={{
-				rotate: 0,
-				stretch: 80,
-				scale: 0.7,
-				depth: 100,
-				modifier: isSmallScreen ? 0 : 1,
-				slideShadows: true,
-			}}
-			navigation
-			pagination={{ clickable: true }}
 		>
-			{myPosts.map((title, idx) => (
-				<SwiperSlide
-					key={"slider_" + idx}
-					className="object-cover w-full h-full swiper-lazy"
-				>
-					<CardSlide myId={idx} activeId={currentId} />
-				</SwiperSlide>
-			))}
-		</Swiper>
+			<Swiper
+				effect={"coverflow"}
+				spaceBetween={0}
+				modules={[Navigation, Pagination, EffectCoverflow]}
+				centeredSlides={true}
+				slidesPerView={isSmallScreen ? 1 : 2}
+				loop
+				onSlideChange={(swiper) => {
+					if (swiper.realIndex == myPosts.length) {
+						setCurrentId(0);
+						return;
+					}
+					setCurrentId(swiper.realIndex);
+				}}
+				style={{
+					paddingBottom: "50px",
+				}}
+				coverflowEffect={{
+					rotate: 0,
+					stretch: 80,
+					scale: 0.7,
+					depth: 100,
+					modifier: isSmallScreen ? 0 : 1,
+					slideShadows: true,
+				}}
+				navigation
+				pagination={{ clickable: true }}
+			>
+				{myPosts.map((title, idx) => (
+					<SwiperSlide
+						key={"slider_" + idx}
+						className="object-cover w-full h-full swiper-lazy"
+					>
+						<CardSlide myId={idx} activeId={currentId} />
+					</SwiperSlide>
+				))}
+			</Swiper>
+			<div
+				style={{
+					position: "absolute",
+					background:
+						"radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.00) 100%)",
+					height: "100px",
+					width: "100%",
+					bottom: "-10px",
+				}}
+			/>
+		</div>
 	);
 };
 
