@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import Stack from "@mui/material/Stack/Stack";
 import Box from "@mui/material/Box/Box";
 import { FunctionComponent } from "react";
 import Typography from "@mui/material/Typography/Typography";
@@ -11,7 +10,7 @@ import { darkTheme } from "../Themes";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import Grid from "@mui/material/Unstable_Grid2/Grid2"; // Grid version 2
 import Button from "@mui/material/Button/Button";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container/Container";
 import NewPostsCarousel from "./NewPostsCarousel/NewPostsCarousel";
 
 interface BannerSomethingNewProps {}

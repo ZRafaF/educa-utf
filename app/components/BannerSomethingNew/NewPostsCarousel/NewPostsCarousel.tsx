@@ -6,13 +6,7 @@
 
 import PostCard from "@/components/PostCard/PostCard";
 import { defaultPostResponse } from "@/lib/helper";
-import {
-	FunctionComponent,
-	MutableRefObject,
-	RefObject,
-	useRef,
-	useState,
-} from "react";
+import { FunctionComponent, RefObject, useRef, useState } from "react";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectCoverflow } from "swiper/modules";
 import useTheme from "@mui/material/styles/useTheme";

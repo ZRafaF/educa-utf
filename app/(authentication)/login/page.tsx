@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography/Typography";
 import LoginFormSender from "./LoginFormSender/LoginFormSender";
 import LoginFormContent from "./LoginFormContent/LoginFormContent";
 import Link from "next/link";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container/Container";
 
 interface LoginPageProps {}
 
