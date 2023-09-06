@@ -9,7 +9,6 @@ import Button from "@mui/material/Button/Button";
 import TextField from "@mui/material/TextField/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
-import Typography from "@mui/material/Typography/Typography";
 
 interface LoginFormContentProps {}
 

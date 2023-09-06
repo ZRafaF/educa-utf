@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container/Container";
 import BestPosts from "./BestPosts";
 import { Suspense } from "react";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box/Box";
 import BannerSomethingNew from "@/components/BannerSomethingNew/BannerSomethingNew";
 
 export default function Home() {
