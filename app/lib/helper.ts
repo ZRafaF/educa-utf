@@ -3,6 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import { Collections } from "@/types/pocketbase-types";
+
 export function formatString(input: string): string {
 	const sanitized = input
 		.replace(/\s+/g, "-")
@@ -10,3 +12,25 @@ export function formatString(input: string): string {
 		.toLowerCase();
 	return sanitized;
 }
+
+export async function waitSeconds(time: number = 1) {
+	await fetch(`https://hub.dummyapis.com/delay?seconds=${time}`);
+}
+
+export const defaultPostResponse = {
+	created: "123",
+	title: "string",
+	description:
+		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt scelerisque sagittis. Vivamus ultrices odio vel risus rhoncus eleifend sit amet ut magna. Cras sed enim lectus. Suspendisse",
+	slug: "string",
+	user: "123",
+	id: "RecordIdString",
+	rating: 2,
+	visible: true,
+	document: "string",
+	liked_by: ["RecordIdString", "asd"],
+	tags: "string",
+	updated: "IsoDateString",
+	collectionId: "string",
+	collectionName: Collections.Posts,
+};
