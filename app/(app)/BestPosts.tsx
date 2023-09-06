@@ -35,7 +35,17 @@ async function BestPosts() {
 				}}
 			>
 				{posts.map((post, idx) => (
-					<Grid key={`post_${idx}`}>
+					<Grid key={`post_${idx}`} xs={6} sm={4} md={3}>
+						<PostCard myPost={post} />
+					</Grid>
+				))}
+				{posts.map((post, idx) => (
+					<Grid key={`post_${idx}`} xs={6} sm={4} md={3}>
+						<PostCard myPost={post} />
+					</Grid>
+				))}
+				{posts.map((post, idx) => (
+					<Grid key={`post_${idx}`} xs={6} sm={4} md={3}>
 						<PostCard myPost={post} />
 					</Grid>
 				))}

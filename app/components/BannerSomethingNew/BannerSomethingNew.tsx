@@ -19,7 +19,7 @@ const BannerSomethingNew: FunctionComponent<BannerSomethingNewProps> = () => {
 	return (
 		<Box
 			width={"100%"}
-			bgcolor={"#828282"}
+			bgcolor={"#427AA1"}
 			mx={{ xs: -2, sm: -3 }}
 			px={{ xs: 2, sm: 3 }}
 			mb={3}
@@ -59,6 +59,7 @@ const BannerSomethingNew: FunctionComponent<BannerSomethingNewProps> = () => {
 								<Button
 									variant="contained"
 									sx={{ fontWeight: "bold" }}
+									color="secondary"
 								>
 									Me surpreenda
 								</Button>

@@ -6,17 +6,19 @@ import BannerSomethingNew from "@/components/BannerSomethingNew/BannerSomethingN
 
 export default function Home() {
 	return (
-		<Container
-			sx={{
-				bgcolor: "white",
-				minHeight: "100vh",
-				boxShadow: 1,
-			}}
-		>
-			<BannerSomethingNew />
-			<Suspense fallback={<Box>Loading...</Box>}>
-				<BestPosts />
-			</Suspense>
-		</Container>
+		<Box>
+			<Container
+				sx={{
+					minHeight: "100vh",
+					boxShadow: 1,
+				}}
+				maxWidth={"lg"}
+			>
+				<BannerSomethingNew />
+				<Suspense fallback={<Box>Loading...</Box>}>
+					<BestPosts />
+				</Suspense>
+			</Container>
+		</Box>
 	);
 }
