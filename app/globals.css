@@ -41,19 +41,17 @@
 	background-color: #ffffff !important;
 }
 .swiper-pagination-bullet-active {
-	background-color: #f0cf65 !important;
+	background-color: #ffffff !important;
 }
 
-/*
 .swiper-slide-visible {
-	opacity: 0.2;
+	z-index: -1 !important;
 }
 
 .swiper-slide-next,
 .swiper-slide-prev {
-	opacity: 0.6;
+	z-index: 0 !important;
 }
 .swiper-slide-active {
-	opacity: 1;
+	z-index: 1 !important;
 }
-*/

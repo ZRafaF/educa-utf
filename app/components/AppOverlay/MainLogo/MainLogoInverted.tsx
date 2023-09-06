@@ -25,6 +25,7 @@ const MainLogo: FunctionComponent<MainLogoProps> = async ({ height = 20 }) => {
 		>
 			<div style={{ position: "relative", height: "100%" }}>
 				<Image
+					sizes="100%"
 					src={educaUtfLogoImage}
 					alt="Picture of the author"
 					fill

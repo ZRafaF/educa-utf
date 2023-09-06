@@ -20,8 +20,9 @@ const BannerSomethingNew: FunctionComponent<BannerSomethingNewProps> = () => {
 		<Box
 			width={"100%"}
 			sx={{
-				background:
-					"linear-gradient(180deg, #121212  100%, rgba(81, 73, 90, 0.00) 100%)",
+				backgroundColor: "#121212",
+				//background:
+				//	"linear-gradient(180deg, #121212  100%, rgba(81, 73, 90, 0.00) 100%)",
 			}}
 			mb={3}
 			pb={3}
