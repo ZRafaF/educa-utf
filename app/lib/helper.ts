@@ -20,7 +20,8 @@ export async function waitSeconds(time: number = 1) {
 export const defaultPostResponse = {
 	created: "123",
 	title: "string",
-	description: "string",
+	description:
+		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt scelerisque sagittis. Vivamus ultrices odio vel risus rhoncus eleifend sit amet ut magna. Cras sed enim lectus. Suspendisse",
 	slug: "string",
 	user: "123",
 	id: "RecordIdString",

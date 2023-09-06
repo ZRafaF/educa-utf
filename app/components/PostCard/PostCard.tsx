@@ -24,23 +24,33 @@ import { PostsResponse } from "@/types/pocketbase-types";
 interface PostCardProps {
 	imgSrc?: string;
 	isExpanded?: boolean;
+	isClickable?: boolean;
 	myPost: PostsResponse;
+	width?: string | number;
 }
 
 const PostCard: FunctionComponent<PostCardProps> = ({
 	imgSrc = contemplativeReptile.src,
 	isExpanded = true,
+	isClickable = true,
 	myPost,
+	width,
 }) => {
 	return (
-		<Card sx={{ maxWidth: 345 }} variant="outlined">
+		<Card
+			sx={{
+				width: width,
+				pointerEvents: isClickable ? "inherit" : "none",
+			}}
+			variant="outlined"
+		>
 			<CardActionArea
 				LinkComponent={Link}
 				href={`/chapter/mqh0krz00lk7b2i/post/${myPost.id}`}
 			>
 				<CardMedia
 					component="img"
-					height="140"
+					height="120"
 					image={imgSrc}
 					alt="green iguana"
 				/>
@@ -59,51 +69,62 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 					<Typography gutterBottom variant="h5" component="div">
 						{myPost.title}
 					</Typography>
-
-					<Typography variant="body2" color="text.secondary">
-						{myPost.description}
-					</Typography>
+					{isExpanded ? (
+						<Typography variant="body2" color="text.secondary">
+							{myPost.description}
+						</Typography>
+					) : (
+						<></>
+					)}
 				</CardContent>
 			</CardActionArea>
-			<Link href={"/login"}>
-				<Typography sx={{ fontSize: 14 }}>Marcos Lima</Typography>
-			</Link>
-			<Divider />
-			<CardActions>
-				<Stack
-					sx={{
-						width: "100%",
-					}}
-				>
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						flexWrap="wrap"
-					>
-						<Stack direction="row">
-							<Chip label={"Química"} />
-							<Chip label={"Modelo atômico"} />
-						</Stack>
-						<Stack direction="row">
-							<IconButton
-								aria-label="add to favorites"
-								key={"favorite-post"}
+			{isExpanded ? (
+				<>
+					<Link href={"/login"}>
+						<Typography sx={{ fontSize: 14 }}>
+							Marcos Lima
+						</Typography>
+					</Link>
+					<Divider />
+					<CardActions>
+						<Stack
+							sx={{
+								width: "100%",
+							}}
+						>
+							<Stack
+								direction="row"
+								justifyContent="space-between"
+								flexWrap="wrap"
 							>
-								<FavoriteIcon />
-							</IconButton>
+								<Stack direction="row">
+									<Chip label={"Química"} />
+									<Chip label={"Modelo atômico"} />
+								</Stack>
+								<Stack direction="row">
+									<IconButton
+										aria-label="add to favorites"
+										key={"favorite-post"}
+									>
+										<FavoriteIcon />
+									</IconButton>
 
-							<ShareButton
-								key={"share-button"}
-								shareData={{
-									title: "Educa UTF",
-									text: "Dê uma olhada nesse link que eu achei!",
-									url: "https://github.com/ZRafaF/educa-utf",
-								}}
-							/>
+									<ShareButton
+										key={"share-button"}
+										shareData={{
+											title: "Educa UTF",
+											text: "Dê uma olhada nesse link que eu achei!",
+											url: "https://github.com/ZRafaF/educa-utf",
+										}}
+									/>
+								</Stack>
+							</Stack>
 						</Stack>
-					</Stack>
-				</Stack>
-			</CardActions>
+					</CardActions>
+				</>
+			) : (
+				<></>
+			)}
 		</Card>
 	);
 };
