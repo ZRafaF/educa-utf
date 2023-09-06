@@ -21,11 +21,11 @@ const BannerSomethingNew: FunctionComponent<BannerSomethingNewProps> = () => {
 		<Box
 			width={"100%"}
 			bgcolor={"#828282"}
-			mx={-3}
+			mx={{ xs: -2, sm: -3 }}
+			px={{ xs: 2, sm: 3 }}
 			mb={3}
 			py={3}
-			px={3}
-			boxShadow={2}
+			boxShadow={5}
 		>
 			<Grid
 				container
