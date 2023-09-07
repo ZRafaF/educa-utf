@@ -12,11 +12,10 @@ import PostContent from './PostContent/PostContent';
 import { getPostDocumentUrl } from '@/lib/dbApi';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
-import Grid from '@mui/material/Grid/Grid';
-import Paper from '@mui/material/Paper/Paper';
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, parseISO, getDay, getMonth, getYear } from 'date-fns';
 import PostInfo from './PostInfo/PostInfo';
+import Grid from '@mui/material/Grid/Grid';
 
 export const revalidate = 30;
 

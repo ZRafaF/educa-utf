@@ -9,7 +9,6 @@ import Card from '@mui/material/Card/Card';
 import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
 import CardActions from '@mui/material/CardActions/CardActions';
 import CardContent from '@mui/material/CardContent/CardContent';
-import Chip from '@mui/material/Chip/Chip';
 import IconButton from '@mui/material/IconButton/IconButton';
 import Typography from '@mui/material/Typography/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -21,7 +20,6 @@ import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
 import { PostsResponse } from '@/types/pocketbase-types';
 import PostTags from '../PostTags/PostTags';
-import { splitStringByComma } from '@/lib/helper';
 
 interface PostCardProps {
 	imgSrc?: string;

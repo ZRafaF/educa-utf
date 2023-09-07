@@ -28,15 +28,17 @@ const PostTags: FunctionComponent<PostTagsProps> = ({ tags }) => {
 					cursor: 'grab',
 				},
 			}}
+			gap={0.5}
 			pb={1}
 			whiteSpace={'nowrap'}
 		>
-			{splitStringByComma(tags).map((tag) => {
-				return <Chip label={tag} key={`tag_${tag}`} clickable />;
-			})}
-			<Chip label={'asd'} clickable />
-			<Chip label={'asd'} clickable />
-			<Chip label={'asd'} clickable />
+			{tags.length ? (
+				splitStringByComma(tags).map((tag) => (
+					<Chip label={tag} key={`tag_${tag}`} clickable />
+				))
+			) : (
+				<Chip label={'nada aqui'} variant="outlined" />
+			)}
 		</Stack>
 	);
 };
