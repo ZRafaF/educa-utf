@@ -1,4 +1,5 @@
 import AppFooter from "@/components/AppFooter/AppFooter";
+import Box from "@mui/material/Box/Box";
 import Toolbar from "@mui/material/Toolbar/Toolbar";
 
 export default function RootLayout({
@@ -7,11 +8,15 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<section>
+		<Box
+			sx={{
+				minHeight: "100vh",
+			}}
+		>
 			<Toolbar />
 
 			{children}
 			<AppFooter />
-		</section>
+		</Box>
 	);
 }

@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"typegen": "pocketbase-typegen --db ./pocketbase/pb_data/data.db -o ./src/types/pocketbase-types.ts",
+		"typegen": "pocketbase-typegen --env -o ./app/types/pocketbase-types.ts",
 		"startDb": "./pocketbase/pocketbase serve",
 		"analyze": "ANALYZE=true next build"
 	},
@@ -25,7 +25,7 @@
 		"eslint": "8.47.0",
 		"eslint-config-next": "13.4.13",
 		"next": "13.4.13",
-		"pocketbase": "^0.16.0",
+		"pocketbase": "^0.18.0",
 		"pocketbase-typegen": "^1.1.12",
 		"postcss": "8.4.27",
 		"react": "18.2.0",

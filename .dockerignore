@@ -9,6 +9,7 @@ README.md
 # NEW
 
 .env.local
+.env
 .prettierignore
 docs
 documentacao

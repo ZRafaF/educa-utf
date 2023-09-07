@@ -20,6 +20,43 @@ npm run install
 
 ---
 
+## Criando variáveis de ambiente
+Os seguintes arquivos são necessários para o desenvolvimento da aplicação:
+
+### Variáveis do NEXTJS
+
+Crie um arquivo de variável de ambiente recomendo `.env.local` e adicione as seguintes variáveis:
+
+``` sh
+# URL of your PocketBase db
+PB_URL=https://myproject.pockethost.io
+
+# Should Next analyze your packages during build
+ANALYZE=false
+```
+
+!!! warning "Atenção"
+    Esses são **SEGREDOS** e não deverão ser enviados a repositórios públicos. Seja GitHub, DockerHub e outros.
+
+### Variáveis do TypeGen
+
+Em um arquivo de variável de ambiente chamado `.env` adicione as seguintes variáveis:
+
+``` sh
+# URL of your PocketBase db
+PB_TYPEGEN_URL=https://myproject.pockethost.io
+
+# Email of an admin on PocketBase dashboard
+PB_TYPEGEN_EMAIL=admin@myproject.com
+
+# Password of an admin on PocketBase dashboard
+PB_TYPEGEN_PASSWORD=secr3tp@ssword!
+```
+
+!!! warning "Atenção"
+    Esses são **SEGREDOS** e não deverão ser enviados a repositórios públicos. Seja GitHub, DockerHub e outros.
+
+
 ## Documentação
 
 > Este projeto foi desenvolvido usando a versão Python `Python 3.10.x`.

@@ -3,23 +3,23 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from "react";
+import { FunctionComponent } from 'react';
 
-import Card from "@mui/material/Card/Card";
-import CardActionArea from "@mui/material/CardActionArea/CardActionArea";
-import CardActions from "@mui/material/CardActions/CardActions";
-import CardContent from "@mui/material/CardContent/CardContent";
-import Chip from "@mui/material/Chip/Chip";
-import IconButton from "@mui/material/IconButton/IconButton";
-import Typography from "@mui/material/Typography/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import Link from "next/link";
-import CardMedia from "@mui/material/CardMedia/CardMedia";
-import Divider from "@mui/material/Divider/Divider";
-import Stack from "@mui/material/Stack/Stack";
-import contemplativeReptile from "@/resources/contemplative-reptile.jpg";
-import ShareButton from "../ShareButton/ShareButton";
-import { PostsResponse } from "@/types/pocketbase-types";
+import Card from '@mui/material/Card/Card';
+import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
+import CardActions from '@mui/material/CardActions/CardActions';
+import CardContent from '@mui/material/CardContent/CardContent';
+import Chip from '@mui/material/Chip/Chip';
+import IconButton from '@mui/material/IconButton/IconButton';
+import Typography from '@mui/material/Typography/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Link from 'next/link';
+import CardMedia from '@mui/material/CardMedia/CardMedia';
+import Divider from '@mui/material/Divider/Divider';
+import Stack from '@mui/material/Stack/Stack';
+import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
+import ShareButton from '../ShareButton/ShareButton';
+import { PostsResponse } from '@/types/pocketbase-types';
 
 interface PostCardProps {
 	imgSrc?: string;
@@ -27,6 +27,7 @@ interface PostCardProps {
 	isClickable?: boolean;
 	myPost: PostsResponse;
 	width?: string | number;
+	href: string;
 }
 
 const PostCard: FunctionComponent<PostCardProps> = ({
@@ -35,19 +36,17 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	isClickable = true,
 	myPost,
 	width,
+	href,
 }) => {
 	return (
 		<Card
 			sx={{
 				width: width,
-				pointerEvents: isClickable ? "inherit" : "none",
+				pointerEvents: isClickable ? 'inherit' : 'none',
 			}}
 			variant="outlined"
 		>
-			<CardActionArea
-				LinkComponent={Link}
-				href={`/chapter/mqh0krz00lk7b2i/post/${myPost.id}`}
-			>
+			<CardActionArea LinkComponent={Link} href={href}>
 				<CardMedia
 					component="img"
 					height="150"
@@ -70,13 +69,13 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 						gutterBottom
 						variant="h5"
 						sx={{
-							overflow: "hidden",
-							wordBreak: "break",
+							overflow: 'hidden',
+							wordBreak: 'break',
 
-							textOverflow: "ellipsis",
-							display: "-webkit-box",
-							WebkitLineClamp: "2",
-							WebkitBoxOrient: "vertical",
+							textOverflow: 'ellipsis',
+							display: '-webkit-box',
+							WebkitLineClamp: '2',
+							WebkitBoxOrient: 'vertical',
 						}}
 					>
 						{myPost.title}
@@ -92,16 +91,11 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 			</CardActionArea>
 			{isExpanded ? (
 				<>
-					<Link href={"/login"}>
-						<Typography sx={{ fontSize: 14 }}>
-							Marcos Lima
-						</Typography>
-					</Link>
 					<Divider />
 					<CardActions>
 						<Stack
 							sx={{
-								width: "100%",
+								width: '100%',
 							}}
 						>
 							<Stack
@@ -110,23 +104,23 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 								flexWrap="wrap"
 							>
 								<Stack direction="row">
-									<Chip label={"Química"} />
-									<Chip label={"Modelo atômico"} />
+									<Chip label={'Química'} />
+									<Chip label={'Modelo atômico'} />
 								</Stack>
 								<Stack direction="row">
 									<IconButton
 										aria-label="add to favorites"
-										key={"favorite-post"}
+										key={'favorite-post'}
 									>
 										<FavoriteIcon />
 									</IconButton>
 
 									<ShareButton
-										key={"share-button"}
+										key={'share-button'}
 										shareData={{
-											title: "Educa UTF",
-											text: "Dê uma olhada nesse link que eu achei!",
-											url: "https://github.com/ZRafaF/educa-utf",
+											title: 'Educa UTF',
+											text: 'Dê uma olhada nesse link que eu achei!',
+											url: 'https://github.com/ZRafaF/educa-utf',
 										}}
 									/>
 								</Stack>
