@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { Collections } from "@/types/pocketbase-types";
+import { Collections, PostsResponse } from "@/types/pocketbase-types";
 
 export function formatString(input: string): string {
 	const sanitized = input
@@ -17,7 +17,7 @@ export async function waitSeconds(time: number = 1) {
 	await fetch(`https://hub.dummyapis.com/delay?seconds=${time}`);
 }
 
-export const defaultPostResponse = {
+export const defaultPostResponse: PostsResponse = {
 	created: "123",
 	title: "string",
 	description:
@@ -32,6 +32,7 @@ export const defaultPostResponse = {
 	tags: "string",
 	updated: "IsoDateString",
 	collectionId: "string",
+	cover: "string",
 	collectionName: Collections.Posts,
 };
 
