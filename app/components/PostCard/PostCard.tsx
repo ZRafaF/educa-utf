@@ -27,6 +27,7 @@ interface PostCardProps {
 	isClickable?: boolean;
 	myPost: PostsResponse;
 	width?: string | number;
+	href: string;
 }
 
 const PostCard: FunctionComponent<PostCardProps> = ({
@@ -35,6 +36,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	isClickable = true,
 	myPost,
 	width,
+	href,
 }) => {
 	return (
 		<Card
@@ -44,10 +46,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 			}}
 			variant="outlined"
 		>
-			<CardActionArea
-				LinkComponent={Link}
-				href={`/chapter/mqh0krz00lk7b2i/post/${myPost.id}`}
-			>
+			<CardActionArea LinkComponent={Link} href={href}>
 				<CardMedia
 					component="img"
 					height="150"

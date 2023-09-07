@@ -8,7 +8,7 @@ import PostCard from "@/components/PostCard/PostCard";
 import { defaultPostResponse } from "@/lib/helper";
 import { FunctionComponent, RefObject, useRef, useState } from "react";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { Pagination, EffectCoverflow, Autoplay } from "swiper/modules";
+import { Pagination, EffectCoverflow } from "swiper/modules";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
 import Grid from "@mui/material/Unstable_Grid2/Grid2"; // Grid version 2
@@ -43,6 +43,7 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 					myPost={defaultPostResponse}
 					isExpanded={true}
 					isClickable={imActive}
+					href={`/post/${defaultPostResponse.id}`}
 				/>
 				<div
 					style={{
@@ -104,7 +105,7 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 						: -150
 				}
 				autoHeight
-				modules={[Autoplay, Pagination, EffectCoverflow]}
+				modules={[Pagination, EffectCoverflow]}
 				centeredSlides={true}
 				slidesPerView={
 					isExtraSmallScreen
@@ -119,10 +120,6 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 				preventClicksPropagation={false}
 				preventClicks={false}
 				speed={750}
-				autoplay={{
-					delay: 2500,
-					disableOnInteraction: true,
-				}}
 				onSlideChange={(swiper) => {
 					if (swiper.realIndex == myPosts.length) {
 						setCurrentId(0);
