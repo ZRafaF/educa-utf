@@ -50,7 +50,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 			>
 				<CardMedia
 					component="img"
-					height="120"
+					height="150"
 					image={imgSrc}
 					alt="green iguana"
 				/>
@@ -66,7 +66,19 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 						pt: 1,
 					}}
 				>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography
+						gutterBottom
+						variant="h5"
+						sx={{
+							overflow: "hidden",
+							wordBreak: "break",
+
+							textOverflow: "ellipsis",
+							display: "-webkit-box",
+							WebkitLineClamp: "2",
+							WebkitBoxOrient: "vertical",
+						}}
+					>
 						{myPost.title}
 					</Typography>
 					{isExpanded ? (

@@ -53,7 +53,6 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 								ml: { xs: 0, sm: 7 },
 							}}
 						>
-							<Toolbar />
 							{children}
 						</Box>
 					</ThemeProvider>

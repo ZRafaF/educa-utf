@@ -12,6 +12,7 @@ import Image from "next/image";
 import MainLogoInverted from "@/components/AppOverlay/MainLogo/MainLogoInverted";
 import Box from "@mui/material/Box/Box";
 import Link from "next/link";
+import Toolbar from "@mui/material/Toolbar/Toolbar";
 
 export default function LoginLayout({
 	children,
@@ -19,13 +20,20 @@ export default function LoginLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<section>
+		<Box
+			sx={{
+				height: "100%",
+				width: "100%",
+				display: "flex", // Use flexbox
+				flexDirection: "column", // Column layout
+			}}
+		>
+			<Toolbar />
+
 			<Grid
 				container
 				sx={{
-					position: "absolute",
-					height: "stretch",
-					width: "stretch",
+					flex: 1,
 				}}
 			>
 				<Grid
@@ -34,7 +42,6 @@ export default function LoginLayout({
 					sm={4}
 					md={7}
 					sx={{
-						height: "100%",
 						overflow: "hidden",
 						display: { xs: "none", sm: "block" },
 					}}
@@ -43,7 +50,8 @@ export default function LoginLayout({
 						<Image
 							src={bgImage}
 							alt="campus utfpr"
-							layout={"fill"}
+							fill
+							sizes="100%"
 							objectFit={"cover"}
 						/>
 					</div>
@@ -74,6 +82,6 @@ export default function LoginLayout({
 					{children}
 				</Grid>
 			</Grid>
-		</section>
+		</Box>
 	);
 }
