@@ -6,11 +6,7 @@ import { bannerFaderSize } from "@/lib/helper";
 
 export default function Home() {
 	return (
-		<Box
-			sx={{
-				minHeight: "100vh",
-			}}
-		>
+		<Box>
 			<BannerSomethingNew />
 
 			<Box

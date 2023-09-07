@@ -5,7 +5,6 @@
 
 import { getListOfPosts, getPostById } from "@/lib/dbApi";
 import { PostsResponse } from "@/types/pocketbase-types";
-import { GetStaticPaths } from "next";
 import { FunctionComponent } from "react";
 
 interface PageProps {
@@ -16,20 +15,6 @@ interface PageProps {
 
 export const revalidate = 10;
 
-/*
-export const getStaticPaths: GetStaticPaths = async () => {
-	const staticParams = await generateStaticParams();
-
-	const paths = staticParams.map((params, idx) => ({
-		params: { postId: params.slug },
-	}));
-
-	return {
-		paths,
-		fallback: false, // false or "blocking"
-	};
-};
-*/
 export async function generateStaticParams() {
 	const posts = await getListOfPosts().catch(() => [] as PostsResponse[]);
 

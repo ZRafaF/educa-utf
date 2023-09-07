@@ -4,20 +4,21 @@
 // https://opensource.org/licenses/MIT
 
 import { getChapterById, getListOfChapters } from "@/lib/dbApi";
-import { ChaptersResponse } from "@/types/pocketbase-types";
-import List from "@mui/material/List/List";
-import ListItem from "@mui/material/ListItem/ListItem";
-import ListItemButton from "@mui/material/ListItemButton/ListItemButton";
-import ListItemText from "@mui/material/ListItemText/ListItemText";
-import Link from "next/link";
+import { ChaptersResponse, PostsResponse } from "@/types/pocketbase-types";
+import Paper from "@mui/material/Paper/Paper";
+import Typography from "@mui/material/Typography/Typography";
+import Divider from "@mui/material/Divider/Divider";
+import PostsList from "./PostsList";
+import React from "react";
 import { FunctionComponent } from "react";
+import Toolbar from "@mui/material/Toolbar/Toolbar";
 
 interface PageProps {
 	params: {
 		chapterId: string;
 	};
 }
-
+//export const dynamic = "force-dynamic";
 export const revalidate = 10;
 
 export async function generateStaticParams() {
@@ -33,28 +34,22 @@ export async function generateStaticParams() {
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const chapterId = params.chapterId;
 	const chapter = await getChapterById(chapterId, true);
-	const posts = chapter.expand.posts;
+	const posts = chapter.expand?.posts;
 
 	return (
-		<div>
-			<h1>{chapter.title}</h1>
-			Chapter id: {chapterId}
-			<List></List>
-			<ul>
-				{posts.map((post: any) => (
-					<Link
-						href={`/chapter/${chapter.id}/post/${post.id}`}
-						key={"link_to_post" + post.id}
-					>
-						<ListItem>
-							<ListItemButton>
-								<ListItemText primary={post.id} />
-							</ListItemButton>
-						</ListItem>
-					</Link>
-				))}
-			</ul>
-		</div>
+		<React.Fragment>
+			<Paper sx={{ p: 3 }}>
+				<Typography variant="h5" fontWeight={700} pb={3} align="center">
+					{chapter.title}
+				</Typography>
+				<Divider />
+				<Typography color="text.secondary" mt={3}>
+					{chapter.description}
+				</Typography>
+			</Paper>
+			<Toolbar />
+			<PostsList posts={posts} chapter={chapter} />
+		</React.Fragment>
 	);
 };
 

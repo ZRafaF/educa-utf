@@ -12,7 +12,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import React from "react";
-import LinkItem from "./LinkItem";
+import LinkItem from "@/components/AppOverlay/LinkItem/LinkItem";
 
 interface ListItemsProps {}
 

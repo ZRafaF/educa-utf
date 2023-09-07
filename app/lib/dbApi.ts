@@ -11,6 +11,10 @@ import {
 import pb from "./PocketBase/pocketbase";
 import { formatString } from "./helper";
 
+type ChaptersExpand = {
+	posts: PostsResponse[];
+};
+
 export function getListOfPosts() {
 	return pb.collection("posts").getFullList<PostsResponse>();
 }
@@ -19,14 +23,21 @@ export function getPostById(id: string) {
 	return pb.collection("posts").getOne<PostsResponse>(id);
 }
 
-export async function getListOfChapters() {
-	return pb.collection("chapters").getFullList<ChaptersResponse>();
+export async function getListOfChapters(expand: boolean = false) {
+	return pb
+		.collection("chapters")
+		.getFullList<ChaptersResponse<ChaptersExpand>>(
+			expand ? { expand: "posts" } : {}
+		);
 }
 
 export function getChapterById(id: string, expand: boolean = false) {
 	return pb
 		.collection("chapters")
-		.getOne(id, expand ? { expand: "posts" } : {});
+		.getOne<ChaptersResponse<ChaptersExpand>>(
+			id,
+			expand ? { expand: "posts" } : {}
+		);
 }
 
 function createPost(newPost: PostsRecord) {

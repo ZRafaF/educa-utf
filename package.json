@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"typegen": "pocketbase-typegen --db ./pocketbase/pb_data/data.db -o ./src/types/pocketbase-types.ts",
+		"typegen": "pocketbase-typegen --env -o ./app/types/pocketbase-types.ts",
 		"startDb": "./pocketbase/pocketbase serve",
 		"analyze": "ANALYZE=true next build"
 	},
