@@ -20,6 +20,8 @@ import Stack from '@mui/material/Stack/Stack';
 import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
 import { PostsResponse } from '@/types/pocketbase-types';
+import PostTags from '../PostTags/PostTags';
+import { splitStringByComma } from '@/lib/helper';
 
 interface PostCardProps {
 	imgSrc?: string;
@@ -101,12 +103,9 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 							<Stack
 								direction="row"
 								justifyContent="space-between"
-								flexWrap="wrap"
 							>
-								<Stack direction="row">
-									<Chip label={'Química'} />
-									<Chip label={'Modelo atômico'} />
-								</Stack>
+								<PostTags tags={myPost.tags} />
+
 								<Stack direction="row">
 									<IconButton
 										aria-label="add to favorites"

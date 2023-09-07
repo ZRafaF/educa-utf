@@ -47,6 +47,7 @@ export default async function Layout({
 						width: 350,
 					}}
 					p={2}
+					zIndex={1}
 					boxShadow={3}
 				>
 					<Paper sx={{ p: 3 }}>
@@ -67,9 +68,7 @@ export default async function Layout({
 					<PostsList posts={posts} chapter={chapter} />
 				</Grid>
 
-				<Grid xs>
-					<Container>{children}</Container>
-				</Grid>
+				<Grid xs>{children}</Grid>
 			</Grid>
 		</section>
 	);

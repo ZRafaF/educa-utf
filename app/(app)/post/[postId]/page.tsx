@@ -4,8 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import PostComponent from '@/components/PostComponent/PostComponent';
-import PostContent from '@/components/PostComponent/PostContent/PostContent';
-import { getListOfPosts, getPostById } from '@/lib/dbApi';
+import { getAuthorById, getListOfPosts, getPostById } from '@/lib/dbApi';
 import { PostsResponse } from '@/types/pocketbase-types';
 import { FunctionComponent } from 'react';
 
@@ -28,7 +27,8 @@ export async function generateStaticParams() {
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const postId = params.postId;
 	const post = await getPostById(postId);
-	return <PostComponent myPost={post} />;
+	const author = await getAuthorById(post.user);
+	return <PostComponent myPost={post} author={author} />;
 };
 
 export default Page;
