@@ -2,40 +2,40 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-"use client";
+'use client';
 
-import { FunctionComponent, ReactNode, useContext } from "react";
-import drawerWidth from "../drawerWidth";
-import { styled } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
-import { OverlayControllerContext } from "@/contexts/OverlayControllerProvider";
-import Backdrop from "@mui/material/Backdrop";
+import { FunctionComponent, ReactNode, useContext } from 'react';
+import drawerWidth from '../../../lib/drawerWidth';
+import { styled } from '@mui/material/styles';
+import MuiDrawer from '@mui/material/Drawer';
+import { OverlayControllerContext } from '@/contexts/OverlayControllerProvider';
+import Backdrop from '@mui/material/Backdrop';
 
 interface ControllerProps {
 	children: ReactNode;
 }
 
 const Drawer = styled(MuiDrawer, {
-	shouldForwardProp: (prop) => prop !== "open",
+	shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-	"& .MuiDrawer-paper": {
-		position: "fixed",
-		whiteSpace: "nowrap",
+	'& .MuiDrawer-paper': {
+		position: 'fixed',
+		whiteSpace: 'nowrap',
 		width: drawerWidth,
-		transition: theme.transitions.create("width", {
+		transition: theme.transitions.create('width', {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.enteringScreen,
 		}),
-		boxSizing: "border-box",
+		boxSizing: 'border-box',
 		...(!open && {
-			overflowX: "hidden",
-			transition: theme.transitions.create("width", {
+			overflowX: 'hidden',
+			transition: theme.transitions.create('width', {
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.leavingScreen,
 			}),
 			width: theme.spacing(7),
 
-			[theme.breakpoints.down("sm")]: {
+			[theme.breakpoints.down('sm')]: {
 				width: theme.spacing(0),
 			},
 		}),

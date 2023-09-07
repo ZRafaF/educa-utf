@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import { getChapterById, getListOfChapters } from '@/lib/dbApi';
 import { ChaptersResponse } from '@/types/pocketbase-types';
@@ -12,9 +11,7 @@ import Typography from '@mui/material/Typography/Typography';
 import Divider from '@mui/material/Divider/Divider';
 import PostsList from './PostsList';
 import React, { ReactNode } from 'react';
-import { FunctionComponent } from 'react';
-import Toolbar from '@mui/material/Toolbar/Toolbar';
-
+import DrawerController from './DrawerController';
 export const revalidate = 10;
 
 export async function generateStaticParams() {
@@ -41,16 +38,8 @@ export default async function Layout({
 	return (
 		<section>
 			<Grid container minHeight={'90vh'}>
-				<Grid
-					sx={{
-						backgroundColor: '#F2F2F2',
-						width: 350,
-					}}
-					p={2}
-					zIndex={1}
-					boxShadow={3}
-				>
-					<Paper sx={{ p: 3 }}>
+				<DrawerController>
+					<Paper sx={{ p: 3, my: 2 }}>
 						<Typography
 							variant="h5"
 							fontWeight={700}
@@ -64,9 +53,8 @@ export default async function Layout({
 							{chapter.description}
 						</Typography>
 					</Paper>
-					<Toolbar />
 					<PostsList posts={posts} chapter={chapter} />
-				</Grid>
+				</DrawerController>
 
 				<Grid xs>{children}</Grid>
 			</Grid>
