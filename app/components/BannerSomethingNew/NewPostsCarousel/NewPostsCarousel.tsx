@@ -8,10 +8,9 @@ import PostCard from "@/components/PostCard/PostCard";
 import { defaultPostResponse } from "@/lib/helper";
 import { FunctionComponent, RefObject, useRef, useState } from "react";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { Pagination, EffectCoverflow } from "swiper/modules";
+import { Pagination, EffectCoverflow, Autoplay } from "swiper/modules";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
-import Box from "@mui/material/Box/Box";
 import Grid from "@mui/material/Unstable_Grid2/Grid2"; // Grid version 2
 import Stack from "@mui/material/Stack/Stack";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -24,41 +23,20 @@ interface CardSlideProps {
 	myId: number;
 	activeId: number;
 	sliderRef: RefObject<SwiperRef>;
-	numberOfSlides: number;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
 	myId,
 	activeId,
 	sliderRef,
-	numberOfSlides,
 }) => {
 	const imActive = myId == activeId;
-
-	const slideNext = () => {
-		sliderRef.current?.swiper.slideNext();
-	};
-	const slidePrev = () => {
-		sliderRef.current?.swiper.slidePrev();
-	};
 
 	return (
 		<>
 			<div
 				onClick={() => {
-					const leftIdx =
-						activeId == 0 ? numberOfSlides - 1 : activeId - 1;
-					const rightIdx =
-						activeId == numberOfSlides - 1 ? 0 : activeId + 1;
-
-					if (myId == leftIdx) {
-						slidePrev();
-						return;
-					}
-					if (myId == rightIdx) {
-						slideNext();
-						return;
-					}
+					sliderRef.current?.swiper.slideTo(myId);
 				}}
 			>
 				<PostCard
@@ -126,7 +104,7 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 						: -150
 				}
 				autoHeight
-				modules={[Pagination, EffectCoverflow]}
+				modules={[Autoplay, Pagination, EffectCoverflow]}
 				centeredSlides={true}
 				slidesPerView={
 					isExtraSmallScreen
@@ -137,10 +115,14 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 						? 3
 						: 3.5
 				}
-				loop
+				rewind={true}
 				preventClicksPropagation={false}
 				preventClicks={false}
 				speed={750}
+				autoplay={{
+					delay: 2500,
+					disableOnInteraction: true,
+				}}
 				onSlideChange={(swiper) => {
 					if (swiper.realIndex == myPosts.length) {
 						setCurrentId(0);
@@ -170,7 +152,6 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 							myId={idx}
 							activeId={currentId}
 							sliderRef={sliderRef}
-							numberOfSlides={myPosts.length}
 						/>
 					</SwiperSlide>
 				))}
@@ -197,7 +178,6 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 					bottom={0}
 					right={0}
 					left={0}
-					zIndex={1}
 				>
 					<Stack
 						direction="row"
@@ -208,7 +188,7 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 						<IconButton
 							aria-label="carrossel anterior"
 							size="small"
-							sx={{ m: 0, p: 0 }}
+							sx={{ zIndex: 1 }}
 							onClick={() => {
 								sliderRef.current?.swiper.slidePrev();
 							}}
@@ -218,7 +198,7 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 						<IconButton
 							aria-label="próximo carrossel "
 							size="small"
-							sx={{ m: 0, p: 0 }}
+							sx={{ zIndex: 1 }}
 							onClick={() => {
 								sliderRef.current?.swiper.slideNext();
 							}}
