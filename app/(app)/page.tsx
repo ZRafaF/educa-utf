@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import Box from "@mui/material/Box/Box";
 import BannerSomethingNew from "@/components/BannerSomethingNew/BannerSomethingNew";
 import { bannerFaderSize } from "@/lib/helper";
+import BestChapters from "./BestChapters";
+import Divider from "@mui/material/Divider/Divider";
 
 export default function Home() {
 	return (
@@ -18,6 +20,15 @@ export default function Home() {
 			>
 				<Suspense fallback={<Box>Loading...</Box>}>
 					<BestPosts />
+				</Suspense>
+				<Divider
+					sx={{
+						my: 10,
+					}}
+					variant="middle"
+				/>
+				<Suspense fallback={<Box>Loading...</Box>}>
+					<BestChapters />
 				</Suspense>
 			</Box>
 		</Box>
