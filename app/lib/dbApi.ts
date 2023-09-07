@@ -59,6 +59,21 @@ export function getFirstChapterByFilter(filter: string) {
 		});
 }
 
+export function getPostDocumentUrl(
+	postId: string,
+	postCollectionId: string,
+	postCollectionName: string,
+	postDocumentName: string
+) {
+	const record = {
+		id: postId,
+		collectionId: postCollectionId,
+		collectionName: postCollectionName,
+	};
+
+	return pb.files.getUrl(record, postDocumentName, {});
+}
+
 export function getUser() {
 	return pb.authStore;
 }

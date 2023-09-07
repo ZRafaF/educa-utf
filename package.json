@@ -24,6 +24,7 @@
 		"autoprefixer": "10.4.14",
 		"eslint": "8.47.0",
 		"eslint-config-next": "13.4.13",
+		"markdown-to-jsx": "^7.3.2",
 		"next": "13.4.13",
 		"pocketbase": "^0.18.0",
 		"pocketbase-typegen": "^1.1.12",
