@@ -45,11 +45,9 @@ async function PostComponent({
 	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
 
-		const formatted = format(parsedDate, 'PPP', {
+		return format(parsedDate, 'PPP', {
 			locale: ptBR,
 		});
-		console.log(formatted);
-		return formatted;
 	};
 
 	return (
