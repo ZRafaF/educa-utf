@@ -3,11 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import {
-	ChaptersResponse,
-	PostsRecord,
-	PostsResponse,
-} from "@/types/pocketbase-types";
+import { ChaptersResponse, PostsResponse } from "@/types/pocketbase-types";
 import pb from "./PocketBase/pocketbase";
 import { formatString } from "./helper";
 
@@ -16,7 +12,9 @@ type ChaptersExpand = {
 };
 
 export function getListOfPosts() {
-	return pb.collection("posts").getFullList<PostsResponse>();
+	return pb.collection("posts").getFullList<PostsResponse>({
+		skipTotal: true,
+	});
 }
 
 export function getPostById(id: string) {
@@ -26,23 +24,27 @@ export function getPostById(id: string) {
 export async function getListOfChapters(expand: boolean = false) {
 	return pb
 		.collection("chapters")
-		.getFullList<ChaptersResponse<ChaptersExpand>>(
-			expand ? { expand: "posts" } : {}
-		);
+		.getFullList<ChaptersResponse<ChaptersExpand>>({
+			skipTotal: true,
+			expand: expand ? "posts" : undefined,
+		});
 }
 
 export function getChapterById(id: string, expand: boolean = false) {
 	return pb
 		.collection("chapters")
-		.getOne<ChaptersResponse<ChaptersExpand>>(
-			id,
-			expand ? { expand: "posts" } : {}
-		);
+		.getOne<ChaptersResponse<ChaptersExpand>>(id, {
+			skipTotal: true,
+			expand: expand ? "posts" : undefined,
+		});
 }
 
-function createPost(newPost: PostsRecord) {
-	newPost.slug = formatString(newPost.title);
-	return pb.collection("posts").create(newPost);
+export function getFirstChapterByFilter(filter: string) {
+	return pb
+		.collection("chapters")
+		.getFirstListItem<ChaptersResponse>(filter, {
+			skipTotal: true,
+		});
 }
 
 export function getUser() {

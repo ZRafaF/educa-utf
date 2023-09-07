@@ -10,8 +10,6 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2"; // Grid version 2
 import React from "react";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
-import Paper from "@mui/material/Paper/Paper";
-import { Container } from "@mui/material";
 
 export const revalidate = 10;
 
