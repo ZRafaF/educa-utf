@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 
 import Box from '@mui/material/Box/Box';
-import { FunctionComponent } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { darkTheme } from '../Themes';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';

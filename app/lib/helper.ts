@@ -41,3 +41,9 @@ export const bannerFaderSize = 0;
 export const getRandomImageUrl = () => {
 	return `https://picsum.photos/seed/${Math.random()}/500/300`;
 };
+
+export function splitStringByComma(inputString: string): string[] {
+	// Split the input string by commas and trim whitespace from each word
+	const words = inputString.split(',').map((word) => word.trim());
+	return words;
+}
