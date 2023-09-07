@@ -34,3 +34,5 @@ export const defaultPostResponse = {
 	collectionId: "string",
 	collectionName: Collections.Posts,
 };
+
+export const bannerFaderSize = 0;

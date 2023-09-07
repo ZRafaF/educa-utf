@@ -8,49 +8,35 @@ import PostCard from "@/components/PostCard/PostCard";
 import { defaultPostResponse } from "@/lib/helper";
 import { FunctionComponent, RefObject, useRef, useState } from "react";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, EffectCoverflow } from "swiper/modules";
+import { Pagination, EffectCoverflow, Autoplay } from "swiper/modules";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
+import Grid from "@mui/material/Unstable_Grid2/Grid2"; // Grid version 2
+import Stack from "@mui/material/Stack/Stack";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import IconButton from "@mui/material/IconButton/IconButton";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import { darkTheme } from "@/components/Themes";
 
 interface CardSlideProps {
 	myId: number;
 	activeId: number;
 	sliderRef: RefObject<SwiperRef>;
-	numberOfSlides: number;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
 	myId,
 	activeId,
 	sliderRef,
-	numberOfSlides,
 }) => {
 	const imActive = myId == activeId;
-
-	const slideNext = () => {
-		sliderRef.current?.swiper.slideNext();
-	};
-	const slidePrev = () => {
-		sliderRef.current?.swiper.slidePrev();
-	};
 
 	return (
 		<>
 			<div
 				onClick={() => {
-					const leftIdx =
-						activeId == 0 ? numberOfSlides - 1 : activeId - 1;
-					const rightIdx =
-						activeId == numberOfSlides - 1 ? 0 : activeId + 1;
-
-					if (myId == leftIdx) {
-						slidePrev();
-						return;
-					}
-					if (myId == rightIdx) {
-						slideNext();
-						return;
-					}
+					sliderRef.current?.swiper.slideTo(myId);
 				}}
 			>
 				<PostCard
@@ -58,18 +44,18 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 					isExpanded={true}
 					isClickable={imActive}
 				/>
+				<div
+					style={{
+						position: "absolute",
+						background:
+							"radial-gradient(50% 30% at 50% 50%, #fff -700%, rgba(0, 0, 0, 0.0) 100%)",
+						height: "100px",
+						width: "100%",
+						bottom: "-80px",
+						zIndex: -1,
+					}}
+				/>
 			</div>
-			<div
-				style={{
-					position: "absolute",
-					background:
-						"radial-gradient(50% 50% at 50% 50%, #000 -50%, rgba(2, 2, 2, 0.0) 80%)",
-					height: "100px",
-					width: "100%",
-					bottom: "-50px",
-					zIndex: -1,
-				}}
-			/>
 		</>
 	);
 };
@@ -78,7 +64,10 @@ interface NewPostsCarouselProps {}
 
 const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 	const theme = useTheme();
-	const isSmallScreen = useMediaQuery(theme.breakpoints.only("xs"));
+	const isExtraSmallScreen = useMediaQuery(theme.breakpoints.only("xs"));
+	const isSmallScreen = useMediaQuery(theme.breakpoints.only("sm"));
+	const isMediumScreen = useMediaQuery(theme.breakpoints.only("md"));
+	const isLargeScreen = useMediaQuery(theme.breakpoints.only("lg"));
 	const [currentId, setCurrentId] = useState<number>(0);
 	const sliderRef = useRef<SwiperRef>(null);
 
@@ -101,15 +90,39 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 			style={{
 				position: "relative",
 			}}
+			className={isExtraSmallScreen ? "" : "faded-edges"}
 		>
 			<Swiper
 				effect={"coverflow"}
-				spaceBetween={5}
-				modules={[Navigation, Pagination, EffectCoverflow]}
+				spaceBetween={
+					isExtraSmallScreen
+						? -20
+						: isSmallScreen
+						? -50
+						: isMediumScreen
+						? -80
+						: -150
+				}
+				autoHeight
+				modules={[Autoplay, Pagination, EffectCoverflow]}
 				centeredSlides={true}
-				slidesPerView={isSmallScreen ? 1 : 2}
-				loop
+				slidesPerView={
+					isExtraSmallScreen
+						? 1
+						: isSmallScreen || isMediumScreen
+						? 1.7
+						: isLargeScreen
+						? 3
+						: 3.5
+				}
+				rewind={true}
+				preventClicksPropagation={false}
+				preventClicks={false}
 				speed={750}
+				autoplay={{
+					delay: 2500,
+					disableOnInteraction: true,
+				}}
 				onSlideChange={(swiper) => {
 					if (swiper.realIndex == myPosts.length) {
 						setCurrentId(0);
@@ -118,18 +131,19 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 					setCurrentId(swiper.realIndex);
 				}}
 				style={{
-					paddingBottom: "50px",
+					paddingBottom: "75px",
 				}}
 				coverflowEffect={{
 					rotate: 0,
-					stretch: 80,
+					stretch: 20,
 					scale: 0.7,
-					depth: 100,
-					modifier: isSmallScreen ? 0 : 1,
+					depth: 0,
+					modifier: isExtraSmallScreen ? 0 : 1,
 					slideShadows: true,
 				}}
-				navigation={!isSmallScreen}
-				pagination={{ clickable: true }}
+				pagination={{
+					clickable: true,
+				}}
 				ref={sliderRef}
 			>
 				{myPosts.map((title, idx) => (
@@ -138,21 +152,62 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = () => {
 							myId={idx}
 							activeId={currentId}
 							sliderRef={sliderRef}
-							numberOfSlides={myPosts.length}
 						/>
 					</SwiperSlide>
 				))}
 			</Swiper>
+
 			<div
 				style={{
 					position: "absolute",
 					background:
-						"radial-gradient(50% 50% at 50% 50%, #000 -50%, rgba(0, 0, 0, 0.00) 100%)",
-					height: "100px",
+						"radial-gradient(50% 30% at 50% 50%, #fff -500%, rgba(0, 0, 0, 0.00) 100%)",
+					height: "200px",
 					width: "100%",
-					bottom: "-10px",
+					bottom: "0px",
 				}}
 			/>
+			<ThemeProvider theme={darkTheme}>
+				<Grid
+					container
+					spacing={0}
+					direction="column"
+					alignItems="center"
+					justifyContent="center"
+					position={"absolute"}
+					bottom={0}
+					right={0}
+					left={0}
+				>
+					<Stack
+						direction="row"
+						spacing={2}
+						justifyContent={"space-between"}
+						width={{ xs: "100%", sm: "90%" }}
+					>
+						<IconButton
+							aria-label="carrossel anterior"
+							size="small"
+							sx={{ zIndex: 1 }}
+							onClick={() => {
+								sliderRef.current?.swiper.slidePrev();
+							}}
+						>
+							<ChevronLeftIcon fontSize="large" />
+						</IconButton>
+						<IconButton
+							aria-label="próximo carrossel "
+							size="small"
+							sx={{ zIndex: 1 }}
+							onClick={() => {
+								sliderRef.current?.swiper.slideNext();
+							}}
+						>
+							<ChevronRightIcon fontSize="large" />
+						</IconButton>
+					</Stack>
+				</Grid>
+			</ThemeProvider>
 		</div>
 	);
 };

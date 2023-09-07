@@ -1,4 +1,5 @@
 import AppFooter from "@/components/AppFooter/AppFooter";
+import Toolbar from "@mui/material/Toolbar/Toolbar";
 
 export default function RootLayout({
 	children,
@@ -7,6 +8,8 @@ export default function RootLayout({
 }) {
 	return (
 		<section>
+			<Toolbar />
+
 			{children}
 			<AppFooter />
 		</section>
