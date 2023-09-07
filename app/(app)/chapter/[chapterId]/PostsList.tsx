@@ -13,6 +13,7 @@ import React from "react";
 import ListItemButton from "@mui/material/ListItemButton/ListItemButton";
 import Link from "next/link";
 import { ChaptersResponse, PostsResponse } from "@/types/pocketbase-types";
+import Box from "@mui/material/Box/Box";
 
 interface PostsListProps {
 	posts: PostsResponse[] | undefined;
@@ -25,12 +26,11 @@ const PostsList: FunctionComponent<PostsListProps> = ({ posts, chapter }) => {
 			<Divider component="li" />
 
 			{posts?.map((post: PostsResponse) => (
-				<React.Fragment>
+				<Box key={"link_to_post" + post.id}>
 					<ListItemButton
 						alignItems="flex-start"
 						LinkComponent={Link}
 						href={`/chapter/${chapter.id}/post/${post.id}`}
-						key={"link_to_post" + post.id}
 					>
 						<ListItemAvatar>
 							<Avatar variant="square">N</Avatar>
@@ -42,7 +42,7 @@ const PostsList: FunctionComponent<PostsListProps> = ({ posts, chapter }) => {
 					</ListItemButton>
 
 					<Divider component="li" />
-				</React.Fragment>
+				</Box>
 			))}
 		</List>
 	);
