@@ -90,7 +90,7 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 				effect={'coverflow'}
 				spaceBetween={
 					isExtraSmallScreen
-						? -20
+						? 5
 						: isSmallScreen
 						? -50
 						: isMediumScreen

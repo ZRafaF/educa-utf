@@ -13,9 +13,9 @@ import { getPostDocumentUrl } from '@/lib/dbApi';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import ptBR from 'date-fns/locale/pt-BR';
-import { format, parseISO, getDay, getMonth, getYear } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import PostInfo from './PostInfo/PostInfo';
-import Grid from '@mui/material/Grid/Grid';
+import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 
 export const revalidate = 30;
 
