@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { FunctionComponent, ReactNode, useContext } from 'react';
+import { FunctionComponent, ReactNode, useContext, useEffect } from 'react';
 import drawerWidth from '../../../lib/drawerWidth';
 import styled from '@mui/material/styles/styled';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -37,7 +37,6 @@ interface ControllerProps {
 
 const AppBarController: FunctionComponent<ControllerProps> = ({ children }) => {
 	const [open] = useContext(OverlayControllerContext);
-
 	return (
 		<AppBar position="absolute" open={open}>
 			{children}
