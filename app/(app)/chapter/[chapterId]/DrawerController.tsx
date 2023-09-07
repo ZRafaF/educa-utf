@@ -18,6 +18,7 @@ import Drawer from '@mui/material/Drawer/Drawer';
 import Container from '@mui/material/Container/Container';
 import Box from '@mui/material/Box/Box';
 import { usePathname } from 'next/navigation';
+import Tooltip from '@mui/material/Tooltip/Tooltip';
 
 interface DrawerControllerProps {
 	children: ReactNode;
@@ -79,6 +80,7 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 							backgroundColor: '#F2F2F2',
 						}}
 						p={2}
+						pb={8}
 						zIndex={1}
 						boxShadow={3}
 					>
@@ -102,22 +104,23 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 					</Grid>
 				</Box>
 			</Drawer>
-
-			<Fab
-				color="primary"
-				aria-label="add"
-				sx={{
-					position: 'fixed',
-					bottom: '30px',
-					right: '30px',
-					zIndex: 1,
-				}}
-				onClick={() => {
-					setIsOpen((o) => !o);
-				}}
-			>
-				<FormatListBulletedIcon />
-			</Fab>
+			<Tooltip title="Abrir gaveta de posts" arrow>
+				<Fab
+					color="primary"
+					aria-label="add"
+					sx={{
+						position: 'fixed',
+						bottom: '30px',
+						right: '30px',
+						zIndex: 1,
+					}}
+					onClick={() => {
+						setIsOpen((o) => !o);
+					}}
+				>
+					<FormatListBulletedIcon />
+				</Fab>
+			</Tooltip>
 		</React.Fragment>
 	);
 

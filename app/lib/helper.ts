@@ -36,8 +36,6 @@ export const defaultPostResponse: PostsResponse = {
 	collectionName: Collections.Posts,
 };
 
-export const bannerFaderSize = 0;
-
 export const getRandomImageUrl = () => {
 	return `https://picsum.photos/seed/${Math.random()}/500/300`;
 };

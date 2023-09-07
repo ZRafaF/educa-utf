@@ -3,9 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-"use client"; // Error components must be Client Components
+'use client'; // Error components must be Client Components
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export default function Error({
 	error,
