@@ -45,18 +45,15 @@ async function PostComponent({
 	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
 
-		const formatted = format(parsedDate, 'PPP', {
+		return format(parsedDate, 'PPP', {
 			locale: ptBR,
 		});
-		console.log(formatted);
-		return formatted;
 	};
 
 	return (
 		<Box
 			sx={{
 				minHeight: '90vh',
-				py: 8,
 			}}
 		>
 			<Grid
@@ -65,24 +62,26 @@ async function PostComponent({
 				alignItems={'center'}
 				justifyContent="space-between"
 				pl={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }}
+				pt={{ xs: 3, sm: 4, md: 8 }}
+				pb={2}
 			>
-				<Grid xs>
-					<Typography
-						variant="h2"
-						color="text.primary"
-						fontWeight={700}
-					>
+				<Grid xs={20} sm={20} md={20} lg mb={3} pr={2}>
+					<Typography variant="h2" color="primary" fontWeight={700}>
 						{myPost.title}
 					</Typography>
-					<Typography color="text.secondary" variant="subtitle2">
+					<Typography
+						color="text.secondary"
+						variant="subtitle2"
+						gutterBottom
+					>
 						{getFormattedDate(myPost.created)}
 					</Typography>
 				</Grid>
-				<Grid xs={4}>
+				<Grid xs={20} sm={20} md={20} lg={5} xl={4}>
 					<PostInfo author={author} myPost={myPost} />
 				</Grid>
 			</Grid>
-			<Box mx={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }}>
+			<Box mx={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }} pb={5}>
 				<PostContent article={article} />
 			</Box>
 		</Box>

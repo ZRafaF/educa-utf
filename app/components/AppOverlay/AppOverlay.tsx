@@ -3,20 +3,20 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import Box from "@mui/material/Box/Box";
-import Toolbar from "@mui/material/Toolbar/Toolbar";
-import { FunctionComponent, ReactNode } from "react";
-import ListItems from "./ListItems/ListItems";
-import Link from "next/link";
-import ProfileButton from "./ProfileButton/ProfileButton";
-import SearchBar from "./SearchBar/SearchBar";
-import { darkTheme, lightTheme } from "../Themes";
-import OverlayControllerProvider from "@/contexts/OverlayControllerProvider";
-import ToggleDrawerButton from "./OverlayController/TogglerDrawerButton";
-import DrawerController from "./OverlayController/DrawerControllers";
-import AppBarController from "./OverlayController/AppBarController";
-import MainLogo from "./MainLogo/MainLogo";
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import Box from '@mui/material/Box/Box';
+import Toolbar from '@mui/material/Toolbar/Toolbar';
+import { FunctionComponent, ReactNode } from 'react';
+import ListItems from './ListItems/ListItems';
+import Link from 'next/link';
+import ProfileButton from './ProfileButton/ProfileButton';
+import SearchBar from './SearchBar/SearchBar';
+import { darkTheme, lightTheme } from '../Themes';
+import OverlayControllerProvider from '@/contexts/OverlayControllerProvider';
+import ToggleDrawerButton from './OverlayController/TogglerDrawerButton';
+import DrawerController from './OverlayController/DrawerControllers';
+import AppBarController from './OverlayController/AppBarController';
+import MainLogo from './MainLogo/MainLogo';
 
 interface AppOverlayProps {
 	children: ReactNode;
@@ -26,12 +26,12 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<OverlayControllerProvider>
-				<Box sx={{ display: "flex" }}>
+				<Box sx={{ display: 'flex' }}>
 					<AppBarController>
 						<Toolbar>
 							<ToggleDrawerButton />
 
-							<Link href={"/"}>
+							<Link href={'/'}>
 								<MainLogo />
 							</Link>
 							<SearchBar />
@@ -48,8 +48,8 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 							component="main"
 							sx={{
 								flexGrow: 1,
-								height: "100vh",
-								overflow: "auto",
+								height: '100vh',
+								overflow: 'auto',
 								ml: { xs: 0, sm: 7 },
 							}}
 						>

@@ -25,9 +25,19 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, author }) => {
 		<Box
 			sx={{
 				px: 2,
+				ml: { xs: -2, sm: -2, md: -3, lg: 0, xl: 0 },
 				backgroundColor: '#F2F2F2',
-				borderRadius: '20px 0px 0px 20px',
-				boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.25)',
+				borderRadius: {
+					xs: '0',
+					sm: '0',
+					md: '0',
+					lg: '10px 0px 0px 10px',
+				},
+				boxShadow: {
+					sm: 'none',
+					md: 'none',
+					lg: '0px 2px 2px 0px rgba(0, 0, 0, 0.25)',
+				},
 				overflow: 'hidden',
 			}}
 		>
