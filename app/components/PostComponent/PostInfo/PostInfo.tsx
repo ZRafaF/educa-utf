@@ -64,13 +64,13 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, author }) => {
 					<Stack spacing={2}>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<VisibilityIcon color="action" />
-							<Typography variant="subtitle2">85</Typography>
+							<Typography variant="subtitle2">
+								{myPost.views}
+							</Typography>
 						</Stack>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<FavoriteIcon color="action" />
-							<Typography variant="subtitle2">
-								{myPost.liked_by.length}
-							</Typography>
+							<Typography variant="subtitle2">{25}</Typography>
 						</Stack>
 					</Stack>
 				</Grid>
