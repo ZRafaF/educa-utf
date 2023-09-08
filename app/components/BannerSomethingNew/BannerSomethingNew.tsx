@@ -4,14 +4,12 @@
 // https://opensource.org/licenses/MIT
 
 import Box from '@mui/material/Box/Box';
-import { FunctionComponent } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { darkTheme } from '../Themes';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Button from '@mui/material/Button/Button';
 import NewPostsCarousel from './NewPostsCarousel/NewPostsCarousel';
-import { bannerFaderSize } from '@/lib/helper';
 import { getSomePostsSorted } from '@/lib/dbApi';
 import { PostsResponse } from '@/types/pocketbase-types';
 
@@ -31,11 +29,9 @@ async function BannerSomethingNew() {
 
 	return (
 		<Box
-			width={'100%'}
+			width="100%"
 			sx={{
 				backgroundColor: '#121212',
-				//background:
-				//	"linear-gradient(180deg, #121212  100%, rgba(81, 73, 90, 0.00) 100%)",
 			}}
 			mb={3}
 			pb={3}
@@ -44,8 +40,8 @@ async function BannerSomethingNew() {
 			<Grid
 				container
 				spacing={2}
-				width={'100%'}
-				alignItems={'center'}
+				width="100%"
+				alignItems="center"
 				justifyContent="center"
 				pl={{ xs: 2, sm: 2, md: 4, lg: 10 }}
 				pr={{ xs: 0, sm: 2, md: 2, lg: 8 }}
@@ -82,7 +78,6 @@ async function BannerSomethingNew() {
 					<NewPostsCarousel myPosts={posts} />
 				</Grid>
 			</Grid>
-			<Box height={bannerFaderSize} />
 		</Box>
 	);
 }

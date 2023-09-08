@@ -3,13 +3,20 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { ChaptersResponse, PostsResponse } from '@/types/pocketbase-types';
+import {
+	AuthorsResponse,
+	ChaptersResponse,
+	PostsResponse,
+	UsersResponse,
+} from '@/types/pocketbase-types';
 import pb from './PocketBase/pocketbase';
 
 type ChaptersExpand = {
 	posts: PostsResponse[];
 };
-
+type PostsExpand = {
+	user: UsersResponse;
+};
 export function getListOfPosts() {
 	return pb.collection('posts').getFullList<PostsResponse>({
 		skipTotal: true,
@@ -30,7 +37,15 @@ export async function getSomePostsSorted(
 }
 
 export function getPostById(id: string) {
-	return pb.collection('posts').getOne<PostsResponse>(id);
+	return pb.collection('posts').getOne<PostsResponse>(id, {
+		skipTotal: true,
+	});
+}
+
+export function getAuthorById(id: string) {
+	return pb.collection('authors').getOne<AuthorsResponse>(id, {
+		skipTotal: true,
+	});
 }
 
 export async function getListOfChapters(expand: boolean = false) {
@@ -57,6 +72,21 @@ export function getFirstChapterByFilter(filter: string) {
 		.getFirstListItem<ChaptersResponse>(filter, {
 			skipTotal: true,
 		});
+}
+
+export function getPostDocumentUrl(
+	postId: string,
+	postCollectionId: string,
+	postCollectionName: string,
+	postDocumentName: string
+) {
+	const record = {
+		id: postId,
+		collectionId: postCollectionId,
+		collectionName: postCollectionName,
+	};
+
+	return pb.files.getUrl(record, postDocumentName, {});
 }
 
 export function getUser() {
