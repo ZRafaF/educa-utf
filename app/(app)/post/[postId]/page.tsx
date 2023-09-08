@@ -4,7 +4,11 @@
 // https://opensource.org/licenses/MIT
 
 import PostComponent from '@/components/PostComponent/PostComponent';
-import { getAuthorById, getListOfPosts, getPostById } from '@/lib/dbApi';
+import {
+	getListOfPosts,
+	getPostById,
+	getPostStatsById,
+} from '@/lib/apiHelpers/postsAPI';
 import { PostsResponse } from '@/types/pocketbase-types';
 import { FunctionComponent } from 'react';
 
@@ -17,7 +21,7 @@ interface PageProps {
 export const revalidate = 10;
 
 export async function generateStaticParams() {
-	const posts = await getListOfPosts().catch(() => [] as PostsResponse[]);
+	const posts = await getListOfPosts();
 
 	return posts.map((post) => ({
 		postId: post.id,
@@ -27,8 +31,8 @@ export async function generateStaticParams() {
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const postId = params.postId;
 	const post = await getPostById(postId);
-	const author = await getAuthorById(post.user);
-	return <PostComponent myPost={post} author={author} />;
+	const postStats = await getPostStatsById(post.id);
+	return <PostComponent myPost={post} postStats={postStats} />;
 };
 
 export default Page;

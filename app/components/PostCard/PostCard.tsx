@@ -20,12 +20,13 @@ import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
 import { PostsResponse } from '@/types/pocketbase-types';
 import PostTags from '../PostTags/PostTags';
+import { PostsExpand } from '@/types/expanded-types';
 
 interface PostCardProps {
 	imgSrc?: string;
 	isExpanded?: boolean;
 	isClickable?: boolean;
-	myPost: PostsResponse;
+	myPost: PostsResponse<PostsExpand>;
 	width?: string | number;
 	href: string;
 }
@@ -102,7 +103,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 								direction="row"
 								justifyContent="space-between"
 							>
-								<PostTags tags={myPost.tags} />
+								<PostTags tags={myPost.expand?.tags} />
 
 								<Stack direction="row">
 									<IconButton

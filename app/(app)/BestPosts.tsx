@@ -3,26 +3,19 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { getListOfPosts } from '@/lib/dbApi';
-import { PostsResponse } from '@/types/pocketbase-types';
 import PostCard from '@/components/PostCard/PostCard';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import React from 'react';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import { getRandomImageUrl } from '@/lib/helper';
+import { getBestPostsOf } from '@/lib/apiHelpers/postsAPI';
 
-export const revalidate = 10;
-
-async function getBestPosts() {
-	const posts = await getListOfPosts().catch((error) => {
-		return [] as PostsResponse[];
-	});
-	return posts;
-}
+export const dynamic = 'force-dynamic';
 
 async function BestPosts() {
-	const posts = await getBestPosts();
+	const posts = await getBestPostsOf('week');
+
 	return (
 		<Box>
 			<Typography variant="h5" fontWeight={700} pb={3}>

@@ -48,19 +48,23 @@ version: "3.7"
 services:
     next:
         depends_on:
-          - pocketbase
+            - pocketbase
         image: zrafaf/educa_utf_nextjs:latest
         restart: unless-stopped
         ports:
-            - 80:3000
-
+            - 3000:3000
     pocketbase:
         image: zrafaf/educa_utf_pocketbase:latest
         restart: unless-stopped
         ports:
             - 8090:8090
         volumes:
-            - "./pocketbase-data:/pb_data"
+            - ./pocketbase_data:/pb/pb_data
+    watchtower:
+        image: containrrr/watchtower
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: --interval 30
 ```
 
 Você pode iniciar os containers com `docker compose up`.

@@ -4,12 +4,13 @@
 // https://opensource.org/licenses/MIT
 
 import { splitStringByComma } from '@/lib/helper';
+import { TagsResponse } from '@/types/pocketbase-types';
 import Chip from '@mui/material/Chip/Chip';
 import Stack from '@mui/material/Stack/Stack';
 import { FunctionComponent } from 'react';
 
 interface PostTagsProps {
-	tags: string;
+	tags: TagsResponse[] | undefined;
 }
 
 const PostTags: FunctionComponent<PostTagsProps> = ({ tags }) => {
@@ -32,9 +33,9 @@ const PostTags: FunctionComponent<PostTagsProps> = ({ tags }) => {
 			pb={1}
 			whiteSpace={'nowrap'}
 		>
-			{tags.length ? (
-				splitStringByComma(tags).map((tag) => (
-					<Chip label={tag} key={`tag_${tag}`} clickable />
+			{tags ? (
+				tags.map((tag) => (
+					<Chip label={tag.name} key={`tag_${tag}`} clickable />
 				))
 			) : (
 				<Chip label={'nada aqui'} variant="outlined" />
