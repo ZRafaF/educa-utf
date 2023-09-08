@@ -67,7 +67,7 @@ async function PostComponent({
 				pb={2}
 			>
 				<Grid xs={20} sm={20} md={20} lg mb={3} pr={2}>
-					<Typography variant="h2" color="primary" fontWeight={700}>
+					<Typography variant="h3" color="primary" fontWeight={700}>
 						{myPost.title}
 					</Typography>
 					<Typography
@@ -79,7 +79,7 @@ async function PostComponent({
 					</Typography>
 				</Grid>
 				<Grid xs={20} sm={20} md={20} lg={5} xl={4}>
-					<PostInfo author={postStats.author_name} myPost={myPost} />
+					<PostInfo postStats={postStats} myPost={myPost} />
 				</Grid>
 			</Grid>
 			<Box mx={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }} pb={5}>

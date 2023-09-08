@@ -31,20 +31,20 @@ export async function getPostStatsById(postId: string) {
 	});
 }
 
-export async function getPostsSorted(qnt: number, sortBy: string = '-created') {
-	try {
-		const response = await pb
-			.collection('posts')
-			.getList<PostsResponse<PostsExpand>>(1, qnt, {
-				sort: sortBy,
-				skipTotal: true,
-			});
-		return response.items;
-	} catch (error) {
-		console.error(error);
-		return [];
-	}
-}
+// export async function getPostsSorted(qnt: number, sortBy: string = '-created') {
+// 	try {
+// 		const response = await pb
+// 			.collection('posts')
+// 			.getList<PostsResponse<PostsExpand>>(1, qnt, {
+// 				sort: sortBy,
+// 				skipTotal: true,
+// 			});
+// 		return response.items;
+// 	} catch (error) {
+// 		console.error(error);
+// 		return [];
+// 	}
+// }
 
 export async function getBestPostsOf(time: 'week' | 'month' | 'year') {
 	try {
@@ -60,6 +60,20 @@ export async function getBestPostsOf(time: 'week' | 'month' | 'year') {
 	}
 }
 
+export async function getNewPosts() {
+	try {
+		const response = await pb
+			.collection('posts')
+			.getList<PostsResponse<PostsExpand>>(1, 8, {
+				sort: '-created',
+				skipTotal: true,
+			});
+		return response.items;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+}
 export async function getPostDocumentUrl(
 	postId: string,
 	postCollectionId: string,

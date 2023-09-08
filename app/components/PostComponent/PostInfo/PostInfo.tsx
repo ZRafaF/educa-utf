@@ -4,11 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import PostTags from '@/components/PostTags/PostTags';
-import {
-	AuthorsResponse,
-	PostsResponse,
-	TagsResponse,
-} from '@/types/pocketbase-types';
+import { PostStatsResponse, PostsResponse } from '@/types/pocketbase-types';
 import Avatar from '@mui/material/Avatar/Avatar';
 import Divider from '@mui/material/Divider/Divider';
 import Box from '@mui/material/Box/Box';
@@ -22,10 +18,10 @@ import { PostsExpand } from '@/types/expanded-types';
 
 interface PostInfoProps {
 	myPost: PostsResponse<PostsExpand>;
-	author: AuthorsResponse;
+	postStats: PostStatsResponse;
 }
 
-const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, author }) => {
+const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {
 	return (
 		<Box
 			sx={{
@@ -60,7 +56,9 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, author }) => {
 						alignItems="center"
 					>
 						<Avatar sx={{ bgcolor: '#427AA1' }}>RF</Avatar>
-						<Typography height={'100%'}>{author.name}</Typography>
+						<Typography height={'100%'}>
+							{postStats.author_name}
+						</Typography>
 					</Stack>
 					<PostTags tags={myPost.expand?.tags} />
 				</Grid>

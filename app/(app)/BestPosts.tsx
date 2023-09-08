@@ -23,7 +23,7 @@ async function BestPosts() {
 			</Typography>
 			<Grid
 				container
-				spacing={2}
+				spacing={1}
 				sx={{
 					justifyContent: {
 						xs: 'center',
@@ -44,6 +44,7 @@ async function BestPosts() {
 						<PostCard
 							myPost={post}
 							href={`/post/${post.id}`}
+							isExpanded={false}
 							imgSrc={getRandomImageUrl()}
 						/>
 					</Grid>

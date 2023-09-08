@@ -17,7 +17,7 @@ interface ChapterCardProps {
 
 const ChapterCard: FunctionComponent<ChapterCardProps> = ({ myChapter }) => {
 	return (
-		<Card sx={{ maxWidth: 345 }}>
+		<Card sx={{ maxWidth: 345, aspectRatio: '3/2' }}>
 			<CardActionArea
 				LinkComponent={Link}
 				href={`chapter/${myChapter.id}`}

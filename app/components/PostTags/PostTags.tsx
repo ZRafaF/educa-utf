@@ -35,7 +35,7 @@ const PostTags: FunctionComponent<PostTagsProps> = ({ tags }) => {
 		>
 			{tags ? (
 				tags.map((tag) => (
-					<Chip label={tag.name} key={`tag_${tag}`} clickable />
+					<Chip label={tag.name} key={`tag_${tag.name}`} clickable />
 				))
 			) : (
 				<Chip label={'nada aqui'} variant="outlined" />
