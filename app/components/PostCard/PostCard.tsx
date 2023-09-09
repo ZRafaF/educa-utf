@@ -19,19 +19,19 @@ import Stack from '@mui/material/Stack/Stack';
 import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
 import { PostsResponse } from '@/types/pocketbase-types';
-import PostTags from '../PostTags/PostTags';
+import TagsComponent from '../TagsComponent/TagsComponent';
 import { PostsExpand } from '@/types/expanded-types';
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import MoreOptions from '../MoreOptions/MoreOptions';
 
 interface PostCardProps {
 	imgSrc?: string;
 	isExpanded?: boolean;
 	isClickable?: boolean;
 	myPost: PostsResponse<PostsExpand>;
-	width?: string | number;
 	href: string;
 }
 
@@ -40,7 +40,6 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	isExpanded = true,
 	isClickable = true,
 	myPost,
-	width,
 	href,
 }) => {
 	const getFormattedDate = (date: string) => {
@@ -86,7 +85,12 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 					<Typography variant="caption">
 						{getFormattedDate(myPost.created)}
 					</Typography>
-					<Stack direction="row" spacing={1} alignItems="center">
+					<Stack
+						direction="row"
+						spacing={1}
+						alignItems="center"
+						justifyContent="center"
+					>
 						<VisibilityIcon color="action" fontSize="small" />
 						<Typography variant="caption">
 							{myPost.views}
@@ -107,14 +111,13 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 			}}
 		>
 			<Stack
-				direction={{ xs: 'column', md: 'row' }}
+				direction="column"
 				justifyContent="space-between"
-				alignItems={{ xs: 'start', md: 'center' }}
-				minHeight={{ xs: 75, md: 55 }}
+				alignItems="start"
+				minHeight={75}
 				useFlexGap
 			>
 				<Typography
-					gutterBottom
 					variant="body1"
 					fontWeight="700"
 					sx={{
@@ -130,9 +133,9 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 					{myPost.title}
 				</Typography>
 				<Stack
-					direction={{ xs: 'row', md: 'column' }}
-					justifyContent={{ xs: 'space-between', md: 'center' }}
-					alignItems={{ xs: 'center', md: 'end' }}
+					direction={'row'}
+					justifyContent={'space-between'}
+					alignItems={'center'}
 					width={'stretch'}
 				>
 					<Typography variant="caption">
@@ -143,6 +146,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 						<Typography variant="caption">
 							{myPost.views}
 						</Typography>
+						<MoreOptions />
 					</Stack>
 				</Stack>
 			</Stack>
@@ -152,7 +156,6 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	return (
 		<Card
 			sx={{
-				width: width,
 				pointerEvents: isClickable ? 'inherit' : 'none',
 			}}
 			variant="outlined"
@@ -182,7 +185,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 								direction="row"
 								justifyContent="space-between"
 							>
-								<PostTags tags={myPost.expand?.tags} />
+								<TagsComponent tags={myPost.expand?.tags} />
 
 								<Stack direction="row">
 									<IconButton

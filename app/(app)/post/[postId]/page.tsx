@@ -9,7 +9,6 @@ import {
 	getPostById,
 	getPostStatsById,
 } from '@/lib/apiHelpers/postsAPI';
-import { PostsResponse } from '@/types/pocketbase-types';
 import { FunctionComponent } from 'react';
 
 interface PageProps {

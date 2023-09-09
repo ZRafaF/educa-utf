@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import PostTags from '@/components/PostTags/PostTags';
+import TagsComponent from '@/components/TagsComponent/TagsComponent';
 import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
 import Avatar from '@mui/material/Avatar/Avatar';
 import Divider from '@mui/material/Divider/Divider';
@@ -60,7 +60,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {
 							{postStats.author_name}
 						</Typography>
 					</Stack>
-					<PostTags tags={myPost.expand?.tags} />
+					<TagsComponent tags={myPost.expand?.tags} />
 				</Grid>
 				<Divider orientation="vertical" flexItem variant="middle" />
 				<Grid xs={2} ml={2}>

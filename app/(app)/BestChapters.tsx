@@ -33,13 +33,13 @@ async function BestChapters() {
 				{chapters.map((chapter, idx) => (
 					<Grid
 						key={`chapter_${idx}`}
-						xs={6}
-						sm={4}
-						md={4}
-						lg={3}
-						xl={3}
+						xs={15}
+						sm={6}
+						md={6}
+						lg={6}
+						xl={4}
 					>
-						<ChapterCard myChapter={chapter} />
+						<ChapterCard myChapter={chapter} idx={idx} />
 					</Grid>
 				))}
 			</Grid>

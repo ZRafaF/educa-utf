@@ -11,4 +11,9 @@ export type PostsExpand = {
 
 export type ChaptersExpand = {
 	posts: PostsResponse[];
+	tags: TagsResponse[];
+};
+
+export type ChaptersExpandTags = {
+	tags: TagsResponse[];
 };

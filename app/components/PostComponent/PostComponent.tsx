@@ -3,11 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import {
-	PostStatsResponse,
-	PostsResponse,
-	UsersResponse,
-} from '@/types/pocketbase-types';
+import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
 import PostContent from './PostContent/PostContent';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
@@ -39,7 +35,7 @@ async function PostComponent({
 	postStats,
 }: {
 	myPost: PostsResponse<PostsExpand>;
-	postStats: PostStatsResponse;
+	postStats: PostsStatsResponse;
 }) {
 	const article = await getArticle(myPost);
 

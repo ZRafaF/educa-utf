@@ -26,7 +26,7 @@ export async function getPostById(id: string) {
 }
 
 export async function getPostStatsById(postId: string) {
-	return pb.collection('post_stats').getOne<PostsStatsResponse>(postId, {
+	return pb.collection('posts_stats').getOne<PostsStatsResponse>(postId, {
 		skipTotal: true,
 	});
 }

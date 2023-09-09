@@ -27,7 +27,7 @@ export const defaultPostResponse: PostsResponse = {
 	visible: true,
 	views: 0,
 	document: 'string',
-	tags: 'string',
+	tags: [],
 	updated: 'IsoDateString',
 	collectionId: 'string',
 	cover: 'string',

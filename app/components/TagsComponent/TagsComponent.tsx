@@ -3,22 +3,22 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { splitStringByComma } from '@/lib/helper';
+'use client';
+
 import { TagsResponse } from '@/types/pocketbase-types';
 import Chip from '@mui/material/Chip/Chip';
 import Stack from '@mui/material/Stack/Stack';
 import { FunctionComponent } from 'react';
 
-interface PostTagsProps {
+interface TagsComponentProps {
 	tags: TagsResponse[] | undefined;
 }
 
-const PostTags: FunctionComponent<PostTagsProps> = ({ tags }) => {
+const TagsComponent: FunctionComponent<TagsComponentProps> = ({ tags }) => {
 	return (
 		<Stack
 			direction="row"
 			sx={{
-				minWidth: 0,
 				overflowX: 'scroll',
 				'::-webkit-scrollbar': {
 					height: '6px',
@@ -31,17 +31,27 @@ const PostTags: FunctionComponent<PostTagsProps> = ({ tags }) => {
 			}}
 			gap={0.5}
 			pb={1}
-			whiteSpace={'nowrap'}
 		>
 			{tags ? (
 				tags.map((tag) => (
-					<Chip label={tag.name} key={`tag_${tag.name}`} clickable />
+					<Chip
+						size="small"
+						label={tag.name}
+						key={`tag_${tag.name}`}
+						clickable
+						onMouseDown={(event) => event.stopPropagation()}
+						onClick={(event) => {
+							event.stopPropagation();
+							event.preventDefault();
+							console.log('Button clicked');
+						}}
+					/>
 				))
 			) : (
-				<Chip label={'nada aqui'} variant="outlined" />
+				<Chip size="small" label={'nada aqui'} variant="outlined" />
 			)}
 		</Stack>
 	);
 };
 
-export default PostTags;
+export default TagsComponent;

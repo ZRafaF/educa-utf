@@ -37,9 +37,9 @@ async function BestPosts() {
 						key={`post_${idx}`}
 						xs={6}
 						sm={4}
-						md={3.5}
-						lg={3}
-						xl={3}
+						md={3.3}
+						lg={2.5}
+						xl={2.5}
 					>
 						<PostCard
 							myPost={post}
