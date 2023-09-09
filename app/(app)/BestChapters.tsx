@@ -8,12 +8,12 @@ import React from 'react';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import ChapterCard from '@/components/ChapterCard/ChapterCard';
-import { getBestChapterOf } from '@/lib/apiHelpers/chaptersAPI';
+import { getBestChaptersOf } from '@/lib/apiHelpers/chaptersAPI';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 10;
 
 async function BestChapters() {
-	const chapters = await getBestChapterOf('month');
+	const chapters = await getBestChaptersOf('month');
 	return (
 		<Box>
 			<Typography variant="h5" fontWeight={700} pb={3}>

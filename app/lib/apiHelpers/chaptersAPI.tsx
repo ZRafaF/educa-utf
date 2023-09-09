@@ -21,7 +21,7 @@ export async function getListOfChapters(expand: boolean = false) {
 	}
 }
 
-export async function getBestChapterOf(time: 'week' | 'month' | 'year') {
+export async function getBestChaptersOf(time: 'week' | 'month' | 'year') {
 	try {
 		return await pb
 			.collection('chapters')
