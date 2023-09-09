@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { PostStatsResponse, PostsResponse } from '@/types/pocketbase-types';
+import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
 import pb from '../PocketBase/pocketbase';
 import { PostsExpand } from '@/types/expanded-types';
 
@@ -26,7 +26,7 @@ export async function getPostById(id: string) {
 }
 
 export async function getPostStatsById(postId: string) {
-	return pb.collection('post_stats').getOne<PostStatsResponse>(postId, {
+	return pb.collection('post_stats').getOne<PostsStatsResponse>(postId, {
 		skipTotal: true,
 	});
 }
@@ -67,6 +67,7 @@ export async function getNewPosts() {
 			.getList<PostsResponse<PostsExpand>>(1, 8, {
 				sort: '-created',
 				skipTotal: true,
+				expand: 'tags',
 			});
 		return response.items;
 	} catch (error) {

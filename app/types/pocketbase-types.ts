@@ -4,9 +4,10 @@
 
 export enum Collections {
 	Chapters = "chapters",
+	ChaptersStats = "chapters_stats",
 	Images = "images",
-	PostStats = "post_stats",
 	Posts = "posts",
+	PostsStats = "posts_stats",
 	Tags = "tags",
 	Users = "users",
 }
@@ -39,22 +40,24 @@ export type ChaptersRecord = {
 	title?: string
 	user?: RecordIdString
 	posts?: RecordIdString[]
-	rating?: number
 	visible?: boolean
 	description?: string
+	tags?: RecordIdString[]
+	views?: number
+}
+
+export type ChaptersStatsRecord = {
+	title?: string
+	likes?: number
+	views?: number
+	author_name: string
+	author_username?: string
+	author_avatar?: string
 }
 
 export type ImagesRecord = {
 	file?: string
 	post?: RecordIdString
-}
-
-export type PostStatsRecord = {
-	title: string
-	number_of_likes?: number
-	author_name: string
-	author_username?: string
-	author_avatar?: string
 }
 
 export type PostsRecord = {
@@ -66,6 +69,15 @@ export type PostsRecord = {
 	cover?: string
 	views?: number
 	tags?: RecordIdString[]
+}
+
+export type PostsStatsRecord = {
+	title: string
+	likes?: number
+	views?: number
+	author_name: string
+	author_username?: string
+	author_avatar?: string
 }
 
 export type TagsRecord = {
@@ -93,15 +105,17 @@ export type UsersRecord = {
 	favorite_posts?: RecordIdString[]
 	favorite_chapters?: RecordIdString[]
 	liked_posts?: RecordIdString[]
+	liked_chapters?: RecordIdString[]
 	course?: string
 	campus?: UsersCampusOptions
 }
 
 // Response types include system fields and match responses from the PocketBase API
 export type ChaptersResponse<Texpand = unknown> = Required<ChaptersRecord> & BaseSystemFields<Texpand>
+export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRecord> & BaseSystemFields<Texpand>
 export type ImagesResponse<Texpand = unknown> = Required<ImagesRecord> & BaseSystemFields<Texpand>
-export type PostStatsResponse<Texpand = unknown> = Required<PostStatsRecord> & BaseSystemFields<Texpand>
 export type PostsResponse<Texpand = unknown> = Required<PostsRecord> & BaseSystemFields<Texpand>
+export type PostsStatsResponse<Texpand = unknown> = Required<PostsStatsRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
@@ -109,18 +123,20 @@ export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSyste
 
 export type CollectionRecords = {
 	chapters: ChaptersRecord
+	chapters_stats: ChaptersStatsRecord
 	images: ImagesRecord
-	post_stats: PostStatsRecord
 	posts: PostsRecord
+	posts_stats: PostsStatsRecord
 	tags: TagsRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
 	chapters: ChaptersResponse
+	chapters_stats: ChaptersStatsResponse
 	images: ImagesResponse
-	post_stats: PostStatsResponse
 	posts: PostsResponse
+	posts_stats: PostsStatsResponse
 	tags: TagsResponse
 	users: UsersResponse
 }

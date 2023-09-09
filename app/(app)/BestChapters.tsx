@@ -13,7 +13,7 @@ import { getBestChapterOf } from '@/lib/apiHelpers/chaptersAPI';
 export const dynamic = 'force-dynamic';
 
 async function BestChapters() {
-	const chapters = await getBestChapterOf('week');
+	const chapters = await getBestChapterOf('month');
 	return (
 		<Box>
 			<Typography variant="h5" fontWeight={700} pb={3}>

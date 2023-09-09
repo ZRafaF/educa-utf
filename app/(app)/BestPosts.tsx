@@ -14,7 +14,7 @@ import { getBestPostsOf } from '@/lib/apiHelpers/postsAPI';
 export const dynamic = 'force-dynamic';
 
 async function BestPosts() {
-	const posts = await getBestPostsOf('week');
+	const posts = await getBestPostsOf('month');
 
 	return (
 		<Box>

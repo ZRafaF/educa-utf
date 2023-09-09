@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import PostTags from '@/components/PostTags/PostTags';
-import { PostStatsResponse, PostsResponse } from '@/types/pocketbase-types';
+import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
 import Avatar from '@mui/material/Avatar/Avatar';
 import Divider from '@mui/material/Divider/Divider';
 import Box from '@mui/material/Box/Box';
@@ -18,7 +18,7 @@ import { PostsExpand } from '@/types/expanded-types';
 
 interface PostInfoProps {
 	myPost: PostsResponse<PostsExpand>;
-	postStats: PostStatsResponse;
+	postStats: PostsStatsResponse;
 }
 
 const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {

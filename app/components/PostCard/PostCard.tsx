@@ -24,6 +24,7 @@ import { PostsExpand } from '@/types/expanded-types';
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface PostCardProps {
 	imgSrc?: string;
@@ -42,7 +43,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	width,
 	href,
 }) => {
-	const getFormattedDate = (date: string, short: boolean) => {
+	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
 
 		return format(parsedDate, 'P', {
@@ -77,9 +78,21 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 					{myPost.title}
 				</Typography>
 
-				<Typography variant="caption">
-					{getFormattedDate(myPost.created, false)}
-				</Typography>
+				<Stack
+					direction="column"
+					justifyContent="center"
+					alignItems="end"
+				>
+					<Typography variant="caption">
+						{getFormattedDate(myPost.created)}
+					</Typography>
+					<Stack direction="row" spacing={1} alignItems="center">
+						<VisibilityIcon color="action" fontSize="small" />
+						<Typography variant="caption">
+							{myPost.views}
+						</Typography>
+					</Stack>
+				</Stack>
 			</Stack>
 			<Typography variant="body2" color="text.secondary">
 				{myPost.description}
@@ -94,10 +107,11 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 			}}
 		>
 			<Stack
-				direction="row"
+				direction={{ xs: 'column', md: 'row' }}
 				justifyContent="space-between"
-				alignItems="center"
-				minHeight={55}
+				alignItems={{ xs: 'start', md: 'center' }}
+				minHeight={{ xs: 75, md: 55 }}
+				useFlexGap
 			>
 				<Typography
 					gutterBottom
@@ -115,9 +129,22 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 				>
 					{myPost.title}
 				</Typography>
-				<Typography variant="caption">
-					{getFormattedDate(myPost.created, true)}
-				</Typography>
+				<Stack
+					direction={{ xs: 'row', md: 'column' }}
+					justifyContent={{ xs: 'space-between', md: 'center' }}
+					alignItems={{ xs: 'center', md: 'end' }}
+					width={'stretch'}
+				>
+					<Typography variant="caption">
+						{getFormattedDate(myPost.created)}
+					</Typography>
+					<Stack direction="row" spacing={1} alignItems="center">
+						<VisibilityIcon color="action" fontSize="small" />
+						<Typography variant="caption">
+							{myPost.views}
+						</Typography>
+					</Stack>
+				</Stack>
 			</Stack>
 		</CardContent>
 	);
