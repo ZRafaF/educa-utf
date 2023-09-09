@@ -12,7 +12,7 @@ import Button from '@mui/material/Button/Button';
 import NewPostsCarousel from './NewPostsCarousel/NewPostsCarousel';
 import { getNewPosts } from '@/lib/apiHelpers/postsAPI';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 30;
 
 async function BannerSomethingNew() {
 	const posts = await getNewPosts();

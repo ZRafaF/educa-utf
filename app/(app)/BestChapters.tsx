@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography/Typography';
 import ChapterCard from '@/components/ChapterCard/ChapterCard';
 import { getBestChaptersOf } from '@/lib/apiHelpers/chaptersAPI';
 
-export const revalidate = 10;
+export const revalidate = 30;
 
 async function BestChapters() {
 	const chapters = await getBestChaptersOf('month');
