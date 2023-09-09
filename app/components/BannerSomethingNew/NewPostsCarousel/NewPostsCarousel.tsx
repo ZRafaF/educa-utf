@@ -19,12 +19,13 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { darkTheme } from '@/components/Themes';
 import { PostsResponse } from '@/types/pocketbase-types';
+import { PostsExpand } from '@/types/expanded-types';
 
 interface CardSlideProps {
 	myId: number;
 	activeId: number;
 	sliderRef: RefObject<SwiperRef>;
-	myPost: PostsResponse;
+	myPost: PostsResponse<PostsExpand>;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
@@ -65,7 +66,7 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 };
 
 interface NewPostsCarouselProps {
-	myPosts: PostsResponse[];
+	myPosts: PostsResponse<PostsExpand>[];
 }
 
 const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({

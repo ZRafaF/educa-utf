@@ -10,22 +10,12 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Button from '@mui/material/Button/Button';
 import NewPostsCarousel from './NewPostsCarousel/NewPostsCarousel';
-import { getSomePostsSorted } from '@/lib/dbApi';
-import { PostsResponse } from '@/types/pocketbase-types';
+import { getNewPosts } from '@/lib/apiHelpers/postsAPI';
 
-export const revalidate = 10;
-
-async function getBestPosts() {
-	const posts = await getSomePostsSorted(8).catch((error) => {
-		console.error(error);
-		return [] as PostsResponse[];
-	});
-
-	return posts as PostsResponse[];
-}
+export const dynamic = 'force-dynamic';
 
 async function BannerSomethingNew() {
-	const posts = await getBestPosts();
+	const posts = await getNewPosts();
 
 	return (
 		<Box

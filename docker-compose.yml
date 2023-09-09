@@ -1,4 +1,4 @@
-version: "3.7"
+version: '3.7'
 
 services:
     next:
@@ -7,7 +7,7 @@ services:
         image: zrafaf/educa_utf_nextjs:latest
         restart: unless-stopped
         ports:
-            - 80:3000
+            - 3000:3000
 
     pocketbase:
         image: zrafaf/educa_utf_pocketbase:latest
@@ -15,10 +15,9 @@ services:
         ports:
             - 8090:8090
         volumes:
-            - "./pocketbase-data:/pb_data"
+            - ./pocketbase_data:/pb/pb_data
     watchtower:
         image: containrrr/watchtower
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-            - /root/.docker/config.json:/config.json
         command: --interval 30

@@ -5,6 +5,18 @@ import BannerSomethingNew from '@/components/BannerSomethingNew/BannerSomethingN
 import BestChapters from './BestChapters';
 import Divider from '@mui/material/Divider/Divider';
 
+/*
+
+
+			<Box
+				mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }}
+				mb={3}
+				gap={4}
+				display={'flex'}
+				flexDirection={'column'}
+			>
+
+*/
 export default function Home() {
 	return (
 		<Box>
@@ -12,13 +24,13 @@ export default function Home() {
 				<BannerSomethingNew />
 			</Suspense>
 
-			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 25 }} mb={3}>
+			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }} mb={3} gap={4}>
 				<Suspense fallback={<Box>Carregando...</Box>}>
 					<BestPosts />
 				</Suspense>
 				<Divider
 					sx={{
-						my: 10,
+						my: 2,
 					}}
 					variant="middle"
 				/>

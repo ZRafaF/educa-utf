@@ -4,20 +4,20 @@
 // https://opensource.org/licenses/MIT
 
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
-import { getChapterById, getListOfChapters } from '@/lib/dbApi';
-import { ChaptersResponse } from '@/types/pocketbase-types';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import Divider from '@mui/material/Divider/Divider';
 import PostsList from './PostsList';
 import React, { ReactNode } from 'react';
 import DrawerController from './DrawerController';
+import {
+	getChapterById,
+	getListOfChapters,
+} from '@/lib/apiHelpers/chaptersAPI';
 export const revalidate = 10;
 
 export async function generateStaticParams() {
-	const chapters = await getListOfChapters().catch((error) => {
-		return [] as ChaptersResponse[];
-	});
+	const chapters = await getListOfChapters();
 
 	return chapters.map((chapter) => ({
 		chapterId: chapter.id,

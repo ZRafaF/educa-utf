@@ -19,14 +19,19 @@ import Stack from '@mui/material/Stack/Stack';
 import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
 import { PostsResponse } from '@/types/pocketbase-types';
-import PostTags from '../PostTags/PostTags';
+import TagsComponent from '../TagsComponent/TagsComponent';
+import { PostsExpand } from '@/types/expanded-types';
+import React from 'react';
+import { format, parseISO } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import MoreOptions from '../MoreOptions/MoreOptions';
 
 interface PostCardProps {
 	imgSrc?: string;
 	isExpanded?: boolean;
 	isClickable?: boolean;
-	myPost: PostsResponse;
-	width?: string | number;
+	myPost: PostsResponse<PostsExpand>;
 	href: string;
 }
 
@@ -35,13 +40,122 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	isExpanded = true,
 	isClickable = true,
 	myPost,
-	width,
 	href,
 }) => {
+	const getFormattedDate = (date: string) => {
+		const parsedDate = parseISO(date);
+
+		return format(parsedDate, 'P', {
+			locale: ptBR,
+		});
+	};
+
+	const ExpandedContent = () => (
+		<CardContent
+			sx={{
+				p: { xs: 1, sm: 1, md: 2 },
+			}}
+		>
+			<Stack
+				direction="row"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Typography
+					gutterBottom
+					variant="h5"
+					sx={{
+						overflow: 'hidden',
+						wordBreak: 'break',
+
+						textOverflow: 'ellipsis',
+						display: '-webkit-box',
+						WebkitLineClamp: '2',
+						WebkitBoxOrient: 'vertical',
+					}}
+				>
+					{myPost.title}
+				</Typography>
+
+				<Stack
+					direction="column"
+					justifyContent="center"
+					alignItems="end"
+				>
+					<Typography variant="caption">
+						{getFormattedDate(myPost.created)}
+					</Typography>
+					<Stack
+						direction="row"
+						spacing={1}
+						alignItems="center"
+						justifyContent="center"
+					>
+						<VisibilityIcon color="action" fontSize="small" />
+						<Typography variant="caption">
+							{myPost.views}
+						</Typography>
+					</Stack>
+				</Stack>
+			</Stack>
+			<Typography variant="body2" color="text.secondary">
+				{myPost.description}
+			</Typography>
+		</CardContent>
+	);
+
+	const CollapsedContent = () => (
+		<CardContent
+			sx={{
+				p: 1,
+			}}
+		>
+			<Stack
+				direction="column"
+				justifyContent="space-between"
+				alignItems="start"
+				minHeight={75}
+				useFlexGap
+			>
+				<Typography
+					variant="body1"
+					fontWeight="700"
+					sx={{
+						overflow: 'hidden',
+						wordBreak: 'break',
+
+						textOverflow: 'ellipsis',
+						display: '-webkit-box',
+						WebkitLineClamp: '2',
+						WebkitBoxOrient: 'vertical',
+					}}
+				>
+					{myPost.title}
+				</Typography>
+				<Stack
+					direction={'row'}
+					justifyContent={'space-between'}
+					alignItems={'center'}
+					width={'stretch'}
+				>
+					<Typography variant="caption">
+						{getFormattedDate(myPost.created)}
+					</Typography>
+					<Stack direction="row" spacing={1} alignItems="center">
+						<VisibilityIcon color="action" fontSize="small" />
+						<Typography variant="caption">
+							{myPost.views}
+						</Typography>
+						<MoreOptions />
+					</Stack>
+				</Stack>
+			</Stack>
+		</CardContent>
+	);
+
 	return (
 		<Card
 			sx={{
-				width: width,
 				pointerEvents: isClickable ? 'inherit' : 'none',
 			}}
 			variant="outlined"
@@ -49,45 +163,14 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 			<CardActionArea LinkComponent={Link} href={href}>
 				<CardMedia
 					component="img"
-					height="150"
+					sx={{
+						aspectRatio: '2.5/1',
+					}}
 					image={imgSrc}
 					alt="green iguana"
 				/>
-				<CardContent sx={{ pb: 0, pt: 1 }}>
-					<Stack direction="row" justifyContent="space-between">
-						<Typography sx={{ fontSize: 14 }}>
-							10 de agosto de 2023
-						</Typography>
-					</Stack>
-				</CardContent>
-				<CardContent
-					sx={{
-						pt: 1,
-					}}
-				>
-					<Typography
-						gutterBottom
-						variant="h5"
-						sx={{
-							overflow: 'hidden',
-							wordBreak: 'break',
 
-							textOverflow: 'ellipsis',
-							display: '-webkit-box',
-							WebkitLineClamp: '2',
-							WebkitBoxOrient: 'vertical',
-						}}
-					>
-						{myPost.title}
-					</Typography>
-					{isExpanded ? (
-						<Typography variant="body2" color="text.secondary">
-							{myPost.description}
-						</Typography>
-					) : (
-						<></>
-					)}
-				</CardContent>
+				{isExpanded ? <ExpandedContent /> : <CollapsedContent />}
 			</CardActionArea>
 			{isExpanded ? (
 				<>
@@ -102,7 +185,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 								direction="row"
 								justifyContent="space-between"
 							>
-								<PostTags tags={myPost.tags} />
+								<TagsComponent tags={myPost.expand?.tags} />
 
 								<Stack direction="row">
 									<IconButton

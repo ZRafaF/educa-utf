@@ -3,19 +3,16 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import {
-	AuthorsResponse,
-	PostsResponse,
-	UsersResponse,
-} from '@/types/pocketbase-types';
+import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
 import PostContent from './PostContent/PostContent';
-import { getPostDocumentUrl } from '@/lib/dbApi';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, parseISO } from 'date-fns';
 import PostInfo from './PostInfo/PostInfo';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
+import { getPostDocumentUrl } from '@/lib/apiHelpers/postsAPI';
+import { PostsExpand } from '@/types/expanded-types';
 
 export const revalidate = 30;
 
@@ -35,10 +32,10 @@ async function getArticle(post: PostsResponse) {
 
 async function PostComponent({
 	myPost,
-	author,
+	postStats,
 }: {
-	myPost: PostsResponse;
-	author: AuthorsResponse;
+	myPost: PostsResponse<PostsExpand>;
+	postStats: PostsStatsResponse;
 }) {
 	const article = await getArticle(myPost);
 
@@ -66,7 +63,7 @@ async function PostComponent({
 				pb={2}
 			>
 				<Grid xs={20} sm={20} md={20} lg mb={3} pr={2}>
-					<Typography variant="h2" color="primary" fontWeight={700}>
+					<Typography variant="h3" color="primary" fontWeight={700}>
 						{myPost.title}
 					</Typography>
 					<Typography
@@ -78,7 +75,7 @@ async function PostComponent({
 					</Typography>
 				</Grid>
 				<Grid xs={20} sm={20} md={20} lg={5} xl={4}>
-					<PostInfo author={author} myPost={myPost} />
+					<PostInfo postStats={postStats} myPost={myPost} />
 				</Grid>
 			</Grid>
 			<Box mx={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }} pb={5}>

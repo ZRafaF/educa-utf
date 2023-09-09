@@ -3,8 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import PostTags from '@/components/PostTags/PostTags';
-import { AuthorsResponse, PostsResponse } from '@/types/pocketbase-types';
+import TagsComponent from '@/components/TagsComponent/TagsComponent';
+import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
 import Avatar from '@mui/material/Avatar/Avatar';
 import Divider from '@mui/material/Divider/Divider';
 import Box from '@mui/material/Box/Box';
@@ -14,13 +14,14 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Stack from '@mui/material/Stack/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { PostsExpand } from '@/types/expanded-types';
 
 interface PostInfoProps {
-	myPost: PostsResponse;
-	author: AuthorsResponse;
+	myPost: PostsResponse<PostsExpand>;
+	postStats: PostsStatsResponse;
 }
 
-const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, author }) => {
+const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {
 	return (
 		<Box
 			sx={{
@@ -55,9 +56,11 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, author }) => {
 						alignItems="center"
 					>
 						<Avatar sx={{ bgcolor: '#427AA1' }}>RF</Avatar>
-						<Typography height={'100%'}>{author.name}</Typography>
+						<Typography height={'100%'}>
+							{postStats.author_name}
+						</Typography>
 					</Stack>
-					<PostTags tags={myPost.tags} />
+					<TagsComponent tags={myPost.expand?.tags} />
 				</Grid>
 				<Divider orientation="vertical" flexItem variant="middle" />
 				<Grid xs={2} ml={2}>
