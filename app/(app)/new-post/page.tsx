@@ -5,6 +5,7 @@
 'use client';
 import PostContent from '@/components/PostComponent/PostContent/PostContent';
 import Button from '@mui/material/Button/Button';
+import Container from '@mui/material/Container/Container';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
@@ -87,7 +88,7 @@ export default function Page() {
 	};
 
 	return (
-		<>
+		<Container maxWidth={false} sx={{ pt: 4, flexGrow: 1 }}>
 			<input
 				type="file"
 				id="file"
@@ -97,13 +98,19 @@ export default function Page() {
 			/>
 
 			<MdEditor
-				style={{ height: '500px' }}
+				style={{
+					display: 'flex',
+					flexGrow: 1,
+					height: '500px',
+					borderRadius: 10,
+					overflow: 'hidden',
+				}}
 				renderHTML={(text) => <PostContent article={text} />}
 				onChange={handleEditorChange}
 				allowPasteImage
 				onImageUpload={handleImageUpload}
 				onCustomImageUpload={onCustomImageUpload}
 			/>
-		</>
+		</Container>
 	);
 }
