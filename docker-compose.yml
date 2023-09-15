@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
     next:
@@ -22,3 +22,15 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         command: --interval 30
+    nginx_proxy:
+        image: jc21/nginx-proxy-manager:latest
+        labels:
+            - 'com.centurylinklabs.watchtower.enable=false' # Disables watchtower auto update
+        restart: unless-stopped
+        ports:
+            - '80:80'
+            - '81:81'
+            - '443:443'
+        volumes:
+            - ./nginx_proxy/data:/data
+            - ./nginx_proxy/letsencrypt:/etc/letsencrypt
