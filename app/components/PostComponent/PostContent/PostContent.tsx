@@ -3,13 +3,15 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+'use client';
+
 import { FunctionComponent } from 'react';
 import Markdown from 'markdown-to-jsx';
 import CustomButton from './CustomButton';
 import './github-markdown.css';
 import Box from '@mui/material/Box/Box';
 //@ts-ignore
-import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 //@ts-ignore
 import { Prism } from 'react-syntax-highlighter';
 
@@ -29,7 +31,7 @@ const CodeBlock = ({
 		lang = className.replace('lang-', '');
 	}
 	return (
-		<Prism language={lang} style={darcula}>
+		<Prism language={lang} style={oneLight} showLineNumbers>
 			{children}
 		</Prism>
 	);
