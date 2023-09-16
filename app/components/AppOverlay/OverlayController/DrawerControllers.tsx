@@ -19,7 +19,6 @@ const Drawer = styled(MuiDrawer, {
 	shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
 	'& .MuiDrawer-paper': {
-		position: 'fixed',
 		whiteSpace: 'nowrap',
 		width: drawerWidth,
 		transition: theme.transitions.create('width', {

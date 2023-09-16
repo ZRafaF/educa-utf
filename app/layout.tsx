@@ -5,8 +5,6 @@
 
 import './globals.css';
 import type { Metadata } from 'next';
-import ToastProvider from '@/components/ToastProvider/ToastProvider';
-import 'react-toastify/dist/ReactToastify.css';
 import AuthProvider from './contexts/AuthProvider';
 import AppOverlay from './components/AppOverlay/AppOverlay';
 import 'swiper/css';
@@ -30,11 +28,9 @@ export default function RootLayout({
 					minHeight: '100vh',
 				}}
 			>
-				<ToastProvider>
-					<AuthProvider>
-						<AppOverlay>{children}</AppOverlay>
-					</AuthProvider>
-				</ToastProvider>
+				<AuthProvider>
+					<AppOverlay>{children}</AppOverlay>
+				</AuthProvider>
 			</body>
 		</html>
 	);

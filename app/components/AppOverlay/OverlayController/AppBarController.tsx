@@ -38,7 +38,13 @@ interface ControllerProps {
 const AppBarController: FunctionComponent<ControllerProps> = ({ children }) => {
 	const [open] = useContext(OverlayControllerContext);
 	return (
-		<AppBar position="absolute" open={open}>
+		<AppBar
+			position="absolute"
+			open={open}
+			sx={{
+				position: 'fixed',
+			}}
+		>
 			{children}
 		</AppBar>
 	);
