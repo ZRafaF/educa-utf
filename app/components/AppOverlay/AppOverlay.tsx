@@ -26,7 +26,7 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<OverlayControllerProvider>
-				<Box sx={{ display: 'flex' }}>
+				<Box>
 					<AppBarController>
 						<Toolbar>
 							<ToggleDrawerButton />
@@ -48,8 +48,6 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 							component="main"
 							sx={{
 								flexGrow: 1,
-								height: '100vh',
-								overflow: 'auto',
 								ml: { xs: 0, sm: 7 },
 							}}
 						>

@@ -8,13 +8,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<>
-			<Box minHeight="100vh" display={'flex'} flexDirection={'column'}>
-				<Toolbar />
-
-				{children}
-			</Box>
-			<AppFooter />
-		</>
+		<Box
+			sx={{
+				minHeight: '100vh',
+			}}
+		>
+			<Toolbar />
+			Browse
+			{children}
+		</Box>
 	);
 }

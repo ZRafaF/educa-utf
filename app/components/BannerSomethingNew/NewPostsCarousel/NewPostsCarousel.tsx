@@ -5,7 +5,6 @@
 'use client';
 
 import PostCard from '@/components/PostCard/PostCard';
-import { defaultPostResponse, getRandomImageUrl } from '@/lib/helper';
 import { FunctionComponent, RefObject, useRef, useState } from 'react';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { Pagination, EffectCoverflow } from 'swiper/modules';

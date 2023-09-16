@@ -14,7 +14,7 @@ import {
 	getChapterById,
 	getListOfChapters,
 } from '@/lib/apiHelpers/chaptersAPI';
-export const revalidate = 10;
+export const revalidate = 30;
 
 export async function generateStaticParams() {
 	const chapters = await getListOfChapters();
@@ -36,28 +36,26 @@ export default async function Layout({
 	const posts = chapter.expand?.posts;
 
 	return (
-		<section>
-			<Grid container minHeight={'90vh'}>
-				<DrawerController>
-					<Paper sx={{ p: 3, my: 2 }}>
-						<Typography
-							variant="h5"
-							fontWeight={700}
-							pb={3}
-							align="center"
-						>
-							{chapter.title}
-						</Typography>
-						<Divider />
-						<Typography color="text.secondary" mt={3}>
-							{chapter.description}
-						</Typography>
-					</Paper>
-					<PostsList posts={posts} chapter={chapter} />
-				</DrawerController>
+		<Grid container flexGrow={1}>
+			<DrawerController>
+				<Paper sx={{ p: 3, my: 2 }}>
+					<Typography
+						variant="h5"
+						fontWeight={700}
+						pb={3}
+						align="center"
+					>
+						{chapter.title}
+					</Typography>
+					<Divider />
+					<Typography color="text.secondary" mt={3}>
+						{chapter.description}
+					</Typography>
+				</Paper>
+				<PostsList posts={posts} chapter={chapter} />
+			</DrawerController>
 
-				<Grid xs>{children}</Grid>
-			</Grid>
-		</section>
+			<Grid xs>{children}</Grid>
+		</Grid>
 	);
 }

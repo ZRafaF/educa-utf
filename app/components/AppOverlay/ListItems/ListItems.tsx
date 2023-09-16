@@ -3,16 +3,16 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from "react";
-import Divider from "@mui/material/Divider/Divider";
-import List from "@mui/material/List/List";
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
-import QueueIcon from "@mui/icons-material/Queue";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import WhatshotIcon from "@mui/icons-material/Whatshot";
-import React from "react";
-import LinkItem from "@/components/AppOverlay/LinkItem/LinkItem";
+import { FunctionComponent } from 'react';
+import Divider from '@mui/material/Divider/Divider';
+import List from '@mui/material/List/List';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import QueueIcon from '@mui/icons-material/Queue';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
+import React from 'react';
+import LinkItem from '@/components/AppOverlay/LinkItem/LinkItem';
 
 interface ListItemsProps {}
 
@@ -30,13 +30,13 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					title="Posts"
 					tooltip="Todos os posts"
 					icon={<AutoStoriesIcon />}
-					href="/posts"
+					href="/browse/posts"
 				/>
 				<LinkItem
 					title="Capítulos"
 					tooltip="Todos as capítulos"
 					icon={<LibraryBooksIcon />}
-					href="/chapters"
+					href="/browse/chapters"
 				/>
 			</List>
 			<Divider />

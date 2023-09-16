@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography/Typography';
 import { getRandomImageUrl } from '@/lib/helper';
 import { getBestPostsOf } from '@/lib/apiHelpers/postsAPI';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 30;
 
 async function BestPosts() {
 	const posts = await getBestPostsOf('month');

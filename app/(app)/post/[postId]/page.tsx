@@ -17,7 +17,7 @@ interface PageProps {
 	};
 }
 
-export const revalidate = 10;
+export const revalidate = 30;
 
 export async function generateStaticParams() {
 	const posts = await getListOfPosts();

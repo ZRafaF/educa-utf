@@ -5,18 +5,8 @@ import BannerSomethingNew from '@/components/BannerSomethingNew/BannerSomethingN
 import BestChapters from './BestChapters';
 import Divider from '@mui/material/Divider/Divider';
 
-/*
+export const revalidate = 30;
 
-
-			<Box
-				mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }}
-				mb={3}
-				gap={4}
-				display={'flex'}
-				flexDirection={'column'}
-			>
-
-*/
 export default function Home() {
 	return (
 		<Box>
