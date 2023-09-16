@@ -213,7 +213,7 @@ export default function Page() {
 				style={{
 					display: 'flex',
 					flexGrow: 1,
-					height: '500px',
+					height: '90vh',
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}

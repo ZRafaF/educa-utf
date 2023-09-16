@@ -5,8 +5,8 @@
 'use client';
 
 import PostCard from '@/components/PostCard/PostCard';
-import { FunctionComponent, RefObject, useRef, useState } from 'react';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { FunctionComponent, RefObject, useRef } from 'react';
+import { Swiper, SwiperRef, SwiperSlide, useSwiperSlide } from 'swiper/react';
 import { Pagination, EffectCoverflow } from 'swiper/modules';
 import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
@@ -19,21 +19,20 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { darkTheme } from '@/components/Themes';
 import { PostsResponse } from '@/types/pocketbase-types';
 import { PostsExpand } from '@/types/expanded-types';
+import Box from '@mui/material/Box/Box';
 
 interface CardSlideProps {
 	myId: number;
-	activeId: number;
 	sliderRef: RefObject<SwiperRef>;
 	myPost: PostsResponse<PostsExpand>;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
 	myId,
-	activeId,
 	sliderRef,
 	myPost,
 }) => {
-	const imActive = myId == activeId;
+	const imActive = useSwiperSlide().isActive;
 
 	return (
 		<>
@@ -76,11 +75,10 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 	const isSmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 	const isMediumScreen = useMediaQuery(theme.breakpoints.only('md'));
 	const isLargeScreen = useMediaQuery(theme.breakpoints.only('lg'));
-	const [currentId, setCurrentId] = useState<number>(0);
 	const sliderRef = useRef<SwiperRef>(null);
 
 	return (
-		<div
+		<Box
 			style={{
 				position: 'relative',
 			}}
@@ -113,13 +111,6 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 				preventClicksPropagation={false}
 				preventClicks={false}
 				speed={750}
-				onSlideChange={(swiper) => {
-					if (swiper.realIndex == myPosts.length) {
-						setCurrentId(0);
-						return;
-					}
-					setCurrentId(swiper.realIndex);
-				}}
 				style={{
 					paddingBottom: '75px',
 				}}
@@ -140,7 +131,6 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 					<SwiperSlide key={'slider_' + idx}>
 						<CardSlide
 							myId={idx}
-							activeId={currentId}
 							sliderRef={sliderRef}
 							myPost={post}
 						/>
@@ -199,7 +189,7 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 					</Stack>
 				</Grid>
 			</ThemeProvider>
-		</div>
+		</Box>
 	);
 };
 
