@@ -4,9 +4,8 @@
 // https://opensource.org/licenses/MIT
 'use client';
 import PostContent from '@/components/PostComponent/PostContent/PostContent';
-import Button from '@mui/material/Button/Button';
 import Container from '@mui/material/Container/Container';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
@@ -96,7 +95,6 @@ export default function Page() {
 				style={{ display: 'none' }}
 				onChange={handleFileChange}
 			/>
-
 			<MdEditor
 				style={{
 					display: 'flex',
@@ -105,7 +103,9 @@ export default function Page() {
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
-				renderHTML={(text) => <PostContent article={text} />}
+				renderHTML={(text) => (
+					<PostContent article={text} ssr={false} />
+				)}
 				onChange={handleEditorChange}
 				allowPasteImage
 				onImageUpload={handleImageUpload}

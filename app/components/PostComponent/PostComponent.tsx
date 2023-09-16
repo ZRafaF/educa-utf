@@ -74,7 +74,7 @@ async function PostComponent({
 						{getFormattedDate(myPost.created)}
 					</Typography>
 				</Grid>
-				<Grid xs={20} sm={20} md={20} lg={5} xl={4}>
+				<Grid xs={20} sm={20} md={20} lg={5} xl={5}>
 					<PostInfo postStats={postStats} myPost={myPost} />
 				</Grid>
 			</Grid>
