@@ -73,7 +73,9 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {
 						</Stack>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<FavoriteIcon color="action" />
-							<Typography variant="subtitle2">{25}</Typography>
+							<Typography variant="subtitle2">
+								{postStats.likes}
+							</Typography>
 						</Stack>
 					</Stack>
 				</Grid>
