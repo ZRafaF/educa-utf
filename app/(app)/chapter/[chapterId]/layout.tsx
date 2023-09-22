@@ -7,7 +7,7 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import Divider from '@mui/material/Divider/Divider';
-import PostsList from './PostsList';
+import ArticlesList from './ArticlesList';
 import React, { ReactNode } from 'react';
 import DrawerController from './DrawerController';
 import {
@@ -33,7 +33,7 @@ export default async function Layout({
 }) {
 	const chapterId = params.chapterId;
 	const chapter = await getChapterById(chapterId, true);
-	const posts = chapter.expand?.posts;
+	const articles = chapter.expand?.articles;
 
 	return (
 		<Grid container flexGrow={1}>
@@ -52,7 +52,7 @@ export default async function Layout({
 						{chapter.description}
 					</Typography>
 				</Paper>
-				<PostsList posts={posts} chapter={chapter} />
+				<ArticlesList articles={articles} chapter={chapter} />
 			</DrawerController>
 
 			<Grid xs>{children}</Grid>
