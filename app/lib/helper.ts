@@ -31,7 +31,7 @@ export const defaultPostResponse: ArticlesResponse = {
 	updated: 'IsoDateString',
 	collectionId: 'string',
 	cover: 'string',
-	collectionName: Collections.Posts,
+	collectionName: Collections.Articles,
 };
 
 export const getRandomImageUrl = () => {

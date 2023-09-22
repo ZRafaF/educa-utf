@@ -48,7 +48,7 @@ const DrawerController: FunctionComponent<ControllerProps> = ({ children }) => {
 
 	useEffect(() => {
 		setOpen(false);
-	}, [pathname]);
+	}, [pathname, setOpen]);
 
 	return (
 		<Drawer variant="permanent" open={open}>
