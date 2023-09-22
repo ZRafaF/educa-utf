@@ -7,12 +7,16 @@ import './globals.css';
 import type { Metadata } from 'next';
 import AuthProvider from './contexts/AuthProvider';
 import AppOverlay from './components/AppOverlay/AppOverlay';
+import educaUtfIcon from './resources/logo-icon.png';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 export const metadata: Metadata = {
 	title: 'Educa UTF',
 	description: 'Web aplicação feita por alunos para alunos.',
+	icons: {
+		icon: '/logo-icon.png',
+	},
 };
 
 export default function RootLayout({

@@ -13,13 +13,13 @@ import { getBestArticlesOf } from '@/lib/apiHelpers/articlesAPI';
 
 export const revalidate = 30;
 
-async function BestPosts() {
-	const posts = await getBestArticlesOf('month');
+async function BestArticles() {
+	const articles = await getBestArticlesOf('month');
 
 	return (
 		<Box>
 			<Typography variant="h5" fontWeight={700} pb={3}>
-				Os melhores posts do mês
+				Os melhores artigos do mês
 			</Typography>
 			<Grid
 				container
@@ -27,14 +27,15 @@ async function BestPosts() {
 				sx={{
 					justifyContent: {
 						xs: 'center',
-						sm: 'center',
-						lg: 'left',
+						sm: 'left',
+						md: 'space-between',
+						lg: 'space-between',
 					},
 				}}
 			>
-				{posts.map((post, idx) => (
+				{articles.map((article, idx) => (
 					<Grid
-						key={`post_${idx}`}
+						key={`article_${idx}`}
 						xs={6}
 						sm={4}
 						md={3.3}
@@ -42,8 +43,8 @@ async function BestPosts() {
 						xl={2.5}
 					>
 						<ArticleCard
-							myArticle={post}
-							href={`/article/${post.id}`}
+							myArticle={article}
+							href={`/article/${article.id}`}
 							isExpanded={false}
 							imgSrc={getRandomImageUrl()}
 						/>
@@ -54,4 +55,4 @@ async function BestPosts() {
 	);
 }
 
-export default BestPosts;
+export default BestArticles;

@@ -63,11 +63,11 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 	);
 };
 
-interface NewPostsCarouselProps {
+interface NewArticlesCarouselProps {
 	myArticles: ArticlesResponse<ArticlesExpand>[];
 }
 
-const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
+const NewArticlesCarousel: FunctionComponent<NewArticlesCarouselProps> = ({
 	myArticles,
 }) => {
 	const theme = useTheme();
@@ -193,4 +193,4 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 	);
 };
 
-export default NewPostsCarousel;
+export default NewArticlesCarousel;

@@ -9,7 +9,7 @@ import { darkTheme } from '../Themes';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Button from '@mui/material/Button/Button';
-import NewPostsCarousel from './NewPostsCarousel/NewPostsCarousel';
+import NewArticlesCarousel from './NewArticlesCarousel/NewArticlesCarousel';
 import { getNewArticles } from '@/lib/apiHelpers/articlesAPI';
 
 export const revalidate = 300;
@@ -65,7 +65,7 @@ async function BannerSomethingNew() {
 					</ThemeProvider>
 				</Grid>
 				<Grid sm={20} md pt={6}>
-					<NewPostsCarousel myArticles={posts} />
+					<NewArticlesCarousel myArticles={posts} />
 				</Grid>
 			</Grid>
 		</Box>
