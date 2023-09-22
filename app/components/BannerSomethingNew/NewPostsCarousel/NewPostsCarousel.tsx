@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import PostCard from '@/components/PostCard/PostCard';
+import ArticleCard from '@/components/ArticleCard/ArticleCard';
 import { FunctionComponent, RefObject, useRef } from 'react';
 import { Swiper, SwiperRef, SwiperSlide, useSwiperSlide } from 'swiper/react';
 import { Pagination, EffectCoverflow } from 'swiper/modules';
@@ -17,20 +17,20 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton/IconButton';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { darkTheme } from '@/components/Themes';
-import { PostsResponse } from '@/types/pocketbase-types';
-import { PostsExpand } from '@/types/expanded-types';
+import { ArticlesResponse } from '@/types/pocketbase-types';
+import { ArticlesExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
 
 interface CardSlideProps {
 	myId: number;
 	sliderRef: RefObject<SwiperRef>;
-	myPost: PostsResponse<PostsExpand>;
+	myArticle: ArticlesResponse<ArticlesExpand>;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
 	myId,
 	sliderRef,
-	myPost,
+	myArticle,
 }) => {
 	const imActive = useSwiperSlide().isActive;
 
@@ -41,11 +41,11 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 					sliderRef.current?.swiper.slideTo(myId);
 				}}
 			>
-				<PostCard
-					myPost={myPost}
+				<ArticleCard
+					myArticle={myArticle}
 					isExpanded={true}
 					isClickable={imActive}
-					href={`/post/${myPost.id}`}
+					href={`/article/${myArticle.id}`}
 				/>
 				<div
 					style={{
@@ -64,11 +64,11 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 };
 
 interface NewPostsCarouselProps {
-	myPosts: PostsResponse<PostsExpand>[];
+	myArticles: ArticlesResponse<ArticlesExpand>[];
 }
 
 const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
-	myPosts,
+	myArticles,
 }) => {
 	const theme = useTheme();
 	const isExtraSmallScreen = useMediaQuery(theme.breakpoints.only('xs'));
@@ -127,12 +127,12 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 				}}
 				ref={sliderRef}
 			>
-				{myPosts.map((post, idx) => (
+				{myArticles.map((post, idx) => (
 					<SwiperSlide key={'slider_' + idx}>
 						<CardSlide
 							myId={idx}
 							sliderRef={sliderRef}
-							myPost={post}
+							myArticle={post}
 						/>
 					</SwiperSlide>
 				))}

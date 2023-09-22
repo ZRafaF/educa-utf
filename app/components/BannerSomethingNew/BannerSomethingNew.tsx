@@ -10,12 +10,12 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Button from '@mui/material/Button/Button';
 import NewPostsCarousel from './NewPostsCarousel/NewPostsCarousel';
-import { getNewPosts } from '@/lib/apiHelpers/postsAPI';
+import { getNewArticles } from '@/lib/apiHelpers/articlesAPI';
 
 export const revalidate = 300;
 
 async function BannerSomethingNew() {
-	const posts = await getNewPosts();
+	const posts = await getNewArticles();
 
 	return (
 		<Box
@@ -65,7 +65,7 @@ async function BannerSomethingNew() {
 					</ThemeProvider>
 				</Grid>
 				<Grid sm={20} md pt={6}>
-					<NewPostsCarousel myPosts={posts} />
+					<NewPostsCarousel myArticles={posts} />
 				</Grid>
 			</Grid>
 		</Box>

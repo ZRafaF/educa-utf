@@ -3,18 +3,18 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import PostCard from '@/components/PostCard/PostCard';
+import ArticleCard from '@/components/ArticleCard/ArticleCard';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import React from 'react';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import { getRandomImageUrl } from '@/lib/helper';
-import { getBestPostsOf } from '@/lib/apiHelpers/postsAPI';
+import { getBestArticlesOf } from '@/lib/apiHelpers/articlesAPI';
 
 export const revalidate = 30;
 
 async function BestPosts() {
-	const posts = await getBestPostsOf('month');
+	const posts = await getBestArticlesOf('month');
 
 	return (
 		<Box>
@@ -41,9 +41,9 @@ async function BestPosts() {
 						lg={2.5}
 						xl={2.5}
 					>
-						<PostCard
-							myPost={post}
-							href={`/post/${post.id}`}
+						<ArticleCard
+							myArticle={post}
+							href={`/article/${post.id}`}
 							isExpanded={false}
 							imgSrc={getRandomImageUrl()}
 						/>

@@ -18,28 +18,28 @@ import Divider from '@mui/material/Divider/Divider';
 import Stack from '@mui/material/Stack/Stack';
 import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
-import { PostsResponse } from '@/types/pocketbase-types';
+import { ArticlesResponse } from '@/types/pocketbase-types';
 import TagsComponent from '../TagsComponent/TagsComponent';
-import { PostsExpand } from '@/types/expanded-types';
+import { ArticlesExpand } from '@/types/expanded-types';
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoreOptions from '../MoreOptions/MoreOptions';
 
-interface PostCardProps {
+interface ArticleCardProps {
 	imgSrc?: string;
 	isExpanded?: boolean;
 	isClickable?: boolean;
-	myPost: PostsResponse<PostsExpand>;
+	myArticle: ArticlesResponse<ArticlesExpand>;
 	href: string;
 }
 
-const PostCard: FunctionComponent<PostCardProps> = ({
+const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 	imgSrc = contemplativeReptile.src,
 	isExpanded = true,
 	isClickable = true,
-	myPost,
+	myArticle,
 	href,
 }) => {
 	const getFormattedDate = (date: string) => {
@@ -74,7 +74,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 						WebkitBoxOrient: 'vertical',
 					}}
 				>
-					{myPost.title}
+					{myArticle.title}
 				</Typography>
 
 				<Stack
@@ -83,7 +83,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 					alignItems="end"
 				>
 					<Typography variant="caption">
-						{getFormattedDate(myPost.created)}
+						{getFormattedDate(myArticle.created)}
 					</Typography>
 					<Stack
 						direction="row"
@@ -93,13 +93,13 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 					>
 						<VisibilityIcon color="action" fontSize="small" />
 						<Typography variant="caption">
-							{myPost.views}
+							{myArticle.views}
 						</Typography>
 					</Stack>
 				</Stack>
 			</Stack>
 			<Typography variant="body2" color="text.secondary">
-				{myPost.description}
+				{myArticle.description}
 			</Typography>
 		</CardContent>
 	);
@@ -130,7 +130,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 						WebkitBoxOrient: 'vertical',
 					}}
 				>
-					{myPost.title}
+					{myArticle.title}
 				</Typography>
 				<Stack
 					direction={'row'}
@@ -139,12 +139,12 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 					width={'stretch'}
 				>
 					<Typography variant="caption">
-						{getFormattedDate(myPost.created)}
+						{getFormattedDate(myArticle.created)}
 					</Typography>
 					<Stack direction="row" spacing={1} alignItems="center">
 						<VisibilityIcon color="action" fontSize="small" />
 						<Typography variant="caption">
-							{myPost.views}
+							{myArticle.views}
 						</Typography>
 						<MoreOptions />
 					</Stack>
@@ -185,7 +185,7 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 								direction="row"
 								justifyContent="space-between"
 							>
-								<TagsComponent tags={myPost.expand?.tags} />
+								<TagsComponent tags={myArticle.expand?.tags} />
 
 								<Stack direction="row">
 									<IconButton
@@ -215,4 +215,4 @@ const PostCard: FunctionComponent<PostCardProps> = ({
 	);
 };
 
-export default PostCard;
+export default ArticleCard;

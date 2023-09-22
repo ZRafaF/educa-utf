@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 'use client';
-import PostContent from '@/components/PostComponent/PostContent/PostContent';
+import ArticleContent from '@/components/ArticleComponent/ArticleContent/ArticleContent';
 import Container from '@mui/material/Container/Container';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
@@ -218,7 +218,7 @@ export default function Page() {
 					overflow: 'hidden',
 				}}
 				renderHTML={(text) => (
-					<PostContent article={text} ssr={false} />
+					<ArticleContent article={text} ssr={false} />
 				)}
 				onChange={handleEditorChange}
 				allowPasteImage

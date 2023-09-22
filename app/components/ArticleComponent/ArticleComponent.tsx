@@ -3,25 +3,28 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
-import PostContent from './PostContent/PostContent';
+import {
+	ArticleStatsResponse,
+	ArticlesResponse,
+} from '@/types/pocketbase-types';
+import ArticleContent from './ArticleContent/ArticleContent';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, parseISO } from 'date-fns';
 import PostInfo from './PostInfo/PostInfo';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
-import { getPostDocumentUrl } from '@/lib/apiHelpers/postsAPI';
-import { PostsExpand } from '@/types/expanded-types';
+import { getArticleDocumentUrl } from '@/lib/apiHelpers/articlesAPI';
+import { ArticlesExpand } from '@/types/expanded-types';
 
 export const revalidate = 30;
 
-async function getArticle(post: PostsResponse) {
-	const markDownContent = await getPostDocumentUrl(
-		post.id,
-		post.collectionId,
-		post.collectionName,
-		post.document
+async function getArticle(article: ArticlesResponse) {
+	const markDownContent = await getArticleDocumentUrl(
+		article.id,
+		article.collectionId,
+		article.collectionName,
+		article.document
 	);
 	try {
 		return await fetch(markDownContent).then((response) => response.text());
@@ -30,14 +33,14 @@ async function getArticle(post: PostsResponse) {
 	}
 }
 
-async function PostComponent({
-	myPost,
-	postStats,
+async function ArticleComponent({
+	myArticle,
+	articleStats,
 }: {
-	myPost: PostsResponse<PostsExpand>;
-	postStats: PostsStatsResponse;
+	myArticle: ArticlesResponse<ArticlesExpand>;
+	articleStats: ArticleStatsResponse;
 }) {
-	const article = await getArticle(myPost);
+	const article = await getArticle(myArticle);
 
 	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
@@ -64,25 +67,28 @@ async function PostComponent({
 			>
 				<Grid xs={20} sm={20} md={20} lg mb={3} pr={2}>
 					<Typography variant="h3" color="primary" fontWeight={700}>
-						{myPost.title}
+						{myArticle.title}
 					</Typography>
 					<Typography
 						color="text.secondary"
 						variant="subtitle2"
 						gutterBottom
 					>
-						{getFormattedDate(myPost.created)}
+						{getFormattedDate(myArticle.created)}
 					</Typography>
 				</Grid>
 				<Grid xs={20} sm={20} md={20} lg={5} xl={5}>
-					<PostInfo postStats={postStats} myPost={myPost} />
+					<PostInfo
+						articleStats={articleStats}
+						myArticle={myArticle}
+					/>
 				</Grid>
 			</Grid>
 			<Box mx={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }} pb={5}>
-				<PostContent article={article} />
+				<ArticleContent article={article} />
 			</Box>
 		</Box>
 	);
 }
 
-export default PostComponent;
+export default ArticleComponent;

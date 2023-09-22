@@ -27,14 +27,14 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					href="/"
 				/>
 				<LinkItem
-					title="Posts"
-					tooltip="Todos os posts"
+					title="Artigos"
+					tooltip="Todos os artigos"
 					icon={<AutoStoriesIcon />}
 					href="/browse/posts"
 				/>
 				<LinkItem
 					title="Capítulos"
-					tooltip="Todos as capítulos"
+					tooltip="Todos os capítulos"
 					icon={<LibraryBooksIcon />}
 					href="/browse/chapters"
 				/>
@@ -43,12 +43,12 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 			<List>
 				<LinkItem
 					title="Novo post"
-					tooltip="Criar novo post"
+					tooltip="Criar novo artigo"
 					icon={<NoteAddIcon />}
 					href="/new-post"
 				/>
 				<LinkItem
-					title="Nova capítulo"
+					title="Novo capítulo"
 					tooltip="Criar novo capítulo"
 					icon={<QueueIcon />}
 					href="/new-chapter"
