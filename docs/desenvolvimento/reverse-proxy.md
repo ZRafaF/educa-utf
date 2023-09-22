@@ -33,6 +33,7 @@ Ao selecionar *`Add SSL Certificate`* e *`Custom`* você será apresentado a seg
 ![Alt text](../resources/sslcert.png)
 
 Os arquivos relacionados ao certificado são:
+
 * `*.key`: Deverá ser inserido no campo `Certificate key`, atenção essa é uma chave **PRIVADA**;
 * `*.cer`: Deverá ser inserido no campo `Certificate`;
 * `*.pem`: Deverá ser inserido no campo `Intermediate Certificate`;

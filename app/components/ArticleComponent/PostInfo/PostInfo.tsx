@@ -4,7 +4,10 @@
 // https://opensource.org/licenses/MIT
 
 import TagsComponent from '@/components/TagsComponent/TagsComponent';
-import { PostsStatsResponse, PostsResponse } from '@/types/pocketbase-types';
+import {
+	ArticleStatsResponse,
+	ArticlesResponse,
+} from '@/types/pocketbase-types';
 import Avatar from '@mui/material/Avatar/Avatar';
 import Divider from '@mui/material/Divider/Divider';
 import Box from '@mui/material/Box/Box';
@@ -14,14 +17,17 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Stack from '@mui/material/Stack/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { PostsExpand } from '@/types/expanded-types';
+import { ArticlesExpand } from '@/types/expanded-types';
 
 interface PostInfoProps {
-	myPost: PostsResponse<PostsExpand>;
-	postStats: PostsStatsResponse;
+	myArticle: ArticlesResponse<ArticlesExpand>;
+	articleStats: ArticleStatsResponse;
 }
 
-const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {
+const PostInfo: FunctionComponent<PostInfoProps> = ({
+	myArticle,
+	articleStats,
+}) => {
 	return (
 		<Box
 			sx={{
@@ -57,10 +63,10 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {
 					>
 						<Avatar sx={{ bgcolor: '#427AA1' }}>RF</Avatar>
 						<Typography height={'100%'}>
-							{postStats.author_name}
+							{articleStats.author_name}
 						</Typography>
 					</Stack>
-					<TagsComponent tags={myPost.expand?.tags} />
+					<TagsComponent tags={myArticle.expand?.tags} />
 				</Grid>
 				<Divider orientation="vertical" flexItem variant="middle" />
 				<Grid xs={2} ml={2}>
@@ -68,13 +74,13 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({ myPost, postStats }) => {
 						<Stack direction="row" spacing={1} alignItems="center">
 							<VisibilityIcon color="action" />
 							<Typography variant="subtitle2">
-								{myPost.views}
+								{myArticle.views}
 							</Typography>
 						</Stack>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<FavoriteIcon color="action" />
 							<Typography variant="subtitle2">
-								{postStats.likes}
+								{articleStats.likes}
 							</Typography>
 						</Stack>
 					</Stack>

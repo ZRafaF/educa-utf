@@ -9,12 +9,12 @@ import Box from '@mui/material/Box/Box';
 import MdRendererAsync from './MdRenderer/MdRendererAsync';
 import MdRenderer from './MdRenderer/MdRenderer';
 
-interface PostContentProps {
+interface ArticleContentProps {
 	article: string;
 	ssr?: boolean;
 }
 
-const PostContent: FunctionComponent<PostContentProps> = ({
+const ArticleContent: FunctionComponent<ArticleContentProps> = ({
 	article,
 	ssr = true,
 }) => {
@@ -29,4 +29,4 @@ const PostContent: FunctionComponent<PostContentProps> = ({
 	);
 };
 
-export default PostContent;
+export default ArticleContent;

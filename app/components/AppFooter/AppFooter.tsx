@@ -3,26 +3,27 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import Box from "@mui/material/Box/Box";
-import Paper from "@mui/material/Paper/Paper";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import { FunctionComponent } from "react";
-import { darkTheme } from "../Themes";
-import Container from "@mui/material/Container/Container";
-import Stack from "@mui/material/Stack/Stack";
-import Tooltip from "@mui/material/Tooltip/Tooltip";
-import IconButton from "@mui/material/IconButton/IconButton";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import Typography from "@mui/material/Typography/Typography";
+import Box from '@mui/material/Box/Box';
+import Paper from '@mui/material/Paper/Paper';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { FunctionComponent } from 'react';
+import { darkTheme } from '../Themes';
+import Container from '@mui/material/Container/Container';
+import Stack from '@mui/material/Stack/Stack';
+import Tooltip from '@mui/material/Tooltip/Tooltip';
+import IconButton from '@mui/material/IconButton/IconButton';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Typography from '@mui/material/Typography/Typography';
+import DockerIcon from '../CustomIcons/DockerIcon';
 
 function Copyright() {
 	return (
 		<Typography variant="body2" color="text.secondary">
-			{"Copyright © Rafael F. Meneses "}
+			{'Copyright © Rafael F. Meneses '}
 
 			{new Date().getFullYear()}
-			{"."}
+			{'.'}
 		</Typography>
 	);
 }
@@ -37,7 +38,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 				elevation={0}
 				square
 				sx={{
-					marginTop: "auto",
+					marginTop: 'auto',
 					py: { xs: 2, sm: 3, md: 4 },
 				}}
 			>
@@ -65,6 +66,15 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 									target="_blank"
 								>
 									<MenuBookIcon />
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Repositório no DockerHub">
+								<IconButton
+									aria-label="DockerHub-link"
+									href="https://hub.docker.com/r/zrafaf/educa_utf_nextjs"
+									target="_blank"
+								>
+									<DockerIcon />
 								</IconButton>
 							</Tooltip>
 						</Stack>

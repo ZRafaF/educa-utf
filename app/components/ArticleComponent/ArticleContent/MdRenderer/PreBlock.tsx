@@ -6,7 +6,7 @@
 'use client';
 
 //@ts-ignore
-import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneDark as theme } from 'react-syntax-highlighter/dist/esm/styles/prism';
 //@ts-ignore
 import { Prism } from 'react-syntax-highlighter';
 
@@ -33,16 +33,7 @@ const PreBlock = ({ children, ...rest }: { rest: any; children: any }) => {
 	if ('type' in children && children['type'] === 'code') {
 		return CodeBlock(children['props']);
 	}
-	return (
-		<pre
-			{...rest}
-			style={{
-				borderRadius: '10px !important',
-			}}
-		>
-			{children}
-		</pre>
-	);
+	return <pre {...rest}>{children}</pre>;
 };
 
 export default PreBlock;

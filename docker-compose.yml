@@ -16,12 +16,14 @@ services:
             - 8090:8090
         volumes:
             - ./pocketbase_data:/pb/pb_data
+
     watchtower:
         image: containrrr/watchtower
         restart: unless-stopped
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         command: --interval 30
+
     nginx_proxy:
         image: jc21/nginx-proxy-manager:latest
         labels:
@@ -34,3 +36,15 @@ services:
         volumes:
             - ./nginx_proxy/data:/data
             - ./nginx_proxy/letsencrypt:/etc/letsencrypt
+
+    # Runs on port 61208
+    glances:
+        image: nicolargo/glances:latest-full
+        pid: host
+        network_mode: host
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
+        environment:
+            - 'GLANCES_OPT=-w'

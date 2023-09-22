@@ -1,4 +1,4 @@
-import BestPosts from './BestPosts';
+import BestArticles from './BestArticles';
 import { Suspense } from 'react';
 import Box from '@mui/material/Box/Box';
 import BannerSomethingNew from '@/components/BannerSomethingNew/BannerSomethingNew';
@@ -16,7 +16,7 @@ export default function Home() {
 
 			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }} mb={3} gap={4}>
 				<Suspense fallback={<Box>Carregando...</Box>}>
-					<BestPosts />
+					<BestArticles />
 				</Suspense>
 				<Divider
 					sx={{

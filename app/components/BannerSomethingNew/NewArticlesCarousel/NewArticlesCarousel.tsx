@@ -4,9 +4,9 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import PostCard from '@/components/PostCard/PostCard';
-import { FunctionComponent, RefObject, useRef, useState } from 'react';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import ArticleCard from '@/components/ArticleCard/ArticleCard';
+import { FunctionComponent, RefObject, useRef } from 'react';
+import { Swiper, SwiperRef, SwiperSlide, useSwiperSlide } from 'swiper/react';
 import { Pagination, EffectCoverflow } from 'swiper/modules';
 import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
@@ -17,23 +17,22 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton/IconButton';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { darkTheme } from '@/components/Themes';
-import { PostsResponse } from '@/types/pocketbase-types';
-import { PostsExpand } from '@/types/expanded-types';
+import { ArticlesResponse } from '@/types/pocketbase-types';
+import { ArticlesExpand } from '@/types/expanded-types';
+import Box from '@mui/material/Box/Box';
 
 interface CardSlideProps {
 	myId: number;
-	activeId: number;
 	sliderRef: RefObject<SwiperRef>;
-	myPost: PostsResponse<PostsExpand>;
+	myArticle: ArticlesResponse<ArticlesExpand>;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
 	myId,
-	activeId,
 	sliderRef,
-	myPost,
+	myArticle,
 }) => {
-	const imActive = myId == activeId;
+	const imActive = useSwiperSlide().isActive;
 
 	return (
 		<>
@@ -42,11 +41,11 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 					sliderRef.current?.swiper.slideTo(myId);
 				}}
 			>
-				<PostCard
-					myPost={myPost}
+				<ArticleCard
+					myArticle={myArticle}
 					isExpanded={true}
 					isClickable={imActive}
-					href={`/post/${myPost.id}`}
+					href={`/article/${myArticle.id}`}
 				/>
 				<div
 					style={{
@@ -64,23 +63,22 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 	);
 };
 
-interface NewPostsCarouselProps {
-	myPosts: PostsResponse<PostsExpand>[];
+interface NewArticlesCarouselProps {
+	myArticles: ArticlesResponse<ArticlesExpand>[];
 }
 
-const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
-	myPosts,
+const NewArticlesCarousel: FunctionComponent<NewArticlesCarouselProps> = ({
+	myArticles,
 }) => {
 	const theme = useTheme();
 	const isExtraSmallScreen = useMediaQuery(theme.breakpoints.only('xs'));
 	const isSmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 	const isMediumScreen = useMediaQuery(theme.breakpoints.only('md'));
 	const isLargeScreen = useMediaQuery(theme.breakpoints.only('lg'));
-	const [currentId, setCurrentId] = useState<number>(0);
 	const sliderRef = useRef<SwiperRef>(null);
 
 	return (
-		<div
+		<Box
 			style={{
 				position: 'relative',
 			}}
@@ -113,13 +111,6 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 				preventClicksPropagation={false}
 				preventClicks={false}
 				speed={750}
-				onSlideChange={(swiper) => {
-					if (swiper.realIndex == myPosts.length) {
-						setCurrentId(0);
-						return;
-					}
-					setCurrentId(swiper.realIndex);
-				}}
 				style={{
 					paddingBottom: '75px',
 				}}
@@ -136,13 +127,12 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 				}}
 				ref={sliderRef}
 			>
-				{myPosts.map((post, idx) => (
+				{myArticles.map((post, idx) => (
 					<SwiperSlide key={'slider_' + idx}>
 						<CardSlide
 							myId={idx}
-							activeId={currentId}
 							sliderRef={sliderRef}
-							myPost={post}
+							myArticle={post}
 						/>
 					</SwiperSlide>
 				))}
@@ -199,8 +189,8 @@ const NewPostsCarousel: FunctionComponent<NewPostsCarouselProps> = ({
 					</Stack>
 				</Grid>
 			</ThemeProvider>
-		</div>
+		</Box>
 	);
 };
 
-export default NewPostsCarousel;
+export default NewArticlesCarousel;
