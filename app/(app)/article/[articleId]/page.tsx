@@ -31,7 +31,13 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const articleId = params.articleId;
 	const article = await getArticleById(articleId);
 	const articleStats = await getArticleStatsById(article.id);
-	return <ArticleComponent myArticle={article} articleStats={articleStats} />;
+	return (
+		<ArticleComponent
+			myArticle={article}
+			articleStats={articleStats}
+			fullWidth
+		/>
+	);
 };
 
 export default Page;
