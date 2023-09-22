@@ -32,7 +32,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 		<Box
 			sx={{
 				px: 2,
-				ml: { xs: -2, sm: -2, md: -3, lg: 0, xl: 0 },
+				ml: { xs: -2, sm: -3, md: -4, lg: 0, xl: 0 },
 				backgroundColor: '#F2F2F2',
 				borderRadius: {
 					xs: '0',

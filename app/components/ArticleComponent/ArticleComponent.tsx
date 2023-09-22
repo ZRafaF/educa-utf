@@ -36,9 +36,11 @@ async function getArticle(article: ArticlesResponse) {
 async function ArticleComponent({
 	myArticle,
 	articleStats,
+	fullWidth,
 }: {
 	myArticle: ArticlesResponse<ArticlesExpand>;
 	articleStats: ArticleStatsResponse;
+	fullWidth?: boolean;
 }) {
 	const article = await getArticle(myArticle);
 
@@ -61,7 +63,13 @@ async function ArticleComponent({
 				direction="row"
 				alignItems={'center'}
 				justifyContent="space-between"
-				pl={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }}
+				pl={{
+					xs: 2,
+					sm: 3,
+					md: 4,
+					lg: fullWidth ? 20 : 5,
+					xl: fullWidth ? 30 : 5,
+				}}
 				pt={{ xs: 3, sm: 4, md: 8 }}
 				pb={2}
 			>
@@ -84,7 +92,16 @@ async function ArticleComponent({
 					/>
 				</Grid>
 			</Grid>
-			<Box mx={{ xs: 2, sm: 2, md: 3, lg: 10, xl: 25 }} pb={5}>
+			<Box
+				mx={{
+					xs: 2,
+					sm: 3,
+					md: 4,
+					lg: fullWidth ? 20 : 5,
+					xl: fullWidth ? 30 : 5,
+				}}
+				pb={5}
+			>
 				<ArticleContent article={article} />
 			</Box>
 		</Box>
