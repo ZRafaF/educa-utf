@@ -15,6 +15,7 @@
 # production
 /build
 /pocketbase
+/analyze
 
 # misc
 .DS_Store
@@ -39,3 +40,4 @@ next-env.d.ts
 # documentation
 /venv
 /documentacao
+

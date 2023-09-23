@@ -217,9 +217,7 @@ export default function Page() {
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
-				renderHTML={(text) => (
-					<ArticleContent article={text} ssr={false} />
-				)}
+				renderHTML={(text) => <ArticleContent article={text} />}
 				onChange={handleEditorChange}
 				allowPasteImage
 				onImageUpload={handleImageUpload}

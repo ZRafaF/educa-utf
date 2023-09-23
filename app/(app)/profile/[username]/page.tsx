@@ -3,7 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { getListOfUsersStats } from '@/lib/apiHelpers/usersAPI';
+import {
+	getListOfUsersStats,
+	getUsersStatsByUsername,
+} from '@/lib/apiHelpers/usersAPI';
 import { FunctionComponent } from 'react';
 import Box from '@mui/material/Box/Box';
 import dynamic from 'next/dynamic';
@@ -29,9 +32,15 @@ export async function generateStaticParams() {
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
+	const userStats = await getUsersStatsByUsername(params.username);
+
 	return (
 		<Box>
-			Você está na pagina de: {params.username}
+			Você está na pagina de: {userStats.name}
+			<br />
+			Usuário: {userStats.username}
+			<br />
+			Id: {userStats.id}
 			<NoSSREditUserComponent username={params.username} />
 		</Box>
 	);

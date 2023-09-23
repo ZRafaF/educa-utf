@@ -40,7 +40,7 @@ export default function LoginLayout({
 							alt="campus utfpr"
 							fill
 							sizes="100%"
-							objectFit={'cover'}
+							style={{ objectFit: 'cover' }}
 						/>
 					</div>
 				</Grid>

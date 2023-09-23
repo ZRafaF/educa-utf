@@ -19,6 +19,14 @@ export async function getListOfUsersStats() {
 	}
 }
 
+export async function getUsersStatsByUsername(username: string) {
+	return pb
+		.collection('users_stats')
+		.getFirstListItem<UsersStatsResponse>(`username = "${username}"`, {
+			skipTotal: true,
+		});
+}
+
 export async function updateUserAvatar(id: string, newAvatar: File) {
 	return await pb.collection('users').update<UsersResponse>(id, {
 		avatar: newAvatar,
