@@ -26,8 +26,6 @@ services:
 
     nginx_proxy:
         image: jc21/nginx-proxy-manager:latest
-        labels:
-            - 'com.centurylinklabs.watchtower.enable=false' # Disables watchtower auto update
         restart: unless-stopped
         ports:
             - '80:80'
@@ -48,3 +46,14 @@ services:
             - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
         environment:
             - 'GLANCES_OPT=-w'
+
+    dozzle:
+        container_name: dozzle
+        image: amir20/dozzle:latest
+        labels:
+            - 'com.centurylinklabs.watchtower.enable=false' # Disables watchtower auto update
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - 9999:8080

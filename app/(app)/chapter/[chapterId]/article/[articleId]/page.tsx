@@ -9,7 +9,7 @@ import {
 	getArticleById,
 	getArticleStatsById,
 } from '@/lib/apiHelpers/articlesAPI';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, Suspense } from 'react';
 
 interface PageProps {
 	params: {
@@ -31,7 +31,11 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const articleId = params.articleId;
 	const article = await getArticleById(articleId);
 	const articleStats = await getArticleStatsById(article.id);
-	return <ArticleComponent myArticle={article} articleStats={articleStats} />;
+	return (
+		<Suspense fallback={<>carregando</>}>
+			<ArticleComponent myArticle={article} articleStats={articleStats} />
+		</Suspense>
+	);
 };
 
 export default Page;

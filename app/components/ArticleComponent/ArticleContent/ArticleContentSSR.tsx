@@ -18,7 +18,7 @@ const ArticleContent: FunctionComponent<ArticleContentProps> = ({
 }) => {
 	return (
 		<Box className="markdown-body">
-			<MdRenderer article={article} />
+			<MdRendererAsync article={article} />
 		</Box>
 	);
 };

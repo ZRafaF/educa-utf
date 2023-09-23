@@ -7,7 +7,7 @@ import {
 	ArticlesResponse,
 	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
-import ArticleContent from './ArticleContent/ArticleContent';
+import ArticleContentSSR from './ArticleContent/ArticleContent';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -46,7 +46,7 @@ async function ArticleComponent({
 	fullWidth?: boolean;
 }) {
 	const article = await getArticle(myArticle);
-	const authorAvatarUrl = '';
+	const authorAvatarUrl = await getUserAvatarUrlByUserId(myArticle.user);
 
 	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
@@ -117,7 +117,7 @@ async function ArticleComponent({
 				}}
 				pb={5}
 			>
-				<ArticleContent article={article} />
+				<ArticleContentSSR article={article} />
 			</Box>
 		</Box>
 	);

@@ -43,7 +43,7 @@ Rode `docker build -t educa_utf_nextjs .` na root do projeto.
 Para iniciar os containers você pode utilizar o seguinte docker-compose
 
 ``` yaml
-version: "3.7"
+version: '3.8'
 
 services:
     next:
@@ -53,6 +53,7 @@ services:
         restart: unless-stopped
         ports:
             - 3000:3000
+
     pocketbase:
         image: zrafaf/educa_utf_pocketbase:latest
         restart: unless-stopped
@@ -60,12 +61,47 @@ services:
             - 8090:8090
         volumes:
             - ./pocketbase_data:/pb/pb_data
+
     watchtower:
         image: containrrr/watchtower
         restart: unless-stopped
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         command: --interval 30
+
+    nginx_proxy:
+        image: jc21/nginx-proxy-manager:latest
+        restart: unless-stopped
+        ports:
+            - '80:80'
+            - '81:81'
+            - '443:443'
+        volumes:
+            - ./nginx_proxy/data:/data
+            - ./nginx_proxy/letsencrypt:/etc/letsencrypt
+
+    # Runs on port 61208
+    glances:
+        image: nicolargo/glances:latest-full
+        pid: host
+        network_mode: host
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
+        environment:
+            - 'GLANCES_OPT=-w'
+
+    dozzle:
+        container_name: dozzle
+        image: amir20/dozzle:latest
+        labels:
+            - 'com.centurylinklabs.watchtower.enable=false' # Disables watchtower auto update
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - 9999:8080
 ```
 
 Você pode iniciar os containers com `docker compose up`.
