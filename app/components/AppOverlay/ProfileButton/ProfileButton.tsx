@@ -3,24 +3,31 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-"use client";
+'use client';
 
-import IconButton from "@mui/material/IconButton/IconButton";
-import Tooltip from "@mui/material/Tooltip/Tooltip";
-import MenuItem from "@mui/material/MenuItem/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText/ListItemText";
-import ListItem from "@mui/material/ListItem/ListItem";
-import Divider from "@mui/material/Divider/Divider";
-import Typography from "@mui/material/Typography/Typography";
-import Menu from "@mui/material/Menu/Menu";
+import IconButton from '@mui/material/IconButton/IconButton';
+import Tooltip from '@mui/material/Tooltip/Tooltip';
+import MenuItem from '@mui/material/MenuItem/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText/ListItemText';
+import ListItem from '@mui/material/ListItem/ListItem';
+import Divider from '@mui/material/Divider/Divider';
+import Typography from '@mui/material/Typography/Typography';
+import Menu from '@mui/material/Menu/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import { FunctionComponent, useState } from "react";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import React from "react";
-import Link from "next/link";
-import LoginIcon from "@mui/icons-material/Login";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { FunctionComponent, use, useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import usePbAuth from '@/hooks/usePbAuth';
+import { logOut } from '@/lib/apiHelpers/authAPI';
+import LogoutIcon from '@mui/icons-material/Logout';
+import dynamic from 'next/dynamic';
+const NoSSRProfileAvatar = dynamic(() => import('./ProfileAvatar'), {
+	ssr: false,
+});
 
 interface ProfileButtonProps {}
 
@@ -33,25 +40,39 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 	const handleMenuClose = () => {
 		setAnchorEl(null);
 	};
-	const menuId = "primary-search-account-menu";
-	const renderMenu = (
-		<Menu
-			anchorEl={anchorEl}
-			id={menuId}
-			keepMounted
-			open={isMenuOpen}
-			onClose={handleMenuClose}
-		>
-			<ListItem>
-				<Typography variant="caption">
-					Olá:
-					<Typography>Visitante</Typography>
-				</Typography>
-			</ListItem>
-			<Divider />
+	const [, user] = usePbAuth();
+
+	const LoggedInMenu = () => (
+		<React.Fragment>
 			<Link
-				href={"/login"}
-				style={{ textDecoration: "none", color: "white" }}
+				href={`/profile/${user?.username}`}
+				style={{ textDecoration: 'none', color: 'white' }}
+			>
+				<MenuItem onClick={handleMenuClose}>
+					<ListItemIcon>
+						<AccountCircle fontSize="small" />
+					</ListItemIcon>
+					<ListItemText>Meu perfil</ListItemText>
+				</MenuItem>
+			</Link>
+			<MenuItem
+				onClick={() => {
+					logOut();
+				}}
+			>
+				<ListItemIcon>
+					<LogoutIcon fontSize="small" />
+				</ListItemIcon>
+				<ListItemText>Sair</ListItemText>
+			</MenuItem>
+		</React.Fragment>
+	);
+
+	const LoggedOutMenu = () => (
+		<React.Fragment>
+			<Link
+				href={'/login'}
+				style={{ textDecoration: 'none', color: 'white' }}
 			>
 				<MenuItem onClick={handleMenuClose}>
 					<ListItemIcon>
@@ -61,8 +82,8 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 				</MenuItem>
 			</Link>
 			<Link
-				href={"/register"}
-				style={{ textDecoration: "none", color: "white" }}
+				href={'/register'}
+				style={{ textDecoration: 'none', color: 'white' }}
 			>
 				<MenuItem onClick={handleMenuClose}>
 					<ListItemIcon>
@@ -71,22 +92,47 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 					<ListItemText>Registrar</ListItemText>
 				</MenuItem>
 			</Link>
+		</React.Fragment>
+	);
+
+	const menuId = 'primary-search-account-menu';
+	const renderMenu = (
+		<Menu
+			anchorEl={anchorEl}
+			id={menuId}
+			open={isMenuOpen}
+			onClose={handleMenuClose}
+		>
+			<ListItem>
+				<Typography variant="caption">
+					Olá:
+					<Link
+						href={user ? `/profile/${user.username}` : '/'}
+						style={{ textDecoration: 'none', color: 'white' }}
+					>
+						<Typography>
+							{user ? user?.name : 'Visitante'}
+						</Typography>
+					</Link>
+				</Typography>
+			</ListItem>
+			<Divider />
+			{user ? <LoggedInMenu /> : <LoggedOutMenu />}
 		</Menu>
 	);
 
 	return (
 		<React.Fragment>
-			<Tooltip title="Meu perfil" arrow>
+			<Tooltip title="Perfil" arrow>
 				<IconButton
-					size="large"
 					edge="end"
 					aria-label="account of current user"
 					aria-controls={menuId}
 					aria-haspopup="true"
-					onClick={handleProfileMenuOpen}
 					color="inherit"
+					onClick={handleProfileMenuOpen}
 				>
-					<AccountCircle />
+					<NoSSRProfileAvatar user={user} />
 				</IconButton>
 			</Tooltip>
 			{renderMenu}

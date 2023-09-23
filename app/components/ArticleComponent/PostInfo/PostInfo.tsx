@@ -5,7 +5,7 @@
 
 import TagsComponent from '@/components/TagsComponent/TagsComponent';
 import {
-	ArticleStatsResponse,
+	ArticlesStatsResponse,
 	ArticlesResponse,
 } from '@/types/pocketbase-types';
 import Avatar from '@mui/material/Avatar/Avatar';
@@ -18,16 +18,23 @@ import Stack from '@mui/material/Stack/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { ArticlesExpand } from '@/types/expanded-types';
+import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
+import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
+import Link from 'next/link';
 
 interface PostInfoProps {
 	myArticle: ArticlesResponse<ArticlesExpand>;
-	articleStats: ArticleStatsResponse;
+	articleStats: ArticlesStatsResponse;
+	authorAvatarUrl: string;
 }
 
 const PostInfo: FunctionComponent<PostInfoProps> = ({
 	myArticle,
 	articleStats,
+	authorAvatarUrl,
 }) => {
+	const authorProfileUrl = `/profile/${articleStats.author_username}`;
+
 	return (
 		<Box
 			sx={{
@@ -61,11 +68,25 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 						py={2}
 						alignItems="center"
 					>
-						<Avatar sx={{ bgcolor: '#427AA1' }}>RF</Avatar>
-						<Typography height={'100%'}>
-							{articleStats.author_name}
-						</Typography>
+						<Link
+							href={authorProfileUrl}
+							style={{ textDecoration: 'none' }}
+						>
+							<AvatarComponent
+								name={articleStats.author_name}
+								src={authorAvatarUrl}
+							/>
+						</Link>
+						<Link
+							href={authorProfileUrl}
+							style={{ textDecoration: 'none' }}
+						>
+							<Typography height={'100%'} color={'MenuText'}>
+								{articleStats.author_name}
+							</Typography>
+						</Link>
 					</Stack>
+
 					<TagsComponent tags={myArticle.expand?.tags} />
 				</Grid>
 				<Divider orientation="vertical" flexItem variant="middle" />

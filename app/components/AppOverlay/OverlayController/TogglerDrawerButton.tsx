@@ -2,13 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-"use client";
+'use client';
 
-import { OverlayControllerContext } from "@/contexts/OverlayControllerProvider";
-import IconButton from "@mui/material/IconButton/IconButton";
-import { FunctionComponent, useContext } from "react";
-import ChevronLeft from "@mui/icons-material/ChevronLeft";
-import MenuIcon from "@mui/icons-material/Menu";
+import { OverlayControllerContext } from '@/contexts/OverlayControllerProvider';
+import IconButton from '@mui/material/IconButton/IconButton';
+import { FunctionComponent, useContext } from 'react';
+import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import MenuIcon from '@mui/icons-material/Menu';
 
 interface ToggleButtonProps {}
 
@@ -26,7 +26,7 @@ const ToggleDrawerButton: FunctionComponent<ToggleButtonProps> = () => {
 			aria-label="open drawer"
 			onClick={toggleDrawer}
 			sx={{
-				marginRight: "20px",
+				marginRight: '20px',
 			}}
 		>
 			{open ? <ChevronLeft /> : <MenuIcon />}
