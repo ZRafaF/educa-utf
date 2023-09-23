@@ -8,6 +8,7 @@ import { FunctionComponent, ReactNode } from 'react';
 import Box from '@mui/material/Box/Box';
 import { loginWithPassword } from '@/lib/apiHelpers/authAPI';
 import useRedirectAuth from '@/hooks/useRedirectAuth';
+import { toast } from 'react-toastify';
 
 interface LoginFormSenderProps {
 	children: ReactNode;
@@ -21,20 +22,36 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
-		const submitEmail = data.get('email')?.toString();
+		const submitLogin = data.get('login')?.toString();
 		const submitPassword = data.get('password')?.toString();
 		const submitRemember = data.get('remember')?.toString();
-		if (submitEmail === undefined) return;
+		if (submitLogin === undefined) return;
 
 		if (submitPassword === undefined) return;
 
 		if (submitRemember) {
 			//setPersistence(auth, browserSessionPersistence);
 		}
+		try {
+			const authRes = await loginWithPassword(
+				submitLogin,
+				submitPassword
+			);
+			console.log(authRes);
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(error);
+				switch (error.message) {
+					case 'Failed to authenticate.':
+						toast.error('Falha na autenticação');
+						break;
 
-		const authRes = await loginWithPassword(submitEmail, submitPassword);
-
-		console.log(authRes);
+					default:
+						toast.error(error.message);
+						break;
+				}
+			}
+		}
 	};
 
 	return (

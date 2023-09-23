@@ -14,9 +14,9 @@ import ListItem from '@mui/material/ListItem/ListItem';
 import Divider from '@mui/material/Divider/Divider';
 import Typography from '@mui/material/Typography/Typography';
 import Menu from '@mui/material/Menu/Menu';
-
-import { FunctionComponent, useEffect, useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+
+import { FunctionComponent, use, useState } from 'react';
 import React from 'react';
 import Link from 'next/link';
 import LoginIcon from '@mui/icons-material/Login';
@@ -24,6 +24,10 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import usePbAuth from '@/hooks/usePbAuth';
 import { logOut } from '@/lib/apiHelpers/authAPI';
 import LogoutIcon from '@mui/icons-material/Logout';
+import dynamic from 'next/dynamic';
+const NoSSRProfileAvatar = dynamic(() => import('./ProfileAvatar'), {
+	ssr: false,
+});
 
 interface ProfileButtonProps {}
 
@@ -36,30 +40,21 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 	const handleMenuClose = () => {
 		setAnchorEl(null);
 	};
-	const [token, user] = usePbAuth();
-
-	useEffect(() => {
-		console.log('token');
-		console.log(token);
-		console.log('usr');
-		console.log(user);
-	}, [token, user]);
+	const [, user] = usePbAuth();
 
 	const LoggedInMenu = () => (
 		<React.Fragment>
-			<MenuItem
-				onClick={() => {
-					console.log('token');
-					console.log(token);
-					console.log('usr');
-					console.log(user);
-				}}
+			<Link
+				href={`/profile/${user?.username}`}
+				style={{ textDecoration: 'none', color: 'white' }}
 			>
-				<ListItemIcon>
-					<PersonAddIcon fontSize="small" />
-				</ListItemIcon>
-				<ListItemText>print</ListItemText>
-			</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<ListItemIcon>
+						<AccountCircle fontSize="small" />
+					</ListItemIcon>
+					<ListItemText>Meu perfil</ListItemText>
+				</MenuItem>
+			</Link>
 			<MenuItem
 				onClick={() => {
 					logOut();
@@ -105,14 +100,20 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 		<Menu
 			anchorEl={anchorEl}
 			id={menuId}
-			keepMounted
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 		>
 			<ListItem>
 				<Typography variant="caption">
 					Olá:
-					<Typography>{user ? user?.name : 'Visitante'}</Typography>
+					<Link
+						href={user ? `/profile/${user.username}` : '/'}
+						style={{ textDecoration: 'none', color: 'white' }}
+					>
+						<Typography>
+							{user ? user?.name : 'Visitante'}
+						</Typography>
+					</Link>
 				</Typography>
 			</ListItem>
 			<Divider />
@@ -122,17 +123,16 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 
 	return (
 		<React.Fragment>
-			<Tooltip title="Meu perfil" arrow>
+			<Tooltip title="Perfil" arrow>
 				<IconButton
-					size="large"
 					edge="end"
 					aria-label="account of current user"
 					aria-controls={menuId}
 					aria-haspopup="true"
-					onClick={handleProfileMenuOpen}
 					color="inherit"
+					onClick={handleProfileMenuOpen}
 				>
-					<AccountCircle />
+					<NoSSRProfileAvatar user={user} />
 				</IconButton>
 			</Tooltip>
 			{renderMenu}

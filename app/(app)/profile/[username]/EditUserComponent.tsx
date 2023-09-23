@@ -5,9 +5,10 @@
 'use client';
 
 import usePbAuth from '@/hooks/usePbAuth';
-import Box from '@mui/material/Box/Box';
+import { updateUserAvatar } from '@/lib/apiHelpers/usersAPI';
 import Paper from '@mui/material/Paper/Paper';
-import { FunctionComponent } from 'react';
+import React from 'react';
+import { FunctionComponent, useState } from 'react';
 
 interface EditUserComponentProps {
 	username: string;
@@ -18,16 +19,50 @@ const EditUserComponent: FunctionComponent<EditUserComponentProps> = ({
 }) => {
 	const [token, user] = usePbAuth();
 
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files && event.target.files[0];
+		if (file) {
+			setSelectedFile(file);
+		}
+	};
+
+	const uploadAvatar = () => {
+		if (selectedFile && user) {
+			console.log('Selected File:', selectedFile);
+
+			updateUserAvatar(user.id, selectedFile);
+
+			// Clear the selected file
+			setSelectedFile(null);
+		} else {
+			alert('Nenhum arquivo selecionado');
+		}
+	};
+
 	return (
 		<Paper sx={{ p: 2 }}>
 			{username === user?.username ? (
-				<button
-					onClick={() => {
-						console.log(token);
-					}}
-				>
-					Imprimir meu token
-				</button>
+				<React.Fragment>
+					<button
+						onClick={() => {
+							console.log('token: ' + token);
+							console.log('user:');
+							console.log(user);
+						}}
+					>
+						Imprimir meu token e usuário
+					</button>
+					<input
+						type="file"
+						accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
+						onChange={handleFileChange}
+					/>
+					<button onClick={uploadAvatar}>
+						Atualizar imagem de perfil
+					</button>
+				</React.Fragment>
 			) : (
 				<>Você não tem permissão</>
 			)}
