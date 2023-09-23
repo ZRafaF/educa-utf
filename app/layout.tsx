@@ -5,17 +5,15 @@
 
 import './globals.css';
 import type { Metadata } from 'next';
-import AuthProvider from './contexts/AuthProvider';
 import AppOverlay from './components/AppOverlay/AppOverlay';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import ToastProvider from './contexts/ToastProvider';
+
 export const metadata: Metadata = {
 	title: 'Educa UTF',
 	description: 'Web aplicação feita por alunos para alunos.',
-	icons: {
-		icon: '/favicon.ico',
-	},
 };
 
 export default function RootLayout({
@@ -31,9 +29,9 @@ export default function RootLayout({
 					minHeight: '100vh',
 				}}
 			>
-				<AuthProvider>
+				<ToastProvider>
 					<AppOverlay>{children}</AppOverlay>
-				</AuthProvider>
+				</ToastProvider>
 			</body>
 		</html>
 	);

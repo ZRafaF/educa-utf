@@ -2,11 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-"use client";
+'use client';
 
-import { FunctionComponent, ReactNode } from "react";
-import Box from "@mui/material/Box/Box";
-//import { toast } from "react-toastify";
+import { FunctionComponent, ReactNode } from 'react';
+import Box from '@mui/material/Box/Box';
+import { loginWithPassword } from '@/lib/apiHelpers/authAPI';
+import useRedirectAuth from '@/hooks/useRedirectAuth';
+import { toast } from 'react-toastify';
 
 interface LoginFormSenderProps {
 	children: ReactNode;
@@ -15,37 +17,41 @@ interface LoginFormSenderProps {
 const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	children,
 }) => {
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	useRedirectAuth();
+
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
-		const submitEmail = data.get("email")?.toString();
-		const submitPassword = data.get("password")?.toString();
-		const submitRemember = data.get("remember")?.toString();
-		if (submitEmail === undefined) {
-			//toast.error("Invalid email.");
-			return;
-		}
-		if (submitPassword === undefined) {
-			//toast.error("Invalid password.");
-			return;
-		}
-		console.log(submitEmail);
+		const submitLogin = data.get('login')?.toString();
+		const submitPassword = data.get('password')?.toString();
+		const submitRemember = data.get('remember')?.toString();
+		if (submitLogin === undefined) return;
+
+		if (submitPassword === undefined) return;
 
 		if (submitRemember) {
 			//setPersistence(auth, browserSessionPersistence);
 		}
-		// example create data
+		try {
+			const authRes = await loginWithPassword(
+				submitLogin,
+				submitPassword
+			);
+			console.log(authRes);
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(error);
+				switch (error.message) {
+					case 'Failed to authenticate.':
+						toast.error('Falha na autenticação');
+						break;
 
-		// pb.collection("users")
-		// 	.create({
-		// 		email: submitEmail,
-		// 		password: submitPassword,
-		// 		passwordConfirm: submitPassword,
-		// 	})
-		// 	.then((record) => {
-		// 		// (optional) send an email verification request
-		// 		//pb.collection("users").requestVerification(submitEmail);
-		// 	});
+					default:
+						toast.error(error.message);
+						break;
+				}
+			}
+		}
 	};
 
 	return (

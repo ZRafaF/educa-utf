@@ -3,12 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import React from "react";
-import { FunctionComponent } from "react";
-import Button from "@mui/material/Button/Button";
-import TextField from "@mui/material/TextField/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox/Checkbox";
+import React from 'react';
+import { FunctionComponent } from 'react';
+import Button from '@mui/material/Button/Button';
+import TextField from '@mui/material/TextField/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox/Checkbox';
 
 interface LoginFormContentProps {}
 
@@ -19,11 +19,11 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				margin="normal"
 				required
 				fullWidth
-				id="email"
-				label="Endereço de email"
-				name="email"
-				type="email"
-				autoComplete="email"
+				id="login"
+				label="Usuário ou Email"
+				name="login"
+				type="text"
+				autoComplete="login"
 				autoFocus
 			/>
 			<TextField
@@ -31,7 +31,7 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				required
 				fullWidth
 				inputProps={{
-					minLength: 8,
+					minLength: 6,
 					maxLength: 72,
 				}}
 				name="password"
@@ -55,7 +55,7 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				type="submit"
 				fullWidth
 				variant="contained"
-				sx={{ mt: 3, mb: 2, fontWeight: "bold" }}
+				sx={{ mt: 3, mb: 2, fontWeight: 'bold' }}
 			>
 				Login
 			</Button>

@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 
 import {
-	ArticleStatsResponse,
 	ArticlesResponse,
+	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
 import ArticleContent from './ArticleContent/ArticleContent';
 import Box from '@mui/material/Box/Box';
@@ -16,6 +16,9 @@ import PostInfo from './PostInfo/PostInfo';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import { getArticleDocumentUrl } from '@/lib/apiHelpers/articlesAPI';
 import { ArticlesExpand } from '@/types/expanded-types';
+import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
+import { Suspense } from 'react';
+import Skeleton from '@mui/material/Skeleton';
 
 export const revalidate = 30;
 
@@ -39,10 +42,11 @@ async function ArticleComponent({
 	fullWidth,
 }: {
 	myArticle: ArticlesResponse<ArticlesExpand>;
-	articleStats: ArticleStatsResponse;
+	articleStats: ArticlesStatsResponse;
 	fullWidth?: boolean;
 }) {
 	const article = await getArticle(myArticle);
+	const authorAvatarUrl = '';
 
 	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
@@ -86,10 +90,21 @@ async function ArticleComponent({
 					</Typography>
 				</Grid>
 				<Grid xs={20} sm={20} md={20} lg={5} xl={5}>
-					<PostInfo
-						articleStats={articleStats}
-						myArticle={myArticle}
-					/>
+					<Suspense
+						fallback={
+							<Skeleton
+								variant="circular"
+								width={40}
+								height={40}
+							/>
+						}
+					>
+						<PostInfo
+							articleStats={articleStats}
+							myArticle={myArticle}
+							authorAvatarUrl={authorAvatarUrl}
+						/>
+					</Suspense>
 				</Grid>
 			</Grid>
 			<Box

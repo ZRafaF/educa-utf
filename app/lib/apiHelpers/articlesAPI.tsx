@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 
 import {
-	ArticleStatsResponse,
 	ArticlesResponse,
+	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
 import pb from '../PocketBase/pocketbase';
 import { ArticlesExpand } from '@/types/expanded-types';
@@ -33,7 +33,7 @@ export async function getArticleById(id: string) {
 export async function getArticleStatsById(articleId: string) {
 	return pb
 		.collection('articles_stats')
-		.getOne<ArticleStatsResponse>(articleId, {
+		.getOne<ArticlesStatsResponse>(articleId, {
 			skipTotal: true,
 		});
 }

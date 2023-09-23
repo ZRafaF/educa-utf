@@ -3,13 +3,14 @@
 */
 
 export enum Collections {
-	ArticleStats = "article_stats",
 	Articles = "articles",
+	ArticlesStats = "articles_stats",
 	Chapters = "chapters",
 	ChaptersStats = "chapters_stats",
 	Images = "images",
 	Tags = "tags",
 	Users = "users",
+	UsersStats = "users_stats",
 }
 
 // Alias types for improved usability
@@ -36,48 +37,48 @@ export type AuthSystemFields<T = never> = {
 
 // Record types for each collection
 
-export type ArticleStatsRecord = {
+export type ArticlesRecord = {
+	cover?: string
+	description?: string
+	document?: string
+	tags?: RecordIdString[]
 	title: string
-	likes?: number
+	user: RecordIdString
 	views?: number
-	author_name: string
-	author_username?: string
-	author_avatar?: string
+	visible?: boolean
 }
 
-export type ArticlesRecord = {
+export type ArticlesStatsRecord = {
+	author_avatar?: string
+	author_name: string
+	author_username?: string
+	likes?: number
 	title: string
-	description?: string
-	user: RecordIdString
-	visible?: boolean
-	document?: string
-	cover?: string
 	views?: number
-	tags?: RecordIdString[]
 }
 
 export type ChaptersRecord = {
-	title?: string
-	user?: RecordIdString
 	articles?: RecordIdString[]
-	visible?: boolean
 	description?: string
 	tags?: RecordIdString[]
+	title?: string
+	user?: RecordIdString
 	views?: number
+	visible?: boolean
 }
 
 export type ChaptersStatsRecord = {
-	title?: string
-	likes?: number
-	views?: number
+	author_avatar?: string
 	author_name: string
 	author_username?: string
-	author_avatar?: string
+	likes?: number
+	title?: string
+	views?: number
 }
 
 export type ImagesRecord = {
-	file?: string
 	article?: RecordIdString
+	file?: string
 }
 
 export type TagsRecord = {
@@ -100,43 +101,52 @@ export enum UsersCampusOptions {
 	"Toledo" = "Toledo",
 }
 export type UsersRecord = {
-	name: string
 	avatar?: string
+	campus?: UsersCampusOptions
+	course?: string
 	favorite_articles?: RecordIdString[]
 	favorite_chapters?: RecordIdString[]
 	liked_articles?: RecordIdString[]
 	liked_chapters?: RecordIdString[]
-	course?: string
-	campus?: UsersCampusOptions
+	name: string
+}
+
+export type UsersStatsRecord = {
+	avatar?: string
+	name: string
+	username?: string
 }
 
 // Response types include system fields and match responses from the PocketBase API
-export type ArticleStatsResponse<Texpand = unknown> = Required<ArticleStatsRecord> & BaseSystemFields<Texpand>
 export type ArticlesResponse<Texpand = unknown> = Required<ArticlesRecord> & BaseSystemFields<Texpand>
+export type ArticlesStatsResponse<Texpand = unknown> = Required<ArticlesStatsRecord> & BaseSystemFields<Texpand>
 export type ChaptersResponse<Texpand = unknown> = Required<ChaptersRecord> & BaseSystemFields<Texpand>
 export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRecord> & BaseSystemFields<Texpand>
 export type ImagesResponse<Texpand = unknown> = Required<ImagesRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
+export type UsersStatsResponse<Texpand = unknown> = Required<UsersStatsRecord> & BaseSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
-	article_stats: ArticleStatsRecord
 	articles: ArticlesRecord
+	articles_stats: ArticlesStatsRecord
 	chapters: ChaptersRecord
 	chapters_stats: ChaptersStatsRecord
 	images: ImagesRecord
 	tags: TagsRecord
 	users: UsersRecord
+	users_stats: UsersStatsRecord
 }
 
 export type CollectionResponses = {
-	article_stats: ArticleStatsResponse
 	articles: ArticlesResponse
+	articles_stats: ArticlesStatsResponse
 	chapters: ChaptersResponse
 	chapters_stats: ChaptersStatsResponse
 	images: ImagesResponse
 	tags: TagsResponse
 	users: UsersResponse
+	users_stats: UsersStatsResponse
 }
