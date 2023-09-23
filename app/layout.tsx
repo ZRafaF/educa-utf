@@ -14,9 +14,6 @@ import ToastProvider from './contexts/ToastProvider';
 export const metadata: Metadata = {
 	title: 'Educa UTF',
 	description: 'Web aplicação feita por alunos para alunos.',
-	icons: {
-		icon: '/favicon.ico',
-	},
 };
 
 export default function RootLayout({
