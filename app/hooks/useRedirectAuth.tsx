@@ -17,7 +17,7 @@ const useRedirectAuth = (shouldRedirectIfLoggedOut?: boolean) => {
 			redirect(`/profile/${user.username}`);
 		}
 		if (shouldRedirectIfLoggedOut && user === null) redirect('/');
-	}, [user]);
+	}, [user, shouldRedirectIfLoggedOut]);
 };
 
 export default useRedirectAuth;
