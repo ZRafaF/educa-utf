@@ -1,27 +1,8 @@
-# Build Stage
-FROM node:20-alpine AS BUILD_IMAGE
+FROM node:20-alpine
+RUN mkdir -p /app
 WORKDIR /app
-
-ENV PB_URL https://educautf.td.utfpr.edu.br/db
-ENV ANALYZE false
-
-COPY package*.json ./
-RUN yarn install --production
 COPY . .
+RUN yarn install --production
 RUN yarn build
-
-
-# Production Stage
-FROM node:20-alpine AS PRODUCTION_STAGE
-WORKDIR /app
-COPY --from=BUILD_IMAGE /app/package*.json ./
-COPY --from=BUILD_IMAGE /app/.next ./.next
-COPY --from=BUILD_IMAGE /app/public ./public
-COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
-
-ENV NODE_ENV=production
-ENV PB_URL https://educautf.td.utfpr.edu.br/db
-ENV ANALYZE false
-
 EXPOSE 3000
 CMD ["yarn", "start"]
