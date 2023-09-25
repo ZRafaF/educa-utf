@@ -6,9 +6,9 @@ ENV PB_URL https://educautf.td.utfpr.edu.br/db
 ENV ANALYZE false
 
 COPY package*.json ./
-RUN npm ci
+RUN yarn install --production
 COPY . .
-RUN npm run build
+RUN yarn build
 
 
 # Production Stage
@@ -24,4 +24,4 @@ ENV PB_URL https://educautf.td.utfpr.edu.br/db
 ENV ANALYZE false
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
