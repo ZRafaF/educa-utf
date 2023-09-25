@@ -26,7 +26,7 @@
 		"eslint": "8.49.0",
 		"eslint-config-next": "13.5.2",
 		"markdown-to-jsx": "^7.3.2",
-		"next": "13.5.2",
+		"next": "^13.4.19",
 		"pocketbase": "^0.18.0",
 		"pocketbase-typegen": "^1.1.12",
 		"postcss": "8.4.30",
