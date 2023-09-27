@@ -21,7 +21,7 @@ const AvatarComponent: FunctionComponent<AvatarComponentProps> = ({
 	const sizeInPixels = () => {
 		switch (size) {
 			case 'small':
-				return 30;
+				return 28;
 			case 'medium':
 				return 40;
 			case 'large':

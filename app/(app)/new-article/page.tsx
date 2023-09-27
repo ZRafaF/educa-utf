@@ -14,13 +14,13 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import 'react-markdown-editor-lite/lib/index.css';
 import TextField from '@mui/material/TextField/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox/Checkbox';
 import Button from '@mui/material/Button/Button';
 import Box from '@mui/material/Box/Box';
 import Radio from '@mui/material/Radio/Radio';
 import FormLabel from '@mui/material/FormLabel/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import Stack from '@mui/material/Stack/Stack';
+import DropZoneComponent from '@/components/DropZoneComponent/DropZoneComponent';
 
 export default function Page() {
 	const inputFile = useRef<HTMLInputElement | null>(null);
@@ -171,9 +171,9 @@ export default function Page() {
 
 					<Grid xs={12}>
 						<Stack
-							direction="row"
+							direction={{ xs: 'column', sm: 'row' }}
 							justifyContent="space-between"
-							alignItems="center"
+							alignItems="flex-start"
 							spacing={2}
 						>
 							<Box>
@@ -197,11 +197,13 @@ export default function Page() {
 									/>
 								</RadioGroup>
 							</Box>
-
-							<Button type="submit" variant="contained">
-								Criar
-							</Button>
+							<Box>
+								<DropZoneComponent />
+							</Box>
 						</Stack>
+						<Button type="submit" variant="contained">
+							Criar
+						</Button>
 					</Grid>
 				</Grid>
 			</Paper>
