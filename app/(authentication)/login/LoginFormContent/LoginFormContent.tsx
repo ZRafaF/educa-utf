@@ -59,7 +59,6 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 			>
 				Login
 			</Button>
-			{/*<OcRegisterWithGoogle />*/}
 		</React.Fragment>
 	);
 };

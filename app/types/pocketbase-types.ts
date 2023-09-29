@@ -37,6 +37,10 @@ export type AuthSystemFields<T = never> = {
 
 // Record types for each collection
 
+export enum ArticlesVisibilityOptions {
+	"public" = "public",
+	"private" = "private",
+}
 export type ArticlesRecord = {
 	cover?: string
 	description?: string
@@ -45,7 +49,7 @@ export type ArticlesRecord = {
 	title: string
 	user: RecordIdString
 	views?: number
-	visible?: boolean
+	visibility: ArticlesVisibilityOptions
 }
 
 export type ArticlesStatsRecord = {

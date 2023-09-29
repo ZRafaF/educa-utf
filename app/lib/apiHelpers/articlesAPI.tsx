@@ -4,11 +4,13 @@
 // https://opensource.org/licenses/MIT
 
 import {
+	ArticlesRecord,
 	ArticlesResponse,
 	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
 import pb from '../PocketBase/pocketbase';
 import { ArticlesExpand } from '@/types/expanded-types';
+import { getFormData } from '../helper';
 
 export async function getListOfArticles() {
 	try {
@@ -95,4 +97,14 @@ export async function getArticleDocumentUrl(
 	};
 
 	return pb.files.getUrl(record, articleDocumentName, {});
+}
+
+export async function createArticle(
+	newArticle: ArticlesRecord,
+	coverFile: File | undefined
+) {
+	const form = getFormData(newArticle);
+	if (coverFile) form.append('cover', coverFile);
+
+	return pb.collection('articles').create<ArticlesRecord>(form);
 }
