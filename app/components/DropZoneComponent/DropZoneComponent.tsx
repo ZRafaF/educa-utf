@@ -5,7 +5,8 @@
 'use client';
 
 import Box from '@mui/material/Box/Box';
-import Paper from '@mui/material/Paper/Paper';
+import FormLabel from '@mui/material/FormLabel/FormLabel';
+import IconButton from '@mui/material/IconButton/IconButton';
 import Typography from '@mui/material/Typography/Typography';
 import Image from 'next/image';
 import {
@@ -16,14 +17,25 @@ import {
 	useState,
 } from 'react';
 import { useDropzone } from 'react-dropzone';
+import CloseIcon from '@mui/icons-material/Close';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import HelpIcon from '@mui/icons-material/Help';
+import Stack from '@mui/material/Stack/Stack';
+import Tooltip from '@mui/material/Tooltip/Tooltip';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+
+const contentWidth = 300;
+const contentHeight = 150;
 
 const baseStyle: CSSProperties = {
 	flex: 1,
 	display: 'flex',
 	alignItems: 'center',
+	justifyContent: 'center',
+	height: contentHeight,
+	width: contentWidth,
 	flexGrow: 2,
 	cursor: 'pointer',
-	padding: '10px',
 };
 
 const focusedStyle: CSSProperties = {
@@ -41,6 +53,16 @@ const rejectStyle: CSSProperties = {
 interface DropZoneComponentProps {}
 
 const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
+	const [open, setOpen] = useState(false);
+
+	const handleTooltipClose = () => {
+		setOpen(false);
+	};
+
+	const handleTooltipOpen = () => {
+		setOpen(true);
+	};
+
 	const [selectedFile, setSelectedFile] = useState<File>();
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setSelectedFile(acceptedFiles[0]);
@@ -78,37 +100,108 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 	return (
 		<Box
 			sx={{
-				':hover': {
-					outlineWidth: 1,
-					outlineStyle: 'dashed',
-					outlineOffset: -1,
-				},
-				display: 'flex',
-				borderWidth: 2,
-				borderRadius: 2,
-				borderColor: '#eeeeee',
-				borderStyle: 'dashed',
-				backgroundColor: '#fafafa',
-				height: 'stretch',
-				width: '100%',
-				position: 'relative',
+				width: contentWidth,
 			}}
 		>
-			{selectedFile ? (
-				<Image
-					alt={selectedFile.name}
-					src={URL.createObjectURL(selectedFile)}
-					fill
-					style={{ objectFit: 'contain' }}
-				/>
-			) : (
-				<div {...getRootProps({ style })}>
-					<input {...getInputProps()} />
-					<Typography color={'GrayText'}>
-						Pressione ou arraste uma imagem aqui
-					</Typography>
-				</div>
-			)}
+			<Stack
+				direction="row"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<FormLabel>
+					<Typography variant="body2">Imagem de capa:</Typography>
+				</FormLabel>
+				<ClickAwayListener onClickAway={handleTooltipClose}>
+					<div>
+						<Tooltip
+							title="Para a melhor qualidade a imagem deve ter proporção de 2/1, recomendamos 600x300 px"
+							arrow
+							placement="top"
+							PopperProps={{
+								disablePortal: true,
+							}}
+							onClose={handleTooltipClose}
+							open={open}
+							disableFocusListener
+							disableHoverListener
+							disableTouchListener
+						>
+							<IconButton
+								onClick={handleTooltipOpen}
+								size="small"
+							>
+								<HelpIcon fontSize="inherit" color="disabled" />
+							</IconButton>
+						</Tooltip>
+					</div>
+				</ClickAwayListener>
+			</Stack>
+			<Box
+				sx={{
+					display: 'flex',
+					borderWidth: 2,
+					height: contentHeight,
+					width: '100%',
+					position: 'relative',
+				}}
+			>
+				{selectedFile ? (
+					<Box
+						sx={{
+							position: 'absolute',
+							width: contentWidth,
+							height: contentHeight,
+							borderColor: '#eeeeee',
+							backgroundColor: '#fafafa',
+							borderStyle: 'solid',
+							borderRadius: 2,
+							overflow: 'hidden',
+						}}
+					>
+						<Image
+							alt={selectedFile.name}
+							src={URL.createObjectURL(selectedFile)}
+							width={contentWidth}
+							height={contentHeight}
+							style={{ objectFit: 'contain' }}
+						/>
+						<IconButton
+							aria-label="delete"
+							size="small"
+							sx={{
+								position: 'absolute',
+								right: 0,
+							}}
+							onClick={() => {
+								setSelectedFile(undefined);
+							}}
+						>
+							<CloseIcon fontSize="inherit" />
+						</IconButton>
+					</Box>
+				) : (
+					<Box
+						sx={{
+							':hover': {
+								borderColor: '#D6D6D6',
+							},
+							transitionDuration: '100ms',
+							borderRadius: 2,
+							borderColor: '#eeeeee',
+							borderStyle: 'dashed',
+							backgroundColor: '#fafafa',
+						}}
+					>
+						<div {...getRootProps({ style })}>
+							<input {...getInputProps()} />
+							<AttachFileIcon color="disabled" fontSize="large" />
+							<Typography variant="body2" color={'GrayText'}>
+								Pressione ou arraste uma imagem aqui
+							</Typography>
+						</div>
+					</Box>
+				)}
+			</Box>
 		</Box>
 	);
 };

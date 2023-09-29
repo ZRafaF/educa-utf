@@ -35,7 +35,7 @@ export const defaultPostResponse: ArticlesResponse = {
 };
 
 export const getRandomImageUrl = () => {
-	return `https://picsum.photos/seed/${Math.random()}/500/300`;
+	return `https://picsum.photos/seed/${Math.random()}/400/200`;
 };
 
 export function splitStringByComma(inputString: string): string[] {

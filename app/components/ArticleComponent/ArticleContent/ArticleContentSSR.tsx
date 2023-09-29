@@ -3,11 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent, Suspense } from 'react';
+import { FunctionComponent } from 'react';
 import './github-markdown.css';
 import Box from '@mui/material/Box/Box';
 import MdRendererAsync from './MdRenderer/MdRendererAsync';
-import MdRenderer from './MdRenderer/MdRenderer';
 
 interface ArticleContentProps {
 	article: string;

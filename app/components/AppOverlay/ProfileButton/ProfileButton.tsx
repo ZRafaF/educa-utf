@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography/Typography';
 import Menu from '@mui/material/Menu/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import { FunctionComponent, use, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import React from 'react';
 import Link from 'next/link';
 import LoginIcon from '@mui/icons-material/Login';
@@ -101,6 +101,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			anchorEl={anchorEl}
 			id={menuId}
 			open={isMenuOpen}
+			keepMounted
 			onClose={handleMenuClose}
 		>
 			<ListItem>
