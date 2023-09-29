@@ -3,11 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-"use client";
-
-import { FunctionComponent, ReactNode } from "react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { darkTheme } from "../Themes";
+import { FunctionComponent, ReactNode } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { darkTheme } from '../Themes';
 
 interface DarkModeThemeProps {
 	children: ReactNode;

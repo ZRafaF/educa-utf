@@ -8,6 +8,13 @@ const nextConfig = {
 	env: {
 		PB_URL: process.env.PB_URL,
 	},
+	webpack: function (config) {
+		config.module.rules.push({
+			test: /.md$/,
+			use: 'raw-loader',
+		});
+		return config;
+	},
 };
 
 module.exports = withBundleAnalyzer({

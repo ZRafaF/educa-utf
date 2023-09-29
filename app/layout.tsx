@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 import ToastProvider from './contexts/ToastProvider';
 
 export const metadata: Metadata = {
-	title: 'Educa UTF',
+	title: 'EducaUTF',
 	description: 'Web aplicação feita por alunos para alunos.',
 };
 
