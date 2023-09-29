@@ -21,6 +21,9 @@ import FormLabel from '@mui/material/FormLabel/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import Stack from '@mui/material/Stack/Stack';
 import DropZoneComponent from '@/components/DropZoneComponent/DropZoneComponent';
+import Checkbox from '@mui/material/Checkbox/Checkbox';
+import NextLink from 'next/link';
+import Link from '@mui/material/Link/Link';
 
 export default function Page() {
 	const inputFile = useRef<HTMLInputElement | null>(null);
@@ -201,10 +204,51 @@ export default function Page() {
 								<DropZoneComponent />
 							</Box>
 						</Stack>
-						<Button type="submit" variant="contained">
-							Criar
-						</Button>
 					</Grid>
+					<Stack
+						direction={'row'}
+						justifyContent="center"
+						alignItems="flex-start"
+						spacing={2}
+					>
+						<Button type="submit" variant="contained">
+							Criar artigo
+						</Button>
+						<FormControlLabel
+							control={
+								<Checkbox
+									required
+									value="accept-terms"
+									name="accept-terms"
+									id="accept-terms"
+								/>
+							}
+							label={
+								<Typography variant="body2">
+									Declaro que li e concordei com os{' '}
+									<Link
+										href="/terms"
+										component={NextLink}
+										underline="hover"
+										alignItems="center"
+										target="_blank"
+									>
+										Termos de Serviço
+									</Link>
+									{' e '}
+									<Link
+										href="/privacy"
+										component={NextLink}
+										underline="hover"
+										alignItems="center"
+										target="_blank"
+									>
+										Política de Privacidade
+									</Link>
+								</Typography>
+							}
+						/>
+					</Stack>
 				</Grid>
 			</Paper>
 			<Typography variant="h6" gutterBottom>
