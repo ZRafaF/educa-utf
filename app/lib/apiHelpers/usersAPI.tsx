@@ -41,12 +41,11 @@ export async function getUserAvatarUrl(
 		collectionId: user.collectionId,
 		collectionName: user.collectionName,
 	};
-
-	return pb.files.getUrl(record, user.avatar, {});
+	return pb.files.getUrl(record, user.avatar, { thumb: '100x100' });
 }
 
 export async function getUserAvatarUrlByUserId(userId: string) {
 	const record = await pb.collection('users_stats').getOne(userId);
 
-	return pb.files.getUrl(record, record.avatar, {});
+	return pb.files.getUrl(record, record.avatar, { thumb: '100x100' });
 }

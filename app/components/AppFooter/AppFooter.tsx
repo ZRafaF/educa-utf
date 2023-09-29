@@ -16,6 +16,8 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Typography from '@mui/material/Typography/Typography';
 import DockerIcon from '../CustomIcons/DockerIcon';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Link from 'next/link';
 
 function Copyright() {
 	return (
@@ -49,38 +51,81 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 						alignItems="center"
 						spacing={2}
 					>
-						<Stack direction="row" spacing={2}>
-							<Tooltip title="Repositório no GitHub">
-								<IconButton
-									aria-label="github"
-									href="https://github.com/ZRafaF/educa-utf"
-									target="_blank"
-								>
-									<GitHubIcon />
-								</IconButton>
-							</Tooltip>
-							<Tooltip title="Documentação">
-								<IconButton
-									aria-label="documentation"
-									href="https://zrafaf.github.io/educa-utf/"
-									target="_blank"
-								>
-									<MenuBookIcon />
-								</IconButton>
-							</Tooltip>
-							<Tooltip title="Repositório no DockerHub">
-								<IconButton
-									aria-label="DockerHub-link"
-									href="https://hub.docker.com/r/zrafaf/educa_utf_nextjs"
-									target="_blank"
-								>
-									<DockerIcon />
-								</IconButton>
-							</Tooltip>
-						</Stack>
-						<Box>
+						<Grid container gap={1}>
+							<Grid>
+								<Tooltip title="Repositório no GitHub">
+									<IconButton
+										aria-label="github"
+										href="https://github.com/ZRafaF/educa-utf"
+										target="_blank"
+									>
+										<GitHubIcon />
+									</IconButton>
+								</Tooltip>
+							</Grid>
+							<Grid>
+								<Tooltip title="Documentação">
+									<IconButton
+										aria-label="documentation"
+										href="https://zrafaf.github.io/educa-utf/"
+										target="_blank"
+									>
+										<MenuBookIcon />
+									</IconButton>
+								</Tooltip>
+							</Grid>
+							<Grid>
+								<Tooltip title="Repositório no DockerHub">
+									<IconButton
+										aria-label="DockerHub-link"
+										href="https://hub.docker.com/r/zrafaf/educa_utf_nextjs"
+										target="_blank"
+									>
+										<DockerIcon />
+									</IconButton>
+								</Tooltip>
+							</Grid>
+						</Grid>
+						<Stack
+							direction="column"
+							justifyContent="center"
+							alignItems="center"
+							spacing={2}
+						>
 							<Copyright />
-						</Box>
+							<Grid container gap={2}>
+								<Grid>
+									<Link
+										href="/terms"
+										style={{
+											textDecoration: 'none',
+										}}
+									>
+										<Typography
+											variant="body2"
+											color="white"
+										>
+											Termos de Serviço
+										</Typography>
+									</Link>
+								</Grid>
+								<Grid>
+									<Link
+										href="/privacy"
+										style={{
+											textDecoration: 'none',
+										}}
+									>
+										<Typography
+											variant="body2"
+											color="white"
+										>
+											Política de Privacidade
+										</Typography>
+									</Link>
+								</Grid>
+							</Grid>
+						</Stack>
 					</Stack>
 				</Container>
 			</Paper>
