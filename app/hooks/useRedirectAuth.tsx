@@ -3,20 +3,21 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-'use-client';
+'use client';
 
 import { useEffect } from 'react';
 import usePbAuth from './usePbAuth';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const useRedirectAuth = (shouldRedirectIfLoggedOut?: boolean) => {
 	const [, user] = usePbAuth();
+	const router = useRouter();
 
 	useEffect(() => {
 		if (user) {
-			redirect(`/profile/${user.username}`);
+			router.back();
 		}
-		if (shouldRedirectIfLoggedOut && user === null) redirect('/');
+		if (shouldRedirectIfLoggedOut && user === null) router.back();
 	}, [user, shouldRedirectIfLoggedOut]);
 };
 

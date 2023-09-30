@@ -84,19 +84,20 @@ export async function getNewArticles() {
 		return [];
 	}
 }
-export async function getArticleDocumentUrl(
-	articleId: string,
-	articleCollectionId: string,
-	articleCollectionName: string,
-	articleDocumentName: string
-) {
+export async function getArticleDocumentUrl(article: ArticlesResponse) {
 	const record = {
-		id: articleId,
-		collectionId: articleCollectionId,
-		collectionName: articleCollectionName,
+		id: article.id,
+		collectionId: article.collectionId,
+		collectionName: article.collectionName,
 	};
 
-	return pb.files.getUrl(record, articleDocumentName, {});
+	const documentUrl = pb.files.getUrl(record, article.document, {});
+
+	try {
+		return await fetch(documentUrl).then((response) => response.text());
+	} catch (error) {
+		return 'Não foi possível encontrar esse post :(';
+	}
 }
 
 export async function createArticle(

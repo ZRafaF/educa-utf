@@ -14,9 +14,6 @@ const Page: FunctionComponent<PageProps> = ({ params }) => {
 	const chapterId = params.slug[0];
 	const articleId = params.slug[1];
 
-	console.log(chapterId);
-	console.log(articleId);
-
 	return (
 		<Suspense fallback={'carregando'}>
 			<ArticlePage params={{ slug: [articleId] }} />

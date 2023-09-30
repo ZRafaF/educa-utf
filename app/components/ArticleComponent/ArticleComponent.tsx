@@ -7,47 +7,30 @@ import {
 	ArticlesResponse,
 	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
-import ArticleContentSSR from './ArticleContent/ArticleContent';
+import ArticleContent from './ArticleContent/ArticleContent';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, parseISO } from 'date-fns';
 import PostInfo from './PostInfo/PostInfo';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
-import { getArticleDocumentUrl } from '@/lib/apiHelpers/articlesAPI';
 import { ArticlesExpand } from '@/types/expanded-types';
-import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
 import { Suspense } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 
-export const revalidate = 30;
-
-async function getArticle(article: ArticlesResponse) {
-	const markDownContent = await getArticleDocumentUrl(
-		article.id,
-		article.collectionId,
-		article.collectionName,
-		article.document
-	);
-	try {
-		return await fetch(markDownContent).then((response) => response.text());
-	} catch (error) {
-		return 'Não foi possível encontrar esse post :(';
-	}
-}
-
-async function ArticleComponent({
+function ArticleComponent({
 	myArticle,
 	articleStats,
 	fullWidth,
+	articleDocument,
+	authorAvatarUrl,
 }: {
 	myArticle: ArticlesResponse<ArticlesExpand>;
 	articleStats: ArticlesStatsResponse;
 	fullWidth?: boolean;
+	articleDocument: string;
+	authorAvatarUrl: string;
 }) {
-	const article = await getArticle(myArticle);
-	const authorAvatarUrl = await getUserAvatarUrlByUserId(myArticle.user);
-
 	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
 
@@ -117,7 +100,7 @@ async function ArticleComponent({
 				}}
 				pb={5}
 			>
-				<ArticleContentSSR article={article} />
+				<ArticleContent article={articleDocument} />
 			</Box>
 		</Box>
 	);

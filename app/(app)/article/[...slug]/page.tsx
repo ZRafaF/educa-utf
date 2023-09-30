@@ -8,8 +8,11 @@ import {
 	getListOfArticles,
 	getArticleById,
 	getArticleStatsById,
+	getArticleDocumentUrl,
 } from '@/lib/apiHelpers/articlesAPI';
 import { FunctionComponent } from 'react';
+import ClientSideArticle from './ClientSideArticle';
+import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
 
 interface PageProps {
 	params: { slug: string[] };
@@ -27,15 +30,32 @@ export async function generateStaticParams() {
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const articleId = params.slug[0];
-	const article = await getArticleById(articleId);
-	const articleStats = await getArticleStatsById(article.id);
-	return (
-		<ArticleComponent
-			myArticle={article}
-			articleStats={articleStats}
-			fullWidth={params.slug[1] ? false : true}
-		/>
-	);
+	const fullWidth = params.slug[1] ? false : true;
+	try {
+		const article = await getArticleById(articleId);
+		const articleStats = await getArticleStatsById(article.id);
+		const articleDocument = await getArticleDocumentUrl(article);
+		const authorAvatarUrl = await getUserAvatarUrlByUserId(article.user);
+
+		return (
+			<ArticleComponent
+				myArticle={article}
+				articleStats={articleStats}
+				fullWidth={fullWidth}
+				articleDocument={articleDocument}
+				authorAvatarUrl={authorAvatarUrl}
+			/>
+		);
+	} catch (error) {
+		return (
+			<div>
+				<ClientSideArticle
+					articleId={articleId}
+					fullWidth={fullWidth}
+				/>
+			</div>
+		);
+	}
 };
 
 export default Page;
