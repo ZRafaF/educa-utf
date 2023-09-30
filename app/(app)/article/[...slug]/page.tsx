@@ -9,12 +9,10 @@ import {
 	getArticleById,
 	getArticleStatsById,
 } from '@/lib/apiHelpers/articlesAPI';
-import { FunctionComponent, Suspense } from 'react';
+import { FunctionComponent } from 'react';
 
 interface PageProps {
-	params: {
-		articleId: string;
-	};
+	params: { slug: string[] };
 }
 
 export const revalidate = 30;
@@ -23,18 +21,20 @@ export async function generateStaticParams() {
 	const articles = await getListOfArticles();
 
 	return articles.map((article) => ({
-		articleId: article.id,
+		slug: [article.id, 'full'],
 	}));
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
-	const articleId = params.articleId;
+	const articleId = params.slug[0];
 	const article = await getArticleById(articleId);
 	const articleStats = await getArticleStatsById(article.id);
 	return (
-		<Suspense fallback={<>carregando</>}>
-			<ArticleComponent myArticle={article} articleStats={articleStats} />
-		</Suspense>
+		<ArticleComponent
+			myArticle={article}
+			articleStats={articleStats}
+			fullWidth={params.slug[1] ? false : true}
+		/>
 	);
 };
 
