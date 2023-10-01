@@ -3,10 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from "react";
-import educaUtfLogoImage from "@/resources/logo-utf-sm.png";
-import Box from "@mui/material/Box/Box";
-import Image from "next/image";
+import { FunctionComponent } from 'react';
+import educaUtfLogoImage from '@/resources/logo-utf-sm.png';
+import Box from '@mui/material/Box/Box';
+import Image from 'next/image';
 
 interface MainLogoProps {}
 
@@ -16,17 +16,19 @@ const MainLogo: FunctionComponent<MainLogoProps> = async () => {
 			sx={{
 				height: 20,
 				maxHeight: { xs: 20, sm: 20 },
-				objectFit: "contain",
+				objectFit: 'contain',
 
-				aspectRatio: "540/107",
+				aspectRatio: '540/107',
 			}}
 		>
-			<div style={{ position: "relative", height: "100%" }}>
+			<div style={{ position: 'relative', height: '100%' }}>
 				<Image
 					src={educaUtfLogoImage}
 					sizes="100%"
-					alt="Picture of the author"
+					alt="Logo of EducaUTF"
 					fill
+					priority={true}
+					quality={75}
 				/>
 			</div>
 		</Box>

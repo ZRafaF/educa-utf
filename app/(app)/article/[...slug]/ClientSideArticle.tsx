@@ -76,7 +76,7 @@ const ClientSideArticle: FunctionComponent<ClientSideArticleProps> = ({
 	}
 	return (
 		<div suppressHydrationWarning>
-			<Typography variant="h5" fontWeight={500} p={10}>
+			<Typography variant="h5" fontWeight={500} p={4}>
 				Página não encontrada
 			</Typography>
 		</div>

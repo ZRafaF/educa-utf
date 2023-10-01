@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+
 'use client';
 
 import { FunctionComponent, useEffect, useState } from 'react';
@@ -14,23 +15,23 @@ import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton/ListItemButton';
 import Link from 'next/link';
 import Box from '@mui/material/Box/Box';
-import { getChapterById } from '@/lib/apiHelpers/chaptersAPI';
-import { ChaptersExpand } from '@/types/expanded-types';
-import DrawerController from './DrawerController';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
-import { ArticlesResponse, ChaptersResponse } from '@/types/pocketbase-types';
-import usePbAuth from '@/hooks/usePbAuth';
+import {
+	ArticlesResponse,
+	ArticlesVisibilityOptions,
+	ChaptersResponse,
+} from '@/types/pocketbase-types';
+import { ChaptersExpand } from '@/types/expanded-types';
+import { getChapterById } from '@/lib/apiHelpers/chaptersAPI';
+import DrawerController from './DrawerController';
 
 interface ArticlesListProps {
 	chapterId: string;
 }
 
 const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
-	const [chapter, setChapter] = useState<
-		ChaptersResponse<ChaptersExpand> | undefined
-	>();
-	const [, user] = usePbAuth();
+	const [chapter, setChapter] = useState<ChaptersResponse<ChaptersExpand>>();
 
 	useEffect(() => {
 		try {
@@ -38,7 +39,8 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 				if (chapterResponse) setChapter(chapterResponse);
 			});
 		} catch (error) {}
-	}, [user]);
+	}, [chapterId]);
+
 	return (
 		<DrawerController>
 			<Paper sx={{ p: 3, my: 2 }}>
@@ -54,7 +56,16 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 				<Divider component="li" />
 
 				{chapter?.expand?.articles?.map((post: ArticlesResponse) => (
-					<Box key={'link_to_article' + post.id}>
+					<Box
+						key={'link_to_article' + post.id}
+						sx={{
+							bgcolor:
+								post.visibility ===
+								ArticlesVisibilityOptions.private
+									? 'red'
+									: 'initial',
+						}}
+					>
 						<ListItemButton
 							alignItems="flex-start"
 							LinkComponent={Link}

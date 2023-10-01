@@ -66,9 +66,12 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 	};
 
 	const [selectedFile, setSelectedFile] = useContext(ArticleCoverContext);
-	const onDrop = useCallback((acceptedFiles: File[]) => {
-		setSelectedFile(acceptedFiles[0]);
-	}, []);
+	const onDrop = useCallback(
+		(acceptedFiles: File[]) => {
+			setSelectedFile(acceptedFiles[0]);
+		},
+		[setSelectedFile]
+	);
 	const {
 		getRootProps,
 		getInputProps,

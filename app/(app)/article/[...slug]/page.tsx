@@ -28,13 +28,14 @@ export async function generateStaticParams() {
 	const articles = await getListOfArticles();
 
 	return articles.map((article) => ({
-		slug: [article.id, 'full'],
+		slug: [article.id, 'f'],
 	}));
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const articleId = params.slug[0];
 	const fullWidth = params.slug[1] ? false : true;
+
 	try {
 		const article = await getArticleById(articleId);
 		const articleStats = await getArticleStatsById(article.id);
