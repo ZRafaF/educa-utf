@@ -107,5 +107,5 @@ export async function createArticle(
 	const form = getFormData(newArticle);
 	if (coverFile) form.append('cover', coverFile);
 
-	return pb.collection('articles').create<ArticlesRecord>(form);
+	return pb.collection('articles').create<ArticlesResponse>(form);
 }

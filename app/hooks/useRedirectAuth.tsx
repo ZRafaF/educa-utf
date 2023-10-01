@@ -18,7 +18,7 @@ const useRedirectAuth = (shouldRedirectIfLoggedOut?: boolean) => {
 			router.back();
 		}
 		if (shouldRedirectIfLoggedOut && user === null) router.back();
-	}, [user, shouldRedirectIfLoggedOut]);
+	}, [user, shouldRedirectIfLoggedOut, router]);
 };
 
 export default useRedirectAuth;

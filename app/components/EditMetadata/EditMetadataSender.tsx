@@ -10,6 +10,7 @@ import usePbAuth from '@/hooks/usePbAuth';
 import { createArticle } from '@/lib/apiHelpers/articlesAPI';
 import { ArticlesVisibilityOptions } from '@/types/pocketbase-types';
 import Paper from '@mui/material/Paper/Paper';
+import { useRouter } from 'next/navigation';
 import { FunctionComponent, ReactNode, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -23,6 +24,7 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 	const [selectedFile, setSelectedFile] = useState<File>();
 
 	const [, user] = usePbAuth();
+	const router = useRouter();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -75,6 +77,8 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 				},
 				selectedFile
 			);
+
+			router.push(`/edit/${newRecord.id}`);
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error);

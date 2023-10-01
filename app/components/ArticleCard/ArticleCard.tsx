@@ -114,7 +114,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 				direction="column"
 				justifyContent="space-between"
 				alignItems="start"
-				minHeight={75}
+				minHeight={80}
 				useFlexGap
 			>
 				<Typography

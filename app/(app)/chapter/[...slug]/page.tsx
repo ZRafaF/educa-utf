@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent, Suspense } from 'react';
+import { FunctionComponent } from 'react';
 import { default as ArticlePage } from '../../article/[...slug]/page';
 
 interface PageProps {
@@ -11,14 +11,7 @@ interface PageProps {
 }
 
 const Page: FunctionComponent<PageProps> = ({ params }) => {
-	const chapterId = params.slug[0];
-	const articleId = params.slug[1];
-
-	return (
-		<Suspense fallback={'carregando'}>
-			<ArticlePage params={{ slug: [articleId] }} />
-		</Suspense>
-	);
+	return <ArticlePage params={{ slug: [params.slug[1], 'f'] }} />;
 };
 
 export default Page;
