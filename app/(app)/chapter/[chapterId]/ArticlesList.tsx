@@ -24,6 +24,7 @@ import {
 } from '@/types/pocketbase-types';
 import { ChaptersExpand } from '@/types/expanded-types';
 import { getChapterById } from '@/lib/apiHelpers/chaptersAPI';
+import DrawerController from './DrawerController';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -41,7 +42,7 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 	}, [chapterId]);
 
 	return (
-		<>
+		<DrawerController>
 			<Paper sx={{ p: 3, my: 2 }}>
 				<Typography variant="h5" fontWeight={700} pb={3} align="center">
 					{chapter?.title}
@@ -83,7 +84,7 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 					</Box>
 				))}
 			</List>
-		</>
+		</DrawerController>
 	);
 };
 
