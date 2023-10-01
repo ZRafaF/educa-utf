@@ -20,6 +20,7 @@ import DrawerController from './DrawerController';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import { ArticlesResponse, ChaptersResponse } from '@/types/pocketbase-types';
+import usePbAuth from '@/hooks/usePbAuth';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -29,11 +30,15 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 	const [chapter, setChapter] = useState<
 		ChaptersResponse<ChaptersExpand> | undefined
 	>();
+	const [, user] = usePbAuth();
+
 	useEffect(() => {
-		getChapterById(chapterId, true).then((chapterResponse) => {
-			if (chapterResponse) setChapter(chapterResponse);
-		});
-	}, []);
+		try {
+			getChapterById(chapterId, true).then((chapterResponse) => {
+				if (chapterResponse) setChapter(chapterResponse);
+			});
+		} catch (error) {}
+	}, [user]);
 	return (
 		<DrawerController>
 			<Paper sx={{ p: 3, my: 2 }}>

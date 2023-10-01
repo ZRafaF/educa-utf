@@ -18,7 +18,8 @@ import {
 	ArticlesResponse,
 	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
-import { FunctionComponent, Suspense, useEffect, useState } from 'react';
+import Typography from '@mui/material/Typography/Typography';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 interface ClientSideArticleProps {
 	fullWidth?: boolean;
@@ -64,18 +65,22 @@ const ClientSideArticle: FunctionComponent<ClientSideArticleProps> = ({
 
 	if (article && articleStats && articleDocument && authorAvatarUrl) {
 		return (
-			<Suspense fallback={<>Carregando artigo...</>}>
-				<ArticleComponent
-					myArticle={article}
-					articleStats={articleStats}
-					fullWidth={fullWidth}
-					articleDocument={articleDocument}
-					authorAvatarUrl={authorAvatarUrl}
-				/>
-			</Suspense>
+			<ArticleComponent
+				myArticle={article}
+				articleStats={articleStats}
+				fullWidth={fullWidth}
+				articleDocument={articleDocument}
+				authorAvatarUrl={authorAvatarUrl}
+			/>
 		);
 	}
-	return <div suppressHydrationWarning>Nada aqui</div>;
+	return (
+		<div suppressHydrationWarning>
+			<Typography variant="h5" fontWeight={500} p={10}>
+				Página não encontrada
+			</Typography>
+		</div>
+	);
 };
 
 export default ClientSideArticle;

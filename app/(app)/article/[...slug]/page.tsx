@@ -11,8 +11,12 @@ import {
 	getArticleDocumentUrl,
 } from '@/lib/apiHelpers/articlesAPI';
 import { FunctionComponent } from 'react';
-import ClientSideArticle from './ClientSideArticle';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
+import dynamic from 'next/dynamic';
+
+const NoSSRClientSideArticle = dynamic(() => import('./ClientSideArticle'), {
+	ssr: false,
+});
 
 interface PageProps {
 	params: { slug: string[] };
@@ -48,12 +52,10 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 		);
 	} catch (error) {
 		return (
-			<div>
-				<ClientSideArticle
-					articleId={articleId}
-					fullWidth={fullWidth}
-				/>
-			</div>
+			<NoSSRClientSideArticle
+				articleId={articleId}
+				fullWidth={fullWidth}
+			/>
 		);
 	}
 };

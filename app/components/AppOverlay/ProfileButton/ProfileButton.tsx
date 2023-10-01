@@ -24,7 +24,6 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import usePbAuth from '@/hooks/usePbAuth';
 import { logOut } from '@/lib/apiHelpers/authAPI';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useRouter } from 'next/navigation';
 
 import dynamic from 'next/dynamic';
 const NoSSRProfileAvatar = dynamic(() => import('./ProfileAvatar'), {
@@ -35,7 +34,6 @@ interface ProfileButtonProps {}
 
 const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const router = useRouter();
 	const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -61,7 +59,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			<MenuItem
 				onClick={() => {
 					logOut().then(() => {
-						router.refresh();
+						window.location.reload();
 					});
 				}}
 			>

@@ -48,11 +48,6 @@ const ArticleComponentLoading: FunctionComponent<
 						<Skeleton animation="wave" />
 					</Typography>
 				</Grid>
-				<Grid xs={20} sm={20} md={20} lg={5} xl={5}>
-					<Typography>
-						<Skeleton animation="wave" />
-					</Typography>
-				</Grid>
 			</Grid>
 			<Box
 				mx={{
