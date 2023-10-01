@@ -3,7 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { Collections, ArticlesResponse } from '@/types/pocketbase-types';
+import {
+	Collections,
+	ArticlesResponse,
+	ArticlesVisibilityOptions,
+} from '@/types/pocketbase-types';
 
 export function formatString(input: string): string {
 	const sanitized = input
@@ -24,7 +28,7 @@ export const defaultPostResponse: ArticlesResponse = {
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt scelerisque sagittis. Vivamus ultrices odio vel risus rhoncus eleifend sit amet ut magna. Cras sed enim lectus. Suspendisse',
 	user: '123',
 	id: 'RecordIdString',
-	visible: true,
+	visibility: ArticlesVisibilityOptions.public,
 	views: 0,
 	document: 'string',
 	tags: [],
@@ -35,7 +39,7 @@ export const defaultPostResponse: ArticlesResponse = {
 };
 
 export const getRandomImageUrl = () => {
-	return `https://picsum.photos/seed/${Math.random()}/500/300`;
+	return `https://picsum.photos/seed/${Math.random()}/400/200`;
 };
 
 export function splitStringByComma(inputString: string): string[] {
@@ -66,4 +70,10 @@ export function stringToColor(string: string) {
 
 export function getInitials(name: string) {
 	return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+}
+
+export function getFormData(object: any) {
+	const formData = new FormData();
+	Object.keys(object).forEach((key) => formData.append(key, object[key]));
+	return formData;
 }

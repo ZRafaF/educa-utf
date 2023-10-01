@@ -164,7 +164,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 				<CardMedia
 					component="img"
 					sx={{
-						aspectRatio: '2.5/1',
+						aspectRatio: '2/1',
 					}}
 					image={imgSrc}
 					alt="green iguana"

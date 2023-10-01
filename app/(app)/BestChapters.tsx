@@ -14,6 +14,7 @@ export const revalidate = 30;
 
 async function BestChapters() {
 	const chapters = await getBestChaptersOf('month');
+
 	return (
 		<Box>
 			<Typography variant="h5" fontWeight={700} pb={3}>

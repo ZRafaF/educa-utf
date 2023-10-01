@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography/Typography';
 import Menu from '@mui/material/Menu/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import { FunctionComponent, use, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import React from 'react';
 import Link from 'next/link';
 import LoginIcon from '@mui/icons-material/Login';
@@ -24,6 +24,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import usePbAuth from '@/hooks/usePbAuth';
 import { logOut } from '@/lib/apiHelpers/authAPI';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 import dynamic from 'next/dynamic';
 const NoSSRProfileAvatar = dynamic(() => import('./ProfileAvatar'), {
 	ssr: false,
@@ -57,7 +58,9 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			</Link>
 			<MenuItem
 				onClick={() => {
-					logOut();
+					logOut().then(() => {
+						window.location.reload();
+					});
 				}}
 			>
 				<ListItemIcon>
@@ -101,6 +104,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			anchorEl={anchorEl}
 			id={menuId}
 			open={isMenuOpen}
+			keepMounted
 			onClose={handleMenuClose}
 		>
 			<ListItem>

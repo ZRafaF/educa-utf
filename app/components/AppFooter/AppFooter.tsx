@@ -17,7 +17,8 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import Typography from '@mui/material/Typography/Typography';
 import DockerIcon from '../CustomIcons/DockerIcon';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import Link from 'next/link';
+import NextLink from 'next/link';
+import Link from '@mui/material/Link/Link';
 
 function Copyright() {
 	return (
@@ -45,13 +46,16 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 				}}
 			>
 				<Container maxWidth="md">
-					<Stack
-						direction="row"
-						justifyContent="space-between"
+					<Grid
+						container
+						justifyContent={{
+							xs: 'center',
+							sm: 'space-between',
+						}}
 						alignItems="center"
-						spacing={2}
+						gap={1}
 					>
-						<Grid container gap={1}>
+						<Grid container gap={2}>
 							<Grid>
 								<Tooltip title="Repositório no GitHub">
 									<IconButton
@@ -97,14 +101,11 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 								<Grid>
 									<Link
 										href="/terms"
-										style={{
-											textDecoration: 'none',
-										}}
+										component={NextLink}
+										underline="hover"
+										color={'white'}
 									>
-										<Typography
-											variant="body2"
-											color="white"
-										>
+										<Typography variant="body2">
 											Termos de Serviço
 										</Typography>
 									</Link>
@@ -112,21 +113,18 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 								<Grid>
 									<Link
 										href="/privacy"
-										style={{
-											textDecoration: 'none',
-										}}
+										component={NextLink}
+										underline="hover"
+										color={'white'}
 									>
-										<Typography
-											variant="body2"
-											color="white"
-										>
+										<Typography variant="body2">
 											Política de Privacidade
 										</Typography>
 									</Link>
 								</Grid>
 							</Grid>
 						</Stack>
-					</Stack>
+					</Grid>
 				</Container>
 			</Paper>
 		</ThemeProvider>
