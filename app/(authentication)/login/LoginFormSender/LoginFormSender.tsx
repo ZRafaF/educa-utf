@@ -7,8 +7,8 @@
 import { FunctionComponent, ReactNode } from 'react';
 import Box from '@mui/material/Box/Box';
 import { loginWithPassword } from '@/lib/apiHelpers/authAPI';
-import useRedirectAuth from '@/hooks/useRedirectAuth';
 import { toast } from 'react-toastify';
+import useRedirectAuth from '@/hooks/useRedirectAuth';
 
 interface LoginFormSenderProps {
 	children: ReactNode;
@@ -33,11 +33,8 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			//setPersistence(auth, browserSessionPersistence);
 		}
 		try {
-			const authRes = await loginWithPassword(
-				submitLogin,
-				submitPassword
-			);
-			console.log(authRes);
+			await loginWithPassword(submitLogin, submitPassword);
+			toast.success('Login com sucesso!');
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error);

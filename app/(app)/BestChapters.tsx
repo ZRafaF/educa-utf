@@ -14,7 +14,6 @@ export const revalidate = 30;
 
 async function BestChapters() {
 	const chapters = await getBestChaptersOf('month');
-	console.log(chapters);
 
 	return (
 		<Box>

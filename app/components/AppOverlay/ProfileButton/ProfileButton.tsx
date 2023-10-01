@@ -24,6 +24,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import usePbAuth from '@/hooks/usePbAuth';
 import { logOut } from '@/lib/apiHelpers/authAPI';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 import dynamic from 'next/dynamic';
 const NoSSRProfileAvatar = dynamic(() => import('./ProfileAvatar'), {
 	ssr: false,
@@ -57,7 +58,9 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			</Link>
 			<MenuItem
 				onClick={() => {
-					logOut();
+					logOut().then(() => {
+						window.location.reload();
+					});
 				}}
 			>
 				<ListItemIcon>
