@@ -109,3 +109,14 @@ export async function createArticle(
 
 	return pb.collection('articles').create<ArticlesResponse>(form);
 }
+
+export async function getArticleCoverURL(
+	article: ArticlesResponse | ArticlesStatsResponse
+) {
+	const record = {
+		id: article.id,
+		collectionId: article.collectionId,
+		collectionName: article.collectionName,
+	};
+	return pb.files.getUrl(record, article.cover, { thumb: '600x300' });
+}
