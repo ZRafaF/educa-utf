@@ -61,7 +61,7 @@ const SearchBar: FunctionComponent<SearchBarProps> = () => {
 					<Tooltip title="Meu perfil" arrow>
 						<IconButton
 							size="large"
-							aria-label="account of current user"
+							aria-label="search"
 							aria-haspopup="true"
 							color="inherit"
 						>
