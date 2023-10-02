@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+    next:
+        depends_on:
+            - pocketbase
+        image: zrafaf/educa_utf_nextjs:latest
+        restart: unless-stopped
+        ports:
+            - 3000:3000
+
+    pocketbase:
+        image: zrafaf/educa_utf_pocketbase:latest
+        restart: unless-stopped
+        ports:
+            - 8090:8090
+        volumes:
+            - ./pocketbase_data:/pb/pb_data
+
+    watchtower:
+        image: containrrr/watchtower
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: --interval 30
+
+    nginx_proxy:
+        image: jc21/nginx-proxy-manager:latest
+        restart: unless-stopped
+        ports:
+            - '80:80'
+            - '81:81'
+            - '443:443'
+        volumes:
+            - ./nginx_proxy/data:/data
+            - ./nginx_proxy/letsencrypt:/etc/letsencrypt
+
+    dozzle:
+        container_name: dozzle
+        image: amir20/dozzle:latest
+        labels:
+            - 'com.centurylinklabs.watchtower.enable=false' # Disables watchtower auto update
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - 9999:8080
+
+    # Runs on port 61208
+    glances:
+        image: nicolargo/glances:latest-full
+        pid: host
+        network_mode: host
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
+        environment:
+            - 'GLANCES_OPT=-w'
+
+    umami:
+        image: zrafaf/educa_utf_umami:latest
+        ports:
+            - '3100:3000'
+        environment:
+            DATABASE_URL: postgresql://umami:umami@umami_db:5432/umami
+            DATABASE_TYPE: postgresql
+            APP_SECRET: '${UMAMI_APP_SECRET}'
+        depends_on:
+            umami_db:
+                condition: service_healthy
+        restart: unless-stopped
+
+    umami_db:
+        image: postgres:15-alpine
+        environment:
+            POSTGRES_DB: umami
+            POSTGRES_USER: umami
+            POSTGRES_PASSWORD: umami
+        volumes:
+            - ./umami-db-data:/var/lib/postgresql/data
+        restart: unless-stopped
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}',
+                ]
+            interval: 5s
+            timeout: 5s
+            retries: 5

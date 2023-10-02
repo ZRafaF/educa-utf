@@ -143,3 +143,4 @@ nav:
           - Backend: desenvolvimento/backend.md
           - Documentação: desenvolvimento/documentacao.md
           - Proxy Reverso: desenvolvimento/reverse-proxy.md
+          - Métricas: desenvolvimento/metricas.md
