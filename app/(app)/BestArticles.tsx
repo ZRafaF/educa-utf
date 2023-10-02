@@ -38,9 +38,9 @@ async function BestArticles() {
 						key={`article_${idx}`}
 						xs={6}
 						sm={4}
-						md={3.3}
-						lg={2.5}
-						xl={2.5}
+						md={3}
+						lg={2.4}
+						xl={2.4}
 					>
 						<ArticleCard
 							myArticle={article}
