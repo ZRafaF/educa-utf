@@ -30,16 +30,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	// read route params
 	const chapterId = params.chapterId;
-	const chapterStats = await getChaptersStatsById(chapterId);
 
 	try {
+		const chapterStats = await getChaptersStatsById(chapterId);
 		const chapter = await getChapterById(chapterId);
-
+		let tags = chapter.expand?.tags.map((tag) => tag.name);
+		if (tags === undefined) tags = [''];
 		return {
 			title: chapter.title,
 			description: chapter.description,
 			applicationName: 'EducaUTF',
 			authors: [{ name: chapterStats.author_name }],
+			keywords: ['EducaUTF', 'capitulo', chapter.title, ...tags],
 		};
 	} catch (error) {
 		return {

@@ -5,6 +5,7 @@
 
 import {
 	getListOfUsersStats,
+	getUserAvatarUrl,
 	getUsersStatsByUsername,
 } from '@/lib/apiHelpers/usersAPI';
 import { FunctionComponent } from 'react';
@@ -37,12 +38,20 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
 	try {
 		const userStats = await getUsersStatsByUsername(params.username);
-
+		const userAvatarUrl = await getUserAvatarUrl(userStats);
 		return {
 			title: userStats.username,
 			description: userStats.description,
 			applicationName: 'EducaUTF',
 			authors: [{ name: userStats.name }],
+			openGraph: {
+				title: userStats.username,
+				description: `Perfil do ${userStats.username}`,
+				siteName: 'EducaUTF',
+				images: [{ url: userAvatarUrl }],
+				locale: 'pt_BR',
+				type: 'website',
+			},
 		};
 	} catch (error) {
 		return {

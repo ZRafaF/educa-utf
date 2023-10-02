@@ -9,6 +9,7 @@ import {
 	getArticleById,
 	getArticleStatsById,
 	getArticleDocumentUrl,
+	getArticleCoverURL,
 } from '@/lib/apiHelpers/articlesAPI';
 import { FunctionComponent } from 'react';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
@@ -35,18 +36,28 @@ export async function generateStaticParams() {
 export async function generateMetadata({
 	params,
 }: PageProps): Promise<Metadata> {
-	// read route params
 	const articleId = params.slug[0];
 
 	try {
 		const article = await getArticleById(articleId);
 		const articleStats = await getArticleStatsById(articleId);
-
+		const ArticleCoverUrl = await getArticleCoverURL(article);
+		let tags = article.expand?.tags.map((tag) => tag.name);
+		if (tags === undefined) tags = [''];
 		return {
 			title: article.title,
 			description: article.description,
 			applicationName: 'EducaUTF',
 			authors: [{ name: articleStats.author_name }],
+			openGraph: {
+				title: article.title,
+				description: article.description,
+				siteName: 'EducaUTF',
+				images: [{ url: ArticleCoverUrl }],
+				locale: 'pt_BR',
+				type: 'website',
+			},
+			keywords: ['EducaUTF', 'artigo', article.title, ...tags],
 		};
 	} catch (error) {
 		return {
