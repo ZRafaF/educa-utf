@@ -5,7 +5,10 @@
 
 import { ChaptersExpand, ChaptersExpandTags } from '@/types/expanded-types';
 import pb from '../PocketBase/pocketbase';
-import { ChaptersResponse } from '@/types/pocketbase-types';
+import {
+	ChaptersResponse,
+	ChaptersStatsResponse,
+} from '@/types/pocketbase-types';
 
 export async function getListOfChapters(expand: boolean = false) {
 	try {
@@ -48,6 +51,14 @@ export async function getFirstChapterByFilter(filter: string) {
 	return await pb
 		.collection('chapters')
 		.getFirstListItem<ChaptersResponse>(filter, {
+			skipTotal: true,
+		});
+}
+
+export async function getChaptersStatsById(chapterId: string) {
+	return pb
+		.collection('chapters_stats')
+		.getOne<ChaptersStatsResponse>(chapterId, {
 			skipTotal: true,
 		});
 }

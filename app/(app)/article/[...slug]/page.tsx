@@ -13,7 +13,7 @@ import {
 import { FunctionComponent } from 'react';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
 import dynamic from 'next/dynamic';
-
+import type { Metadata } from 'next';
 const NoSSRClientSideArticle = dynamic(() => import('./ClientSideArticle'), {
 	ssr: false,
 });
@@ -30,6 +30,30 @@ export async function generateStaticParams() {
 	return articles.map((article) => ({
 		slug: [article.id, 'f'],
 	}));
+}
+
+export async function generateMetadata({
+	params,
+}: PageProps): Promise<Metadata> {
+	// read route params
+	const articleId = params.slug[0];
+
+	try {
+		const article = await getArticleById(articleId);
+		const articleStats = await getArticleStatsById(articleId);
+
+		return {
+			title: article.title,
+			description: article.description,
+			applicationName: 'EducaUTF',
+			authors: [{ name: articleStats.author_name }],
+		};
+	} catch (error) {
+		return {
+			title: 'Artigo privado',
+			description: 'Artigo privado',
+		};
+	}
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
