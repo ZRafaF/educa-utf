@@ -12,7 +12,7 @@ interface ArticleContentProps {
 	article: string;
 }
 
-const ArticleContent: FunctionComponent<ArticleContentProps> = ({
+const ArticleContentSSR: FunctionComponent<ArticleContentProps> = ({
 	article,
 }) => {
 	return (
@@ -22,4 +22,4 @@ const ArticleContent: FunctionComponent<ArticleContentProps> = ({
 	);
 };
 
-export default ArticleContent;
+export default ArticleContentSSR;
