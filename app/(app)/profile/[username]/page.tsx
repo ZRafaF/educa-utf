@@ -10,6 +10,7 @@ import {
 import { FunctionComponent } from 'react';
 import Box from '@mui/material/Box/Box';
 import dynamic from 'next/dynamic';
+import type { Metadata } from 'next';
 
 const NoSSREditUserComponent = dynamic(() => import('./EditUserComponent'), {
 	ssr: false,
@@ -29,6 +30,25 @@ export async function generateStaticParams() {
 	return result.map((user) => ({
 		username: user.username,
 	}));
+}
+
+export async function generateMetadata({
+	params,
+}: PageProps): Promise<Metadata> {
+	try {
+		const userStats = await getUsersStatsByUsername(params.username);
+
+		return {
+			title: userStats.username,
+			description: userStats.description,
+			applicationName: 'EducaUTF',
+			authors: [{ name: userStats.name }],
+		};
+	} catch (error) {
+		return {
+			title: 'Perfil',
+		};
+	}
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
