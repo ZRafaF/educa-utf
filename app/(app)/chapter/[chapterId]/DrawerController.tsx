@@ -31,7 +31,7 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 	const pathname = usePathname();
 
 	const theme = useTheme();
-	const smallScreens = useMediaQuery(theme.breakpoints.down('md'));
+	const notSmallScreens = useMediaQuery(theme.breakpoints.up('sm'));
 	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 	const onlyMediumScreen = useMediaQuery(theme.breakpoints.only('md'));
 
@@ -124,7 +124,7 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 		</React.Fragment>
 	);
 
-	return smallScreens ? dynamicDrawer : fixedDrawer;
+	return notSmallScreens ? fixedDrawer : dynamicDrawer;
 };
 
 export default DrawerController;
