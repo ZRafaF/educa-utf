@@ -14,7 +14,9 @@ import Script from 'next/script';
 
 export const metadata: Metadata = {
 	title: 'EducaUTF',
-	description: 'Web aplicação feita por alunos para alunos.',
+	description:
+		'Web aplicação para criação e compartilhamento de conteúdo acadêmico. Feito por alunos para o mundo :)',
+	keywords: ['EducaUTF', 'Educa UTF', 'artigos', 'estudo', 'UTFPR', 'wiki'],
 };
 
 export default function RootLayout({

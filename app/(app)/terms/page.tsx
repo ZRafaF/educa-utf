@@ -12,6 +12,12 @@ import ArticleContentSSR from '@/components/ArticleComponent/ArticleContent/Arti
 export const metadata: Metadata = {
 	title: 'Termos de Serviço',
 	description: 'Termos de Serviço do EducaUTF',
+	keywords: [
+		'EducaUTF',
+		'Educa UTF',
+		'terms of service',
+		'termos de serviço',
+	],
 };
 interface PageProps {}
 

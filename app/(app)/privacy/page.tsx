@@ -12,6 +12,12 @@ import ArticleContentSSR from '@/components/ArticleComponent/ArticleContent/Arti
 export const metadata: Metadata = {
 	title: 'Política de Privacidade',
 	description: 'Política de Privacidade do EducaUTF',
+	keywords: [
+		'EducaUTF',
+		'Educa UTF',
+		'privacy policy',
+		'política de privacidade',
+	],
 };
 
 interface PageProps {}
