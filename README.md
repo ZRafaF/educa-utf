@@ -1,6 +1,8 @@
 ## Links
-* [Educa UTF](https://zrafaf.github.io/educa-utf/)
-* [Documentação](https://zrafaf.github.io/educa-utf/documentacao)
+* [Educa UTF](https://educautf.td.utfpr.edu.br/)
+* [Umami](https://educautf.td.utfpr.edu.br/umami)
+* [PB](https://educautf.td.utfpr.edu.br/db/_)
+* [Documentação](https://zrafaf.github.io/educa-utf/)
 * [PDF](https://zrafaf.github.io/educa-utf/pdf/document.pdf)
 
 ## Dependências
