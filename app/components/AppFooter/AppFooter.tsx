@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import Box from '@mui/material/Box/Box';
 import Paper from '@mui/material/Paper/Paper';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { FunctionComponent } from 'react';

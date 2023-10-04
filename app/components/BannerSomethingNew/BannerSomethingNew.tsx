@@ -12,8 +12,6 @@ import Button from '@mui/material/Button/Button';
 import NewArticlesCarousel from './NewArticlesCarousel/NewArticlesCarousel';
 import { getNewArticles } from '@/lib/apiHelpers/articlesAPI';
 
-export const revalidate = 300;
-
 async function BannerSomethingNew() {
 	const posts = await getNewArticles();
 
@@ -43,6 +41,7 @@ async function BannerSomethingNew() {
 								variant="h2"
 								color="text.primary"
 								fontWeight={700}
+								component="h1"
 							>
 								Descubra algo novo
 							</Typography>
@@ -51,6 +50,7 @@ async function BannerSomethingNew() {
 								variant="h6"
 								color="text.secondary"
 								mb={3}
+								component="p"
 							>
 								Encontre seu próximo conhecimento agora!
 							</Typography>
@@ -65,7 +65,7 @@ async function BannerSomethingNew() {
 					</ThemeProvider>
 				</Grid>
 				<Grid sm={20} md pt={6}>
-					<NewArticlesCarousel myArticles={posts} />
+					{<NewArticlesCarousel myArticles={posts} />}
 				</Grid>
 			</Grid>
 		</Box>

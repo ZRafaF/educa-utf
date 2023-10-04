@@ -40,8 +40,8 @@ export async function generateMetadata({
 		const userStats = await getUsersStatsByUsername(params.username);
 		const userAvatarUrl = await getUserAvatarUrl(userStats);
 		return {
-			title: `${userStats.username} - EducaUTF`,
-			description: userStats.description,
+			title: `${userStats.username} (${userStats.name})  - EducaUTF`,
+			description: `Perfil do ${userStats.username}: ${userStats.description}`,
 			applicationName: 'EducaUTF',
 			authors: [{ name: userStats.name }],
 			openGraph: {

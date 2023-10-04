@@ -81,7 +81,11 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 							href={authorProfileUrl}
 							style={{ textDecoration: 'none' }}
 						>
-							<Typography height={'100%'} color={'MenuText'}>
+							<Typography
+								height={'100%'}
+								color={'MenuText'}
+								component="p"
+							>
 								{articleStats.author_name}
 							</Typography>
 						</Link>
@@ -94,13 +98,13 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 					<Stack spacing={2}>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<VisibilityIcon color="action" />
-							<Typography variant="subtitle2">
+							<Typography variant="subtitle2" component="p">
 								{myArticle.views}
 							</Typography>
 						</Stack>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<FavoriteIcon color="action" />
-							<Typography variant="subtitle2">
+							<Typography variant="subtitle2" component="p">
 								{articleStats.likes}
 							</Typography>
 						</Stack>
