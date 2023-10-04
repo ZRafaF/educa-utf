@@ -4,7 +4,13 @@
 // https://opensource.org/licenses/MIT
 
 import { FunctionComponent } from 'react';
+import { Metadata } from 'next/types';
 
+export const metadata: Metadata = {
+	title: 'Editar artigo - EducaUTF',
+	description: 'Edite seu artigo do EducaUTF!',
+	keywords: ['EducaUTF', 'Educa UTF', 'article', 'artigo', 'edit', 'editar'],
+};
 interface PageProps {
 	params: { articleId: string };
 }

@@ -4,8 +4,22 @@ import Box from '@mui/material/Box/Box';
 import BannerSomethingNew from '@/components/BannerSomethingNew/BannerSomethingNew';
 import BestChapters from './BestChapters';
 import Divider from '@mui/material/Divider/Divider';
+import { Metadata } from 'next/types';
 
 export const revalidate = 30;
+
+export const metadata: Metadata = {
+	title: 'EducaUTF',
+	description:
+		'Web aplicação para criação e compartilhamento de conteúdo acadêmico. Feito por alunos para o mundo :)',
+	keywords: ['EducaUTF', 'Educa UTF', 'artigos', 'estudo', 'UTFPR', 'wiki'],
+	openGraph: {
+		images: '/icon-256x256.png',
+	},
+	twitter: {
+		images: '/icon-256x256.png',
+	},
+};
 
 export default function Home() {
 	return (

@@ -40,7 +40,7 @@ export async function generateMetadata({
 		const userStats = await getUsersStatsByUsername(params.username);
 		const userAvatarUrl = await getUserAvatarUrl(userStats);
 		return {
-			title: userStats.username,
+			title: `${userStats.username} - EducaUTF`,
 			description: userStats.description,
 			applicationName: 'EducaUTF',
 			authors: [{ name: userStats.name }],

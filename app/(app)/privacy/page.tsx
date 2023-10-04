@@ -10,7 +10,7 @@ import type { Metadata } from 'next/types';
 import ArticleContentSSR from '@/components/ArticleComponent/ArticleContent/ArticleContentSSR';
 
 export const metadata: Metadata = {
-	title: 'Política de Privacidade',
+	title: 'Política de Privacidade - EducaUTF',
 	description: 'Política de Privacidade do EducaUTF',
 	keywords: [
 		'EducaUTF',

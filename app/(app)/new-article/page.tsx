@@ -11,7 +11,7 @@ import EditMetadata from '@/components/EditMetadata/EditMetadata';
 import EditArticle from '@/components/EditArticle/EditArticle';
 
 export const metadata: Metadata = {
-	title: 'Novo artigo',
+	title: 'Novo artigo - EducaUTF',
 	description: 'Crie um novo artigo e publique no EducaUTF!',
 	keywords: ['EducaUTF', 'Educa UTF', 'novo artigo', 'criar', 'novo'],
 };

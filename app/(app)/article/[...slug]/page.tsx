@@ -45,7 +45,7 @@ export async function generateMetadata({
 		let tags = article.expand?.tags.map((tag) => tag.name);
 		if (tags === undefined) tags = [''];
 		return {
-			title: article.title,
+			title: `${article.title} - EducaUTF`,
 			description: article.description,
 			applicationName: 'EducaUTF',
 			authors: [{ name: articleStats.author_name }],

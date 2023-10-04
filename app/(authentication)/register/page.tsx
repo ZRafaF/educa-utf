@@ -9,6 +9,13 @@ import Grid from '@mui/material/Grid/Grid';
 import Typography from '@mui/material/Typography/Typography';
 
 import Link from 'next/link';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+	title: 'Registro - EducaUTF',
+	description: 'Registre-se em EducaUTF',
+	keywords: ['EducaUTF', 'Educa UTF', 'register', 'registro', 'criar conta'],
+};
 
 interface pageProps {}
 
