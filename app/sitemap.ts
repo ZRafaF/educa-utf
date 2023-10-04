@@ -12,7 +12,7 @@ export default async function sitemap() {
 
 	const articlesSiteMap = articles.map((article) => ({
 		url: `https://educautf.td.utfpr.edu.br/article/${article.id}`,
-		lastModified: new Date(article.updated),
+		lastModified: new Date(),
 		changeFrequency: 'daily',
 		priority: 0.9,
 	}));
@@ -30,7 +30,7 @@ export default async function sitemap() {
 		chapter.expand?.articles.forEach((article) => {
 			chaptersSiteMap.push({
 				url: `https://educautf.td.utfpr.edu.br/chapter/${chapter.id}/${article.id}`,
-				lastModified: new Date(article.updated),
+				lastModified: new Date(),
 				changeFrequency: 'daily',
 				priority: 0.9,
 			});
@@ -40,7 +40,7 @@ export default async function sitemap() {
 	const users = await getListOfUsersStats();
 	const usersSiteMap = users.map((user) => ({
 		url: `https://educautf.td.utfpr.edu.br/profile/${user.username}`,
-		lastModified: new Date(user.updated),
+		lastModified: new Date(),
 		changeFrequency: 'daily',
 		priority: 0.7,
 	}));
