@@ -17,6 +17,15 @@ export const metadata: Metadata = {
 	description:
 		'Web aplicação para criação e compartilhamento de conteúdo acadêmico. Feito por alunos para o mundo :)',
 	keywords: ['EducaUTF', 'Educa UTF', 'artigos', 'estudo', 'UTFPR', 'wiki'],
+
+	manifest: '/manifest.json',
+	themeColor: '#121212',
+	openGraph: {
+		images: '/icon-256x256.png',
+	},
+	twitter: {
+		images: '/icon-256x256.png',
+	},
 };
 
 export default function RootLayout({
@@ -26,6 +35,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="pt-br">
+			<head>
+				<link rel="manifest" href="/manifest.json" />
+			</head>
 			<Script
 				src="https://educautf.td.utfpr.edu.br/umami/script.js"
 				data-website-id="01024959-6d25-4edb-bee5-95f5cc103bff"
