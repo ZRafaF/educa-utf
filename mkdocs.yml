@@ -16,11 +16,11 @@
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 site_name: Educa UTF
-site_dir: documentacao
+# site_dir: documentacao
 
 repo_url: https://github.com/ZRafaF/educa-utf
 repo_name: ZRafaF/educa-utf
-copyright: Copyright &copy; 2023 Rafael Farias
+copyright: Copyright &copy; 2023 Rafael F. Meneses
 edit_uri: edit/main/docs/
 
 theme:
@@ -84,9 +84,9 @@ plugins:
     - search:
           separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
     - with-pdf:
-          author: Rafael Farias
+          author: Rafael F. Meneses
           cover_subtitle: Documentação completa
-          copyright: Copyright &copy; 2023 Rafael Farias.
+          copyright: Copyright &copy; 2023 Rafael F. Meneses.
           toc_title: Índice
           enabled_if_env: ENABLE_PDF_EXPORT
           toc_level: 2
