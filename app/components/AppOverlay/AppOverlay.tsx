@@ -24,9 +24,9 @@ interface AppOverlayProps {
 
 const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 	return (
-		<ThemeProvider theme={darkTheme}>
-			<OverlayControllerProvider>
-				<Box>
+		<OverlayControllerProvider>
+			<Box>
+				<ThemeProvider theme={darkTheme}>
 					<AppBarController>
 						<Toolbar>
 							<ToggleDrawerButton />
@@ -43,20 +43,11 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 						<Toolbar />
 						<ListItems />
 					</DrawerController>
-					<ThemeProvider theme={lightTheme}>
-						<Box
-							component="main"
-							sx={{
-								flexGrow: 1,
-								ml: { xs: 0, sm: 7 },
-							}}
-						>
-							{children}
-						</Box>
-					</ThemeProvider>
-				</Box>
-			</OverlayControllerProvider>
-		</ThemeProvider>
+				</ThemeProvider>
+
+				{children}
+			</Box>
+		</OverlayControllerProvider>
 	);
 };
 

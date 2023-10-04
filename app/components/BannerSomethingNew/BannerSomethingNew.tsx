@@ -17,11 +17,17 @@ async function BannerSomethingNew() {
 
 	return (
 		<Box
+			// component={Paper}
 			width="100%"
 			sx={{
 				backgroundColor: '#121212',
+
+				//outlineColor: 'grey',
+				//outlineWidth: 1,
+				//outlineStyle: 'solid',
 			}}
-			mb={3}
+			// variant="outlined"
+			// square
 			pb={3}
 			pt={3}
 		>

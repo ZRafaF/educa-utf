@@ -9,8 +9,10 @@ import AppOverlay from './components/AppOverlay/AppOverlay';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import ToastProvider from './contexts/ToastProvider';
+import Providers from './contexts/Providers';
 import Script from 'next/script';
+import ThemeRegistry from './ThemeRegistry';
+import Box from '@mui/material/Box/Box';
 
 export const metadata: Metadata = {
 	title: 'EducaUTF',
@@ -48,9 +50,21 @@ export default function RootLayout({
 					minHeight: '100vh',
 				}}
 			>
-				<ToastProvider>
-					<AppOverlay>{children}</AppOverlay>
-				</ToastProvider>
+				<Providers>
+					<ThemeRegistry options={{ key: 'mui' }}>
+						<AppOverlay>
+							<Box
+								component="main"
+								sx={{
+									flexGrow: 1,
+									ml: { xs: 0, sm: 7 },
+								}}
+							>
+								{children}
+							</Box>
+						</AppOverlay>
+					</ThemeRegistry>
+				</Providers>
 			</body>
 		</html>
 	);

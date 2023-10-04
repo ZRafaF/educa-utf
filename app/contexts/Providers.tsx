@@ -7,16 +7,17 @@
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ThemeProvider } from 'next-themes';
 
-interface ToastProviderProps {
+interface ProvidersProps {
 	children: React.ReactNode;
 }
 
-export default function ToastProvider({ children }: ToastProviderProps) {
+export default function Providers({ children }: ProvidersProps) {
 	return (
-		<>
+		<ThemeProvider>
 			{children}
 			<ToastContainer />
-		</>
+		</ThemeProvider>
 	);
 }

@@ -18,6 +18,7 @@ import DockerIcon from '../CustomIcons/DockerIcon';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import NextLink from 'next/link';
 import Link from '@mui/material/Link/Link';
+import Divider from '@mui/material/Divider/Divider';
 
 function Copyright() {
 	return (
@@ -35,6 +36,8 @@ interface AppFooterProps {}
 const AppFooter: FunctionComponent<AppFooterProps> = () => {
 	return (
 		<ThemeProvider theme={darkTheme}>
+			<Divider variant="middle" />
+
 			<Paper
 				component="footer"
 				elevation={0}
