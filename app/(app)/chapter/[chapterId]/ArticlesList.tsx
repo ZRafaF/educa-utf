@@ -65,6 +65,7 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 									? 'red'
 									: 'initial',
 						}}
+						color={'text.primary'}
 					>
 						<ListItemButton
 							alignItems="flex-start"

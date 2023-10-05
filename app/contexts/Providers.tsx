@@ -7,14 +7,17 @@
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getInitColorSchemeScript } from '@mui/material/styles';
 
-interface ToastProviderProps {
+interface ProvidersProps {
 	children: React.ReactNode;
 }
 
-export default function ToastProvider({ children }: ToastProviderProps) {
+export default function Providers({ children }: ProvidersProps) {
 	return (
 		<>
+			{getInitColorSchemeScript()}
+
 			{children}
 			<ToastContainer />
 		</>

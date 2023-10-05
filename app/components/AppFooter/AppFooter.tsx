@@ -4,9 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import Paper from '@mui/material/Paper/Paper';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { FunctionComponent } from 'react';
-import { darkTheme } from '../Themes';
 import Container from '@mui/material/Container/Container';
 import Stack from '@mui/material/Stack/Stack';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
@@ -18,6 +16,7 @@ import DockerIcon from '../CustomIcons/DockerIcon';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import NextLink from 'next/link';
 import Link from '@mui/material/Link/Link';
+import Divider from '@mui/material/Divider/Divider';
 
 function Copyright() {
 	return (
@@ -34,7 +33,9 @@ interface AppFooterProps {}
 
 const AppFooter: FunctionComponent<AppFooterProps> = () => {
 	return (
-		<ThemeProvider theme={darkTheme}>
+		<div data-mui-color-scheme="dark">
+			<Divider variant="middle" />
+
 			<Paper
 				component="footer"
 				elevation={0}
@@ -126,7 +127,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 					</Grid>
 				</Container>
 			</Paper>
-		</ThemeProvider>
+		</div>
 	);
 };
 

@@ -5,8 +5,6 @@
 
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
-import { darkTheme } from '../Themes';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Button from '@mui/material/Button/Button';
 import NewArticlesCarousel from './NewArticlesCarousel/NewArticlesCarousel';
@@ -17,11 +15,17 @@ async function BannerSomethingNew() {
 
 	return (
 		<Box
+			// component={Paper}
 			width="100%"
 			sx={{
 				backgroundColor: '#121212',
+
+				//outlineColor: 'grey',
+				//outlineWidth: 1,
+				//outlineStyle: 'solid',
 			}}
-			mb={3}
+			// variant="outlined"
+			// square
 			pb={3}
 			pt={3}
 		>
@@ -35,7 +39,7 @@ async function BannerSomethingNew() {
 				pr={{ xs: 0, sm: 2, md: 2, lg: 8 }}
 			>
 				<Grid xs={14} sm={10} md={5} lg={4}>
-					<ThemeProvider theme={darkTheme}>
+					<div data-mui-color-scheme="dark">
 						<Box>
 							<Typography
 								variant="h2"
@@ -62,7 +66,7 @@ async function BannerSomethingNew() {
 								Me surpreenda
 							</Button>
 						</Box>
-					</ThemeProvider>
+					</div>
 				</Grid>
 				<Grid sm={20} md pt={6}>
 					{<NewArticlesCarousel myArticles={posts} />}

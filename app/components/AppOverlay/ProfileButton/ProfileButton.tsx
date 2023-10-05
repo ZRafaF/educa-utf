@@ -106,6 +106,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			open={isMenuOpen}
 			keepMounted
 			onClose={handleMenuClose}
+			data-mui-color-scheme="dark"
 		>
 			<ListItem>
 				<Typography variant="caption">
