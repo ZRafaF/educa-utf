@@ -144,7 +144,6 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 			<Box
 				sx={{
 					display: 'flex',
-					borderWidth: 2,
 					height: contentHeight,
 					width: '100%',
 					position: 'relative',
@@ -156,10 +155,10 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 							position: 'absolute',
 							width: contentWidth,
 							height: contentHeight,
-							borderColor: '#eeeeee',
-							backgroundColor: '#fafafa',
+							borderColor: 'text.disabled',
 							borderStyle: 'solid',
 							borderRadius: 2,
+							borderWidth: 2,
 							overflow: 'hidden',
 						}}
 					>
@@ -176,7 +175,9 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 							sx={{
 								position: 'absolute',
 								right: 0,
+								top: 0,
 							}}
+							color="primary"
 							onClick={() => {
 								setSelectedFile(undefined);
 							}}
@@ -188,13 +189,15 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 					<Box
 						sx={{
 							':hover': {
-								borderColor: '#D6D6D6',
+								borderColor: 'primary.main',
 							},
 							transitionDuration: '100ms',
 							borderRadius: 2,
-							borderColor: '#eeeeee',
+							borderWidth: 2,
 							borderStyle: 'dashed',
-							backgroundColor: '#fafafa',
+							borderColor: 'text.disabled',
+
+							backgroundColor: 'background.default',
 						}}
 					>
 						<div {...getRootProps({ style })}>

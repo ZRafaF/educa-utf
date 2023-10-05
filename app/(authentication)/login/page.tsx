@@ -3,15 +3,22 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from "react";
-import Box from "@mui/material/Box/Box";
-import Grid from "@mui/material/Grid/Grid";
-import Typography from "@mui/material/Typography/Typography";
+import { FunctionComponent } from 'react';
+import Box from '@mui/material/Box/Box';
+import Grid from '@mui/material/Grid/Grid';
+import Typography from '@mui/material/Typography/Typography';
 
-import LoginFormSender from "./LoginFormSender/LoginFormSender";
-import LoginFormContent from "./LoginFormContent/LoginFormContent";
-import Link from "next/link";
-import Container from "@mui/material/Container/Container";
+import LoginFormSender from './LoginFormSender/LoginFormSender';
+import LoginFormContent from './LoginFormContent/LoginFormContent';
+import Link from 'next/link';
+import Container from '@mui/material/Container/Container';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+	title: 'Login - EducaUTF',
+	description: 'Faça login em sua conta do EducaUTF',
+	keywords: ['EducaUTF', 'Educa UTF', 'login', 'logar', 'entrar'],
+};
 
 interface LoginPageProps {}
 
@@ -20,13 +27,13 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 		<Box
 			sx={{
 				mb: 4,
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
 			}}
 		>
 			<Container maxWidth="sm">
-				<Typography component="h1" variant="h5" width={"100%"}>
+				<Typography component="h1" variant="h5" width={'100%'}>
 					Fazer Login
 				</Typography>
 				<LoginFormSender>

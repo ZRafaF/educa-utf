@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Box from '@mui/material/Box/Box';
 import Toolbar from '@mui/material/Toolbar/Toolbar';
 import { FunctionComponent, ReactNode } from 'react';
@@ -11,12 +10,16 @@ import ListItems from './ListItems/ListItems';
 import Link from 'next/link';
 import ProfileButton from './ProfileButton/ProfileButton';
 import SearchBar from './SearchBar/SearchBar';
-import { darkTheme, lightTheme } from '../Themes';
 import OverlayControllerProvider from '@/contexts/OverlayControllerProvider';
 import ToggleDrawerButton from './OverlayController/TogglerDrawerButton';
 import DrawerController from './OverlayController/DrawerControllers';
 import AppBarController from './OverlayController/AppBarController';
 import MainLogo from './MainLogo/MainLogo';
+import ContentArea from './ContentArea/ContentArea';
+import dynamic from 'next/dynamic';
+const NoSSRThemeToggler = dynamic(() => import('./ThemeToggler/ThemeToggler'), {
+	ssr: false,
+});
 
 interface AppOverlayProps {
 	children: ReactNode;
@@ -24,9 +27,9 @@ interface AppOverlayProps {
 
 const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 	return (
-		<ThemeProvider theme={darkTheme}>
-			<OverlayControllerProvider>
-				<Box>
+		<OverlayControllerProvider>
+			<Box bgcolor={'background.default'} color={'text.primary'}>
+				<div data-mui-color-scheme="dark">
 					<AppBarController>
 						<Toolbar>
 							<ToggleDrawerButton />
@@ -35,6 +38,7 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 								<MainLogo />
 							</Link>
 							<SearchBar />
+							<NoSSRThemeToggler />
 							<ProfileButton />
 						</Toolbar>
 					</AppBarController>
@@ -43,20 +47,10 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 						<Toolbar />
 						<ListItems />
 					</DrawerController>
-					<ThemeProvider theme={lightTheme}>
-						<Box
-							component="main"
-							sx={{
-								flexGrow: 1,
-								ml: { xs: 0, sm: 7 },
-							}}
-						>
-							{children}
-						</Box>
-					</ThemeProvider>
-				</Box>
-			</OverlayControllerProvider>
-		</ThemeProvider>
+				</div>
+				<ContentArea>{children}</ContentArea>
+			</Box>
+		</OverlayControllerProvider>
 	);
 };
 

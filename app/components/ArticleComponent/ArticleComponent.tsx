@@ -61,12 +61,18 @@ function ArticleComponent({
 				pb={2}
 			>
 				<Grid xs={20} sm={20} md={20} lg mb={3} pr={2}>
-					<Typography variant="h3" color="primary" fontWeight={700}>
+					<Typography
+						variant="h3"
+						component="h1"
+						color="primary"
+						fontWeight={700}
+					>
 						{myArticle.title}
 					</Typography>
 					<Typography
 						color="text.secondary"
 						variant="subtitle2"
+						component="p"
 						gutterBottom
 					>
 						{getFormattedDate(myArticle.created)}

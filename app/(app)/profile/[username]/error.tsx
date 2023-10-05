@@ -5,12 +5,11 @@
 
 'use client'; // Error components must be Client Components
 
-import DarkModeTheme from '@/components/DarkModeTheme/DarkModeTheme';
 import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import Box from '@mui/material/Box/Box';
 import { useEffect } from 'react';
-import { Button, Divider, Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 
 export default function Error({
 	error,
@@ -25,7 +24,7 @@ export default function Error({
 	}, [error]);
 
 	return (
-		<DarkModeTheme>
+		<div data-mui-color-scheme="dark">
 			<Box
 				sx={{
 					position: 'absolute',
@@ -68,6 +67,6 @@ export default function Error({
 					</Stack>
 				</Paper>
 			</Box>
-		</DarkModeTheme>
+		</div>
 	);
 }

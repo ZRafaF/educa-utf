@@ -9,8 +9,9 @@ import AppOverlay from './components/AppOverlay/AppOverlay';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import ToastProvider from './contexts/ToastProvider';
+import Providers from './contexts/Providers';
 import Script from 'next/script';
+import ThemeRegistry from './ThemeRegistry';
 
 export const metadata: Metadata = {
 	title: 'EducaUTF',
@@ -34,7 +35,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="pt-br">
+		<html lang="pt-br" data-color-scheme="light">
 			<head>
 				<link rel="manifest" href="/manifest.json" />
 			</head>
@@ -48,9 +49,11 @@ export default function RootLayout({
 					minHeight: '100vh',
 				}}
 			>
-				<ToastProvider>
-					<AppOverlay>{children}</AppOverlay>
-				</ToastProvider>
+				<Providers>
+					<ThemeRegistry options={{ key: 'mui' }}>
+						<AppOverlay>{children}</AppOverlay>
+					</ThemeRegistry>
+				</Providers>
 			</body>
 		</html>
 	);

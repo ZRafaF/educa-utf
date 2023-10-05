@@ -4,8 +4,22 @@ import Box from '@mui/material/Box/Box';
 import BannerSomethingNew from '@/components/BannerSomethingNew/BannerSomethingNew';
 import BestChapters from './BestChapters';
 import Divider from '@mui/material/Divider/Divider';
+import { Metadata } from 'next/types';
 
 export const revalidate = 30;
+
+export const metadata: Metadata = {
+	title: 'EducaUTF',
+	description:
+		'Web aplicação para criação e compartilhamento de conteúdo acadêmico. Feito por alunos para o mundo :)',
+	keywords: ['EducaUTF', 'Educa UTF', 'artigos', 'estudo', 'UTFPR', 'wiki'],
+	openGraph: {
+		images: '/icon-256x256.png',
+	},
+	twitter: {
+		images: '/icon-256x256.png',
+	},
+};
 
 export default function Home() {
 	return (
@@ -13,8 +27,9 @@ export default function Home() {
 			<Suspense fallback={<Box>Carregando...</Box>}>
 				<BannerSomethingNew />
 			</Suspense>
+			<Divider variant="middle" />
 
-			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }} mb={3} gap={4}>
+			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }} my={3} gap={4}>
 				<Suspense fallback={<Box>Carregando...</Box>}>
 					<BestArticles />
 				</Suspense>

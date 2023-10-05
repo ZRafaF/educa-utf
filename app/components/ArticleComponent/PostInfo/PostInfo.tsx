@@ -40,7 +40,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 			sx={{
 				px: 2,
 				ml: { xs: -2, sm: -3, md: -4, lg: 0, xl: 0 },
-				backgroundColor: '#F2F2F2',
+				backgroundColor: 'grey.A700',
 				borderRadius: {
 					xs: '0',
 					sm: '0',
@@ -77,14 +77,21 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 								src={authorAvatarUrl}
 							/>
 						</Link>
-						<Link
-							href={authorProfileUrl}
-							style={{ textDecoration: 'none' }}
+						<Typography
+							height={'100%'}
+							component="p"
+							color={'text.primary'}
 						>
-							<Typography height={'100%'} color={'MenuText'}>
+							<Link
+								href={authorProfileUrl}
+								style={{
+									textDecoration: 'none',
+									color: 'inherit',
+								}}
+							>
 								{articleStats.author_name}
-							</Typography>
-						</Link>
+							</Link>
+						</Typography>
 					</Stack>
 
 					<TagsComponent tags={myArticle.expand?.tags} />
@@ -94,13 +101,13 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 					<Stack spacing={2}>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<VisibilityIcon color="action" />
-							<Typography variant="subtitle2">
+							<Typography variant="subtitle2" component="p">
 								{myArticle.views}
 							</Typography>
 						</Stack>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<FavoriteIcon color="action" />
-							<Typography variant="subtitle2">
+							<Typography variant="subtitle2" component="p">
 								{articleStats.likes}
 							</Typography>
 						</Stack>

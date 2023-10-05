@@ -10,7 +10,7 @@ import type { Metadata } from 'next/types';
 import ArticleContentSSR from '@/components/ArticleComponent/ArticleContent/ArticleContentSSR';
 
 export const metadata: Metadata = {
-	title: 'Termos de Serviço',
+	title: 'Termos de Serviço - EducaUTF',
 	description: 'Termos de Serviço do EducaUTF',
 	keywords: [
 		'EducaUTF',
