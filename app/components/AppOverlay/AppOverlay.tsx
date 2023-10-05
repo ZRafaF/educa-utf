@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Box from '@mui/material/Box/Box';
 import Toolbar from '@mui/material/Toolbar/Toolbar';
 import { FunctionComponent, ReactNode } from 'react';
@@ -11,12 +10,15 @@ import ListItems from './ListItems/ListItems';
 import Link from 'next/link';
 import ProfileButton from './ProfileButton/ProfileButton';
 import SearchBar from './SearchBar/SearchBar';
-import { darkTheme, lightTheme } from '../Themes';
+import { cssTheme } from '../Themes';
 import OverlayControllerProvider from '@/contexts/OverlayControllerProvider';
 import ToggleDrawerButton from './OverlayController/TogglerDrawerButton';
 import DrawerController from './OverlayController/DrawerControllers';
 import AppBarController from './OverlayController/AppBarController';
 import MainLogo from './MainLogo/MainLogo';
+import ThemeToggler from './ThemeToggler/ThemeToggler';
+import ContentArea from './ContentArea/ContentArea';
+import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 
 interface AppOverlayProps {
 	children: ReactNode;
@@ -26,7 +28,7 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 	return (
 		<OverlayControllerProvider>
 			<Box>
-				<ThemeProvider theme={darkTheme}>
+				<CssVarsProvider theme={cssTheme} colorSchemeSelector="dark">
 					<AppBarController>
 						<Toolbar>
 							<ToggleDrawerButton />
@@ -35,6 +37,7 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 								<MainLogo />
 							</Link>
 							<SearchBar />
+							<ThemeToggler />
 							<ProfileButton />
 						</Toolbar>
 					</AppBarController>
@@ -43,9 +46,8 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 						<Toolbar />
 						<ListItems />
 					</DrawerController>
-				</ThemeProvider>
-
-				{children}
+				</CssVarsProvider>
+				<ContentArea>{children}</ContentArea>
 			</Box>
 		</OverlayControllerProvider>
 	);

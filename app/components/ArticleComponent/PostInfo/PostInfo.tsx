@@ -77,7 +77,11 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 								src={authorAvatarUrl}
 							/>
 						</Link>
-						<Typography height={'100%'} component="p">
+						<Typography
+							height={'100%'}
+							component="p"
+							color={'text.primary'}
+						>
 							<Link
 								href={authorProfileUrl}
 								style={{

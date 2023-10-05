@@ -5,7 +5,37 @@
 'use client';
 
 import { createTheme } from '@mui/material/';
+import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
+export const cssTheme = extendTheme({
+	colorSchemes: {
+		dark: {
+			palette: {
+				mode: 'dark',
+				primary: { main: '#427AA1' },
+				secondary: { main: '#FFCA02' },
+				background: {
+					//default: '#161616',
+				},
+				text: {
+					primary: '#c9d1d9',
+				},
+				grey: { A700: '#111111' },
+			},
+		},
+		light: {
+			palette: {
+				mode: 'light',
+				primary: {
+					main: '#427AA1',
+				},
+				secondary: { main: '#F0CF65' },
+
+				grey: { A700: '#f2f2f2' },
+			},
+		},
+	},
+});
 export const darkTheme = createTheme({
 	palette: {
 		mode: 'dark',
@@ -17,7 +47,7 @@ export const darkTheme = createTheme({
 		text: {
 			primary: '#c9d1d9',
 		},
-		grey: { A700: '#202020' },
+		grey: { A700: '#111111' },
 	},
 });
 
@@ -28,6 +58,7 @@ export const lightTheme = createTheme({
 			main: '#427AA1',
 		},
 		secondary: { main: '#F0CF65' },
+
 		grey: { A700: '#f2f2f2' },
 	},
 });

@@ -12,7 +12,6 @@ import 'swiper/css/pagination';
 import Providers from './contexts/Providers';
 import Script from 'next/script';
 import ThemeRegistry from './ThemeRegistry';
-import Box from '@mui/material/Box/Box';
 
 export const metadata: Metadata = {
 	title: 'EducaUTF',
@@ -36,7 +35,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="pt-br">
+		<html lang="pt-br" data-color-scheme="light">
 			<head>
 				<link rel="manifest" href="/manifest.json" />
 			</head>
@@ -52,17 +51,7 @@ export default function RootLayout({
 			>
 				<Providers>
 					<ThemeRegistry options={{ key: 'mui' }}>
-						<AppOverlay>
-							<Box
-								component="main"
-								sx={{
-									flexGrow: 1,
-									ml: { xs: 0, sm: 7 },
-								}}
-							>
-								{children}
-							</Box>
-						</AppOverlay>
+						<AppOverlay>{children}</AppOverlay>
 					</ThemeRegistry>
 				</Providers>
 			</body>

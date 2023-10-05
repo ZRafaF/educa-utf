@@ -46,7 +46,7 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 	const fixedDrawer = (
 		<Grid
 			sx={{
-				backgroundColor: '#F2F2F2',
+				backgroundColor: 'grey.A700',
 				width: onlyMediumScreen ? 300 : 350,
 			}}
 			p={2}

@@ -15,11 +15,11 @@ import Stack from '@mui/material/Stack/Stack';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton/IconButton';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import { darkTheme } from '@/components/Themes';
+import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 import { ArticlesResponse } from '@/types/pocketbase-types';
 import { ArticlesExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
+import { cssTheme } from '@/components/Themes';
 
 interface CardSlideProps {
 	myId: number;
@@ -148,7 +148,7 @@ const NewArticlesCarousel: FunctionComponent<NewArticlesCarouselProps> = ({
 					bottom: '0px',
 				}}
 			/>
-			<ThemeProvider theme={darkTheme}>
+			<CssVarsProvider theme={cssTheme} colorSchemeSelector="dark">
 				<Grid
 					container
 					spacing={0}
@@ -188,7 +188,7 @@ const NewArticlesCarousel: FunctionComponent<NewArticlesCarouselProps> = ({
 						</IconButton>
 					</Stack>
 				</Grid>
-			</ThemeProvider>
+			</CssVarsProvider>
 		</Box>
 	);
 };
