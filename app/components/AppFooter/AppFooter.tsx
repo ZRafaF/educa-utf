@@ -5,7 +5,6 @@
 
 import Paper from '@mui/material/Paper/Paper';
 import { FunctionComponent } from 'react';
-import { cssTheme } from '../Themes';
 import Container from '@mui/material/Container/Container';
 import Stack from '@mui/material/Stack/Stack';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
@@ -18,7 +17,6 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import NextLink from 'next/link';
 import Link from '@mui/material/Link/Link';
 import Divider from '@mui/material/Divider/Divider';
-import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 
 function Copyright() {
 	return (
@@ -35,7 +33,7 @@ interface AppFooterProps {}
 
 const AppFooter: FunctionComponent<AppFooterProps> = () => {
 	return (
-		<CssVarsProvider theme={cssTheme} colorSchemeSelector="dark">
+		<div data-mui-color-scheme="dark">
 			<Divider variant="middle" />
 
 			<Paper
@@ -129,7 +127,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 					</Grid>
 				</Container>
 			</Paper>
-		</CssVarsProvider>
+		</div>
 	);
 };
 

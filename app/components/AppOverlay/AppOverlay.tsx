@@ -10,15 +10,16 @@ import ListItems from './ListItems/ListItems';
 import Link from 'next/link';
 import ProfileButton from './ProfileButton/ProfileButton';
 import SearchBar from './SearchBar/SearchBar';
-import { cssTheme } from '../Themes';
 import OverlayControllerProvider from '@/contexts/OverlayControllerProvider';
 import ToggleDrawerButton from './OverlayController/TogglerDrawerButton';
 import DrawerController from './OverlayController/DrawerControllers';
 import AppBarController from './OverlayController/AppBarController';
 import MainLogo from './MainLogo/MainLogo';
-import ThemeToggler from './ThemeToggler/ThemeToggler';
 import ContentArea from './ContentArea/ContentArea';
-import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
+import dynamic from 'next/dynamic';
+const NoSSRThemeToggler = dynamic(() => import('./ThemeToggler/ThemeToggler'), {
+	ssr: false,
+});
 
 interface AppOverlayProps {
 	children: ReactNode;
@@ -27,8 +28,8 @@ interface AppOverlayProps {
 const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 	return (
 		<OverlayControllerProvider>
-			<Box>
-				<CssVarsProvider theme={cssTheme} colorSchemeSelector="dark">
+			<Box bgcolor={'background.default'} color={'text.primary'}>
+				<div data-mui-color-scheme="dark">
 					<AppBarController>
 						<Toolbar>
 							<ToggleDrawerButton />
@@ -37,7 +38,7 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 								<MainLogo />
 							</Link>
 							<SearchBar />
-							<ThemeToggler />
+							<NoSSRThemeToggler />
 							<ProfileButton />
 						</Toolbar>
 					</AppBarController>
@@ -46,7 +47,7 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 						<Toolbar />
 						<ListItems />
 					</DrawerController>
-				</CssVarsProvider>
+				</div>
 				<ContentArea>{children}</ContentArea>
 			</Box>
 		</OverlayControllerProvider>

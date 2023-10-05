@@ -58,9 +58,11 @@ export default function ThemeRegistry(props: any) {
 	});
 
 	return (
-		<CssVarsProvider theme={cssTheme}>
-			<CssBaseline />
-			{children}
-		</CssVarsProvider>
+		<CacheProvider value={cache}>
+			<CssVarsProvider theme={cssTheme}>
+				<CssBaseline />
+				{children}
+			</CssVarsProvider>
+		</CacheProvider>
 	);
 }

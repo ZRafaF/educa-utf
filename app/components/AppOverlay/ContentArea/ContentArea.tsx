@@ -20,8 +20,6 @@ const ContentArea: FunctionComponent<ContentAreaProps> = ({ children }) => {
 				flexGrow: 1,
 				ml: { xs: 0, sm: 7 },
 			}}
-			bgcolor={'background.default'}
-			color={'text.primary'}
 		>
 			{children}
 		</Box>

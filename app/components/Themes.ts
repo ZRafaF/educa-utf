@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { createTheme } from '@mui/material/';
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
 export const cssTheme = extendTheme({
@@ -12,7 +11,7 @@ export const cssTheme = extendTheme({
 		dark: {
 			palette: {
 				mode: 'dark',
-				primary: { main: '#427AA1' },
+				primary: { main: '#58A6FF' },
 				secondary: { main: '#FFCA02' },
 				background: {
 					//default: '#161616',
@@ -34,31 +33,5 @@ export const cssTheme = extendTheme({
 				grey: { A700: '#f2f2f2' },
 			},
 		},
-	},
-});
-export const darkTheme = createTheme({
-	palette: {
-		mode: 'dark',
-		primary: { main: '#427AA1' },
-		secondary: { main: '#FFCA02' },
-		background: {
-			//default: '#161616',
-		},
-		text: {
-			primary: '#c9d1d9',
-		},
-		grey: { A700: '#111111' },
-	},
-});
-
-export const lightTheme = createTheme({
-	palette: {
-		mode: 'light',
-		primary: {
-			main: '#427AA1',
-		},
-		secondary: { main: '#F0CF65' },
-
-		grey: { A700: '#f2f2f2' },
 	},
 });
