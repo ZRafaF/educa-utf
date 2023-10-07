@@ -19,6 +19,7 @@ import Container from '@mui/material/Container/Container';
 import Box from '@mui/material/Box/Box';
 import { usePathname } from 'next/navigation';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
+import Paper from '@mui/material/Paper';
 
 interface DrawerControllerProps {
 	children: ReactNode;
@@ -67,6 +68,8 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 				}}
 				PaperProps={{
 					style: { borderRadius: '20px 20px 0px 0px' },
+					elevatio: 0,
+					variant: 'outlined',
 				}}
 			>
 				<Box
@@ -78,6 +81,9 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 					<Grid
 						sx={{
 							backgroundColor: 'grey.A700',
+							// outlineWidth: 5,
+							// outlineStyle: 'solid',
+							// outlineColor: 'InactiveBorder',
 						}}
 						p={2}
 						pb={8}
