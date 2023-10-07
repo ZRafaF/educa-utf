@@ -34,13 +34,20 @@ export default function LoginLayout({
 						display: { xs: 'none', sm: 'block' },
 					}}
 				>
-					<div style={{ position: 'relative', height: '100%' }}>
+					<div
+						style={{
+							position: 'relative',
+							height: '100%',
+						}}
+					>
 						<Image
 							src={bgImage}
 							alt="campus utfpr"
 							fill
 							sizes="100%"
-							style={{ objectFit: 'cover' }}
+							style={{
+								objectFit: 'cover',
+							}}
 						/>
 					</div>
 				</Grid>
@@ -64,7 +71,13 @@ export default function LoginLayout({
 						}}
 					>
 						<Link href={'/'}>
-							<MainLogoInverted height={40} />
+							<Paper
+								sx={{ px: 6, py: 3, bgcolor: '#f2f2f2' }}
+								data-mui-color-scheme="light"
+								variant="outlined"
+							>
+								<MainLogoInverted height={40} />
+							</Paper>
 						</Link>
 					</Box>
 					{children}

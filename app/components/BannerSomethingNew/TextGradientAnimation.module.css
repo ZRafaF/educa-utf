@@ -1,0 +1,31 @@
+/**
+ * Copyright (c) 2023 Rafael Farias
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+.animated_text {
+	background: linear-gradient(
+		to right,
+		#ffca02 20%,
+		#58a6ff 30%,
+		#0190cd 70%,
+		#ffca02 80%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-fill-color: transparent;
+	background-size: 500% auto;
+	animation: textShine 10s ease-in-out infinite alternate;
+}
+
+@keyframes textShine {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
+}

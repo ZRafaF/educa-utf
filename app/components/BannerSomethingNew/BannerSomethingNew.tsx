@@ -9,7 +9,7 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Button from '@mui/material/Button/Button';
 import NewArticlesCarousel from './NewArticlesCarousel/NewArticlesCarousel';
 import { getNewArticles } from '@/lib/apiHelpers/articlesAPI';
-
+import styleModule from './TextGradientAnimation.module.css';
 async function BannerSomethingNew() {
 	const posts = await getNewArticles();
 
@@ -18,7 +18,9 @@ async function BannerSomethingNew() {
 			// component={Paper}
 			width="100%"
 			sx={{
-				backgroundColor: '#121212',
+				backgroundColor: 'grey.A400',
+
+				// backgroundColor: '#121212',
 
 				//outlineColor: 'grey',
 				//outlineWidth: 1,
@@ -43,11 +45,14 @@ async function BannerSomethingNew() {
 						<Box>
 							<Typography
 								variant="h2"
-								color="text.primary"
+								color="white"
 								fontWeight={700}
 								component="h1"
 							>
-								Descubra algo novo
+								Descubra algo{' '}
+								<span className={styleModule.animated_text}>
+									novo
+								</span>
 							</Typography>
 
 							<Typography

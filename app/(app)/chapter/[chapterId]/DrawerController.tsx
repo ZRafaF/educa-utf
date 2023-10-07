@@ -77,7 +77,7 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 				>
 					<Grid
 						sx={{
-							backgroundColor: '#F2F2F2',
+							backgroundColor: 'grey.A700',
 						}}
 						p={2}
 						pb={8}

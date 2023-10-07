@@ -43,7 +43,7 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 
 	return (
 		<DrawerController>
-			<Paper sx={{ p: 3, my: 2 }}>
+			<Paper sx={{ p: 3, my: 2 }} variant="outlined">
 				<Typography variant="h5" fontWeight={700} pb={3} align="center">
 					{chapter?.title}
 				</Typography>
