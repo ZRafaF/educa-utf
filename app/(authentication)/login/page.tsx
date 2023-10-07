@@ -41,14 +41,14 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 				</LoginFormSender>
 				<Grid container>
 					<Grid item xs>
-						<Link href="#">
+						<Link href="#" style={{ color: 'inherit' }}>
 							<Typography sx={{ fontSize: 14 }}>
 								Esqueci minha senha
 							</Typography>
 						</Link>
 					</Grid>
 					<Grid item>
-						<Link href="/register">
+						<Link href="/register" style={{ color: 'inherit' }}>
 							<Typography sx={{ fontSize: 14 }}>
 								Registre-se aqui!
 							</Typography>

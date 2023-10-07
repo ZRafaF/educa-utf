@@ -47,7 +47,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 		<React.Fragment>
 			<Link
 				href={`/profile/${user?.username}`}
-				style={{ textDecoration: 'none', color: 'white' }}
+				style={{ textDecoration: 'none', color: 'inherit' }}
 			>
 				<MenuItem onClick={handleMenuClose}>
 					<ListItemIcon>
@@ -75,7 +75,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 		<React.Fragment>
 			<Link
 				href={'/login'}
-				style={{ textDecoration: 'none', color: 'white' }}
+				style={{ textDecoration: 'none', color: 'inherit' }}
 			>
 				<MenuItem onClick={handleMenuClose}>
 					<ListItemIcon>
@@ -86,7 +86,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			</Link>
 			<Link
 				href={'/register'}
-				style={{ textDecoration: 'none', color: 'white' }}
+				style={{ textDecoration: 'none', color: 'inherit' }}
 			>
 				<MenuItem onClick={handleMenuClose}>
 					<ListItemIcon>

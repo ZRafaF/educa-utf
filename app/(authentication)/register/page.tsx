@@ -36,7 +36,9 @@ const page: FunctionComponent<pageProps> = () => {
 
 			<Grid container>
 				<Grid item>
-					<Link href="/login">{'Já tem uma conta? Login aqui!'}</Link>
+					<Link href="/login" style={{ color: 'inherit' }}>
+						{'Já tem uma conta? Login aqui!'}
+					</Link>
 				</Grid>
 			</Grid>
 		</Box>

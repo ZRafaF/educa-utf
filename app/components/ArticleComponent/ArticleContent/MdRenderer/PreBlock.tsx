@@ -6,7 +6,7 @@
 'use client';
 
 //@ts-ignore
-import { oneDark as theme } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/esm/styles/prism';
 //@ts-ignore
 import { Prism } from 'react-syntax-highlighter';
 
