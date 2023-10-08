@@ -27,7 +27,7 @@ export default function Home() {
 			<Suspense fallback={<Box>Carregando...</Box>}>
 				<BannerSomethingNew />
 			</Suspense>
-			<Divider variant="middle" />
+			<Divider variant="middle" sx={{ mx: 0 }} />
 
 			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }} my={3} gap={4}>
 				<Suspense fallback={<Box>Carregando...</Box>}>

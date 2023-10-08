@@ -34,7 +34,7 @@ interface AppFooterProps {}
 const AppFooter: FunctionComponent<AppFooterProps> = () => {
 	return (
 		<div data-mui-color-scheme="dark">
-			<Divider variant="middle" />
+			<Divider variant="middle" sx={{ mx: 0 }} />
 
 			<Paper
 				component="footer"
@@ -43,6 +43,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 				sx={{
 					marginTop: 'auto',
 					py: { xs: 2, sm: 3, md: 4 },
+					backgroundColor: 'grey.A400',
 				}}
 			>
 				<Container maxWidth="md">

@@ -1,0 +1,42 @@
+/**
+ * Copyright (c) 2023 Rafael Farias
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+.rc-md-editor {
+	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+	background-color: var(--mui-palette-background-default) !important;
+}
+
+.button-wrap .button:hover {
+	color: var(--mui-palette-text-primary) !important;
+}
+.button-wrap .disabled:hover {
+	color: var(--mui-palette-action-disabled) !important;
+}
+.button-wrap .disabled {
+	color: var(--mui-palette-action-disabled) !important;
+}
+.section-container {
+	background-color: var(--mui-palette-background-default) !important;
+	color: var(--mui-palette-text-primary) !important;
+}
+.rc-md-navigation {
+	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+}
+.section {
+	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+}
+
+.rc-md-navigation {
+	background-color: var(--mui-palette-grey-A700) !important;
+}
+
+.drop-wrap {
+	background-color: var(--mui-palette-background-default) !important;
+}
+.list-item :hover {
+	background-color: var(--mui-palette-background-A700) !important;
+}

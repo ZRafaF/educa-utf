@@ -10,6 +10,7 @@ import Button from '@mui/material/Button/Button';
 import NewArticlesCarousel from './NewArticlesCarousel/NewArticlesCarousel';
 import { getNewArticles } from '@/lib/apiHelpers/articlesAPI';
 import styleModule from './TextGradientAnimation.module.css';
+import Link from 'next/link';
 async function BannerSomethingNew() {
 	const posts = await getNewArticles();
 
@@ -67,6 +68,8 @@ async function BannerSomethingNew() {
 								variant="contained"
 								sx={{ fontWeight: 'bold' }}
 								color="secondary"
+								href="/random"
+								LinkComponent={Link}
 							>
 								Me surpreenda
 							</Button>

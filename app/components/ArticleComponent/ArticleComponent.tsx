@@ -7,7 +7,6 @@ import {
 	ArticlesResponse,
 	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
-import ArticleContent from './ArticleContent/ArticleContent';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -17,6 +16,7 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import { ArticlesExpand } from '@/types/expanded-types';
 import { Suspense } from 'react';
 import Skeleton from '@mui/material/Skeleton';
+import ArticleContentSSR from './ArticleContent/ArticleContentSSR';
 
 function ArticleComponent({
 	myArticle,
@@ -106,7 +106,7 @@ function ArticleComponent({
 				}}
 				pb={5}
 			>
-				<ArticleContent article={articleDocument} />
+				<ArticleContentSSR article={articleDocument} />
 			</Box>
 		</Box>
 	);

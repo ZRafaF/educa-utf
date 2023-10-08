@@ -62,3 +62,15 @@ export async function getChaptersStatsById(chapterId: string) {
 			skipTotal: true,
 		});
 }
+
+export async function getRandomChapter() {
+	try {
+		const list = await pb.collection('chapters').getList(1, 1, {
+			sort: '@random',
+		});
+		return list.items;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+}

@@ -41,7 +41,13 @@ export async function generateMetadata({
 			description: chapter.description,
 			applicationName: 'EducaUTF',
 			authors: [{ name: chapterStats.author_name }],
-			keywords: ['EducaUTF', 'capitulo', chapter.title, ...tags],
+			keywords: [
+				'EducaUTF',
+				'Educa UTF',
+				'capitulo',
+				chapter.title,
+				...tags,
+			],
 		};
 	} catch (error) {
 		return {
