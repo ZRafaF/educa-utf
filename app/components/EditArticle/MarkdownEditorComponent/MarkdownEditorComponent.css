@@ -8,6 +8,7 @@
 .rc-md-editor {
 	border-color: var(--mui-palette-Chip-defaultBorder) !important;
 	background-color: var(--mui-palette-background-default) !important;
+	tab-size: 1em;
 }
 
 .button-wrap .button:hover {

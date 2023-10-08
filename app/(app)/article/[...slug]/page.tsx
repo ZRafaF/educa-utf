@@ -15,6 +15,7 @@ import { FunctionComponent } from 'react';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
+import PageMessage from '@/components/PageMessage/PageMessage';
 const NoSSRClientSideArticle = dynamic(() => import('./ClientSideArticle'), {
 	ssr: false,
 });
@@ -82,16 +83,19 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 		const articleStats = await getArticleStatsById(article.id);
 		const articleDocument = await getArticleDocumentUrl(article);
 		const authorAvatarUrl = await getUserAvatarUrlByUserId(article.user);
-
-		return (
-			<ArticleComponent
-				myArticle={article}
-				articleStats={articleStats}
-				fullWidth={fullWidth}
-				articleDocument={articleDocument}
-				authorAvatarUrl={authorAvatarUrl}
-			/>
-		);
+		if (articleDocument)
+			return (
+				<ArticleComponent
+					myArticle={article}
+					articleStats={articleStats}
+					fullWidth={fullWidth}
+					articleDocument={articleDocument}
+					authorAvatarUrl={authorAvatarUrl}
+				/>
+			);
+		else {
+			return <PageMessage message="Artigo não encontrado" />;
+		}
 	} catch (error) {
 		return (
 			<NoSSRClientSideArticle

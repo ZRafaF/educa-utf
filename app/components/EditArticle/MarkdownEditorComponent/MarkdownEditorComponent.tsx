@@ -5,18 +5,57 @@
 'use client';
 
 import './MarkdownEditorComponent.css';
-import { Dispatch, FunctionComponent, SetStateAction, Suspense } from 'react';
+import {
+	ComponentType,
+	Dispatch,
+	FunctionComponent,
+	SetStateAction,
+	Suspense,
+} from 'react';
 import { ChangeEvent, useRef } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
+
+import Editor, { Plugins } from 'react-markdown-editor-lite';
+
 const ArticleContent = dynamic(
 	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
 );
-const MdEditor = dynamic(() => import('react-markdown-editor-lite'));
+
+Editor.addLocale('pt_BR', {
+	btnHeader: 'Títulos',
+	btnClear: 'Apagar tudo',
+	btnBold: 'Negrito',
+	btnItalic: 'Itálico',
+	btnUnderline: 'Sublinhado',
+});
+Editor.useLocale('pt_BR');
+Editor.use(Plugins.TabInsert);
+
+const plugins = [
+	'header',
+	'font-bold',
+	'font-italic',
+	'font-underline',
+	'font-strikethrough',
+	'list-unordered',
+	'list-ordered',
+	'block-quote',
+	'block-wrap',
+	'block-code-inline',
+	'block-code-block',
+	'table',
+	'image',
+	'link',
+	'clear',
+	'logger',
+	'mode-toggle',
+	'tab-insert',
+];
 
 interface MarkdownEditorComponentProps {
 	myArticleDocument: string;
-	setMyArticleDocument: Dispatch<SetStateAction<string>>;
+	setMyArticleDocument: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const MarkdownEditorComponent: FunctionComponent<
@@ -107,7 +146,7 @@ const MarkdownEditorComponent: FunctionComponent<
 				style={{ display: 'none' }}
 				onChange={handleFileChange}
 			/>
-			<MdEditor
+			<Editor
 				style={{
 					display: 'flex',
 					flexGrow: 1,
@@ -115,6 +154,7 @@ const MarkdownEditorComponent: FunctionComponent<
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
+				plugins={plugins}
 				renderHTML={(text) => <ArticleContent article={text} />}
 				onChange={handleEditorChange}
 				allowPasteImage

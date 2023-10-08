@@ -6,6 +6,7 @@
 import { FunctionComponent } from 'react';
 import type { Metadata } from 'next/types';
 import PageMessage from '@/components/PageMessage/PageMessage';
+import RedirectToRandomContent from './RedirectToRandomContent';
 
 export const metadata: Metadata = {
 	title: 'Aleatório - EducaUTF',
@@ -16,7 +17,12 @@ export const metadata: Metadata = {
 interface PageProps {}
 
 const Page: FunctionComponent<PageProps> = async () => {
-	return <PageMessage message="Redirecionando, aguarde..." loading />;
+	return (
+		<>
+			<PageMessage message="Redirecionando, aguarde..." loading />
+			<RedirectToRandomContent />
+		</>
+	);
 };
 
 export default Page;

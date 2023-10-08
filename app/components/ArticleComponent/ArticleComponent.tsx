@@ -16,7 +16,7 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import { ArticlesExpand } from '@/types/expanded-types';
 import { Suspense } from 'react';
 import Skeleton from '@mui/material/Skeleton';
-import ArticleContentSSR from './ArticleContent/ArticleContentSSR';
+import ArticleContent from './ArticleContent/ArticleContent';
 
 function ArticleComponent({
 	myArticle,
@@ -106,7 +106,7 @@ function ArticleComponent({
 				}}
 				pb={5}
 			>
-				<ArticleContentSSR article={articleDocument} />
+				<ArticleContent article={articleDocument} />
 			</Box>
 		</Box>
 	);
