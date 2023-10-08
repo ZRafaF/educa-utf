@@ -94,17 +94,22 @@ export async function getArticleDocumentUrl(article: ArticlesResponse) {
 	const documentUrl = pb.files.getUrl(record, article.document, {});
 
 	try {
-		return await fetch(documentUrl).then((response) => response.text());
+		if (documentUrl) {
+			return await fetch(documentUrl).then((response) => response.text());
+		}
 	} catch (error) {
-		return 'Não foi possível encontrar esse post :(';
+		console.error(error);
 	}
+	return undefined;
 }
 
 export async function createArticle(
 	newArticle: ArticlesRecord,
+	baseFile: Blob,
 	coverFile: File | undefined
 ) {
 	const form = getFormData(newArticle);
+	form.append('document', baseFile, 'article.md');
 	if (coverFile) form.append('cover', coverFile);
 
 	return pb.collection('articles').create<ArticlesResponse>(form);
@@ -126,6 +131,7 @@ export async function getRandomArticle() {
 		const list = await pb
 			.collection('articles')
 			.getList<ArticlesResponse>(1, 1, {
+				filter: 'visibility = "public"',
 				sort: '@random',
 			});
 		return list.items;

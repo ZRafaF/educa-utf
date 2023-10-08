@@ -66,6 +66,7 @@ export async function getChaptersStatsById(chapterId: string) {
 export async function getRandomChapter() {
 	try {
 		const list = await pb.collection('chapters').getList(1, 1, {
+			filter: 'visibility = "public"',
 			sort: '@random',
 		});
 		return list.items;

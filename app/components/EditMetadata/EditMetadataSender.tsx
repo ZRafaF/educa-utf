@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper/Paper';
 import { useRouter } from 'next/navigation';
 import { FunctionComponent, ReactNode, useState } from 'react';
 import { toast } from 'react-toastify';
+import PageMessage from '../PageMessage/PageMessage';
 
 interface EditMetadataSenderProps {
 	children: ReactNode;
@@ -67,7 +68,10 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 			toast.error('Você precisa estar logado!');
 			return;
 		}
+
 		try {
+			const baseFile = new Blob([''], { type: 'text/markdown' });
+
 			const newRecord = await createArticle(
 				{
 					title: submitTitle,
@@ -75,6 +79,7 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 					description: submitDescription,
 					visibility: submitVisibility,
 				},
+				baseFile,
 				selectedFile
 			);
 
