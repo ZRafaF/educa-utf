@@ -120,3 +120,17 @@ export async function getArticleCoverURL(
 	};
 	return pb.files.getUrl(record, article.cover, { thumb: '600x300' });
 }
+
+export async function getRandomArticle() {
+	try {
+		const list = await pb
+			.collection('articles')
+			.getList<ArticlesResponse>(1, 1, {
+				sort: '@random',
+			});
+		return list.items;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+}

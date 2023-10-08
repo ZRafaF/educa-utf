@@ -5,7 +5,7 @@
 
 'use client';
 
-import Typography from '@mui/material/Typography/Typography';
+import PageMessage from '@/components/PageMessage/PageMessage';
 import { useEffect } from 'react';
 
 export default function Error({
@@ -20,9 +20,5 @@ export default function Error({
 		console.error(error);
 	}, [error]);
 
-	return (
-		<Typography variant="h5" fontWeight={500} pt={10}>
-			Página não encontrada
-		</Typography>
-	);
+	return <PageMessage message="Página não encontrada." />;
 }

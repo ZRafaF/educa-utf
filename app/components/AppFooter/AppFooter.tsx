@@ -43,6 +43,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 				sx={{
 					marginTop: 'auto',
 					py: { xs: 2, sm: 3, md: 4 },
+					backgroundColor: 'grey.A400',
 				}}
 			>
 				<Container maxWidth="md">

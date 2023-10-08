@@ -57,7 +57,13 @@ export async function generateMetadata({
 				locale: 'pt_BR',
 				type: 'website',
 			},
-			keywords: ['EducaUTF', 'artigo', article.title, ...tags],
+			keywords: [
+				'EducaUTF',
+				'Educa UTF',
+				'artigo',
+				article.title,
+				...tags,
+			],
 		};
 	} catch (error) {
 		return {

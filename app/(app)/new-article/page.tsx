@@ -5,10 +5,8 @@
 import Container from '@mui/material/Container/Container';
 import Typography from '@mui/material/Typography/Typography';
 
-import 'react-markdown-editor-lite/lib/index.css';
 import { Metadata } from 'next/types';
 import EditMetadata from '@/components/EditMetadata/EditMetadata';
-import EditArticle from '@/components/EditArticle/EditArticle';
 
 export const metadata: Metadata = {
 	title: 'Novo artigo - EducaUTF',
@@ -28,8 +26,6 @@ export default function Page() {
 			<Typography variant="h6" gutterBottom>
 				Artigo
 			</Typography>
-
-			<EditArticle />
 		</Container>
 	);
 }

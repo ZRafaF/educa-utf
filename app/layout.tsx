@@ -21,9 +21,11 @@ export const metadata: Metadata = {
 
 	manifest: '/manifest.json',
 	themeColor: '#121212',
+
 	openGraph: {
 		images: '/icon-256x256.png',
 	},
+	metadataBase: new URL('https://educautf.td.utfpr.edu.br'),
 	twitter: {
 		images: '/icon-256x256.png',
 	},
