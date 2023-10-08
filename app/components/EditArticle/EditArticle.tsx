@@ -15,6 +15,7 @@ import {
 	getArticleDocumentUrl,
 } from '@/lib/apiHelpers/articlesAPI';
 import MarkdownEditorComponent from './MarkdownEditorComponent/MarkdownEditorComponent';
+import Typography from '@mui/material/Typography/Typography';
 
 interface EditArticleProps {
 	articleId: string;
@@ -45,7 +46,15 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
 	} else if (myArticle && myArticleDocument) {
 		return (
-			<Container>
+			<Container maxWidth={'lg'} sx={{ py: 4, flexGrow: 1 }}>
+				<Typography
+					component="h1"
+					variant="h4"
+					align="center"
+					gutterBottom
+				>
+					Editando [{myArticle.title}]
+				</Typography>
 				<MarkdownEditorComponent
 					myArticleDocument={myArticleDocument}
 					setMyArticleDocument={setMyArticleDocument}

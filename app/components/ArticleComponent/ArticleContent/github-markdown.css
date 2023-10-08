@@ -300,7 +300,9 @@
 	display: block;
 	width: max-content;
 	max-width: 100%;
+	border: 1px solid var(--color-border-muted);
 	overflow: auto;
+	border: unset !important;
 }
 
 .markdown-body td,
@@ -878,7 +880,7 @@
 
 .markdown-body th {
 	font-weight: var(--base-text-weight-semibold, 600);
-	background: var(--color-table-head);
+	background: var(--color-table-head) !important;
 	border-top: 0;
 }
 

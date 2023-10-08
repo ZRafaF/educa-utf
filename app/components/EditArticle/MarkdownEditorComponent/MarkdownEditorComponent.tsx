@@ -4,11 +4,15 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { Dispatch, FunctionComponent, SetStateAction } from 'react';
-import ArticleContent from '@/components/ArticleComponent/ArticleContent/ArticleContent';
+import './MarkdownEditorComponent.css';
+import { Dispatch, FunctionComponent, SetStateAction, Suspense } from 'react';
 import { ChangeEvent, useRef } from 'react';
-import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
+import dynamic from 'next/dynamic';
+const ArticleContent = dynamic(
+	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
+);
+const MdEditor = dynamic(() => import('react-markdown-editor-lite'));
 
 interface MarkdownEditorComponentProps {
 	myArticleDocument: string;
@@ -71,7 +75,7 @@ const MarkdownEditorComponent: FunctionComponent<
 		text: string;
 		html: string;
 	}) {
-		console.log('handleEditorChange', html, text);
+		setMyArticleDocument(text);
 	}
 
 	const handleImageUpload = (file: any) => {

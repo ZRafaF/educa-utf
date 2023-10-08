@@ -22,10 +22,6 @@ export default function Page() {
 			</Typography>
 
 			<EditMetadata />
-
-			<Typography variant="h6" gutterBottom>
-				Artigo
-			</Typography>
 		</Container>
 	);
 }
