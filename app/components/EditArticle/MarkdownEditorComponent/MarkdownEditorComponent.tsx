@@ -22,17 +22,7 @@ const ArticleContent = dynamic(
 	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
 );
 
-Editor.addLocale('pt_BR', {
-	btnHeader: 'Títulos',
-	btnClear: 'Apagar tudo',
-	btnBold: 'Negrito',
-	btnItalic: 'Itálico',
-	btnUnderline: 'Sublinhado',
-});
-Editor.useLocale('pt_BR');
-Editor.use(Plugins.TabInsert);
-
-const plugins = [
+const EDITOR_PLUGINS = [
 	'header',
 	'font-bold',
 	'font-italic',
@@ -61,6 +51,15 @@ interface MarkdownEditorComponentProps {
 const MarkdownEditorComponent: FunctionComponent<
 	MarkdownEditorComponentProps
 > = ({ myArticleDocument, setMyArticleDocument }) => {
+	Editor.addLocale('pt_BR', {
+		btnHeader: 'Títulos',
+		btnClear: 'Apagar tudo',
+		btnBold: 'Negrito',
+		btnItalic: 'Itálico',
+		btnUnderline: 'Sublinhado',
+	});
+	Editor.useLocale('pt_BR');
+	Editor.use(Plugins.TabInsert);
 	const inputFile = useRef<HTMLInputElement | null>(null);
 	const promiseResolveRef =
 		useRef<(value: { url: string; text?: string | undefined }) => void>();
@@ -154,7 +153,7 @@ const MarkdownEditorComponent: FunctionComponent<
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
-				plugins={plugins}
+				plugins={EDITOR_PLUGINS}
 				renderHTML={(text) => <ArticleContent article={text} />}
 				onChange={handleEditorChange}
 				allowPasteImage
