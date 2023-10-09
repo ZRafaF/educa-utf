@@ -72,6 +72,7 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 					user: user.id,
 					description: submitDescription,
 					visibility: submitVisibility,
+					document: '',
 				},
 				baseFile,
 				selectedCoverFile

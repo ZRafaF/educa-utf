@@ -106,7 +106,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						return ArticlesVisibilityOptions.private;
 
 					default:
-						return ArticlesVisibilityOptions.public;
+						return myArticle.visibility;
 				}
 			};
 
@@ -139,6 +139,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						user: user.id,
 						description: submitDescription,
 						visibility: submitVisibility,
+						document: '',
 					},
 					baseFile,
 					selectedCoverFile

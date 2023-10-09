@@ -44,7 +44,7 @@ export enum ArticlesVisibilityOptions {
 export type ArticlesRecord = {
 	cover?: string
 	description?: string
-	document?: string
+	document: string
 	tags?: RecordIdString[]
 	title: string
 	user: RecordIdString
@@ -62,7 +62,7 @@ export type ArticlesStatsRecord = {
 	author_username?: string
 	cover?: string
 	description?: string
-	document?: string
+	document: string
 	likes?: number
 	tags?: RecordIdString[]
 	title: string
