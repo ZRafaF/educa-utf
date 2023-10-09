@@ -13,7 +13,6 @@ import Paper from '@mui/material/Paper/Paper';
 import { useRouter } from 'next/navigation';
 import { FunctionComponent, ReactNode, useState } from 'react';
 import { toast } from 'react-toastify';
-import PageMessage from '../PageMessage/PageMessage';
 
 interface EditMetadataSenderProps {
 	children: ReactNode;
