@@ -13,7 +13,7 @@ interface EditMetadataProps {}
 const EditMetadata: FunctionComponent<EditMetadataProps> = () => {
 	return (
 		<EditMetadataSender>
-			<EditMetadataContent />
+			<EditMetadataContent sendButton />
 		</EditMetadataSender>
 	);
 };

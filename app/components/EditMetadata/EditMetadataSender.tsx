@@ -22,7 +22,7 @@ interface EditMetadataSenderProps {
 const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 	children,
 }) => {
-	const [selectedFile, setSelectedFile] = useState<File>();
+	const [selectedCoverFile, setSelectedCoverFile] = useState<File>();
 
 	const [, user] = usePbAuth();
 	const router = useRouter();
@@ -54,11 +54,6 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 			return;
 		}
 
-		if (submitTag === undefined) {
-			toast.error('Tags inválidas!');
-			return;
-		}
-
 		if (submitDescription === undefined) {
 			toast.error('Descrição inválida');
 			return;
@@ -80,8 +75,9 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 					visibility: submitVisibility,
 				},
 				baseFile,
-				selectedFile
+				selectedCoverFile
 			);
+			toast.success('Artigo criado com sucesso!');
 
 			router.push(`/edit/${newRecord.id}`);
 		} catch (error) {
@@ -109,7 +105,7 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 			onSubmit={handleSubmit}
 		>
 			<ArticleCoverContext.Provider
-				value={[selectedFile, setSelectedFile]}
+				value={[selectedCoverFile, setSelectedCoverFile]}
 			>
 				{children}
 			</ArticleCoverContext.Provider>

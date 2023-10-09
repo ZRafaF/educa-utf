@@ -17,9 +17,27 @@ import Stack from '@mui/material/Stack/Stack';
 import DropZoneComponent from '@/components/DropZoneComponent/DropZoneComponent';
 import SendMetadataButton from './SendMetadataButton';
 
-interface EditMetadataContentProps {}
+interface DefaultValues {
+	title: string;
+	tags: string | string[];
+	description: string;
+	visibility: 'public' | 'private';
+}
 
-const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = () => {
+interface EditMetadataContentProps {
+	sendButton?: boolean;
+	defaultValues?: DefaultValues;
+}
+
+const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
+	sendButton,
+	defaultValues = {
+		description: '',
+		tags: '',
+		title: '',
+		visibility: 'public',
+	},
+}) => {
 	return (
 		<>
 			<Typography variant="h6" gutterBottom>
@@ -44,14 +62,15 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = () => {
 							}}
 							fullWidth
 							autoComplete="article-title"
+							defaultValue={defaultValues.title}
 						/>
 						<TextField
-							required
 							name="article-tag"
 							label="Tags..."
 							helperText="Tags devem ser em minusculo e separadas por espaço"
 							fullWidth
 							autoComplete="article-tag"
+							defaultValue={defaultValues.tags}
 						/>
 					</Stack>
 				</Grid>
@@ -67,6 +86,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = () => {
 						multiline
 						rows={5}
 						autoComplete="article-description"
+						defaultValue={defaultValues.description}
 					/>
 				</Grid>
 
@@ -97,7 +117,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = () => {
 								</FormLabel>
 								<RadioGroup
 									aria-labelledby="visibility-radio-buttons"
-									defaultValue="public"
+									defaultValue={defaultValues.visibility}
 									name="visibility-radio-buttons"
 									row
 								>
@@ -113,7 +133,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = () => {
 									/>
 								</RadioGroup>
 							</Box>
-							<SendMetadataButton />
+							{sendButton && <SendMetadataButton />}
 						</Stack>
 					</Stack>
 				</Grid>

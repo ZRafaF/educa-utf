@@ -116,14 +116,19 @@ export async function createArticle(
 }
 
 export async function getArticleCoverURL(
-	article: ArticlesResponse | ArticlesStatsResponse
+	article: ArticlesResponse | ArticlesStatsResponse,
+	original?: boolean
 ) {
 	const record = {
 		id: article.id,
 		collectionId: article.collectionId,
 		collectionName: article.collectionName,
 	};
-	return pb.files.getUrl(record, article.cover, { thumb: '600x300' });
+	return pb.files.getUrl(
+		record,
+		article.cover,
+		original ? {} : { thumb: '600x300' }
+	);
 }
 
 export async function getRandomArticle() {
@@ -139,4 +144,22 @@ export async function getRandomArticle() {
 		console.error(error);
 		return [];
 	}
+}
+
+export async function updateArticle(
+	articleId: string,
+	updatedArticleRecord: ArticlesRecord,
+	baseFile: Blob,
+	coverFile: File | undefined
+) {
+	const form = getFormData(updatedArticleRecord);
+	form.append('document', baseFile, 'article.md');
+	if (coverFile) form.append('cover', coverFile);
+	else {
+		return pb.collection('articles').update<ArticlesResponse>(articleId, {
+			...form,
+			cover: null, // Removing cover file
+		});
+	}
+	return pb.collection('articles').update<ArticlesResponse>(articleId, form);
 }
