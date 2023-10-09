@@ -6,15 +6,17 @@
 
 import usePbAuth from '@/hooks/usePbAuth';
 import { updateUserAvatar } from '@/lib/apiHelpers/usersAPI';
-import Paper from '@mui/material/Paper/Paper';
+import Box from '@mui/material/Box';
 import React from 'react';
 import { FunctionComponent, useState } from 'react';
 
-interface EditUserComponentProps {
+interface PrivateUserComponentProps {
 	username: string;
 }
 
-const EditUserComponent: FunctionComponent<EditUserComponentProps> = ({
+const drawerWidth = 400;
+
+const PrivateUserComponent: FunctionComponent<PrivateUserComponentProps> = ({
 	username,
 }) => {
 	const [token, user] = usePbAuth();
@@ -42,9 +44,9 @@ const EditUserComponent: FunctionComponent<EditUserComponentProps> = ({
 	};
 
 	return (
-		<Paper sx={{ p: 2 }}>
-			{username === user?.username ? (
-				<React.Fragment>
+		<>
+			{username === user?.username && (
+				<Box display={'flex'} width={drawerWidth}>
 					<button
 						onClick={() => {
 							console.log('token: ' + token);
@@ -62,12 +64,10 @@ const EditUserComponent: FunctionComponent<EditUserComponentProps> = ({
 					<button onClick={uploadAvatar}>
 						Atualizar imagem de perfil
 					</button>
-				</React.Fragment>
-			) : (
-				<>Você não tem permissão</>
+				</Box>
 			)}
-		</Paper>
+		</>
 	);
 };
 
-export default EditUserComponent;
+export default PrivateUserComponent;

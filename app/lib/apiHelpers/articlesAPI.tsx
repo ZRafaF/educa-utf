@@ -91,7 +91,11 @@ export async function getArticleDocumentUrl(article: ArticlesResponse) {
 		collectionName: article.collectionName,
 	};
 
-	const documentUrl = pb.files.getUrl(record, article.document, {});
+	const fileToken = await pb.files.getToken();
+
+	const documentUrl = pb.files.getUrl(record, article.document, {
+		token: fileToken,
+	});
 
 	try {
 		if (documentUrl) {
@@ -124,10 +128,13 @@ export async function getArticleCoverURL(
 		collectionId: article.collectionId,
 		collectionName: article.collectionName,
 	};
+
+	const fileToken = await pb.files.getToken();
+
 	return pb.files.getUrl(
 		record,
 		article.cover,
-		original ? {} : { thumb: '600x300' }
+		original ? { token: fileToken } : { thumb: '600x300', token: fileToken }
 	);
 }
 
@@ -156,8 +163,10 @@ export async function updateArticle(
 	form.append('document', baseFile, 'article.md');
 	if (coverFile) form.append('cover', coverFile);
 	else {
+		await pb
+			.collection('articles')
+			.update<ArticlesResponse>(articleId, form);
 		return pb.collection('articles').update<ArticlesResponse>(articleId, {
-			...form,
 			cover: null, // Removing cover file
 		});
 	}

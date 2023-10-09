@@ -10,7 +10,7 @@ import { getInitials, stringToColor } from '@/lib/helper';
 interface AvatarComponentProps {
 	name: string;
 	src: string;
-	size?: 'small' | 'medium' | 'large';
+	size?: 'small' | 'medium' | 'large' | 'huge';
 }
 
 const AvatarComponent: FunctionComponent<AvatarComponentProps> = ({
@@ -26,6 +26,8 @@ const AvatarComponent: FunctionComponent<AvatarComponentProps> = ({
 				return 40;
 			case 'large':
 				return 56;
+			case 'huge':
+				return 80;
 
 			default:
 				return 40;
