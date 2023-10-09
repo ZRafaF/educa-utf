@@ -9,14 +9,13 @@ import {
 } from '@/types/pocketbase-types';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
-import ptBR from 'date-fns/locale/pt-BR';
-import { format, parseISO } from 'date-fns';
 import PostInfo from './PostInfo/PostInfo';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import { ArticlesExpand } from '@/types/expanded-types';
 import { Suspense } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import ArticleContent from './ArticleContent/ArticleContent';
+import { getFormattedDate } from '@/lib/helper';
 
 function ArticleComponent({
 	myArticle,
@@ -31,14 +30,6 @@ function ArticleComponent({
 	articleDocument: string;
 	authorAvatarUrl: string;
 }) {
-	const getFormattedDate = (date: string) => {
-		const parsedDate = parseISO(date);
-
-		return format(parsedDate, 'PPP', {
-			locale: ptBR,
-		});
-	};
-
 	return (
 		<Box
 			sx={{
@@ -75,7 +66,7 @@ function ArticleComponent({
 						component="p"
 						gutterBottom
 					>
-						{getFormattedDate(myArticle.created)}
+						{getFormattedDate(myArticle.created, 'PPP')}
 					</Typography>
 				</Grid>
 				<Grid xs={20} sm={20} md={20} lg={5} xl={5}>

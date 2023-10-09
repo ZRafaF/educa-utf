@@ -8,6 +8,8 @@ import {
 	ArticlesResponse,
 	ArticlesVisibilityOptions,
 } from '@/types/pocketbase-types';
+import ptBR from 'date-fns/locale/pt-BR';
+import { format, parseISO } from 'date-fns';
 
 export function formatString(input: string): string {
 	const sanitized = input
@@ -76,4 +78,15 @@ export function getFormData(object: any) {
 	const formData = new FormData();
 	Object.keys(object).forEach((key) => formData.append(key, object[key]));
 	return formData;
+}
+
+export function getFormattedDate(
+	date: string,
+	formatStyle: string = 'MM/dd/yyyy'
+) {
+	const parsedDate = parseISO(date);
+
+	return format(parsedDate, formatStyle, {
+		locale: ptBR,
+	});
 }

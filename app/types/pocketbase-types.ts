@@ -9,6 +9,8 @@ export enum Collections {
 	ChaptersStats = "chapters_stats",
 	Images = "images",
 	Tags = "tags",
+	TotalUsersArticlesStats = "total_users_articles_stats",
+	TotalUsersChaptersStats = "total_users_chapters_stats",
 	Users = "users",
 	UsersStats = "users_stats",
 }
@@ -112,6 +114,20 @@ export type TagsRecord = {
 	name: string
 }
 
+export type TotalUsersArticlesStatsRecord = {
+	likes?: number
+	num?: number
+	username?: string
+	views?: number
+}
+
+export type TotalUsersChaptersStatsRecord = {
+	likes?: number
+	num?: number
+	username?: string
+	views?: number
+}
+
 export enum UsersCampusOptions {
 	"Apucarana" = "Apucarana",
 	"Campo Mourão" = "Campo Mourão",
@@ -142,6 +158,12 @@ export type UsersRecord = {
 export type UsersStatsRecord = {
 	avatar?: string
 	description?: string
+	n_of_articles?: number
+	n_of_articles_likes?: number
+	n_of_articles_views?: number
+	n_of_chapters?: number
+	n_of_chapters_likes?: number
+	n_of_chapters_views?: number
 	name: string
 	username?: string
 }
@@ -153,6 +175,8 @@ export type ChaptersResponse<Texpand = unknown> = Required<ChaptersRecord> & Bas
 export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRecord> & BaseSystemFields<Texpand>
 export type ImagesResponse<Texpand = unknown> = Required<ImagesRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
+export type TotalUsersArticlesStatsResponse<Texpand = unknown> = Required<TotalUsersArticlesStatsRecord> & BaseSystemFields<Texpand>
+export type TotalUsersChaptersStatsResponse<Texpand = unknown> = Required<TotalUsersChaptersStatsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 export type UsersStatsResponse<Texpand = unknown> = Required<UsersStatsRecord> & BaseSystemFields<Texpand>
 
@@ -165,6 +189,8 @@ export type CollectionRecords = {
 	chapters_stats: ChaptersStatsRecord
 	images: ImagesRecord
 	tags: TagsRecord
+	total_users_articles_stats: TotalUsersArticlesStatsRecord
+	total_users_chapters_stats: TotalUsersChaptersStatsRecord
 	users: UsersRecord
 	users_stats: UsersStatsRecord
 }
@@ -176,6 +202,8 @@ export type CollectionResponses = {
 	chapters_stats: ChaptersStatsResponse
 	images: ImagesResponse
 	tags: TagsResponse
+	total_users_articles_stats: TotalUsersArticlesStatsResponse
+	total_users_chapters_stats: TotalUsersChaptersStatsResponse
 	users: UsersResponse
 	users_stats: UsersStatsResponse
 }

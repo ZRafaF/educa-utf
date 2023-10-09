@@ -6,16 +6,25 @@
 import {
 	getListOfUsersStats,
 	getUserAvatarUrl,
+	getUserAvatarUrlByUserId,
 	getUsersStatsByUsername,
 } from '@/lib/apiHelpers/usersAPI';
 import { FunctionComponent } from 'react';
 import Box from '@mui/material/Box/Box';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
+import { getFormattedDate } from '@/lib/helper';
+import Paper from '@mui/material/Paper';
 
-const NoSSREditUserComponent = dynamic(() => import('./EditUserComponent'), {
-	ssr: false,
-});
+const NoSSRPrivateUserComponent = dynamic(
+	() => import('./PrivateUserComponent'),
+	{
+		ssr: false,
+	}
+);
 
 interface PageProps {
 	params: {
@@ -62,15 +71,106 @@ export async function generateMetadata({
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const userStats = await getUsersStatsByUsername(params.username);
+	const authorAvatarUrl = await getUserAvatarUrlByUserId(userStats.id);
 
 	return (
-		<Box>
-			Você está na pagina de: {userStats.name}
-			<br />
-			Usuário: {userStats.username}
-			<br />
-			Id: {userStats.id}
-			<NoSSREditUserComponent username={params.username} />
+		<Box display={'flex'} width={'100%'} minHeight="100dvh">
+			<Box width={'100%'}>
+				<Container maxWidth="md">
+					<Box display={'flex'} p={2} gap={2} alignItems={'center'}>
+						<AvatarComponent
+							name={userStats.name}
+							src={authorAvatarUrl}
+							size="huge"
+						/>
+						<Box>
+							<Typography
+								variant="h3"
+								component="h1"
+								color="primary"
+								fontWeight={700}
+							>
+								{userStats.name}
+							</Typography>
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
+								{userStats.description}
+							</Typography>
+						</Box>
+					</Box>
+				</Container>
+				<Box
+					display={'flex'}
+					flexDirection={'column'}
+					pl={2}
+					gap={2}
+					alignItems={'center'}
+					bgcolor={'grey.A700'}
+					// component={Paper}
+					// variant="outlined"
+					// square
+				>
+					<Container maxWidth="md" sx={{ py: 2 }}>
+						<Typography>
+							<b>INFORMAÇÕES:</b>
+						</Typography>
+						<Box display={'flex'} pt={1} gap={1} flexWrap={'wrap'}>
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
+								Juntou-se em:{' '}
+								<b>{getFormattedDate(userStats.created)}</b>
+							</Typography>
+							{' | '}
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
+								Visualizações:{' '}
+								<b>
+									{userStats.n_of_articles_views +
+										userStats.n_of_chapters_views}
+								</b>
+							</Typography>
+							{' | '}
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
+								Likes:{' '}
+								<b>
+									{userStats.n_of_articles_likes +
+										userStats.n_of_chapters_likes}
+								</b>
+							</Typography>
+							{' | '}
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
+								Artigos: <b>{userStats.n_of_articles}</b>
+							</Typography>
+							{' | '}
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
+								Capítulos: <b>{userStats.n_of_chapters}</b>
+							</Typography>
+						</Box>
+					</Container>
+				</Box>
+			</Box>
+			<NoSSRPrivateUserComponent username={params.username} />
 		</Box>
 	);
 };
