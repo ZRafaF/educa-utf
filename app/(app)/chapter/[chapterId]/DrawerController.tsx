@@ -19,7 +19,6 @@ import Container from '@mui/material/Container/Container';
 import Box from '@mui/material/Box/Box';
 import { usePathname } from 'next/navigation';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
-import Paper from '@mui/material/Paper';
 
 interface DrawerControllerProps {
 	children: ReactNode;

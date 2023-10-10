@@ -34,13 +34,13 @@ const EditablePfp: FunctionComponent<EditablePfpProps> = ({ userStats }) => {
 			if (user.id === userStats.id) return false;
 		}
 		return true;
-	}, [user]);
+	}, [user, userStats]);
 
 	useEffect(() => {
 		getUserAvatarUrlByUserId(userStats.id).then((url) => {
 			setAuthorAvatarUrl(url);
 		});
-	}, [user]);
+	}, [user, userStats]);
 
 	const [uploadImage, InputComponent] = useUploadFile();
 
