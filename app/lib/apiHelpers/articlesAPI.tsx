@@ -91,11 +91,7 @@ export async function getArticleDocumentUrl(article: ArticlesResponse) {
 		collectionName: article.collectionName,
 	};
 
-	const fileToken = await pb.files.getToken();
-
-	const documentUrl = pb.files.getUrl(record, article.document, {
-		token: fileToken,
-	});
+	const documentUrl = pb.files.getUrl(record, article.document);
 
 	try {
 		if (documentUrl) {
@@ -129,12 +125,10 @@ export async function getArticleCoverURL(
 		collectionName: article.collectionName,
 	};
 
-	const fileToken = await pb.files.getToken();
-
 	return pb.files.getUrl(
 		record,
 		article.cover,
-		original ? { token: fileToken } : { thumb: '600x300', token: fileToken }
+		original ? {} : { thumb: '600x300' }
 	);
 }
 

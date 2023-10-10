@@ -5,18 +5,17 @@
 'use client';
 
 import './MarkdownEditorComponent.css';
-import {
-	ComponentType,
-	Dispatch,
-	FunctionComponent,
-	SetStateAction,
-	Suspense,
-} from 'react';
+import { Dispatch, FunctionComponent, LegacyRef, SetStateAction } from 'react';
 import { ChangeEvent, useRef } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
 
 import Editor, { Plugins } from 'react-markdown-editor-lite';
+import {
+	attachFile,
+	getAttachmentFileURL,
+} from '@/lib/apiHelpers/attachmentsAPI';
+import { toast } from 'react-toastify';
 
 const ArticleContent = dynamic(
 	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
@@ -44,13 +43,14 @@ const EDITOR_PLUGINS = [
 ];
 
 interface MarkdownEditorComponentProps {
+	articleId: string;
 	myArticleDocument: string;
 	setMyArticleDocument: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const MarkdownEditorComponent: FunctionComponent<
 	MarkdownEditorComponentProps
-> = ({ myArticleDocument, setMyArticleDocument }) => {
+> = ({ articleId, myArticleDocument, setMyArticleDocument }) => {
 	Editor.addLocale('pt_BR', {
 		btnHeader: 'Títulos',
 		btnClear: 'Apagar tudo',
@@ -59,71 +59,94 @@ const MarkdownEditorComponent: FunctionComponent<
 		btnUnderline: 'Sublinhado',
 	});
 	Editor.useLocale('pt_BR');
-	Editor.use(Plugins.TabInsert);
+	Editor.use(Plugins.TabInsert, {
+		tabMapValue: 1,
+	});
+
 	const inputFile = useRef<HTMLInputElement | null>(null);
+	const editorRef = useRef<Editor>(null);
 	const promiseResolveRef =
 		useRef<(value: { url: string; text?: string | undefined }) => void>();
 
 	const promiseRejectRef = useRef<(reason?: any) => void>();
 
-	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const selectedFile = event.target.files?.[0];
+	const uploadFile = async (file: File) => {
+		const id = toast.loading('Fazendo upload do arquivo, aguarde...');
 
-		if (selectedFile) {
-			readFileContent(selectedFile)
-				.then((content) => {
-					if (promiseResolveRef.current) {
-						promiseResolveRef.current({
-							url: content,
-						});
-					}
-				})
-				.catch((error) => {
-					if (promiseRejectRef.current)
-						promiseRejectRef.current(
-							new Error(`Promessa não cumprida, erro:`, error)
-						);
-					console.error('Error reading file:', error);
-				});
+		try {
+			const attachmentsRecord = await attachFile(articleId, file);
+
+			const imageUrl = await getAttachmentFileURL(
+				articleId,
+				attachmentsRecord.files[attachmentsRecord.files.length - 1],
+				true
+			);
+			toast.update(id, {
+				render: 'Arquivo enviado com sucesso!',
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
+			return imageUrl;
+		} finally {
+			toast.update(id, {
+				render: 'Arquivo enviado com sucesso!',
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
 		}
 	};
 
-	const readFileContent = (file: File): Promise<string> => {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
+	const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+		const selectedFile = event.target.files?.[0];
 
-			reader.onload = (event) => {
-				const content = event.target?.result as string;
-				resolve(content);
-			};
-
-			reader.onerror = (event) => {
-				reject(event.target?.error);
-			};
-
-			reader.readAsDataURL(file);
-			//reader.readAsBinaryString(file)
-		});
+		if (selectedFile && promiseResolveRef.current) {
+			try {
+				const imageUrl = await uploadFile(selectedFile);
+				promiseResolveRef.current({
+					text: selectedFile.name,
+					url: imageUrl,
+				});
+			} catch (error) {
+				if (promiseRejectRef.current)
+					promiseRejectRef.current(
+						new Error(
+							`Promessa não cumprida, erro:`,
+							error as ErrorOptions
+						)
+					);
+				console.error('Error reading file:', error);
+			}
+		}
 	};
 
-	function handleEditorChange({
-		text,
-		html,
-	}: {
-		text: string;
-		html: string;
-	}) {
+	function handleEditorChange(
+		{
+			text,
+			html,
+		}: {
+			text: string;
+			html: string;
+		},
+		event: ChangeEvent<HTMLTextAreaElement> | undefined
+	) {
+		event?.preventDefault();
+		console.log(event);
+
 		setMyArticleDocument(text);
 	}
 
-	const handleImageUpload = (file: any) => {
-		return new Promise((resolve) => {
-			const reader = new FileReader();
-			reader.onload = (data) => {
-				if (data.target) resolve(data.target.result);
-			};
-			reader.readAsDataURL(file);
-		});
+	const handleImageUpload = (file: File) => {
+		return uploadFile(file);
 	};
 
 	const onCustomImageUpload = async (
@@ -149,17 +172,27 @@ const MarkdownEditorComponent: FunctionComponent<
 				style={{
 					display: 'flex',
 					flexGrow: 1,
-					height: '90vh',
+					height: '85vh',
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
-				plugins={EDITOR_PLUGINS}
+				ref={editorRef}
+				onChangeTrigger="both"
 				renderHTML={(text) => <ArticleContent article={text} />}
 				onChange={handleEditorChange}
 				allowPasteImage
 				defaultValue={myArticleDocument}
 				onImageUpload={handleImageUpload}
 				onCustomImageUpload={onCustomImageUpload}
+				config={{
+					view: {
+						menu: true,
+						md: true, // use this to hide
+						html: true,
+						fullScreen: true,
+						hideMenu: true,
+					},
+				}}
 			/>
 		</>
 	);

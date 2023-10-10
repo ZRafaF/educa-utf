@@ -5,9 +5,9 @@
 export enum Collections {
 	Articles = "articles",
 	ArticlesStats = "articles_stats",
+	Attachments = "attachments",
 	Chapters = "chapters",
 	ChaptersStats = "chapters_stats",
-	Images = "images",
 	Tags = "tags",
 	TotalUsersArticlesStats = "total_users_articles_stats",
 	TotalUsersChaptersStats = "total_users_chapters_stats",
@@ -44,6 +44,7 @@ export enum ArticlesVisibilityOptions {
 	"private" = "private",
 }
 export type ArticlesRecord = {
+	attachments?: RecordIdString
 	cover?: string
 	description?: string
 	document: string
@@ -71,6 +72,12 @@ export type ArticlesStatsRecord = {
 	user: RecordIdString
 	views?: number
 	visibility: ArticlesStatsVisibilityOptions
+}
+
+export type AttachmentsRecord = {
+	article?: RecordIdString
+	files?: string[]
+	user?: RecordIdString
 }
 
 export enum ChaptersVisibilityOptions {
@@ -103,11 +110,6 @@ export type ChaptersStatsRecord = {
 	user: RecordIdString
 	views?: number
 	visibility: ChaptersStatsVisibilityOptions
-}
-
-export type ImagesRecord = {
-	article?: RecordIdString
-	file?: string
 }
 
 export type TagsRecord = {
@@ -171,9 +173,9 @@ export type UsersStatsRecord = {
 // Response types include system fields and match responses from the PocketBase API
 export type ArticlesResponse<Texpand = unknown> = Required<ArticlesRecord> & BaseSystemFields<Texpand>
 export type ArticlesStatsResponse<Texpand = unknown> = Required<ArticlesStatsRecord> & BaseSystemFields<Texpand>
+export type AttachmentsResponse<Texpand = unknown> = Required<AttachmentsRecord> & BaseSystemFields<Texpand>
 export type ChaptersResponse<Texpand = unknown> = Required<ChaptersRecord> & BaseSystemFields<Texpand>
 export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRecord> & BaseSystemFields<Texpand>
-export type ImagesResponse<Texpand = unknown> = Required<ImagesRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersArticlesStatsResponse<Texpand = unknown> = Required<TotalUsersArticlesStatsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersChaptersStatsResponse<Texpand = unknown> = Required<TotalUsersChaptersStatsRecord> & BaseSystemFields<Texpand>
@@ -185,9 +187,9 @@ export type UsersStatsResponse<Texpand = unknown> = Required<UsersStatsRecord> &
 export type CollectionRecords = {
 	articles: ArticlesRecord
 	articles_stats: ArticlesStatsRecord
+	attachments: AttachmentsRecord
 	chapters: ChaptersRecord
 	chapters_stats: ChaptersStatsRecord
-	images: ImagesRecord
 	tags: TagsRecord
 	total_users_articles_stats: TotalUsersArticlesStatsRecord
 	total_users_chapters_stats: TotalUsersChaptersStatsRecord
@@ -198,9 +200,9 @@ export type CollectionRecords = {
 export type CollectionResponses = {
 	articles: ArticlesResponse
 	articles_stats: ArticlesStatsResponse
+	attachments: AttachmentsResponse
 	chapters: ChaptersResponse
 	chapters_stats: ChaptersStatsResponse
-	images: ImagesResponse
 	tags: TagsResponse
 	total_users_articles_stats: TotalUsersArticlesStatsResponse
 	total_users_chapters_stats: TotalUsersChaptersStatsResponse

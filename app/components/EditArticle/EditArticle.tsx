@@ -210,6 +210,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						</AccordionSummary>
 						<AccordionDetails>
 							<MarkdownEditorComponent
+								articleId={myArticle.id}
 								myArticleDocument={myArticleDocument}
 								setMyArticleDocument={setMyArticleDocument}
 							/>
