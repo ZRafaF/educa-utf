@@ -6,7 +6,6 @@
 import {
 	getListOfUsersStats,
 	getUserAvatarUrl,
-	getUserAvatarUrlByUserId,
 	getUsersStatsByUsername,
 } from '@/lib/apiHelpers/usersAPI';
 import { FunctionComponent } from 'react';
@@ -15,9 +14,13 @@ import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
 import { getFormattedDate } from '@/lib/helper';
-import Paper from '@mui/material/Paper';
+const EditablePfp = dynamic(
+	() => import('@/components/EditablePfp/EditablePfp'),
+	{
+		ssr: false,
+	}
+);
 
 const NoSSRPrivateUserComponent = dynamic(
 	() => import('./PrivateUserComponent'),
@@ -71,21 +74,28 @@ export async function generateMetadata({
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const userStats = await getUsersStatsByUsername(params.username);
-	const authorAvatarUrl = await getUserAvatarUrlByUserId(userStats.id);
 
 	return (
 		<Box display={'flex'} width={'100%'} minHeight="100dvh">
 			<Box width={'100%'}>
-				<Container maxWidth="md">
-					<Box display={'flex'} p={2} gap={2} alignItems={'center'}>
-						<AvatarComponent
-							name={userStats.name}
-							src={authorAvatarUrl}
-							size="huge"
-						/>
+				<Container
+					maxWidth="md"
+					sx={{
+						px: { xs: 0.5, sm: 1, md: 2 },
+					}}
+				>
+					<Box
+						display={'flex'}
+						flexGrow={2}
+						py={{ xs: 0.5, sm: 1, md: 2 }}
+						gap={2}
+						alignItems={'center'}
+					>
+						<EditablePfp userStats={userStats} />
 						<Box>
 							<Typography
 								variant="h3"
+								fontSize={{ xs: 'xx-large', sm: 'xxx-large' }}
 								component="h1"
 								color="primary"
 								fontWeight={700}
@@ -109,11 +119,11 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 					gap={2}
 					alignItems={'center'}
 					bgcolor={'grey.A700'}
-					// component={Paper}
-					// variant="outlined"
-					// square
 				>
-					<Container maxWidth="md" sx={{ py: 2 }}>
+					<Container
+						maxWidth="md"
+						sx={{ py: 2, px: { xs: 0.5, sm: 1, md: 2 } }}
+					>
 						<Typography>
 							<b>INFORMAÇÕES:</b>
 						</Typography>

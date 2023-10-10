@@ -19,7 +19,6 @@ import Container from '@mui/material/Container/Container';
 import Box from '@mui/material/Box/Box';
 import { usePathname } from 'next/navigation';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
-import Paper from '@mui/material/Paper';
 
 interface DrawerControllerProps {
 	children: ReactNode;
@@ -32,7 +31,7 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 	const pathname = usePathname();
 
 	const theme = useTheme();
-	const notSmallScreens = useMediaQuery(theme.breakpoints.up('sm'));
+	const notSmallScreens = useMediaQuery(theme.breakpoints.up('md'));
 	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 	const onlyMediumScreen = useMediaQuery(theme.breakpoints.only('md'));
 

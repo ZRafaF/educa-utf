@@ -27,15 +27,13 @@ export async function getUsersStatsByUsername(username: string) {
 		});
 }
 
-export async function updateUserAvatar(id: string, newAvatar: File) {
+export async function updateUserAvatar(id: string, newAvatar: File | null) {
 	return await pb.collection('users').update<UsersResponse>(id, {
 		avatar: newAvatar,
 	});
 }
 
-export async function getUserAvatarUrl(
-	user: UsersResponse | UsersStatsResponse
-) {
+export function getUserAvatarUrl(user: UsersResponse | UsersStatsResponse) {
 	const record = {
 		id: user.id,
 		collectionId: user.collectionId,

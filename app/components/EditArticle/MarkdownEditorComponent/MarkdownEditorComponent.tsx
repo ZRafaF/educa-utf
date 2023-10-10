@@ -5,7 +5,7 @@
 'use client';
 
 import './MarkdownEditorComponent.css';
-import { Dispatch, FunctionComponent, LegacyRef, SetStateAction } from 'react';
+import { Dispatch, FunctionComponent, SetStateAction } from 'react';
 import { ChangeEvent, useRef } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
@@ -16,6 +16,7 @@ import {
 	getAttachmentFileURL,
 } from '@/lib/apiHelpers/attachmentsAPI';
 import { toast } from 'react-toastify';
+import useUploadFile from '@/hooks/useUploadFile';
 
 const ArticleContent = dynamic(
 	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
@@ -63,12 +64,8 @@ const MarkdownEditorComponent: FunctionComponent<
 		tabMapValue: 1,
 	});
 
-	const inputFile = useRef<HTMLInputElement | null>(null);
 	const editorRef = useRef<Editor>(null);
-	const promiseResolveRef =
-		useRef<(value: { url: string; text?: string | undefined }) => void>();
-
-	const promiseRejectRef = useRef<(reason?: any) => void>();
+	const [uploadImage, InputComponent] = useUploadFile();
 
 	const uploadFile = async (file: File) => {
 		const id = toast.loading('Fazendo upload do arquivo, aguarde...');
@@ -92,10 +89,12 @@ const MarkdownEditorComponent: FunctionComponent<
 				closeOnClick: true,
 			});
 			return imageUrl;
-		} finally {
+		} catch (error) {
+			console.error(error);
+
 			toast.update(id, {
-				render: 'Arquivo enviado com sucesso!',
-				type: 'success',
+				render: 'Algo deu errado2!',
+				type: 'error',
 				isLoading: false,
 				autoClose: 5000,
 				pauseOnFocusLoss: true,
@@ -103,29 +102,8 @@ const MarkdownEditorComponent: FunctionComponent<
 				pauseOnHover: true,
 				closeOnClick: true,
 			});
-		}
-	};
 
-	const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-		const selectedFile = event.target.files?.[0];
-
-		if (selectedFile && promiseResolveRef.current) {
-			try {
-				const imageUrl = await uploadFile(selectedFile);
-				promiseResolveRef.current({
-					text: selectedFile.name,
-					url: imageUrl,
-				});
-			} catch (error) {
-				if (promiseRejectRef.current)
-					promiseRejectRef.current(
-						new Error(
-							`Promessa não cumprida, erro:`,
-							error as ErrorOptions
-						)
-					);
-				console.error('Error reading file:', error);
-			}
+			throw new Error('Error message ' + error);
 		}
 	};
 
@@ -140,7 +118,6 @@ const MarkdownEditorComponent: FunctionComponent<
 		event: ChangeEvent<HTMLTextAreaElement> | undefined
 	) {
 		event?.preventDefault();
-		console.log(event);
 
 		setMyArticleDocument(text);
 	}
@@ -152,22 +129,17 @@ const MarkdownEditorComponent: FunctionComponent<
 	const onCustomImageUpload = async (
 		event: any
 	): Promise<{ url: string; text?: string | undefined }> => {
-		inputFile.current?.click();
-		return new Promise((resolve, reject) => {
-			promiseResolveRef.current = resolve;
-			promiseRejectRef.current = reject;
-		});
+		const selectedFile = await uploadImage();
+		const uploadedFileURL = await uploadFile(selectedFile);
+		return {
+			url: uploadedFileURL,
+			text: selectedFile.name,
+		};
 	};
 
 	return (
 		<>
-			<input
-				type="file"
-				id="file"
-				ref={inputFile}
-				style={{ display: 'none' }}
-				onChange={handleFileChange}
-			/>
+			<InputComponent />
 			<Editor
 				style={{
 					display: 'flex',
@@ -176,6 +148,7 @@ const MarkdownEditorComponent: FunctionComponent<
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
+				plugins={EDITOR_PLUGINS}
 				ref={editorRef}
 				onChangeTrigger="both"
 				renderHTML={(text) => <ArticleContent article={text} />}
