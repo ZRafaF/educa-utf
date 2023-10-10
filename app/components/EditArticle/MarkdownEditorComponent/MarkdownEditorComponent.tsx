@@ -5,14 +5,7 @@
 'use client';
 
 import './MarkdownEditorComponent.css';
-import {
-	ComponentType,
-	Dispatch,
-	FunctionComponent,
-	SetStateAction,
-	Suspense,
-	useState,
-} from 'react';
+import { Dispatch, FunctionComponent, SetStateAction } from 'react';
 import { ChangeEvent, useRef } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
@@ -66,7 +59,10 @@ const MarkdownEditorComponent: FunctionComponent<
 		btnUnderline: 'Sublinhado',
 	});
 	Editor.useLocale('pt_BR');
-	Editor.use(Plugins.TabInsert);
+	Editor.use(Plugins.TabInsert, {
+		tabMapValue: 1,
+	});
+
 	const inputFile = useRef<HTMLInputElement | null>(null);
 	const promiseResolveRef =
 		useRef<(value: { url: string; text?: string | undefined }) => void>();
@@ -173,7 +169,7 @@ const MarkdownEditorComponent: FunctionComponent<
 				style={{
 					display: 'flex',
 					flexGrow: 1,
-					height: '90vh',
+					height: '85vh',
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
