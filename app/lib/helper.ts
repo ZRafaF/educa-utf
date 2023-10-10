@@ -37,6 +37,7 @@ export const defaultPostResponse: ArticlesResponse = {
 	updated: 'IsoDateString',
 	collectionId: 'string',
 	cover: 'string',
+	attachments: '123',
 	collectionName: Collections.Articles,
 };
 
