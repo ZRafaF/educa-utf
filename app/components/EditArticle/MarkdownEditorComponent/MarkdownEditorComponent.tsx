@@ -5,7 +5,7 @@
 'use client';
 
 import './MarkdownEditorComponent.css';
-import { Dispatch, FunctionComponent, SetStateAction } from 'react';
+import { Dispatch, FunctionComponent, LegacyRef, SetStateAction } from 'react';
 import { ChangeEvent, useRef } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
@@ -64,6 +64,7 @@ const MarkdownEditorComponent: FunctionComponent<
 	});
 
 	const inputFile = useRef<HTMLInputElement | null>(null);
+	const editorRef = useRef<Editor>(null);
 	const promiseResolveRef =
 		useRef<(value: { url: string; text?: string | undefined }) => void>();
 
@@ -128,22 +129,24 @@ const MarkdownEditorComponent: FunctionComponent<
 		}
 	};
 
-	function handleEditorChange({
-		text,
-		html,
-	}: {
-		text: string;
-		html: string;
-	}) {
+	function handleEditorChange(
+		{
+			text,
+			html,
+		}: {
+			text: string;
+			html: string;
+		},
+		event: ChangeEvent<HTMLTextAreaElement> | undefined
+	) {
+		event?.preventDefault();
+		console.log(event);
+
 		setMyArticleDocument(text);
 	}
 
 	const handleImageUpload = (file: File) => {
-		return new Promise(async (resolve) => {
-			const imageUrl = await uploadFile(file);
-
-			resolve(imageUrl);
-		});
+		return uploadFile(file);
 	};
 
 	const onCustomImageUpload = async (
@@ -173,13 +176,23 @@ const MarkdownEditorComponent: FunctionComponent<
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
-				plugins={EDITOR_PLUGINS}
+				ref={editorRef}
+				onChangeTrigger="both"
 				renderHTML={(text) => <ArticleContent article={text} />}
 				onChange={handleEditorChange}
 				allowPasteImage
 				defaultValue={myArticleDocument}
 				onImageUpload={handleImageUpload}
 				onCustomImageUpload={onCustomImageUpload}
+				config={{
+					view: {
+						menu: true,
+						md: true, // use this to hide
+						html: true,
+						fullScreen: true,
+						hideMenu: true,
+					},
+				}}
 			/>
 		</>
 	);
