@@ -5,7 +5,7 @@
 'use client';
 
 import './MarkdownEditorComponent.css';
-import { Dispatch, FunctionComponent, LegacyRef, SetStateAction } from 'react';
+import { Dispatch, FunctionComponent, SetStateAction } from 'react';
 import { ChangeEvent, useRef } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
@@ -89,9 +89,11 @@ const MarkdownEditorComponent: FunctionComponent<
 				closeOnClick: true,
 			});
 			return imageUrl;
-		} finally {
+		} catch (error) {
+			console.error(error);
+
 			toast.update(id, {
-				render: 'Algo deu errado!',
+				render: 'Algo deu errado2!',
 				type: 'error',
 				isLoading: false,
 				autoClose: 5000,
@@ -100,6 +102,8 @@ const MarkdownEditorComponent: FunctionComponent<
 				pauseOnHover: true,
 				closeOnClick: true,
 			});
+
+			throw new Error('Error message ' + error);
 		}
 	};
 

@@ -5,16 +5,20 @@
 
 'use client';
 
-import { getUserAvatarUrl, updateUserAvatar } from '@/lib/apiHelpers/usersAPI';
+import {
+	getUserAvatarUrl,
+	getUserAvatarUrlByUserId,
+	updateUserAvatar,
+} from '@/lib/apiHelpers/usersAPI';
 import { UsersStatsResponse } from '@/types/pocketbase-types';
-import { FunctionComponent, useMemo, useState } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import AvatarComponent from '../AvatarComponent/AvatarComponent';
 import Box from '@mui/material/Box';
 import usePbAuth from '@/hooks/usePbAuth';
-import { IconButton, Paper } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { IconButton, Tooltip } from '@mui/material';
 import useUploadFile from '@/hooks/useUploadFile';
 import { toast } from 'react-toastify';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface EditablePfpProps {
 	userStats: UsersStatsResponse;
@@ -22,15 +26,20 @@ interface EditablePfpProps {
 
 const EditablePfp: FunctionComponent<EditablePfpProps> = ({ userStats }) => {
 	const [, user] = usePbAuth();
-	const authorAvatarUrl = useMemo(
-		() => getUserAvatarUrl(user ? user : userStats),
-		[userStats, user]
+	const [authorAvatarUrl, setAuthorAvatarUrl] = useState<string>(
+		getUserAvatarUrl(userStats)
 	);
 	const disabled = useMemo(() => {
 		if (user) {
 			if (user.id === userStats.id) return false;
 		}
 		return true;
+	}, [user]);
+
+	useEffect(() => {
+		getUserAvatarUrlByUserId(userStats.id).then((url) => {
+			setAuthorAvatarUrl(url);
+		});
 	}, [user]);
 
 	const [uploadImage, InputComponent] = useUploadFile();
@@ -67,38 +76,55 @@ const EditablePfp: FunctionComponent<EditablePfpProps> = ({ userStats }) => {
 		}
 	};
 
+	const removePfp = () => {
+		if (user) {
+			updateUserAvatar(user.id, null)
+				.then(() => toast.success('Imagem removida com sucesso'))
+				.catch((e) => {
+					console.error(e);
+					toast.error('Algo deu errado, erro: ' + e);
+				});
+		}
+	};
+
 	return (
 		<Box
 			sx={{
 				position: 'relative',
 			}}
 		>
-			<IconButton
-				onClick={() => {
-					updatePfp();
-				}}
-				disabled={disabled}
-			>
-				<AvatarComponent
-					name={userStats.name}
-					src={authorAvatarUrl}
-					size="huge"
-				/>
-			</IconButton>
+			<Tooltip title="Editar imagem de perfil" arrow>
+				<Box>
+					<IconButton
+						onClick={() => {
+							updatePfp();
+						}}
+						disabled={disabled}
+					>
+						<AvatarComponent
+							name={userStats.name}
+							src={authorAvatarUrl}
+							size="x-large"
+						/>
+					</IconButton>
+				</Box>
+			</Tooltip>
 			{!disabled && (
-				<IconButton
-					sx={{
-						position: 'absolute',
-						right: -5,
-						bottom: -5,
-					}}
-					size="small"
-					onClick={() => {
-						updatePfp();
-					}}
-				>
-					<EditIcon />
-				</IconButton>
+				<Tooltip title="Remover imagem de perfil" arrow>
+					<IconButton
+						sx={{
+							position: 'absolute',
+							right: -5,
+							bottom: -5,
+						}}
+						size="small"
+						onClick={() => {
+							removePfp();
+						}}
+					>
+						<DeleteIcon fontSize="small" color="disabled" />
+					</IconButton>
+				</Tooltip>
 			)}
 			<InputComponent />
 		</Box>

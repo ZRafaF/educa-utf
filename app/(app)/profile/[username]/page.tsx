@@ -6,7 +6,6 @@
 import {
 	getListOfUsersStats,
 	getUserAvatarUrl,
-	getUserAvatarUrlByUserId,
 	getUsersStatsByUsername,
 } from '@/lib/apiHelpers/usersAPI';
 import { FunctionComponent } from 'react';
@@ -79,12 +78,24 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	return (
 		<Box display={'flex'} width={'100%'} minHeight="100dvh">
 			<Box width={'100%'}>
-				<Container maxWidth="md">
-					<Box display={'flex'} p={2} gap={2} alignItems={'center'}>
+				<Container
+					maxWidth="md"
+					sx={{
+						px: { xs: 0.5, sm: 1, md: 2 },
+					}}
+				>
+					<Box
+						display={'flex'}
+						flexGrow={2}
+						py={{ xs: 0.5, sm: 1, md: 2 }}
+						gap={2}
+						alignItems={'center'}
+					>
 						<EditablePfp userStats={userStats} />
 						<Box>
 							<Typography
 								variant="h3"
+								fontSize={{ xs: 'xx-large', sm: 'xxx-large' }}
 								component="h1"
 								color="primary"
 								fontWeight={700}
@@ -108,11 +119,11 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 					gap={2}
 					alignItems={'center'}
 					bgcolor={'grey.A700'}
-					// component={Paper}
-					// variant="outlined"
-					// square
 				>
-					<Container maxWidth="md" sx={{ py: 2 }}>
+					<Container
+						maxWidth="md"
+						sx={{ py: 2, px: { xs: 0.5, sm: 1, md: 2 } }}
+					>
 						<Typography>
 							<b>INFORMAÇÕES:</b>
 						</Typography>

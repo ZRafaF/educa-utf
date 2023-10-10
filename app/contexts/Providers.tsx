@@ -18,8 +18,19 @@ export default function Providers({ children }: ProvidersProps) {
 		<>
 			{getInitColorSchemeScript()}
 
+			<ToastContainer
+				position="top-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="colored"
+			/>
 			{children}
-			<ToastContainer />
 		</>
 	);
 }

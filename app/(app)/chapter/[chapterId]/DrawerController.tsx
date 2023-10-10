@@ -32,7 +32,7 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 	const pathname = usePathname();
 
 	const theme = useTheme();
-	const notSmallScreens = useMediaQuery(theme.breakpoints.up('sm'));
+	const notSmallScreens = useMediaQuery(theme.breakpoints.up('md'));
 	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 	const onlyMediumScreen = useMediaQuery(theme.breakpoints.only('md'));
 
