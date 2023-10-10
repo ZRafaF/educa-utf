@@ -33,9 +33,7 @@ export async function updateUserAvatar(id: string, newAvatar: File) {
 	});
 }
 
-export async function getUserAvatarUrl(
-	user: UsersResponse | UsersStatsResponse
-) {
+export function getUserAvatarUrl(user: UsersResponse | UsersStatsResponse) {
 	const record = {
 		id: user.id,
 		collectionId: user.collectionId,

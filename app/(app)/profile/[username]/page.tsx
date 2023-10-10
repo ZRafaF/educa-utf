@@ -15,9 +15,13 @@ import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
 import { getFormattedDate } from '@/lib/helper';
-import Paper from '@mui/material/Paper';
+const EditablePfp = dynamic(
+	() => import('@/components/EditablePfp/EditablePfp'),
+	{
+		ssr: false,
+	}
+);
 
 const NoSSRPrivateUserComponent = dynamic(
 	() => import('./PrivateUserComponent'),
@@ -71,18 +75,13 @@ export async function generateMetadata({
 
 const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	const userStats = await getUsersStatsByUsername(params.username);
-	const authorAvatarUrl = await getUserAvatarUrlByUserId(userStats.id);
 
 	return (
 		<Box display={'flex'} width={'100%'} minHeight="100dvh">
 			<Box width={'100%'}>
 				<Container maxWidth="md">
 					<Box display={'flex'} p={2} gap={2} alignItems={'center'}>
-						<AvatarComponent
-							name={userStats.name}
-							src={authorAvatarUrl}
-							size="huge"
-						/>
+						<EditablePfp userStats={userStats} />
 						<Box>
 							<Typography
 								variant="h3"

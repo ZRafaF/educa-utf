@@ -176,6 +176,7 @@ const MarkdownEditorComponent: FunctionComponent<
 					borderRadius: 10,
 					overflow: 'hidden',
 				}}
+				plugins={EDITOR_PLUGINS}
 				ref={editorRef}
 				onChangeTrigger="both"
 				renderHTML={(text) => <ArticleContent article={text} />}

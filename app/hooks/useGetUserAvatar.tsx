@@ -14,9 +14,8 @@ const useGetUserAvatar = (user: UsersResponse | UsersStatsResponse | null) => {
 
 	useEffect(() => {
 		if (user) {
-			getUserAvatarUrl(user).then((url) => {
-				setAvatarUrl(url);
-			});
+			const url = getUserAvatarUrl(user);
+			setAvatarUrl(url);
 		}
 	}, [user, setAvatarUrl]);
 
