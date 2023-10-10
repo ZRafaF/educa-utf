@@ -11,12 +11,18 @@ import {
 	FunctionComponent,
 	SetStateAction,
 	Suspense,
+	useState,
 } from 'react';
 import { ChangeEvent, useRef } from 'react';
 import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
 
 import Editor, { Plugins } from 'react-markdown-editor-lite';
+import {
+	attachFile,
+	getAttachmentFileURL,
+} from '@/lib/apiHelpers/attachmentsAPI';
+import { toast } from 'react-toastify';
 
 const ArticleContent = dynamic(
 	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
@@ -44,13 +50,14 @@ const EDITOR_PLUGINS = [
 ];
 
 interface MarkdownEditorComponentProps {
+	articleId: string;
 	myArticleDocument: string;
 	setMyArticleDocument: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const MarkdownEditorComponent: FunctionComponent<
 	MarkdownEditorComponentProps
-> = ({ myArticleDocument, setMyArticleDocument }) => {
+> = ({ articleId, myArticleDocument, setMyArticleDocument }) => {
 	Editor.addLocale('pt_BR', {
 		btnHeader: 'Títulos',
 		btnClear: 'Apagar tudo',
@@ -66,44 +73,63 @@ const MarkdownEditorComponent: FunctionComponent<
 
 	const promiseRejectRef = useRef<(reason?: any) => void>();
 
-	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const selectedFile = event.target.files?.[0];
+	const uploadFile = async (file: File) => {
+		const id = toast.loading('Fazendo upload do arquivo, aguarde...');
 
-		if (selectedFile) {
-			readFileContent(selectedFile)
-				.then((content) => {
-					if (promiseResolveRef.current) {
-						promiseResolveRef.current({
-							url: content,
-						});
-					}
-				})
-				.catch((error) => {
-					if (promiseRejectRef.current)
-						promiseRejectRef.current(
-							new Error(`Promessa não cumprida, erro:`, error)
-						);
-					console.error('Error reading file:', error);
-				});
+		try {
+			const attachmentsRecord = await attachFile(articleId, file);
+
+			const imageUrl = await getAttachmentFileURL(
+				articleId,
+				attachmentsRecord.files[attachmentsRecord.files.length - 1],
+				true
+			);
+			toast.update(id, {
+				render: 'Arquivo enviado com sucesso!',
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
+			return imageUrl;
+		} finally {
+			toast.update(id, {
+				render: 'Arquivo enviado com sucesso!',
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
 		}
 	};
 
-	const readFileContent = (file: File): Promise<string> => {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
+	const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+		const selectedFile = event.target.files?.[0];
 
-			reader.onload = (event) => {
-				const content = event.target?.result as string;
-				resolve(content);
-			};
-
-			reader.onerror = (event) => {
-				reject(event.target?.error);
-			};
-
-			reader.readAsDataURL(file);
-			//reader.readAsBinaryString(file)
-		});
+		if (selectedFile && promiseResolveRef.current) {
+			try {
+				const imageUrl = await uploadFile(selectedFile);
+				promiseResolveRef.current({
+					text: selectedFile.name,
+					url: imageUrl,
+				});
+			} catch (error) {
+				if (promiseRejectRef.current)
+					promiseRejectRef.current(
+						new Error(
+							`Promessa não cumprida, erro:`,
+							error as ErrorOptions
+						)
+					);
+				console.error('Error reading file:', error);
+			}
+		}
 	};
 
 	function handleEditorChange({
@@ -116,13 +142,11 @@ const MarkdownEditorComponent: FunctionComponent<
 		setMyArticleDocument(text);
 	}
 
-	const handleImageUpload = (file: any) => {
-		return new Promise((resolve) => {
-			const reader = new FileReader();
-			reader.onload = (data) => {
-				if (data.target) resolve(data.target.result);
-			};
-			reader.readAsDataURL(file);
+	const handleImageUpload = (file: File) => {
+		return new Promise(async (resolve) => {
+			const imageUrl = await uploadFile(file);
+
+			resolve(imageUrl);
 		});
 	};
 
