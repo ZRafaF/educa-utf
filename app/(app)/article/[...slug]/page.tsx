@@ -5,7 +5,7 @@
 
 import ArticleComponent from '@/components/ArticleComponent/ArticleComponent';
 import {
-	getListOfArticles,
+	getFullListOfArticles,
 	getArticleById,
 	getArticleStatsById,
 	getArticleDocumentUrl,
@@ -27,7 +27,7 @@ interface PageProps {
 export const revalidate = 30;
 
 export async function generateStaticParams() {
-	const articles = await getListOfArticles();
+	const articles = await getFullListOfArticles();
 
 	return articles.map((article) => ({
 		slug: [article.id, 'f'],

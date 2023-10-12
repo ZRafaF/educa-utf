@@ -44,6 +44,7 @@ const CollapsibleList: FunctionComponent<CollapsibleListProps> = ({
 					bgcolor: 'background.default',
 					// boxShadow: 'inset 0px 0px 4px #000',
 				}}
+				unmountOnExit
 			>
 				<Paper variant="outlined" square>
 					{children}

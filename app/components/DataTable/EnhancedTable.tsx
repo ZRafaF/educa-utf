@@ -11,102 +11,69 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
+import { RecordOptions } from 'pocketbase';
+import { useEffect } from 'react';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { getFormattedDate } from '@/lib/helper';
+import { getListOfArticlesStats } from '@/lib/apiHelpers/articlesAPI';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import TitleIcon from '@mui/icons-material/Title';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 
 interface Data {
-	calories: number;
-	carbs: number;
-	fat: number;
-	name: string;
-	protein: number;
-}
-
-function createData(
-	name: string,
-	calories: number,
-	fat: number,
-	carbs: number,
-	protein: number
-): Data {
-	return {
-		name,
-		calories,
-		fat,
-		carbs,
-		protein,
-	};
-}
-
-const rows = [
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Donut', 452, 25.0, 51, 4.9),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
-	createData('Honeycomb', 408, 3.2, 87, 6.5),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Jelly Bean', 375, 0.0, 94, 0.0),
-	createData('KitKat', 518, 26.0, 65, 7.0),
-	createData('Lollipop', 392, 0.2, 98, 0.0),
-	createData('Marshmallow', 318, 0, 81, 2.0),
-	createData('Nougat', 360, 19.0, 9, 37.0),
-	createData('Oreo', 437, 18.0, 63, 4.0),
-];
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-	if (b[orderBy] < a[orderBy]) {
-		return -1;
-	}
-	if (b[orderBy] > a[orderBy]) {
-		return 1;
-	}
-	return 0;
+	title: string;
+	views: number;
+	likes: number;
+	updated: string;
+	created: string;
 }
 
 type Order = 'asc' | 'desc';
-
-function getComparator<Key extends keyof any>(
-	order: Order,
-	orderBy: Key
-): (
-	a: { [key in Key]: number | string },
-	b: { [key in Key]: number | string }
-) => number {
-	return order === 'desc'
-		? (a, b) => descendingComparator(a, b, orderBy)
-		: (a, b) => -descendingComparator(a, b, orderBy);
-}
 
 interface HeadCell {
 	id: keyof Data;
 	label: string;
 	numeric: boolean;
+	icon: JSX.Element;
 }
 
 const headCells: readonly HeadCell[] = [
 	{
-		id: 'name',
+		id: 'title',
 		numeric: false,
-		label: 'Dessert (100g serving)',
+		label: 'Titulo',
+		icon: <TitleIcon />,
 	},
 	{
-		id: 'calories',
+		id: 'views',
 		numeric: true,
-		label: 'Calories',
+		label: 'Views',
+		icon: <VisibilityIcon />,
 	},
 	{
-		id: 'fat',
+		id: 'likes',
 		numeric: true,
-		label: 'Fat (g)',
+		label: 'Likes',
+		icon: <FavoriteIcon />,
 	},
 	{
-		id: 'carbs',
+		id: 'updated',
 		numeric: true,
-		label: 'Carbs (g)',
+		label: 'Atualizado',
+		icon: <AccessTimeIcon />,
 	},
+
 	{
-		id: 'protein',
+		id: 'created',
 		numeric: true,
-		label: 'Protein (g)',
+		label: 'Criado',
+		icon: <DateRangeIcon />,
 	},
 ];
 
@@ -117,11 +84,10 @@ interface EnhancedTableProps {
 	) => void;
 	order: Order;
 	orderBy: string;
-	rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-	const { order, orderBy, rowCount, onRequestSort } = props;
+	const { order, orderBy, onRequestSort } = props;
 	const createSortHandler =
 		(property: keyof Data) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
@@ -130,19 +96,32 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 	return (
 		<TableHead>
 			<TableRow>
-				{headCells.map((headCell) => (
+				{headCells.map((headCell, idx) => (
 					<TableCell
 						key={headCell.id}
-						align={headCell.numeric ? 'right' : 'left'}
-						padding={'checkbox'}
+						align={'center'}
+						padding={'none'}
+						sx={{
+							pl: idx === 0 ? 2 : 0,
+						}}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
 						<TableSortLabel
 							active={orderBy === headCell.id}
 							direction={orderBy === headCell.id ? order : 'asc'}
 							onClick={createSortHandler(headCell.id)}
+							sx={{
+								fontWeight: 600,
+							}}
 						>
-							{headCell.label}
+							<Tooltip
+								title={headCell.label}
+								arrow
+								placement="top"
+							>
+								{headCell.icon}
+							</Tooltip>
+
 							{orderBy === headCell.id ? (
 								<Box component="span" sx={visuallyHidden}>
 									{order === 'desc'
@@ -158,30 +137,16 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 	);
 }
 
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
-function stableSort<T>(
-	array: readonly T[],
-	comparator: (a: T, b: T) => number
-) {
-	const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-	stabilizedThis.sort((a, b) => {
-		const order = comparator(a[0], b[0]);
-		if (order !== 0) {
-			return order;
-		}
-		return a[1] - b[1];
-	});
-	return stabilizedThis.map((el) => el[0]);
-}
-
 export default function EnhancedTable() {
 	const [order, setOrder] = React.useState<Order>('asc');
-	const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
+	const [orderBy, setOrderBy] = React.useState<keyof Data>('title');
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const [queryOptions, setQueryOptions] = React.useState<
+		RecordOptions | undefined
+	>();
+	const [rows, setRows] = React.useState<Data[]>([]);
+	const [totalItems, setTotalItems] = React.useState<number>(0);
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
@@ -190,6 +155,12 @@ export default function EnhancedTable() {
 		const isAsc = orderBy === property && order === 'asc';
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
+
+		const newSort = `${isAsc ? '+' : '-'}${property}`;
+		setQueryOptions((old) => ({
+			...old,
+			sort: newSort,
+		}));
 	};
 
 	const handleChangePage = (event: unknown, newPage: number) => {
@@ -203,83 +174,103 @@ export default function EnhancedTable() {
 		setPage(0);
 	};
 
-	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+	useEffect(() => {
+		const fetchNewData = async () => {
+			const data = await getListOfArticlesStats(
+				page + 1,
+				rowsPerPage,
+				queryOptions
+			);
 
-	const visibleRows = React.useMemo(
-		() =>
-			stableSort(rows, getComparator(order, orderBy)).slice(
-				page * rowsPerPage,
-				page * rowsPerPage + rowsPerPage
-			),
-		[order, orderBy, page, rowsPerPage]
-	);
+			setTotalItems(data.totalItems);
+			setRows(
+				data.items.map((row) => {
+					return {
+						title: row.title,
+						views: row.views,
+						likes: row.likes,
+						updated: getFormattedDate(row.updated),
+						created: getFormattedDate(row.created),
+					} as Data;
+				})
+			);
+		};
+
+		fetchNewData();
+	}, [queryOptions, page, rowsPerPage]);
 
 	return (
 		<>
+			<Toolbar
+				sx={{
+					pl: { sm: 2 },
+					pr: { xs: 1, sm: 1 },
+				}}
+			>
+				<Typography
+					sx={{ flex: '1 1 100%' }}
+					variant="h6"
+					id="tableTitle"
+					component="div"
+				>
+					Nutrition
+				</Typography>
+
+				<Tooltip title="Filtrar lista">
+					<IconButton>
+						<FilterListIcon />
+					</IconButton>
+				</Tooltip>
+			</Toolbar>
+
 			<TableContainer>
-				<Table aria-labelledby="tableTitle" size={'medium'}>
+				<Table aria-labelledby="tableTitle" size={'small'}>
 					<EnhancedTableHead
 						order={order}
 						orderBy={orderBy}
 						onRequestSort={handleRequestSort}
-						rowCount={rows.length}
 					/>
 					<TableBody>
-						{visibleRows.map((row, index) => {
+						{rows.map((row, index) => {
 							const labelId = `enhanced-table-checkbox-${index}`;
 
 							return (
 								<TableRow
 									hover
-									role="checkbox"
 									tabIndex={-1}
-									key={row.name}
-									sx={{ cursor: 'pointer' }}
+									key={row.title}
+									sx={{
+										cursor: 'pointer',
+									}}
 								>
 									<TableCell
-										component="th"
 										id={labelId}
 										scope="row"
 										padding="checkbox"
+										colSpan={Object.keys(row).length}
 									>
-										{row.name}
-									</TableCell>
-									<TableCell align="right">
-										{row.calories}
-									</TableCell>
-									<TableCell align="right">
-										{row.fat}
-									</TableCell>
-									<TableCell align="right">
-										{row.carbs}
-									</TableCell>
-									<TableCell align="right">
-										{row.protein}
+										{row.title}
 									</TableCell>
 								</TableRow>
 							);
 						})}
-						{emptyRows > 0 && (
-							<TableRow
-								style={{
-									height: 53 * emptyRows,
-								}}
-							>
-								<TableCell colSpan={6} />
-							</TableRow>
-						)}
 					</TableBody>
 				</Table>
 			</TableContainer>
 			<TablePagination
 				rowsPerPageOptions={[5, 10, 25]}
 				component="div"
-				count={rows.length}
+				count={totalItems}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				onPageChange={handleChangePage}
 				onRowsPerPageChange={handleChangeRowsPerPage}
+				labelRowsPerPage={'Itens por página'}
+				labelDisplayedRows={({ from, to, count }) => {
+					return `${from}–${to} de ${
+						count !== -1 ? count : `mais de ${to}`
+					}`;
+				}}
 			/>
 		</>
 	);
