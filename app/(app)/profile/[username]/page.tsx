@@ -15,6 +15,7 @@ import type { Metadata } from 'next';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { getFormattedDate } from '@/lib/helper';
+import PrivateDrawerContent from './PrivateDrawerContent';
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
 	{
@@ -82,7 +83,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 					maxWidth="md"
 					sx={{
 						px: { xs: 0.5, sm: 1, md: 2 },
-						// boxShadow: '0 0 4px #000',
+						py: 2,
 					}}
 				>
 					<Box
@@ -181,7 +182,9 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 					</Container>
 				</Box>
 			</Box>
-			<NoSSRPrivateUserComponent username={params.username} />
+			<NoSSRPrivateUserComponent username={params.username}>
+				<PrivateDrawerContent />
+			</NoSSRPrivateUserComponent>
 		</Box>
 	);
 };
