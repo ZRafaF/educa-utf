@@ -13,6 +13,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import React from 'react';
 import LinkItem from '@/components/AppOverlay/LinkItem/LinkItem';
+import InstallPwaButton from './InstallPwaButton';
 
 interface ListItemsProps {}
 
@@ -38,9 +39,7 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					icon={<LibraryBooksIcon />}
 					href="/browse/chapters"
 				/>
-			</List>
-			<Divider />
-			<List>
+				<Divider />
 				<LinkItem
 					title="Novo artigo"
 					tooltip="Criar novo artigo"
@@ -53,6 +52,8 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					icon={<QueueIcon />}
 					href="/new-chapter"
 				/>
+				<Divider />
+				<InstallPwaButton />
 			</List>
 		</React.Fragment>
 	);

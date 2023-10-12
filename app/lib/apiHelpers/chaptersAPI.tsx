@@ -9,6 +9,7 @@ import {
 	ChaptersResponse,
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
+import { ListResult, RecordOptions } from 'pocketbase';
 
 export async function getListOfChapters(expand: boolean = false) {
 	try {
@@ -73,5 +74,20 @@ export async function getRandomChapter() {
 	} catch (error) {
 		console.error(error);
 		return [];
+	}
+}
+
+export async function getListOfChaptersStats(
+	page: number,
+	itemsPerPage: number,
+	options: RecordOptions | undefined
+) {
+	try {
+		return await pb
+			.collection('chapters_stats')
+			.getList<ChaptersStatsResponse>(page, itemsPerPage, options);
+	} catch (error) {
+		console.error(error);
+		return {} as ListResult<ChaptersStatsResponse>;
 	}
 }

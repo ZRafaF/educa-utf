@@ -3,12 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { getListOfArticles } from './lib/apiHelpers/articlesAPI';
+import { getFullListOfArticles } from './lib/apiHelpers/articlesAPI';
 import { getListOfChapters } from './lib/apiHelpers/chaptersAPI';
 import { getListOfUsersStats } from './lib/apiHelpers/usersAPI';
 
 export default async function sitemap() {
-	const articles = await getListOfArticles();
+	const articles = await getFullListOfArticles();
 
 	const articlesSiteMap = articles.map((article) => ({
 		url: `https://educautf.td.utfpr.edu.br/article/${article.id}`,

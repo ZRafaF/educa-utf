@@ -11,11 +11,13 @@ import {
 import pb from '../PocketBase/pocketbase';
 import { ArticlesExpand } from '@/types/expanded-types';
 import { getFormData } from '../helper';
+import { ListResult, RecordOptions } from 'pocketbase';
 
-export async function getListOfArticles() {
+export async function getFullListOfArticles() {
 	try {
 		return await pb.collection('articles').getFullList<ArticlesResponse>({
 			skipTotal: true,
+			batch: 9999,
 		});
 	} catch (error) {
 		console.error(error);
@@ -39,21 +41,6 @@ export async function getArticleStatsById(articleId: string) {
 			skipTotal: true,
 		});
 }
-
-// export async function getPostsSorted(qnt: number, sortBy: string = '-created') {
-// 	try {
-// 		const response = await pb
-// 			.collection('posts')
-// 			.getList<ArticlesResponse<ArticlesExpand>>(1, qnt, {
-// 				sort: sortBy,
-// 				skipTotal: true,
-// 			});
-// 		return response.items;
-// 	} catch (error) {
-// 		console.error(error);
-// 		return [];
-// 	}
-// }
 
 export async function getBestArticlesOf(time: 'week' | 'month' | 'year') {
 	try {
@@ -165,4 +152,19 @@ export async function updateArticle(
 		});
 	}
 	return pb.collection('articles').update<ArticlesResponse>(articleId, form);
+}
+
+export async function getListOfArticlesStats(
+	page: number,
+	itemsPerPage: number,
+	options: RecordOptions | undefined
+) {
+	try {
+		return await pb
+			.collection('articles_stats')
+			.getList<ArticlesStatsResponse>(page, itemsPerPage, options);
+	} catch (error) {
+		console.error(error);
+		return {} as ListResult<ArticlesStatsResponse>;
+	}
 }

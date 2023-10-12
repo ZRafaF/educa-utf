@@ -77,7 +77,10 @@ const EditablePfp: FunctionComponent<EditablePfpProps> = ({ userStats }) => {
 	};
 
 	const removePfp = () => {
-		if (user) {
+		if (
+			user &&
+			confirm('Tem certeza que deseja remover a imagem de perfil?')
+		) {
 			updateUserAvatar(user.id, null)
 				.then(() => toast.success('Imagem removida com sucesso'))
 				.catch((e) => {
