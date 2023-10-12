@@ -46,7 +46,7 @@ async function BannerSomethingNew() {
 						<Box>
 							<Typography
 								variant="h2"
-								color="white"
+								color="text.primary"
 								fontWeight={700}
 								component="h1"
 							>

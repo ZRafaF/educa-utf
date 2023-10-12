@@ -17,7 +17,7 @@ export const cssTheme = extendTheme({
 					//default: '#161616',
 				},
 				text: {
-					primary: '#c9d1d9',
+					primary: '#F7F7F7',
 				},
 				grey: { A700: '#090909', A400: '#090909' },
 			},

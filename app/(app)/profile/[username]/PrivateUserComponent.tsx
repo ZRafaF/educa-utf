@@ -6,14 +6,31 @@
 
 import usePbAuth from '@/hooks/usePbAuth';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 import { FunctionComponent } from 'react';
+import MailIcon from '@mui/icons-material/Mail';
+import ListItemText from '@mui/material/ListItemText';
+// import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import CollapsibleList from '@/components/CollapsibleList/CollapsibleList';
+import FaceIcon from '@mui/icons-material/Face';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import QueueIcon from '@mui/icons-material/Queue';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 interface PrivateUserComponentProps {
 	username: string;
 }
 
-const drawerWidth = 400;
+const drawerWidth = 450;
 
 const PrivateUserComponent: FunctionComponent<PrivateUserComponentProps> = ({
 	username,
@@ -23,8 +40,90 @@ const PrivateUserComponent: FunctionComponent<PrivateUserComponentProps> = ({
 	if (username !== user?.username) return <></>;
 
 	return (
-		<Box display={'flex'} width={drawerWidth}>
-			Meu perfil
+		<Box
+			minWidth={drawerWidth}
+			sx={{
+				bgcolor: 'grey.A700',
+			}}
+			position={'relative'}
+			// component={Paper}
+			// variant="outlined"
+			// square
+		>
+			<Toolbar
+				sx={{
+					justifyContent: 'center',
+					//boxShadow: 'inset 0 0 4px #000',
+				}}
+			>
+				<Typography
+					variant="h3"
+					fontSize={'xx-large'}
+					component="h2"
+					fontWeight={600}
+				>
+					Meu perfil
+				</Typography>
+			</Toolbar>
+			<List>
+				<Divider />
+				<CollapsibleList icon={<FaceIcon />} title="Minhas informações">
+					<ListItemButton>
+						<ListItemIcon>
+							<MailIcon />
+						</ListItemIcon>
+						<ListItemText primary="Starred" />
+					</ListItemButton>
+				</CollapsibleList>
+				<Divider />
+				<ListItem disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<NoteAddIcon />
+						</ListItemIcon>
+						<ListItemText primary={'Criar novo artigo'} />
+					</ListItemButton>
+				</ListItem>
+				<ListItem disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<QueueIcon />
+						</ListItemIcon>
+						<ListItemText primary={'Criar novo capítulo'} />
+					</ListItemButton>
+				</ListItem>
+				<Divider />
+				<CollapsibleList icon={<FavoriteIcon />} title="Meus favoritos">
+					<ListItemButton>
+						<ListItemIcon>
+							<MailIcon />
+						</ListItemIcon>
+						<ListItemText primary="Starred" />
+					</ListItemButton>
+				</CollapsibleList>
+				<CollapsibleList
+					icon={<AutoStoriesIcon />}
+					title="Meus artigos"
+				>
+					<ListItemButton>
+						<ListItemIcon>
+							<MailIcon />
+						</ListItemIcon>
+						<ListItemText primary="Artigos" />
+					</ListItemButton>
+				</CollapsibleList>
+				<CollapsibleList
+					icon={<LibraryBooksIcon />}
+					title="Meus capítulos"
+				>
+					<ListItemButton>
+						<ListItemIcon>
+							<MailIcon />
+						</ListItemIcon>
+						<ListItemText primary="Capítulos" />
+					</ListItemButton>
+				</CollapsibleList>
+			</List>
 		</Box>
 	);
 };

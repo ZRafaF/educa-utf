@@ -28,7 +28,7 @@ const LinkItem: FunctionComponent<LinkItemProps> = ({
 		<li>
 			<NextLink
 				href={href}
-				style={{ textDecoration: 'none', color: 'white' }}
+				style={{ textDecoration: 'none', color: 'inherit' }}
 			>
 				<Tooltip title={tooltip} arrow placement="right">
 					<ListItemButton>

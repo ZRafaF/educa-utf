@@ -4550,6 +4550,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
+pwa-install-handler@^2.4.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/pwa-install-handler/-/pwa-install-handler-2.5.0.tgz#07f21107531b1fff9421d9cf8a5f606b0a8d25d3"
+  integrity sha512-kZN69UHEGU25tvfkfI9k63zG0unqIw9VDMPzm8ZXNwJ5al6Qzwua6qgpfqXM8c/kOuPR88dnYaSM3a0e+F+EUg==
+
 queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
@@ -4649,6 +4654,13 @@ react-transition-group@^4.4.5:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-use-pwa-install@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-use-pwa-install/-/react-use-pwa-install-0.2.4.tgz#4807257933f11c905118cfedf0fcad659ea703bf"
+  integrity sha512-J3aGMEf6yqLfiDjy4WH9OByCXxgjpACMYFwqA5xLLpNacCLE3/TUyTJ6IFEg14CzFUXIWymSxpvSkdm4TdNoCg==
+  dependencies:
+    pwa-install-handler "^2.4.0"
 
 react@18.2.0:
   version "18.2.0"

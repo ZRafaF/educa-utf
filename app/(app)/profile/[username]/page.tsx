@@ -77,11 +77,12 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 
 	return (
 		<Box display={'flex'} width={'100%'} minHeight="100dvh">
-			<Box width={'100%'}>
+			<Box width={'100%'} boxShadow={'0 0 4px #000'} zIndex={1}>
 				<Container
 					maxWidth="md"
 					sx={{
 						px: { xs: 0.5, sm: 1, md: 2 },
+						// boxShadow: '0 0 4px #000',
 					}}
 				>
 					<Box
