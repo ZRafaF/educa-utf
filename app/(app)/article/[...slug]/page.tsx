@@ -42,7 +42,7 @@ export async function generateMetadata({
 	try {
 		const article = await getArticleById(articleId);
 		const articleStats = await getArticleStatsById(articleId);
-		const ArticleCoverUrl = await getArticleCoverURL(article);
+		const ArticleCoverUrl = getArticleCoverURL(article);
 		let tags = article.expand?.tags.map((tag) => tag.name);
 		if (tags === undefined) tags = [''];
 		return {

@@ -7,6 +7,9 @@ import {
 	Collections,
 	ArticlesResponse,
 	ArticlesVisibilityOptions,
+	ArticlesStatsVisibilityOptions,
+	ChaptersStatsVisibilityOptions,
+	ChaptersVisibilityOptions,
 } from '@/types/pocketbase-types';
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, parseISO } from 'date-fns';
@@ -83,11 +86,21 @@ export function getFormData(object: any) {
 
 export function getFormattedDate(
 	date: string,
-	formatStyle: string = 'MM/dd/yyyy'
+	formatStyle: string = 'dd/MM/yyyy'
 ) {
 	const parsedDate = parseISO(date);
 
 	return format(parsedDate, formatStyle, {
 		locale: ptBR,
 	});
+}
+
+export function getFormattedVisibility(
+	visibility:
+		| ArticlesStatsVisibilityOptions
+		| ArticlesVisibilityOptions
+		| ChaptersStatsVisibilityOptions
+		| ChaptersVisibilityOptions
+) {
+	return visibility === 'public' ? 'Publico' : 'Privado';
 }

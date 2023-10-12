@@ -58,7 +58,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 
 			if (article.user === user?.id) {
 				const articleDocument = await getArticleDocumentUrl(article);
-				const coverUrl = await getArticleCoverURL(article, true);
+				const coverUrl = getArticleCoverURL(article, true);
 
 				if (coverUrl) {
 					const cover = await fetch(coverUrl);

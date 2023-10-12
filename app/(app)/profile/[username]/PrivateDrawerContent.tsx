@@ -96,7 +96,7 @@ const PrivateDrawerContent: FunctionComponent<
 					icon={<LibraryBooksIcon />}
 					title="Meus capítulos"
 				>
-					<DataTable title="Artigos" fetchType="chapters" />
+					<DataTable title="Capítulos" fetchType="chapters" />
 				</CollapsibleList>
 			</List>
 		</>
