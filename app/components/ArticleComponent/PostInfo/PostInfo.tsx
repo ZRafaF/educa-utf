@@ -8,7 +8,6 @@ import {
 	ArticlesStatsResponse,
 	ArticlesResponse,
 } from '@/types/pocketbase-types';
-import Avatar from '@mui/material/Avatar/Avatar';
 import Divider from '@mui/material/Divider/Divider';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
@@ -18,10 +17,9 @@ import Stack from '@mui/material/Stack/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { ArticlesExpand } from '@/types/expanded-types';
-import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
 import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
 import Link from 'next/link';
-
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 interface PostInfoProps {
 	myArticle: ArticlesResponse<ArticlesExpand>;
 	articleStats: ArticlesStatsResponse;
@@ -77,27 +75,42 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 								src={authorAvatarUrl}
 							/>
 						</Link>
-						<Typography
-							height={'100%'}
-							component="p"
-							color={'text.primary'}
+						<Stack
+							direction="row"
+							spacing={2}
+							py={2}
+							alignItems="center"
+							justifyContent="space-between"
+							flexGrow={2}
 						>
-							<Link
-								href={authorProfileUrl}
-								style={{
-									textDecoration: 'none',
-									color: 'inherit',
-								}}
+							<Typography
+								height={'100%'}
+								component="p"
+								color={'text.primary'}
 							>
-								{articleStats.author_name}
-							</Link>
-						</Typography>
+								<Link
+									href={authorProfileUrl}
+									style={{
+										textDecoration: 'none',
+										color: 'inherit',
+									}}
+								>
+									{articleStats.author_name}
+								</Link>
+							</Typography>
+							<MoreVertIcon color="action" />
+						</Stack>
 					</Stack>
 
 					<TagsComponent tags={myArticle.expand?.tags} />
 				</Grid>
-				<Divider orientation="vertical" flexItem variant="middle" />
-				<Grid xs={2} ml={2}>
+				<Divider
+					orientation="vertical"
+					flexItem
+					variant="middle"
+					sx={{ mx: 2 }}
+				/>
+				<Grid xs={2}>
 					<Stack spacing={2}>
 						<Stack direction="row" spacing={1} alignItems="center">
 							<VisibilityIcon color="action" />
