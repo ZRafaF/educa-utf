@@ -30,7 +30,7 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
-	const isArticle = useMemo<boolean>(() => 'cover' in data, []);
+	const isArticle = useMemo<boolean>(() => 'cover' in data, [data]);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
