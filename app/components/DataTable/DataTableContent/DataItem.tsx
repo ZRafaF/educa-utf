@@ -16,10 +16,10 @@ import Typography from '@mui/material/Typography';
 import { FunctionComponent } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton from '@mui/material/IconButton';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DateRangeIcon from '@mui/icons-material/DateRange';
+import Box from '@mui/material/Box';
+import MoreDataOptions from './MoreDataOptions';
 
 interface DataItemProps {
 	data: ArticlesStatsResponse | ChaptersStatsResponse;
@@ -36,27 +36,58 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 		) : (
 			<></>
 		);
+	const NumOfArticles: JSX.Element =
+		'cover' in data ? (
+			<></>
+		) : (
+			<Typography
+				component="p"
+				fontWeight={600}
+				color="text.secondary"
+				fontSize={'small'}
+				display={'inline'}
+				noWrap
+			>
+				&nbsp;•&nbsp;{data.articles.length} artigo(s)
+			</Typography>
+		);
 
 	return (
-		<Stack direction="row" spacing={1} my={1} px={1} alignItems="center">
+		<Stack
+			direction="row"
+			spacing={1}
+			py={1}
+			px={1}
+			alignItems="center"
+			sx={{
+				':hover': {
+					bgcolor: 'action.hover',
+				},
+			}}
+		>
 			{CoverImg}
 			<Stack direction="column" width={'100%'}>
 				<Stack
 					direction="row"
 					alignItems="center"
 					justifyContent="space-between"
+					spacing={1}
 				>
-					<Typography
-						component="p"
-						color={
-							data.visibility === 'public'
-								? 'text.primary'
-								: 'text.secondary'
-						}
-						fontWeight={700}
-					>
-						{data.title}
-					</Typography>
+					<Box display={'flex'}>
+						<Typography
+							component="p"
+							color={
+								data.visibility === 'public'
+									? 'text.primary'
+									: 'text.secondary'
+							}
+							fontWeight={700}
+						>
+							{data.title}
+							{NumOfArticles}
+						</Typography>
+					</Box>
+
 					<Tooltip title="Visibilidade" arrow>
 						<Typography
 							variant="subtitle2"
@@ -181,9 +212,6 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 					</Tooltip>
 				</Stack>
 			</Stack>
-			<IconButton aria-label="mais-opcoes" size="small">
-				<MoreVertIcon fontSize="medium" />
-			</IconButton>
 		</Stack>
 	);
 };

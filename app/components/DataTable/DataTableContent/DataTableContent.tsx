@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,6 +9,8 @@ import {
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
 import DataItem from './DataItem';
+import MoreDataOptions from './MoreDataOptions';
+import Link from 'next/link';
 
 interface DataTableContentProps {
 	rows: ArticlesStatsResponse[] | ChaptersStatsResponse[];
@@ -21,21 +24,29 @@ const DataTableContent: FunctionComponent<DataTableContentProps> = ({
 	return (
 		<TableBody>
 			{rows.map((row, index) => (
-				<TableRow
-					hover
-					tabIndex={-1}
-					key={row.title}
-					sx={{
-						cursor: 'pointer',
-					}}
-				>
+				<TableRow tabIndex={-1} key={row.title}>
 					<TableCell
 						id={`enhanced-table-checkbox-${index}`}
 						scope="row"
 						padding="none"
-						colSpan={99}
+						colSpan={5}
 					>
-						<DataItem data={row} />
+						<Link
+							href={`/${'cover' in row ? 'article' : 'chapter'}/${
+								row.id
+							}`}
+							style={{ textDecoration: 'none', color: 'inherit' }}
+						>
+							<DataItem data={row} />
+						</Link>
+					</TableCell>
+					<TableCell
+						id={`enhanced-table-checkbox-${index}`}
+						scope="row"
+						padding="none"
+						colSpan={1}
+					>
+						<MoreDataOptions data={row} />
 					</TableCell>
 				</TableRow>
 			))}
