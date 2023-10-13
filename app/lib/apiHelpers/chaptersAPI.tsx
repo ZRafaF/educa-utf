@@ -11,13 +11,14 @@ import {
 } from '@/types/pocketbase-types';
 import { ListResult, RecordOptions } from 'pocketbase';
 
-export async function getListOfChapters(expand: boolean = false) {
+export async function getFullListOfChapters(expand: boolean = false) {
 	try {
 		return await pb
 			.collection('chapters')
 			.getFullList<ChaptersResponse<ChaptersExpand>>({
 				skipTotal: true,
 				expand: expand ? 'articles' : undefined,
+				batch: 9999,
 			});
 	} catch (error) {
 		console.error(error);

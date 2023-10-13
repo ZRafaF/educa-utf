@@ -9,51 +9,17 @@ import { ListResult, RecordOptions } from 'pocketbase';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { getFormattedDate } from '@/lib/helper';
 import { getListOfArticlesStats } from '@/lib/apiHelpers/articlesAPI';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import TitleIcon from '@mui/icons-material/Title';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import DataTableContent from './DataTableContent';
+import DataTableContent from '../DataTableContent/DataTableContent';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TablePagination from '@mui/material/TablePagination';
-import { Data, FetchType, HeadCell, Order } from '@/types/data-table-type';
+import { Data, FetchType, Order } from '@/types/data-table-type';
 import DataTableHead from './DataTableHead';
+import { getListOfChaptersStats } from '@/lib/apiHelpers/chaptersAPI';
 import {
 	ArticlesStatsResponse,
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
-import { getListOfChaptersStats } from '@/lib/apiHelpers/chaptersAPI';
-
-const headCells: readonly HeadCell[] = [
-	{
-		id: 'title',
-		label: 'Titulo',
-		icon: <TitleIcon />,
-	},
-	{
-		id: 'views',
-		label: 'Views',
-		icon: <VisibilityIcon />,
-	},
-	{
-		id: 'likes',
-		label: 'Likes',
-		icon: <FavoriteIcon />,
-	},
-	{
-		id: 'updated',
-		label: 'Atualizado',
-		icon: <AccessTimeIcon />,
-	},
-
-	{
-		id: 'created',
-		label: 'Criado',
-		icon: <DateRangeIcon />,
-	},
-];
 
 interface DataTableHandlerProps {
 	fetchType: FetchType;
@@ -69,7 +35,9 @@ const DataTableHandler: FunctionComponent<DataTableHandlerProps> = ({
 	const [queryOptions, setQueryOptions] = useState<
 		RecordOptions | undefined
 	>();
-	const [rows, setRows] = useState<Data[]>([]);
+	const [rows, setRows] = useState<
+		ArticlesStatsResponse[] | ChaptersStatsResponse[]
+	>([]);
 	const [totalItems, setTotalItems] = useState<number>(0);
 
 	const emptyRows = Math.max(0, rowsPerPage - rows.length);
@@ -108,17 +76,7 @@ const DataTableHandler: FunctionComponent<DataTableHandlerProps> = ({
 				: getListOfChaptersStats(page + 1, rowsPerPage, queryOptions));
 
 			setTotalItems(data.totalItems);
-			setRows(
-				data.items.map((row) => {
-					return {
-						title: row.title,
-						views: row.views,
-						likes: row.likes,
-						updated: getFormattedDate(row.updated),
-						created: getFormattedDate(row.created),
-					} as Data;
-				})
-			);
+			setRows(data.items);
 		};
 
 		fetchNewData();
@@ -131,7 +89,6 @@ const DataTableHandler: FunctionComponent<DataTableHandlerProps> = ({
 						order={order}
 						orderBy={orderBy}
 						onRequestSort={handleRequestSort}
-						headCells={headCells}
 					/>
 					<DataTableContent rows={rows} emptyRows={emptyRows} />
 				</Table>

@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { getFormattedDate } from '@/lib/helper';
 import PrivateDrawerContent from './PrivateDrawerContent';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
 	{
@@ -29,6 +31,10 @@ const NoSSRPrivateUserComponent = dynamic(
 		ssr: false,
 	}
 );
+
+const DataTable = dynamic(() => import('@/components/DataTable/DataTable'), {
+	ssr: false,
+});
 
 interface PageProps {
 	params: {
@@ -181,6 +187,32 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						</Box>
 					</Container>
 				</Box>
+				<Container
+					maxWidth="md"
+					sx={{
+						py: 2,
+					}}
+				>
+					<Typography variant="h5" fontWeight={700} pb={2}>
+						Artigos públicos
+					</Typography>
+					<Paper
+						sx={{ p: { xs: 0, sm: 0, md: 2 } }}
+						variant="outlined"
+					>
+						<DataTable fetchType="articles" />
+					</Paper>
+					<Divider sx={{ my: 4 }} variant="middle" />
+					<Typography variant="h5" fontWeight={700} pb={2}>
+						Capítulos públicos
+					</Typography>
+					<Paper
+						sx={{ p: { xs: 0, sm: 0, md: 2 } }}
+						variant="outlined"
+					>
+						<DataTable fetchType="chapters" />
+					</Paper>
+				</Container>
 			</Box>
 			<NoSSRPrivateUserComponent username={params.username}>
 				<PrivateDrawerContent />

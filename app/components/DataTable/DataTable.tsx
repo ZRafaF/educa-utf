@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
@@ -20,27 +20,32 @@ interface DataTableProps {
 const DataTable: FunctionComponent<DataTableProps> = ({ title, fetchType }) => {
 	return (
 		<>
-			<Toolbar
-				sx={{
-					pl: { sm: 2 },
-					pr: { xs: 1, sm: 1 },
-				}}
-			>
-				<Typography
-					sx={{ flex: '1 1 100%' }}
-					variant="h6"
-					id="tableTitle"
-					component="div"
+			{title && (
+				<Toolbar
+					sx={{
+						pl: { sm: 2 },
+						pr: { xs: 1, sm: 1 },
+					}}
 				>
-					{title}
-				</Typography>
+					<Typography
+						sx={{ flex: '1 1 100%' }}
+						variant="h6"
+						id="tableTitle"
+						component="div"
+					>
+						{title}
+					</Typography>
 
-				<Tooltip title="Filtrar lista">
-					<IconButton>
-						<FilterListIcon />
-					</IconButton>
-				</Tooltip>
-			</Toolbar>
+					{
+						// <Tooltip title="Filtrar lista">
+						// 	<IconButton>
+						// 		<FilterListIcon />
+						// 	</IconButton>
+						// </Tooltip>
+					}
+				</Toolbar>
+			)}
+
 			<DataTableHandler fetchType={fetchType} />
 		</>
 	);

@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import { getFullListOfArticles } from './lib/apiHelpers/articlesAPI';
-import { getListOfChapters } from './lib/apiHelpers/chaptersAPI';
+import { getFullListOfChapters } from './lib/apiHelpers/chaptersAPI';
 import { getListOfUsersStats } from './lib/apiHelpers/usersAPI';
 
 export default async function sitemap() {
@@ -17,7 +17,7 @@ export default async function sitemap() {
 		priority: 0.9,
 	}));
 
-	const chapters = await getListOfChapters();
+	const chapters = await getFullListOfChapters();
 
 	let chaptersSiteMap: {
 		url: string;

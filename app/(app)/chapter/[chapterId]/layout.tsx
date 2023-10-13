@@ -9,14 +9,14 @@ import ArticlesList from './ArticlesList';
 import {
 	getChapterById,
 	getChaptersStatsById,
-	getListOfChapters,
+	getFullListOfChapters,
 } from '@/lib/apiHelpers/chaptersAPI';
 import type { Metadata } from 'next';
 
 export const revalidate = 30;
 
 export async function generateStaticParams() {
-	const chapters = await getListOfChapters();
+	const chapters = await getFullListOfChapters();
 
 	return chapters.map((chapter) => ({
 		chapterId: chapter.id,

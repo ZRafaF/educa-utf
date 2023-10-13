@@ -12,6 +12,43 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Tooltip from '@mui/material/Tooltip';
 import { FunctionComponent } from 'react';
 import { visuallyHidden } from '@mui/utils';
+import TitleIcon from '@mui/icons-material/Title';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import IconButton from '@mui/material/IconButton';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+
+const headCells: readonly HeadCell[] = [
+	{
+		id: 'title',
+		label: 'Titulo',
+		icon: <TitleIcon />,
+	},
+	{
+		id: 'views',
+		label: 'Visualizações',
+		icon: <VisibilityIcon />,
+	},
+	{
+		id: 'likes',
+		label: 'Likes',
+		icon: <FavoriteIcon />,
+	},
+	{
+		id: 'updated',
+		label: 'Modificado em',
+		icon: <AccessTimeIcon />,
+	},
+	{
+		id: 'created',
+		label: 'Criado em',
+		icon: <DateRangeIcon />,
+	},
+];
 
 interface DataTableHeadProps {
 	onRequestSort: (
@@ -20,14 +57,12 @@ interface DataTableHeadProps {
 	) => void;
 	order: Order;
 	orderBy: string;
-	headCells: readonly HeadCell[];
 }
 
 const DataTableHead: FunctionComponent<DataTableHeadProps> = ({
 	onRequestSort,
 	order,
 	orderBy,
-	headCells,
 }) => {
 	const createSortHandler =
 		(property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -40,10 +75,11 @@ const DataTableHead: FunctionComponent<DataTableHeadProps> = ({
 				{headCells.map((headCell, idx) => (
 					<TableCell
 						key={headCell.id}
-						align={'center'}
+						align={'left'}
 						padding={'none'}
 						sx={{
 							pl: idx === 0 ? 2 : 0,
+							py: 1,
 						}}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -73,6 +109,35 @@ const DataTableHead: FunctionComponent<DataTableHeadProps> = ({
 						</TableSortLabel>
 					</TableCell>
 				))}
+				<TableCell
+					align={'left'}
+					padding={'none'}
+					sx={{
+						pl: 0,
+						py: 1,
+					}}
+				>
+					<Tooltip title="Filtrar lista" arrow placement="top">
+						<Button
+							variant="outlined"
+							color="primary"
+							sx={{
+								minWidth: 0,
+								width: 30,
+								height: 30,
+							}}
+						>
+							<FilterListIcon />
+						</Button>
+					</Tooltip>
+					{
+						// 	<Tooltip title="Filtrar lista">
+						// 	<IconButton color="primary">
+						// 		<FilterListIcon />
+						// 	</IconButton>
+						// </Tooltip>
+					}
+				</TableCell>
 			</TableRow>
 		</TableHead>
 	);

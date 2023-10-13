@@ -102,7 +102,7 @@ export async function createArticle(
 	return pb.collection('articles').create<ArticlesResponse>(form);
 }
 
-export async function getArticleCoverURL(
+export function getArticleCoverURL(
 	article: ArticlesResponse | ArticlesStatsResponse,
 	original?: boolean
 ) {
