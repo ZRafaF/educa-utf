@@ -75,7 +75,10 @@ export function stringToColor(string: string) {
 }
 
 export function getInitials(name: string) {
-	return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+	const numberOfNames = name.split(' ').length;
+	if (numberOfNames > 1)
+		return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+	return `${name.split(' ')[0][0]}${name.split(' ')[0][1]}`;
 }
 
 export function getFormData(object: any) {
