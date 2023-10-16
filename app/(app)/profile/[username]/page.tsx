@@ -8,7 +8,7 @@ import {
 	getUserAvatarUrl,
 	getUsersStatsByUsername,
 } from '@/lib/apiHelpers/usersAPI';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, Suspense } from 'react';
 import Box from '@mui/material/Box/Box';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';

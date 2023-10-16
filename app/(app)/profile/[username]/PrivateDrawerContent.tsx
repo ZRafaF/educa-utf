@@ -13,7 +13,6 @@ import React from 'react';
 import { FunctionComponent } from 'react';
 import MailIcon from '@mui/icons-material/Mail';
 import ListItemText from '@mui/material/ListItemText';
-// import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import CollapsibleList from '@/components/CollapsibleList/CollapsibleList';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
@@ -24,6 +23,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DataTable from '@/components/DataTable/DataTable';
 import Box from '@mui/material/Box';
+import LinkItem from '@/components/LinkItem/LinkItem';
 
 interface PrivateDrawerContentProps {
 	userId: string;
@@ -63,22 +63,16 @@ const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
 					</ListItemButton>
 				</CollapsibleList>
 				<Divider />
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon>
-							<NoteAddIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Criar novo artigo'} />
-					</ListItemButton>
-				</ListItem>
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon>
-							<QueueIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Criar novo capítulo'} />
-					</ListItemButton>
-				</ListItem>
+				<LinkItem
+					title="Novo artigo"
+					icon={<NoteAddIcon />}
+					href="/new-article"
+				/>
+				<LinkItem
+					title="Novo capítulo"
+					icon={<QueueIcon />}
+					href="/new-chapter"
+				/>
 				<Divider />
 				<CollapsibleList icon={<FavoriteIcon />} title="Meus favoritos">
 					<ListItemButton>

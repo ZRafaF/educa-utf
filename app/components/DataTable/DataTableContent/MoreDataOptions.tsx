@@ -9,7 +9,7 @@ import {
 	ArticlesStatsResponse,
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
-import { FunctionComponent, MouseEventHandler, useMemo, useState } from 'react';
+import { FunctionComponent, useMemo, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -21,6 +21,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import Link from 'next/link';
 import Tooltip from '@mui/material/Tooltip';
+import usePbAuth from '@/hooks/usePbAuth';
+import ShareIcon from '@mui/icons-material/Share';
 
 interface MoreDataOptionsProps {
 	data: ArticlesStatsResponse | ChaptersStatsResponse;
@@ -29,6 +31,7 @@ interface MoreDataOptionsProps {
 const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	const [, user] = usePbAuth();
 
 	const isArticle = useMemo<boolean>(() => 'cover' in data, [data]);
 
@@ -38,6 +41,20 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const editButton = isArticle && (
+		<Link
+			href={`/edit/${data.id}`}
+			style={{ textDecoration: 'none', color: 'inherit' }}
+		>
+			<MenuItem onClick={handleClose}>
+				<ListItemIcon>
+					<EditIcon fontSize="small" />
+				</ListItemIcon>
+				<ListItemText>Editar</ListItemText>
+			</MenuItem>
+		</Link>
+	);
 
 	return (
 		<>
@@ -64,26 +81,43 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 					'aria-labelledby': 'basic-button',
 				}}
 			>
-				{isArticle && (
-					<Link
-						href={`/edit/${data.id}`}
-						style={{ textDecoration: 'none', color: 'inherit' }}
-					>
-						<MenuItem onClick={handleClose}>
-							<ListItemIcon>
-								<EditIcon fontSize="small" />
-							</ListItemIcon>
-							<ListItemText>Editar</ListItemText>
-						</MenuItem>
-					</Link>
-				)}
-				<Divider />
-				<MenuItem onClick={handleClose} sx={{ color: 'error.main' }}>
+				<MenuItem
+					onClick={() => {
+						const shareUrl = isArticle
+							? `https://educautf.td.utfpr.edu.br/article/${data.id}`
+							: `https://educautf.td.utfpr.edu.br/article/${data.id}`;
+
+						navigator.share({
+							title: `${data.title} - EducaUTF`,
+							text: `Aqui: ${data.description}`,
+							url: shareUrl,
+						});
+
+						handleClose();
+					}}
+				>
 					<ListItemIcon>
-						<DeleteIcon fontSize="small" color="error" />
+						<ShareIcon fontSize="small" />
 					</ListItemIcon>
-					<ListItemText>Apagar</ListItemText>
+					<ListItemText>Compartilhar</ListItemText>
 				</MenuItem>
+
+				{user?.id === data.user && (
+					<>
+						<Divider />
+
+						{editButton}
+						<MenuItem
+							onClick={handleClose}
+							sx={{ color: 'error.main' }}
+						>
+							<ListItemIcon>
+								<DeleteIcon fontSize="small" color="error" />
+							</ListItemIcon>
+							<ListItemText>Apagar</ListItemText>
+						</MenuItem>
+					</>
+				)}
 			</Menu>
 		</>
 	);

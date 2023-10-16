@@ -43,7 +43,7 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 		ArticlesStatsResponse[] | ChaptersStatsResponse[]
 	>([]);
 	const [totalItems, setTotalItems] = useState<number>(0);
-
+	const [loading, setLoading] = useState(true);
 	const emptyRows = Math.max(0, rowsPerPage - rows.length);
 
 	const handleRequestSort = (
@@ -98,10 +98,15 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 
 			setTotalItems(data.totalItems);
 			setRows(data.items);
+
+			setLoading(false);
 		};
 
 		fetchNewData();
 	}, [queryOptions, page, rowsPerPage, fetchType]);
+
+	if (loading) return <>Carregando...</>;
+
 	return (
 		<Box>
 			<TableContainer>

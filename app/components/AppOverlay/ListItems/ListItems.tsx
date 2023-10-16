@@ -12,7 +12,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import React from 'react';
-import LinkItem from '@/components/AppOverlay/LinkItem/LinkItem';
+import LinkItem from '@/components/LinkItem/LinkItem';
 import InstallPwaButton from './InstallPwaButton';
 
 interface ListItemsProps {}
