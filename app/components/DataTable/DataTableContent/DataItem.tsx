@@ -40,16 +40,14 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 		'cover' in data ? (
 			<></>
 		) : (
-			<Typography
-				component="p"
+			<Box
+				component={'span'}
 				fontWeight={600}
 				color="text.secondary"
 				fontSize={'small'}
-				display={'inline'}
-				noWrap
 			>
 				&nbsp;•&nbsp;{data.articles.length} artigo(s)
-			</Typography>
+			</Box>
 		);
 
 	return (

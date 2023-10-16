@@ -207,17 +207,25 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						}}
 						square
 					>
-						<DataTable fetchType="articles" userId={userStats.id} />
+						<DataTable
+							fetchType="articles"
+							userId={userStats.id}
+							onlyPublic
+						/>
 					</Paper>
 					<Divider sx={{ my: 4 }} variant="middle" />
 					<Typography variant="h5" fontWeight={700} pb={2}>
 						Capítulos públicos
 					</Typography>
-					<DataTable fetchType="chapters" userId={userStats.id} />
+					<DataTable
+						fetchType="chapters"
+						userId={userStats.id}
+						onlyPublic
+					/>
 				</Container>
 			</Box>
 			<NoSSRPrivateUserComponent username={params.username}>
-				<PrivateDrawerContent />
+				<PrivateDrawerContent userId={userStats.id} />
 			</NoSSRPrivateUserComponent>
 		</Box>
 	);

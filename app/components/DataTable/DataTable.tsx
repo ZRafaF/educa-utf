@@ -23,12 +23,14 @@ import { Box } from '@mui/material';
 
 interface DataTableProps {
 	fetchType: FetchType;
-	userId?: string | undefined;
+	userId: string;
+	onlyPublic?: boolean;
 }
 
 const DataTable: FunctionComponent<DataTableProps> = ({
 	fetchType,
 	userId,
+	onlyPublic,
 }) => {
 	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<keyof Data>('title');
@@ -73,9 +75,21 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 
 	useEffect(() => {
 		const fetchNewData = async () => {
+			let filterArray: string[] = [];
+			if (userId) filterArray.push(`user="${userId}"`);
+			if (onlyPublic) filterArray.push(`visibility="public"`);
+
+			let filterString: string = '';
+			filterArray.forEach((filter, idx) => {
+				if (idx) filterString += '&&';
+				filterString += filter;
+			});
+
 			const filteredQuery = {
 				...queryOptions,
-				...(userId && { filter: `user="${userId}"` }),
+				...(filterString && {
+					filter: filterString,
+				}),
 			};
 
 			const data = await (fetchType === 'articles'

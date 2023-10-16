@@ -25,11 +25,13 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DataTable from '@/components/DataTable/DataTable';
 import Box from '@mui/material/Box';
 
-interface PrivateDrawerContentProps {}
+interface PrivateDrawerContentProps {
+	userId: string;
+}
 
-const PrivateDrawerContent: FunctionComponent<
-	PrivateDrawerContentProps
-> = () => {
+const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
+	userId,
+}) => {
 	return (
 		<>
 			<Toolbar
@@ -91,7 +93,7 @@ const PrivateDrawerContent: FunctionComponent<
 					title="Meus artigos"
 				>
 					<Box pt={1} px={1}>
-						<DataTable fetchType="articles" />
+						<DataTable fetchType="articles" userId={userId} />
 					</Box>
 				</CollapsibleList>
 				<CollapsibleList
@@ -99,7 +101,7 @@ const PrivateDrawerContent: FunctionComponent<
 					title="Meus capítulos"
 				>
 					<Box pt={1} px={1}>
-						<DataTable fetchType="chapters" />
+						<DataTable fetchType="chapters" userId={userId} />
 					</Box>
 				</CollapsibleList>
 			</List>
