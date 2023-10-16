@@ -23,7 +23,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 interface PostInfoProps {
 	myArticle: ArticlesResponse<ArticlesExpand>;
 	articleStats: ArticlesStatsResponse;
-	authorAvatarUrl: string;
+	authorAvatarUrl: string | undefined;
 }
 
 const PostInfo: FunctionComponent<PostInfoProps> = ({

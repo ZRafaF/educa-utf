@@ -9,7 +9,7 @@ import { getInitials, stringToColor } from '@/lib/helper';
 
 interface AvatarComponentProps {
 	name: string;
-	src: string;
+	src: string | undefined;
 	size?: 'small' | 'medium' | 'large' | 'x-large' | 'xx-large';
 }
 
