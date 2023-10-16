@@ -23,7 +23,6 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DataTable from '@/components/DataTable/DataTable';
-import DataTableHandler from '@/components/DataTable/DataTableHandler';
 import Box from '@mui/material/Box';
 
 interface PrivateDrawerContentProps {}

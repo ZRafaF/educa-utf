@@ -14,12 +14,9 @@ import { FunctionComponent } from 'react';
 import { visuallyHidden } from '@mui/utils';
 import TitleIcon from '@mui/icons-material/Title';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import IconButton from '@mui/material/IconButton';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
 const headCells: readonly HeadCell[] = [
