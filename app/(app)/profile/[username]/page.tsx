@@ -18,6 +18,7 @@ import { getFormattedDate } from '@/lib/helper';
 import PrivateDrawerContent from './PrivateDrawerContent';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
 	{
@@ -120,17 +121,17 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						</Box>
 					</Box>
 				</Container>
-				<Box
-					display={'flex'}
-					flexDirection={'column'}
-					pl={2}
-					gap={2}
-					alignItems={'center'}
+
+				<Stack
+					direction="column"
+					justifyContent="center"
+					alignItems="center"
 					bgcolor={'grey.A700'}
 				>
+					<Divider flexItem />
 					<Container
 						maxWidth="md"
-						sx={{ py: 2, px: { xs: 0.5, sm: 1, md: 2 } }}
+						sx={{ py: 2, px: { xs: 1, sm: 1, md: 2 } }}
 					>
 						<Typography>
 							<b>INFORMAÇÕES:</b>
@@ -186,32 +187,33 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 							</Typography>
 						</Box>
 					</Container>
-				</Box>
+					<Divider flexItem />
+				</Stack>
 				<Container
 					maxWidth="md"
 					sx={{
 						py: 2,
+						px: { xs: 1, sm: 1, md: 2 },
 					}}
 				>
 					<Typography variant="h5" fontWeight={700} pb={2}>
 						Artigos públicos
 					</Typography>
 					<Paper
-						sx={{ p: { xs: 0, sm: 0, md: 2 } }}
 						variant="outlined"
+						sx={{
+							m: { xs: -1, sm: 0, md: 0 },
+							p: 1,
+						}}
+						square
 					>
-						<DataTable fetchType="articles" />
+						<DataTable fetchType="articles" userId={userStats.id} />
 					</Paper>
 					<Divider sx={{ my: 4 }} variant="middle" />
 					<Typography variant="h5" fontWeight={700} pb={2}>
 						Capítulos públicos
 					</Typography>
-					<Paper
-						sx={{ p: { xs: 0, sm: 0, md: 2 } }}
-						variant="outlined"
-					>
-						<DataTable fetchType="chapters" />
-					</Paper>
+					<DataTable fetchType="chapters" userId={userStats.id} />
 				</Container>
 			</Box>
 			<NoSSRPrivateUserComponent username={params.username}>

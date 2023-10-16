@@ -29,7 +29,10 @@ const DataTableContent: FunctionComponent<DataTableContentProps> = ({
 						id={`enhanced-table-checkbox-${index}`}
 						scope="row"
 						padding="none"
-						colSpan={5}
+						colSpan={4}
+						sx={{
+							width: '100%',
+						}}
 					>
 						<Link
 							href={`/${'cover' in row ? 'article' : 'chapter'}/${
@@ -45,6 +48,7 @@ const DataTableContent: FunctionComponent<DataTableContentProps> = ({
 						scope="row"
 						padding="none"
 						colSpan={1}
+						align={'right'}
 					>
 						<MoreDataOptions data={row} />
 					</TableCell>

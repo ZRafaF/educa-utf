@@ -39,11 +39,6 @@ const headCells: readonly HeadCell[] = [
 		icon: <FavoriteIcon />,
 	},
 	{
-		id: 'updated',
-		label: 'Modificado em',
-		icon: <AccessTimeIcon />,
-	},
-	{
 		id: 'created',
 		label: 'Criado em',
 		icon: <DateRangeIcon />,
@@ -78,8 +73,8 @@ const DataTableHead: FunctionComponent<DataTableHeadProps> = ({
 						align={'left'}
 						padding={'none'}
 						sx={{
-							pl: idx === 0 ? 2 : 0,
-							py: 1,
+							//pl: idx === 0 ? 2 : 0,
+							pb: 1,
 						}}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -110,26 +105,23 @@ const DataTableHead: FunctionComponent<DataTableHeadProps> = ({
 					</TableCell>
 				))}
 				<TableCell
-					align={'left'}
+					align={'right'}
 					padding={'none'}
 					sx={{
-						pl: 0,
-						py: 1,
+						pb: 1,
 					}}
 				>
-					<Tooltip title="Filtrar lista" arrow placement="top">
-						<Button
-							variant="outlined"
-							color="primary"
-							sx={{
-								minWidth: 0,
-								width: 30,
-								height: 30,
-							}}
-						>
-							<FilterListIcon />
-						</Button>
-					</Tooltip>
+					{
+						<Tooltip title="Filtrar lista" arrow placement="top">
+							<Button
+								variant="outlined"
+								color="primary"
+								sx={{ minWidth: 0 }}
+							>
+								<FilterListIcon fontSize="small" />
+							</Button>
+						</Tooltip>
+					}
 					{
 						// 	<Tooltip title="Filtrar lista">
 						// 	<IconButton color="primary">

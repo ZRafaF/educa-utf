@@ -23,7 +23,8 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DataTable from '@/components/DataTable/DataTable';
-import DataTableHandler from '@/components/DataTable/DataTableHandler/DataTableHandler';
+import DataTableHandler from '@/components/DataTable/DataTableHandler';
+import Box from '@mui/material/Box';
 
 interface PrivateDrawerContentProps {}
 
@@ -90,13 +91,17 @@ const PrivateDrawerContent: FunctionComponent<
 					icon={<AutoStoriesIcon />}
 					title="Meus artigos"
 				>
-					<DataTable title="Artigos" fetchType="articles" />
+					<Box pt={1} px={1}>
+						<DataTable fetchType="articles" />
+					</Box>
 				</CollapsibleList>
 				<CollapsibleList
 					icon={<LibraryBooksIcon />}
 					title="Meus capítulos"
 				>
-					<DataTable title="Capítulos" fetchType="chapters" />
+					<Box pt={1} px={1}>
+						<DataTable fetchType="chapters" />
+					</Box>
 				</CollapsibleList>
 			</List>
 		</>

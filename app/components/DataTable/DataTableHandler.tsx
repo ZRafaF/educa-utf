@@ -5,28 +5,30 @@
 
 'use client';
 
-import { ListResult, RecordOptions } from 'pocketbase';
+import { RecordOptions } from 'pocketbase';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { getFormattedDate } from '@/lib/helper';
 import { getListOfArticlesStats } from '@/lib/apiHelpers/articlesAPI';
-import DataTableContent from '../DataTableContent/DataTableContent';
+import DataTableContent from './DataTableContent/DataTableContent';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TablePagination from '@mui/material/TablePagination';
 import { Data, FetchType, Order } from '@/types/data-table-type';
-import DataTableHead from './DataTableHead';
+import DataTableHead from './DataTableHandler/DataTableHead';
 import { getListOfChaptersStats } from '@/lib/apiHelpers/chaptersAPI';
 import {
 	ArticlesStatsResponse,
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
+import { Box } from '@mui/material';
 
 interface DataTableHandlerProps {
 	fetchType: FetchType;
+	userId?: string | undefined;
 }
 
 const DataTableHandler: FunctionComponent<DataTableHandlerProps> = ({
 	fetchType,
+	userId,
 }) => {
 	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<keyof Data>('title');
@@ -71,9 +73,14 @@ const DataTableHandler: FunctionComponent<DataTableHandlerProps> = ({
 
 	useEffect(() => {
 		const fetchNewData = async () => {
+			const filteredQuery = {
+				...queryOptions,
+				...(userId && { filter: `user="${userId}"` }),
+			};
+
 			const data = await (fetchType === 'articles'
-				? getListOfArticlesStats(page + 1, rowsPerPage, queryOptions)
-				: getListOfChaptersStats(page + 1, rowsPerPage, queryOptions));
+				? getListOfArticlesStats(page + 1, rowsPerPage, filteredQuery)
+				: getListOfChaptersStats(page + 1, rowsPerPage, filteredQuery));
 
 			setTotalItems(data.totalItems);
 			setRows(data.items);
@@ -82,7 +89,7 @@ const DataTableHandler: FunctionComponent<DataTableHandlerProps> = ({
 		fetchNewData();
 	}, [queryOptions, page, rowsPerPage, fetchType]);
 	return (
-		<>
+		<Box>
 			<TableContainer>
 				<Table aria-labelledby="tableTitle" size={'small'}>
 					<DataTableHead
@@ -101,14 +108,15 @@ const DataTableHandler: FunctionComponent<DataTableHandlerProps> = ({
 				page={page}
 				onPageChange={handleChangePage}
 				onRowsPerPageChange={handleChangeRowsPerPage}
-				labelRowsPerPage={'Itens por página'}
+				labelRowsPerPage={'Itens p/ página'}
 				labelDisplayedRows={({ from, to, count }) => {
 					return `${from}–${to} de ${
 						count !== -1 ? count : `mais de ${to}`
 					}`;
 				}}
+				sx={{ p: 0 }}
 			/>
-		</>
+		</Box>
 	);
 };
 

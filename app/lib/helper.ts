@@ -77,8 +77,8 @@ export function stringToColor(string: string) {
 export function getInitials(name: string) {
 	const numberOfNames = name.split(' ').length;
 	if (numberOfNames > 1)
-		return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
-	return `${name.split(' ')[0][0]}${name.split(' ')[0][1]}`;
+		return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`.toUpperCase();
+	return `${name.split(' ')[0][0]}${name.split(' ')[0][1]}`.toUpperCase();
 }
 
 export function getFormData(object: any) {
