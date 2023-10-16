@@ -217,11 +217,20 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 					<Typography variant="h5" fontWeight={700} pb={2}>
 						Capítulos públicos
 					</Typography>
-					<DataTable
-						fetchType="chapters"
-						userId={userStats.id}
-						onlyPublic
-					/>
+					<Paper
+						variant="outlined"
+						sx={{
+							m: { xs: -1, sm: 0, md: 0 },
+							p: 1,
+						}}
+						square
+					>
+						<DataTable
+							fetchType="chapters"
+							userId={userStats.id}
+							onlyPublic
+						/>
+					</Paper>
 				</Container>
 			</Box>
 			<NoSSRPrivateUserComponent username={params.username}>
