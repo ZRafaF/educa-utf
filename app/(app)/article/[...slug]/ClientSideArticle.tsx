@@ -55,7 +55,9 @@ const ClientSideArticle: FunctionComponent<ClientSideArticleProps> = ({
 				setArticleStats(fetchedArticleStats);
 				setArticleDocument(fetchedArticleDocument);
 				setAuthorAvatarUrl(fetchedAuthorAvatarUrl);
-			} catch (error) {}
+			} catch (error) {
+				console.error(error);
+			}
 			setLoading(false);
 		}
 		fetchData();
@@ -63,7 +65,7 @@ const ClientSideArticle: FunctionComponent<ClientSideArticleProps> = ({
 
 	if (loading) return <ArticleComponentLoading />;
 
-	if (article && articleStats && articleDocument && authorAvatarUrl) {
+	if (article && articleStats && articleDocument) {
 		return (
 			<ArticleComponent
 				myArticle={article}

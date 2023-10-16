@@ -83,6 +83,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 		const articleStats = await getArticleStatsById(article.id);
 		const articleDocument = await getArticleDocumentUrl(article);
 		const authorAvatarUrl = await getUserAvatarUrlByUserId(article.user);
+
 		if (articleDocument)
 			return (
 				<ArticleComponent

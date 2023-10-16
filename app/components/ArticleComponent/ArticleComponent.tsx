@@ -33,7 +33,7 @@ function ArticleComponent({
 	articleStats: ArticlesStatsResponse;
 	fullWidth?: boolean;
 	articleDocument: string;
-	authorAvatarUrl: string;
+	authorAvatarUrl: string | undefined;
 }) {
 	return (
 		<Box
