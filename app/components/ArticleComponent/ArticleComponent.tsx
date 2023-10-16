@@ -18,6 +18,7 @@ import ArticleContent from './ArticleContent/ArticleContent';
 import { getFormattedDate } from '@/lib/helper';
 import Stack from '@mui/material/Stack';
 import dynamic from 'next/dynamic';
+import PageMessage from '../PageMessage/PageMessage';
 const EditPostIcon = dynamic(() => import('./PostInfo/EditPostIcon'), {
 	ssr: false,
 });
@@ -32,7 +33,7 @@ function ArticleComponent({
 	myArticle: ArticlesResponse<ArticlesExpand>;
 	articleStats: ArticlesStatsResponse;
 	fullWidth?: boolean;
-	articleDocument: string;
+	articleDocument: string | undefined;
 	authorAvatarUrl: string | undefined;
 }) {
 	return (
@@ -108,7 +109,11 @@ function ArticleComponent({
 				}}
 				pb={5}
 			>
-				<ArticleContent article={articleDocument} />
+				{articleDocument ? (
+					<ArticleContent article={articleDocument} />
+				) : (
+					<PageMessage message="Artigo não encontrado" />
+				)}
 			</Box>
 		</Box>
 	);

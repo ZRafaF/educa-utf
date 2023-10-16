@@ -7,6 +7,7 @@
 
 import ArticleComponent from '@/components/ArticleComponent/ArticleComponent';
 import ArticleComponentLoading from '@/components/ArticleComponent/ArticleComponentLoading';
+import PageMessage from '@/components/PageMessage/PageMessage';
 import {
 	getArticleById,
 	getArticleDocumentUrl,
@@ -65,7 +66,7 @@ const ClientSideArticle: FunctionComponent<ClientSideArticleProps> = ({
 
 	if (loading) return <ArticleComponentLoading />;
 
-	if (article && articleStats && articleDocument) {
+	if (article && articleStats) {
 		return (
 			<ArticleComponent
 				myArticle={article}
