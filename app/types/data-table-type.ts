@@ -6,7 +6,6 @@ export interface Data {
 	title: string;
 	views: number;
 	likes: number;
-	updated: string;
 	created: string;
 }
 

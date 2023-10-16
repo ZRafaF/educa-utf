@@ -198,9 +198,9 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 									<ShareButton
 										key={'share-button'}
 										shareData={{
-											title: 'Educa UTF',
-											text: 'Dê uma olhada nesse link que eu achei!',
-											url: 'https://github.com/ZRafaF/educa-utf',
+											title: `${myArticle.title} - EducaUTF`,
+											text: `Aqui: ${myArticle.description}`,
+											url: `https://educautf.td.utfpr.edu.br/article/${myArticle.id}`,
 										}}
 									/>
 								</Stack>

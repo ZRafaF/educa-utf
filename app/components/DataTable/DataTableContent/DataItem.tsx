@@ -40,16 +40,14 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 		'cover' in data ? (
 			<></>
 		) : (
-			<Typography
-				component="p"
+			<Box
+				component={'span'}
 				fontWeight={600}
 				color="text.secondary"
 				fontSize={'small'}
-				display={'inline'}
-				noWrap
 			>
 				&nbsp;•&nbsp;{data.articles.length} artigo(s)
-			</Typography>
+			</Box>
 		);
 
 	return (
@@ -87,21 +85,6 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 							{NumOfArticles}
 						</Typography>
 					</Box>
-
-					<Tooltip title="Visibilidade" arrow>
-						<Typography
-							variant="subtitle2"
-							component="p"
-							fontWeight={600}
-							color={
-								data.visibility === 'public'
-									? 'success.main'
-									: 'text.secondary'
-							}
-						>
-							{getFormattedVisibility(data.visibility)}
-						</Typography>
-					</Tooltip>
 				</Stack>
 				<Stack
 					direction="row"
@@ -164,29 +147,6 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 						</Tooltip>
 					</Stack>
 
-					<Tooltip title="Modificado em" arrow>
-						<Stack
-							direction="row"
-							alignItems="center"
-							width="fit-content"
-							color="text.secondary"
-						>
-							<AccessTimeIcon
-								sx={{
-									fontSize: 'small',
-								}}
-							/>
-							&nbsp;
-							<Typography
-								variant="subtitle2"
-								component="p"
-								fontSize={'small'}
-								fontWeight={600}
-							>
-								{getFormattedDate(data.updated)}
-							</Typography>
-						</Stack>
-					</Tooltip>
 					<Tooltip title="Criado em" arrow>
 						<Stack
 							direction="row"
@@ -209,6 +169,20 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 								{getFormattedDate(data.created)}
 							</Typography>
 						</Stack>
+					</Tooltip>
+					<Tooltip title="Visibilidade" arrow>
+						<Typography
+							variant="subtitle2"
+							component="p"
+							fontWeight={600}
+							color={
+								data.visibility === 'public'
+									? 'success.main'
+									: 'text.secondary'
+							}
+						>
+							{getFormattedVisibility(data.visibility)}
+						</Typography>
 					</Tooltip>
 				</Stack>
 			</Stack>

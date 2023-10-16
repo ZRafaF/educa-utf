@@ -13,6 +13,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import MobileDrawer from '@/components/MobileDrawer/MobileDrawer';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 
 interface PrivateUserComponentProps {
 	username: string;
@@ -33,14 +34,17 @@ const PrivateUserComponent: FunctionComponent<PrivateUserComponentProps> = ({
 
 	if (notSmallScreens)
 		return (
-			<Box
-				minWidth={drawerWidth}
-				sx={{
-					bgcolor: 'grey.A700',
-				}}
-				position={'relative'}
-			>
-				{children}
+			<Box display={'flex'}>
+				<Divider orientation="vertical" flexItem />
+				<Box
+					minWidth={drawerWidth}
+					sx={{
+						bgcolor: 'grey.A700',
+					}}
+					position={'relative'}
+				>
+					{children}
+				</Box>
 			</Box>
 		);
 	return (

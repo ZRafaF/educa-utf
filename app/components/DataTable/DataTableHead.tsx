@@ -14,12 +14,9 @@ import { FunctionComponent } from 'react';
 import { visuallyHidden } from '@mui/utils';
 import TitleIcon from '@mui/icons-material/Title';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import IconButton from '@mui/material/IconButton';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
 const headCells: readonly HeadCell[] = [
@@ -37,11 +34,6 @@ const headCells: readonly HeadCell[] = [
 		id: 'likes',
 		label: 'Likes',
 		icon: <FavoriteIcon />,
-	},
-	{
-		id: 'updated',
-		label: 'Modificado em',
-		icon: <AccessTimeIcon />,
 	},
 	{
 		id: 'created',
@@ -78,8 +70,8 @@ const DataTableHead: FunctionComponent<DataTableHeadProps> = ({
 						align={'left'}
 						padding={'none'}
 						sx={{
-							pl: idx === 0 ? 2 : 0,
-							py: 1,
+							//pl: idx === 0 ? 2 : 0,
+							pb: 1,
 						}}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -110,26 +102,23 @@ const DataTableHead: FunctionComponent<DataTableHeadProps> = ({
 					</TableCell>
 				))}
 				<TableCell
-					align={'left'}
+					align={'right'}
 					padding={'none'}
 					sx={{
-						pl: 0,
-						py: 1,
+						pb: 1,
 					}}
 				>
-					<Tooltip title="Filtrar lista" arrow placement="top">
-						<Button
-							variant="outlined"
-							color="primary"
-							sx={{
-								minWidth: 0,
-								width: 30,
-								height: 30,
-							}}
-						>
-							<FilterListIcon />
-						</Button>
-					</Tooltip>
+					{
+						<Tooltip title="Filtrar lista" arrow placement="top">
+							<Button
+								variant="outlined"
+								color="primary"
+								sx={{ minWidth: 0 }}
+							>
+								<FilterListIcon fontSize="small" />
+							</Button>
+						</Tooltip>
+					}
 					{
 						// 	<Tooltip title="Filtrar lista">
 						// 	<IconButton color="primary">

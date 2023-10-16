@@ -13,7 +13,6 @@ import React from 'react';
 import { FunctionComponent } from 'react';
 import MailIcon from '@mui/icons-material/Mail';
 import ListItemText from '@mui/material/ListItemText';
-// import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import CollapsibleList from '@/components/CollapsibleList/CollapsibleList';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
@@ -23,13 +22,16 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DataTable from '@/components/DataTable/DataTable';
-import DataTableHandler from '@/components/DataTable/DataTableHandler/DataTableHandler';
+import Box from '@mui/material/Box';
+import LinkItem from '@/components/LinkItem/LinkItem';
 
-interface PrivateDrawerContentProps {}
+interface PrivateDrawerContentProps {
+	userId: string;
+}
 
-const PrivateDrawerContent: FunctionComponent<
-	PrivateDrawerContentProps
-> = () => {
+const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
+	userId,
+}) => {
 	return (
 		<>
 			<Toolbar
@@ -61,22 +63,16 @@ const PrivateDrawerContent: FunctionComponent<
 					</ListItemButton>
 				</CollapsibleList>
 				<Divider />
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon>
-							<NoteAddIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Criar novo artigo'} />
-					</ListItemButton>
-				</ListItem>
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon>
-							<QueueIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Criar novo capítulo'} />
-					</ListItemButton>
-				</ListItem>
+				<LinkItem
+					title="Novo artigo"
+					icon={<NoteAddIcon />}
+					href="/new-article"
+				/>
+				<LinkItem
+					title="Novo capítulo"
+					icon={<QueueIcon />}
+					href="/new-chapter"
+				/>
 				<Divider />
 				<CollapsibleList icon={<FavoriteIcon />} title="Meus favoritos">
 					<ListItemButton>
@@ -90,13 +86,17 @@ const PrivateDrawerContent: FunctionComponent<
 					icon={<AutoStoriesIcon />}
 					title="Meus artigos"
 				>
-					<DataTable title="Artigos" fetchType="articles" />
+					<Box pt={1} px={1}>
+						<DataTable fetchType="articles" userId={userId} />
+					</Box>
 				</CollapsibleList>
 				<CollapsibleList
 					icon={<LibraryBooksIcon />}
 					title="Meus capítulos"
 				>
-					<DataTable title="Capítulos" fetchType="chapters" />
+					<Box pt={1} px={1}>
+						<DataTable fetchType="chapters" userId={userId} />
+					</Box>
 				</CollapsibleList>
 			</List>
 		</>

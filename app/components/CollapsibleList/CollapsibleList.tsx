@@ -12,6 +12,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 
 interface CollapsibleListProps {
 	icon: ReactNode;
@@ -46,9 +47,14 @@ const CollapsibleList: FunctionComponent<CollapsibleListProps> = ({
 				}}
 				unmountOnExit
 			>
-				<Paper variant="outlined" square>
+				<Box
+					sx={{
+						bgcolor: 'background.default',
+						boxShadow: 'inset 0px 0px 4px 1px rgba(0, 0, 0, 0.50)',
+					}}
+				>
 					{children}
-				</Paper>
+				</Box>
 			</Collapse>
 		</>
 	);
