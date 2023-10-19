@@ -54,11 +54,10 @@ export function splitStringByComma(inputString: string): string[] {
 	return words;
 }
 
-export function stringToColor(string: string) {
+export function stringToColor(string: string | undefined) {
 	let hash = 0;
 	let i;
-
-	/* eslint-disable no-bitwise */
+	if (!string) return '#ff0000';
 	for (i = 0; i < string.length; i += 1) {
 		hash = string.charCodeAt(i) + ((hash << 5) - hash);
 	}
@@ -74,7 +73,8 @@ export function stringToColor(string: string) {
 	return color;
 }
 
-export function getInitials(name: string) {
+export function getInitials(name: string | undefined) {
+	if (!name) return 'NL';
 	const numberOfNames = name.split(' ').length;
 	if (numberOfNames > 1)
 		return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`.toUpperCase();
@@ -106,4 +106,11 @@ export function getFormattedVisibility(
 		| ChaptersVisibilityOptions
 ) {
 	return visibility === 'public' ? 'Publico' : 'Privado';
+}
+
+export function isUTFPRUser(username: string): boolean {
+	// Checks if follows the Pattern: 'a' followed by numbers
+	const regex = /^a\d+$/;
+
+	return regex.test(username);
 }
