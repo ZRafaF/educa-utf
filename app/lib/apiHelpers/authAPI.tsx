@@ -5,7 +5,7 @@
 
 import { UsersResponse } from '@/types/pocketbase-types';
 import pb from '../PocketBase/pocketbase';
-import PocketBase from 'pocketbase';
+import PocketBase, { RecordAuthResponse } from 'pocketbase';
 
 export async function initPocketBaseServerSide(req: any, res: any) {
 	const serverPb = new PocketBase(process.env.PB_URL);
@@ -38,6 +38,26 @@ export async function loginWithPassword(
 		.collection('users')
 		.authWithPassword<UsersResponse>(usernameOrEmail, password);
 }
+
+export async function loginUTFPR(
+	username: string,
+	password: string
+): Promise<RecordAuthResponse<UsersResponse>> {
+	const res = await pb.send('/api/educautf/utfpr-auth', {
+		method: 'POST',
+		body: JSON.stringify({
+			username: username,
+			password: password,
+		}),
+	});
+
+	const token = res.token;
+	const record = res.record;
+
+	pb.authStore.save(token, record);
+	return record;
+}
+
 export async function logOut() {
 	return await pb.authStore.clear();
 }
