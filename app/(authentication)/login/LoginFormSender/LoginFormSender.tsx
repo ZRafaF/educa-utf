@@ -4,11 +4,14 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode, useState } from 'react';
 import Box from '@mui/material/Box/Box';
-import { loginWithPassword } from '@/lib/apiHelpers/authAPI';
+import { loginUTFPR, loginWithPassword } from '@/lib/apiHelpers/authAPI';
 import { toast } from 'react-toastify';
 import useRedirectAuth from '@/hooks/useRedirectAuth';
+import { isUTFPRUser } from '@/lib/helper';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormSenderProps {
 	children: ReactNode;
@@ -17,7 +20,9 @@ interface LoginFormSenderProps {
 const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	children,
 }) => {
-	useRedirectAuth();
+	const [manualTrigger] = useRedirectAuth();
+
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -33,8 +38,13 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			//setPersistence(auth, browserSessionPersistence);
 		}
 		try {
-			await loginWithPassword(submitLogin, submitPassword);
+			if (isUTFPRUser(submitLogin)) {
+				await loginUTFPR(submitLogin, submitPassword);
+			} else {
+				await loginWithPassword(submitLogin, submitPassword);
+			}
 			toast.success('Login com sucesso!');
+			manualTrigger();
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error);
@@ -52,8 +62,26 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	};
 
 	return (
-		<Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+		<Box
+			component="form"
+			onSubmit={(e) => {
+				setIsLoading(true);
+				handleSubmit(e).finally(() => {
+					setIsLoading(false);
+				});
+			}}
+			sx={{ mt: 1 }}
+		>
 			{children}
+			<LoadingButton
+				type="submit"
+				fullWidth
+				variant="contained"
+				sx={{ mt: 3, mb: 2, fontWeight: 'bold' }}
+				loading={isLoading}
+			>
+				Login
+			</LoadingButton>
 		</Box>
 	);
 };

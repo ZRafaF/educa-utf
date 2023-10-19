@@ -12,12 +12,18 @@ const useRedirectAuth = (shouldRedirectIfLoggedOut?: boolean) => {
 	const [, user] = usePbAuth();
 	const router = useRouter();
 
-	useEffect(() => {
+	const triggerRoute = () => {
 		if (user) {
 			router.back();
 		}
 		if (shouldRedirectIfLoggedOut && user === null) router.back();
+	};
+
+	useEffect(() => {
+		triggerRoute();
 	}, [user, shouldRedirectIfLoggedOut, router]);
+
+	return [triggerRoute] as const;
 };
 
 export default useRedirectAuth;
