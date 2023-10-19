@@ -36,7 +36,22 @@ Rode `docker build -t educa_utf_nextjs .` na root do projeto.
 
 ## Iniciando os Containers
 
+### Variáveis de ambiente
 
+O docker compose faz uso das seguintes variáveis de ambiente:
+
+* `UMAMI_APP_SECRET`
+* `UTF_AUTH_TOKEN`
+
+Esses **segredos** devem ser setados dentro de um arquivo `.env` no mesmo diretório do `docker-compose.yaml`.
+
+Exemplo de `.env`
+
+```sh
+UMAMI_APP_SECRET=meusegredoumami
+UTF_AUTH_TOKEN=meutokendeautenticacao
+
+``` 
 
 ### Docker compose
 
@@ -61,6 +76,8 @@ services:
             - 8090:8090
         volumes:
             - ./pocketbase_data:/pb/pb_data
+        environment:
+            UTF_AUTH_TOKEN: '${UTF_AUTH_TOKEN}'
 
     watchtower:
         image: containrrr/watchtower
@@ -90,6 +107,50 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
         ports:
             - 9999:8080
+
+    # Runs on port 61208
+    glances:
+        image: nicolargo/glances:latest-full
+        pid: host
+        network_mode: host
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
+        environment:
+            - 'GLANCES_OPT=-w'
+
+    umami:
+        image: zrafaf/educa_utf_umami:latest
+        ports:
+            - '3100:3000'
+        environment:
+            DATABASE_URL: postgresql://umami:umami@umami_db:5432/umami
+            DATABASE_TYPE: postgresql
+            APP_SECRET: '${UMAMI_APP_SECRET}'
+        depends_on:
+            umami_db:
+                condition: service_healthy
+        restart: unless-stopped
+
+    umami_db:
+        image: postgres:15-alpine
+        environment:
+            POSTGRES_DB: umami
+            POSTGRES_USER: umami
+            POSTGRES_PASSWORD: umami
+        volumes:
+            - ./umami-db-data:/var/lib/postgresql/data
+        restart: unless-stopped
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}',
+                ]
+            interval: 5s
+            timeout: 5s
+            retries: 5
 ```
 
 Você pode iniciar os containers com `docker compose up`.
