@@ -12,6 +12,8 @@ const compressAndUpload = (file: File, articleId: string): Promise<string> => {
 	return new Promise<string>((resolve, reject) => {
 		const sendForm = async (result: File | Blob) => {
 			try {
+				if (result.size > 2000000)
+					reject(new Error('Imagem muito grande!'));
 				const attachmentsRecord = await attachFile(articleId, result);
 
 				const imageUrl = await getAttachmentFileURL(
