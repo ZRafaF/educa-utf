@@ -12,7 +12,8 @@ import dynamic from 'next/dynamic';
 
 import Editor, { Plugins } from 'react-markdown-editor-lite';
 import useUploadFile from '@/hooks/useUploadFile';
-import { uploadFile } from '@/lib/fileUploadHelper';
+import { compressImage, uploadFile } from '@/lib/fileHelper';
+import { uploadAndGetURL } from '@/lib/apiHelpers/attachmentsAPI';
 
 const ArticleContent = dynamic(
 	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
@@ -78,17 +79,18 @@ const MarkdownEditorComponent: FunctionComponent<
 		setMyArticleDocument(text);
 	}
 
-	const handleImageUpload = (file: File) => {
-		return uploadFile(file, articleId);
+	const handleImageUpload = async (file: File) => {
+		const url = await uploadFile(file, articleId);
+		return url;
 	};
 
 	const onCustomImageUpload = async (
 		event: any
 	): Promise<{ url: string; text?: string | undefined }> => {
 		const selectedFile = await uploadImage();
-		const uploadedFileURL = await uploadFile(selectedFile, articleId);
+		const url = await uploadFile(selectedFile, articleId);
 		return {
-			url: uploadedFileURL,
+			url: url,
 			text: selectedFile.name,
 		};
 	};

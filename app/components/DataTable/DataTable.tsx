@@ -33,7 +33,7 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 	onlyPublic,
 }) => {
 	const [order, setOrder] = useState<Order>('asc');
-	const [orderBy, setOrderBy] = useState<keyof Data>('title');
+	const [orderBy, setOrderBy] = useState<keyof Data>('created');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 	const [queryOptions, setQueryOptions] = useState<

@@ -35,6 +35,7 @@ import { toast } from 'react-toastify';
 import EditMetadataContent from '../EditMetadata/EditMetadataContent';
 import ArticleCoverContext from '@/contexts/ArticleCoverContext';
 import { useRouter } from 'next/navigation';
+import Stack from '@mui/material/Stack';
 
 interface EditArticleProps {
 	articleId: string;
@@ -109,6 +110,8 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						return myArticle.visibility;
 				}
 			};
+			const saveAndFinish =
+				(event as any).nativeEvent.submitter.name === 'saveAndFinish';
 
 			const submitVisibility = getVis();
 
@@ -144,8 +147,9 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 					baseFile,
 					selectedCoverFile
 				);
+
 				toast.success('Artigo atualizado com sucesso!');
-				router.push(`/article/${updatedRecord.id}`);
+				if (saveAndFinish) router.push(`/article/${updatedRecord.id}`);
 			} catch (error) {
 				if (error instanceof Error) {
 					console.error(error);
@@ -218,16 +222,35 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 					</Accordion>
 					<Grid container spacing={2} p={2}>
 						<Grid xs="auto">
-							<Button
-								type="submit"
-								variant="contained"
-								sx={{
-									p: 1.5,
-								}}
-								disabled={!accept}
+							<Stack
+								direction="row"
+								justifyContent="center"
+								alignItems="center"
+								spacing={2}
 							>
-								Salvar modificações
-							</Button>
+								<Button
+									type="submit"
+									name="save"
+									variant="outlined"
+									sx={{
+										p: 1.5,
+									}}
+									disabled={!accept}
+								>
+									Salvar
+								</Button>
+								<Button
+									type="submit"
+									name="saveAndFinish"
+									variant="contained"
+									sx={{
+										p: 1.5,
+									}}
+									disabled={!accept}
+								>
+									Salvar e finalizar
+								</Button>
+							</Stack>
 						</Grid>
 						<Grid>
 							<FormControlLabel
