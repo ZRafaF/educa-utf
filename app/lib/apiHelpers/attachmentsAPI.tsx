@@ -30,7 +30,7 @@ export async function getAttachmentFileURL(
 	return pb.files.getUrl(record, file, original ? {} : { thumb: '300x300' });
 }
 
-export async function attachFile(articleId: string, file: File) {
+export async function attachFile(articleId: string, file: File | Blob) {
 	const form = new FormData();
 
 	form.append('files', file);

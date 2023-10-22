@@ -21,7 +21,7 @@ const useRedirectAuth = (shouldRedirectIfLoggedOut?: boolean) => {
 
 	useEffect(() => {
 		triggerRoute();
-	}, [user, shouldRedirectIfLoggedOut, router]);
+	}, [user, shouldRedirectIfLoggedOut, router, triggerRoute]);
 
 	return [triggerRoute] as const;
 };
