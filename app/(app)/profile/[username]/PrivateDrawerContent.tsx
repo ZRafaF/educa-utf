@@ -21,9 +21,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import DataTable from '@/components/DataTable/DataTable';
 import Box from '@mui/material/Box';
 import LinkItem from '@/components/LinkItem/LinkItem';
+import dynamic from 'next/dynamic';
+import EditUserInfo from '@/components/EditUserInfo/EditUserInfo';
+import EditUserInfoSender from '@/components/EditUserInfo/EditUserInfoSender';
+
+const DataTable = dynamic(() => import('@/components/DataTable/DataTable'), {
+	ssr: false,
+});
 
 interface PrivateDrawerContentProps {
 	userId: string;
@@ -55,12 +61,7 @@ const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
 					icon={<ManageAccountsIcon />}
 					title="Minhas informações"
 				>
-					<ListItemButton>
-						<ListItemIcon>
-							<MailIcon />
-						</ListItemIcon>
-						<ListItemText primary="Starred" />
-					</ListItemButton>
+					<EditUserInfo />
 				</CollapsibleList>
 				<Divider />
 				<LinkItem

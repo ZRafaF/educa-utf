@@ -23,6 +23,7 @@ import Link from 'next/link';
 import Tooltip from '@mui/material/Tooltip';
 import usePbAuth from '@/hooks/usePbAuth';
 import ShareIcon from '@mui/icons-material/Share';
+import Box from '@mui/material/Box';
 
 interface MoreDataOptionsProps {
 	data: ArticlesStatsResponse | ChaptersStatsResponse;
@@ -33,7 +34,7 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 	const open = Boolean(anchorEl);
 	const [, user] = usePbAuth();
 
-	const isArticle = useMemo<boolean>(() => 'cover' in data, [data]);
+	const isChapter = useMemo<boolean>(() => 'cover' in data, [data]);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -42,7 +43,7 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 		setAnchorEl(null);
 	};
 
-	const editButton = isArticle && (
+	const editButton = !isChapter && (
 		<Link
 			href={`/edit/${data.id}`}
 			style={{ textDecoration: 'none', color: 'inherit' }}
@@ -83,7 +84,7 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 			>
 				<MenuItem
 					onClick={() => {
-						const shareUrl = isArticle
+						const shareUrl = isChapter
 							? `https://educautf.td.utfpr.edu.br/article/${data.id}`
 							: `https://educautf.td.utfpr.edu.br/article/${data.id}`;
 
@@ -101,23 +102,27 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 					</ListItemIcon>
 					<ListItemText>Compartilhar</ListItemText>
 				</MenuItem>
+				<Box>
+					{user?.id === data.user && (
+						<>
+							<Divider />
 
-				{user?.id === data.user && (
-					<>
-						<Divider />
-
-						{editButton}
-						<MenuItem
-							onClick={handleClose}
-							sx={{ color: 'error.main' }}
-						>
-							<ListItemIcon>
-								<DeleteIcon fontSize="small" color="error" />
-							</ListItemIcon>
-							<ListItemText>Apagar</ListItemText>
-						</MenuItem>
-					</>
-				)}
+							{editButton}
+							<MenuItem
+								onClick={handleClose}
+								sx={{ color: 'error.main' }}
+							>
+								<ListItemIcon>
+									<DeleteIcon
+										fontSize="small"
+										color="error"
+									/>
+								</ListItemIcon>
+								<ListItemText>Apagar</ListItemText>
+							</MenuItem>
+						</>
+					)}
+				</Box>
 			</Menu>
 		</>
 	);
