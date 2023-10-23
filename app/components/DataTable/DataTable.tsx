@@ -63,7 +63,7 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 	};
 	useEffect(() => {
 		handleRequestSort(undefined, 'created');
-	}, []);
+	}, [handleRequestSort]);
 
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
