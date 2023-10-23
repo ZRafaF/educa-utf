@@ -7,12 +7,13 @@ import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Button from '@mui/material/Button/Button';
-import NewArticlesCarousel from './NewArticlesCarousel/NewArticlesCarousel';
-import { getNewArticles } from '@/lib/apiHelpers/articlesAPI';
+import NewChaptersCarousel from './NewChaptersCarousel/NewChaptersCarousel';
 import styleModule from './TextGradientAnimation.module.css';
 import Link from 'next/link';
+import { getNewChapters } from '@/lib/apiHelpers/chaptersAPI';
+
 async function BannerSomethingNew() {
-	const posts = await getNewArticles();
+	const chapters = await getNewChapters();
 
 	return (
 		<Box
@@ -77,7 +78,7 @@ async function BannerSomethingNew() {
 					</div>
 				</Grid>
 				<Grid sm={20} md pt={6}>
-					{<NewArticlesCarousel myArticles={posts} />}
+					{<NewChaptersCarousel myChapters={chapters} />}
 				</Grid>
 			</Grid>
 		</Box>

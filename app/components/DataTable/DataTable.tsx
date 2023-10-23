@@ -103,7 +103,7 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 		};
 
 		fetchNewData();
-	}, [queryOptions, page, rowsPerPage, fetchType]);
+	}, [queryOptions, page, rowsPerPage, fetchType, onlyPublic, userId]);
 
 	if (loading) return <>Carregando...</>;
 

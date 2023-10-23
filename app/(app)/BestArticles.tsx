@@ -3,13 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import ArticleCard from '@/components/ArticleCard/ArticleCard';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import React from 'react';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
-import { getRandomImageUrl } from '@/lib/helper';
 import { getBestArticlesOf } from '@/lib/apiHelpers/articlesAPI';
+import ArticleCard from '@/components/ArticleCard/ArticleCard';
 
 export const revalidate = 30;
 
@@ -27,27 +26,21 @@ async function BestArticles() {
 				sx={{
 					justifyContent: {
 						xs: 'center',
-						sm: 'left',
-						md: 'space-between',
-						lg: 'space-between',
+						sm: 'center',
+						lg: 'left',
 					},
 				}}
 			>
 				{articles.map((article, idx) => (
 					<Grid
 						key={`article_${idx}`}
-						xs={6}
-						sm={4}
-						md={3}
-						lg={2.4}
-						xl={2.4}
+						xs={15}
+						sm={6}
+						md={6}
+						lg={4}
+						xl={4}
 					>
-						<ArticleCard
-							myArticle={article}
-							href={`/article/${article.id}`}
-							isExpanded={false}
-							imgSrc={getRandomImageUrl()}
-						/>
+						<ArticleCard myArticle={article} idx={idx} />
 					</Grid>
 				))}
 			</Grid>
