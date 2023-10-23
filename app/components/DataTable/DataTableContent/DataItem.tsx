@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { getArticleCoverURL } from '@/lib/apiHelpers/articlesAPI';
 import { getFormattedDate, getFormattedVisibility } from '@/lib/helper';
 import {
 	ArticlesStatsResponse,
@@ -20,6 +19,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import Box from '@mui/material/Box';
 import MoreDataOptions from './MoreDataOptions';
+import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 
 interface DataItemProps {
 	data: ArticlesStatsResponse | ChaptersStatsResponse;
@@ -29,7 +29,7 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 	const CoverImg: JSX.Element =
 		'cover' in data ? (
 			<Avatar
-				src={getArticleCoverURL(data)}
+				src={getChapterCoverURL(data)}
 				variant="square"
 				sx={{ width: 34, height: 34 }}
 			></Avatar>
@@ -38,8 +38,6 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 		);
 	const NumOfArticles: JSX.Element =
 		'cover' in data ? (
-			<></>
-		) : (
 			<Box
 				component={'span'}
 				fontWeight={600}
@@ -48,6 +46,8 @@ const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {
 			>
 				&nbsp;•&nbsp;{data.articles.length} artigo(s)
 			</Box>
+		) : (
+			<></>
 		);
 
 	return (

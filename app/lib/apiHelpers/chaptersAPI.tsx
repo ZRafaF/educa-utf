@@ -92,3 +92,36 @@ export async function getListOfChaptersStats(
 		return {} as ListResult<ChaptersStatsResponse>;
 	}
 }
+
+export async function getNewChapters() {
+	try {
+		const response = await pb
+			.collection('chapters')
+			.getList<ChaptersResponse<ChaptersExpandTags>>(1, 8, {
+				sort: '-created',
+				skipTotal: true,
+				expand: 'tags',
+			});
+		return response.items;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+}
+
+export function getChapterCoverURL(
+	chapter: ChaptersResponse | ChaptersStatsResponse,
+	original?: boolean
+) {
+	const record = {
+		id: chapter.id,
+		collectionId: chapter.collectionId,
+		collectionName: chapter.collectionName,
+	};
+
+	return pb.files.getUrl(
+		record,
+		chapter.cover,
+		original ? {} : { thumb: '600x300' }
+	);
+}

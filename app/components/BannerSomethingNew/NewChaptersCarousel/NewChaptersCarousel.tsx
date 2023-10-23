@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import ArticleCard from '@/components/ArticleCard/ArticleCard';
+import ChapterCard from '@/components/ChapterCard/ChapterCard';
 import { FunctionComponent, RefObject, useRef } from 'react';
 import { Swiper, SwiperRef, SwiperSlide, useSwiperSlide } from 'swiper/react';
 import { Pagination, EffectCoverflow } from 'swiper/modules';
@@ -15,20 +15,20 @@ import Stack from '@mui/material/Stack/Stack';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton/IconButton';
-import { ArticlesResponse } from '@/types/pocketbase-types';
-import { ArticlesExpand } from '@/types/expanded-types';
+import { ArticlesResponse, ChaptersResponse } from '@/types/pocketbase-types';
+import { ArticlesExpand, ChaptersExpandTags } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
 
 interface CardSlideProps {
 	myId: number;
 	sliderRef: RefObject<SwiperRef>;
-	myArticle: ArticlesResponse<ArticlesExpand>;
+	myChapter: ChaptersResponse<ChaptersExpandTags>;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
 	myId,
 	sliderRef,
-	myArticle,
+	myChapter,
 }) => {
 	const imActive = useSwiperSlide().isActive;
 
@@ -39,11 +39,11 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 					sliderRef.current?.swiper.slideTo(myId);
 				}}
 			>
-				<ArticleCard
-					myArticle={myArticle}
+				<ChapterCard
+					myChapter={myChapter}
 					isExpanded={true}
 					isClickable={imActive}
-					href={`/article/${myArticle.id}`}
+					href={`/chapter/${myChapter.id}`}
 				/>
 				<div
 					style={{
@@ -61,12 +61,12 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 	);
 };
 
-interface NewArticlesCarouselProps {
-	myArticles: ArticlesResponse<ArticlesExpand>[];
+interface NewChaptersCarouselProps {
+	myChapters: ChaptersResponse<ChaptersExpandTags>[];
 }
 
-const NewArticlesCarousel: FunctionComponent<NewArticlesCarouselProps> = ({
-	myArticles,
+const NewChaptersCarousel: FunctionComponent<NewChaptersCarouselProps> = ({
+	myChapters,
 }) => {
 	const theme = useTheme();
 	const isExtraSmallScreen = useMediaQuery(theme.breakpoints.only('xs'));
@@ -125,12 +125,12 @@ const NewArticlesCarousel: FunctionComponent<NewArticlesCarouselProps> = ({
 				}}
 				ref={sliderRef}
 			>
-				{myArticles.map((post, idx) => (
+				{myChapters.map((post, idx) => (
 					<SwiperSlide key={'slider_' + idx}>
 						<CardSlide
 							myId={idx}
 							sliderRef={sliderRef}
-							myArticle={post}
+							myChapter={post}
 						/>
 					</SwiperSlide>
 				))}
@@ -191,4 +191,4 @@ const NewArticlesCarousel: FunctionComponent<NewArticlesCarouselProps> = ({
 	);
 };
 
-export default NewArticlesCarousel;
+export default NewChaptersCarousel;

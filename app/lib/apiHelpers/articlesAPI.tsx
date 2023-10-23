@@ -56,21 +56,6 @@ export async function getBestArticlesOf(time: 'week' | 'month' | 'year') {
 	}
 }
 
-export async function getNewArticles() {
-	try {
-		const response = await pb
-			.collection('articles')
-			.getList<ArticlesResponse<ArticlesExpand>>(1, 8, {
-				sort: '-created',
-				skipTotal: true,
-				expand: 'tags',
-			});
-		return response.items;
-	} catch (error) {
-		console.error(error);
-		return [];
-	}
-}
 export async function getArticleDocumentUrl(article: ArticlesResponse) {
 	const record = {
 		id: article.id,
@@ -92,31 +77,12 @@ export async function getArticleDocumentUrl(article: ArticlesResponse) {
 
 export async function createArticle(
 	newArticle: ArticlesRecord,
-	baseFile: Blob,
-	coverFile: File | undefined
+	baseFile: Blob
 ) {
 	const form = getFormData(newArticle);
 	form.append('document', baseFile, 'article.md');
-	if (coverFile) form.append('cover', coverFile);
 
 	return pb.collection('articles').create<ArticlesResponse>(form);
-}
-
-export function getArticleCoverURL(
-	article: ArticlesResponse | ArticlesStatsResponse,
-	original?: boolean
-) {
-	const record = {
-		id: article.id,
-		collectionId: article.collectionId,
-		collectionName: article.collectionName,
-	};
-
-	return pb.files.getUrl(
-		record,
-		article.cover,
-		original ? {} : { thumb: '600x300' }
-	);
 }
 
 export async function getRandomArticle() {
@@ -137,20 +103,11 @@ export async function getRandomArticle() {
 export async function updateArticle(
 	articleId: string,
 	updatedArticleRecord: ArticlesRecord,
-	baseFile: Blob,
-	coverFile: File | undefined
+	baseFile: Blob
 ) {
 	const form = getFormData(updatedArticleRecord);
 	form.append('document', baseFile, 'article.md');
-	if (coverFile) form.append('cover', coverFile);
-	else {
-		await pb
-			.collection('articles')
-			.update<ArticlesResponse>(articleId, form);
-		return pb.collection('articles').update<ArticlesResponse>(articleId, {
-			cover: null, // Removing cover file
-		});
-	}
+
 	return pb.collection('articles').update<ArticlesResponse>(articleId, form);
 }
 

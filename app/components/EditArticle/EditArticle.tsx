@@ -15,7 +15,6 @@ import PageMessage from '../PageMessage/PageMessage';
 import usePbAuth from '@/hooks/usePbAuth';
 import {
 	getArticleById,
-	getArticleCoverURL,
 	getArticleDocumentUrl,
 	updateArticle,
 } from '@/lib/apiHelpers/articlesAPI';
@@ -33,7 +32,6 @@ import NextLink from 'next/link';
 import Link from '@mui/material/Link/Link';
 import { toast } from 'react-toastify';
 import EditMetadataContent from '../EditMetadata/EditMetadataContent';
-import ArticleCoverContext from '@/contexts/ArticleCoverContext';
 import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
 
@@ -50,7 +48,6 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 	>(undefined);
 	const [, user] = usePbAuth();
 	const [accept, setAccept] = useState<boolean>(false);
-	const [selectedCoverFile, setSelectedCoverFile] = useState<File>();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -59,19 +56,6 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 
 			if (article.user === user?.id) {
 				const articleDocument = await getArticleDocumentUrl(article);
-				const coverUrl = getArticleCoverURL(article, true);
-
-				if (coverUrl) {
-					const cover = await fetch(coverUrl);
-					const coverBlob = await cover.blob();
-					const urlParts = coverUrl.split('/');
-					const fileName = urlParts[urlParts.length - 1];
-					const myFile = new File([coverBlob], fileName, {
-						type: coverBlob.type,
-					});
-
-					setSelectedCoverFile(myFile);
-				}
 
 				setMyArticleDocument(articleDocument);
 				setMyArticle(article);
@@ -144,8 +128,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						visibility: submitVisibility,
 						document: '',
 					},
-					baseFile,
-					selectedCoverFile
+					baseFile
 				);
 
 				toast.success('Artigo atualizado com sucesso!');
@@ -167,139 +150,132 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		};
 
 		return (
-			<ArticleCoverContext.Provider
-				value={[selectedCoverFile, setSelectedCoverFile]}
+			<Container
+				maxWidth={'lg'}
+				sx={{ py: 4, flexGrow: 1, px: { sm: 0, md: 2, lg: 3 } }}
+				disableGutters
+				component="form"
+				onSubmit={handleSubmit}
 			>
-				<Container
-					maxWidth={'lg'}
-					sx={{ py: 4, flexGrow: 1, px: { sm: 0, md: 2, lg: 3 } }}
-					disableGutters
-					component="form"
-					onSubmit={handleSubmit}
+				<Typography
+					component="h1"
+					variant="h4"
+					align="center"
+					gutterBottom
 				>
-					<Typography
-						component="h1"
-						variant="h4"
-						align="center"
-						gutterBottom
+					Editando [{myArticle.title}]
+				</Typography>
+				<Accordion sx={{}} variant="outlined">
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
 					>
-						Editando [{myArticle.title}]
-					</Typography>
-					<Accordion sx={{}} variant="outlined">
-						<AccordionSummary
-							expandIcon={<ExpandMoreIcon />}
-							aria-controls="panel1a-content"
-							id="panel1a-header"
+						<Typography>Editar metadados</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<EditMetadataContent
+							defaultValues={{
+								title: myArticle.title,
+								description: myArticle.description,
+								tags: myArticle.tags,
+								visibility: myArticle.visibility,
+							}}
+						/>
+					</AccordionDetails>
+				</Accordion>
+				<Accordion variant="outlined" defaultExpanded sx={{}}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
+					>
+						<Typography>Editar Artigo</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<MarkdownEditorComponent
+							articleId={myArticle.id}
+							myArticleDocument={myArticleDocument}
+							setMyArticleDocument={setMyArticleDocument}
+						/>
+					</AccordionDetails>
+				</Accordion>
+				<Grid container spacing={2} p={2}>
+					<Grid xs="auto">
+						<Stack
+							direction="row"
+							justifyContent="center"
+							alignItems="center"
+							spacing={2}
 						>
-							<Typography>Editar metadados</Typography>
-						</AccordionSummary>
-						<AccordionDetails>
-							<EditMetadataContent
-								defaultValues={{
-									title: myArticle.title,
-									description: myArticle.description,
-									tags: myArticle.tags,
-									visibility: myArticle.visibility,
+							<Button
+								type="submit"
+								name="save"
+								variant="outlined"
+								sx={{
+									p: 1.5,
 								}}
-							/>
-						</AccordionDetails>
-					</Accordion>
-					<Accordion variant="outlined" defaultExpanded sx={{}}>
-						<AccordionSummary
-							expandIcon={<ExpandMoreIcon />}
-							aria-controls="panel1a-content"
-							id="panel1a-header"
-						>
-							<Typography>Editar Artigo</Typography>
-						</AccordionSummary>
-						<AccordionDetails>
-							<MarkdownEditorComponent
-								articleId={myArticle.id}
-								myArticleDocument={myArticleDocument}
-								setMyArticleDocument={setMyArticleDocument}
-							/>
-						</AccordionDetails>
-					</Accordion>
-					<Grid container spacing={2} p={2}>
-						<Grid xs="auto">
-							<Stack
-								direction="row"
-								justifyContent="center"
-								alignItems="center"
-								spacing={2}
+								disabled={!accept}
 							>
-								<Button
-									type="submit"
-									name="save"
-									variant="outlined"
-									sx={{
-										p: 1.5,
-									}}
-									disabled={!accept}
-								>
-									Salvar
-								</Button>
-								<Button
-									type="submit"
-									name="saveAndFinish"
-									variant="contained"
-									sx={{
-										p: 1.5,
-									}}
-									disabled={!accept}
-								>
-									Salvar e finalizar
-								</Button>
-							</Stack>
-						</Grid>
-						<Grid>
-							<FormControlLabel
-								control={
-									<Checkbox
-										required
-										value="accept-terms"
-										name="accept-terms"
-										id="accept-terms"
-										checked={accept}
-										onChange={(e) => {
-											setAccept(e.target.checked);
-										}}
-									/>
-								}
-								label={
-									<>
-										<Typography
-											variant="body2"
-											fontSize={13}
-										>
-											Declaro que li e concordo com os{' '}
-											<Link
-												href="/terms"
-												component={NextLink}
-												underline="hover"
-												alignItems="center"
-												target="_blank"
-											>
-												Termos de Serviço
-											</Link>
-											{' e '}
-											<Link
-												href="/privacy"
-												component={NextLink}
-												underline="hover"
-												alignItems="center"
-												target="_blank"
-											>
-												Política de Privacidade
-											</Link>
-										</Typography>
-									</>
-								}
-							/>
-						</Grid>
+								Salvar
+							</Button>
+							<Button
+								type="submit"
+								name="saveAndFinish"
+								variant="contained"
+								sx={{
+									p: 1.5,
+								}}
+								disabled={!accept}
+							>
+								Salvar e finalizar
+							</Button>
+						</Stack>
 					</Grid>
-				</Container>
-			</ArticleCoverContext.Provider>
+					<Grid>
+						<FormControlLabel
+							control={
+								<Checkbox
+									required
+									value="accept-terms"
+									name="accept-terms"
+									id="accept-terms"
+									checked={accept}
+									onChange={(e) => {
+										setAccept(e.target.checked);
+									}}
+								/>
+							}
+							label={
+								<>
+									<Typography variant="body2" fontSize={13}>
+										Declaro que li e concordo com os{' '}
+										<Link
+											href="/terms"
+											component={NextLink}
+											underline="hover"
+											alignItems="center"
+											target="_blank"
+										>
+											Termos de Serviço
+										</Link>
+										{' e '}
+										<Link
+											href="/privacy"
+											component={NextLink}
+											underline="hover"
+											alignItems="center"
+											target="_blank"
+										>
+											Política de Privacidade
+										</Link>
+									</Typography>
+								</>
+							}
+						/>
+					</Grid>
+				</Grid>
+			</Container>
 		);
 	}
 	return (

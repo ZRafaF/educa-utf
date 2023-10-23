@@ -1,8 +1,8 @@
-import BestArticles from './BestArticles';
+import BestChapters from './BestChapters';
 import { Suspense } from 'react';
 import Box from '@mui/material/Box/Box';
 import BannerSomethingNew from '@/components/BannerSomethingNew/BannerSomethingNew';
-import BestChapters from './BestChapters';
+import BestArticles from './BestArticles';
 import Divider from '@mui/material/Divider/Divider';
 import { Metadata } from 'next/types';
 
@@ -31,7 +31,7 @@ export default function Home() {
 
 			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }} my={3} gap={4}>
 				<Suspense fallback={<Box>Carregando...</Box>}>
-					<BestArticles />
+					<BestChapters />
 				</Suspense>
 				<Divider
 					sx={{
@@ -40,7 +40,7 @@ export default function Home() {
 					variant="middle"
 				/>
 				<Suspense fallback={<Box>Carregando...</Box>}>
-					<BestChapters />
+					<BestArticles />
 				</Suspense>
 			</Box>
 		</Box>
