@@ -9,7 +9,6 @@ import {
 	getArticleById,
 	getArticleStatsById,
 	getArticleDocumentUrl,
-	getArticleCoverURL,
 } from '@/lib/apiHelpers/articlesAPI';
 import { FunctionComponent } from 'react';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
@@ -42,7 +41,6 @@ export async function generateMetadata({
 	try {
 		const article = await getArticleById(articleId);
 		const articleStats = await getArticleStatsById(articleId);
-		const ArticleCoverUrl = getArticleCoverURL(article);
 		let tags = article.expand?.tags.map((tag) => tag.name);
 		if (tags === undefined) tags = [''];
 		return {
@@ -54,7 +52,6 @@ export async function generateMetadata({
 				title: article.title,
 				description: article.description,
 				siteName: 'EducaUTF',
-				images: [{ url: ArticleCoverUrl }],
 				locale: 'pt_BR',
 				type: 'website',
 			},
