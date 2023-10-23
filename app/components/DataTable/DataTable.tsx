@@ -32,13 +32,13 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 	userId,
 	onlyPublic,
 }) => {
-	const [order, setOrder] = useState<Order>('desc');
+	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<keyof Data>('created');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
-	const [queryOptions, setQueryOptions] = useState<
-		RecordOptions | undefined
-	>();
+	const [queryOptions, setQueryOptions] = useState<RecordOptions>({
+		sort: '-created',
+	});
 	const [rows, setRows] = useState<
 		ArticlesStatsResponse[] | ChaptersStatsResponse[]
 	>([]);
@@ -61,9 +61,6 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 		}));
 		setPage(0);
 	};
-	useEffect(() => {
-		handleRequestSort(undefined, 'created');
-	}, [handleRequestSort]);
 
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
@@ -106,7 +103,7 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 
 			setLoading(false);
 		};
-		if (queryOptions) fetchNewData();
+		fetchNewData();
 	}, [queryOptions, page, rowsPerPage, fetchType, onlyPublic, userId, order]);
 
 	if (loading) return <>Carregando...</>;
