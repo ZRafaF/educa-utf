@@ -32,7 +32,7 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 	userId,
 	onlyPublic,
 }) => {
-	const [order, setOrder] = useState<Order>('asc');
+	const [order, setOrder] = useState<Order>('desc');
 	const [orderBy, setOrderBy] = useState<keyof Data>('created');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -47,7 +47,7 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 	const emptyRows = Math.max(0, rowsPerPage - rows.length);
 
 	const handleRequestSort = (
-		event: React.MouseEvent<unknown>,
+		event: React.MouseEvent<unknown> | undefined,
 		property: keyof Data
 	) => {
 		const isAsc = orderBy === property && order === 'asc';
@@ -61,6 +61,9 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 		}));
 		setPage(0);
 	};
+	useEffect(() => {
+		handleRequestSort(undefined, 'created');
+	}, []);
 
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
@@ -92,6 +95,8 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 				}),
 			};
 
+			console.log(filteredQuery);
+
 			const data = await (fetchType === 'articles'
 				? getListOfArticlesStats(page + 1, rowsPerPage, filteredQuery)
 				: getListOfChaptersStats(page + 1, rowsPerPage, filteredQuery));
@@ -101,9 +106,8 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 
 			setLoading(false);
 		};
-
-		fetchNewData();
-	}, [queryOptions, page, rowsPerPage, fetchType, onlyPublic, userId]);
+		if (queryOptions) fetchNewData();
+	}, [queryOptions, page, rowsPerPage, fetchType, onlyPublic, userId, order]);
 
 	if (loading) return <>Carregando...</>;
 

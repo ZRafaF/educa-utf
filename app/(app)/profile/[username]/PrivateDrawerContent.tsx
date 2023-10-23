@@ -21,9 +21,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import DataTable from '@/components/DataTable/DataTable';
 import Box from '@mui/material/Box';
 import LinkItem from '@/components/LinkItem/LinkItem';
+import dynamic from 'next/dynamic';
+
+const DataTable = dynamic(() => import('@/components/DataTable/DataTable'), {
+	ssr: false,
+});
 
 interface PrivateDrawerContentProps {
 	userId: string;

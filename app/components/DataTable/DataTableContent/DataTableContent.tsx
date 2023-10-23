@@ -11,6 +11,7 @@ import {
 import DataItem from './DataItem';
 import MoreDataOptions from './MoreDataOptions';
 import Link from 'next/link';
+import Box from '@mui/material/Box';
 
 interface DataTableContentProps {
 	rows: ArticlesStatsResponse[] | ChaptersStatsResponse[];
@@ -35,7 +36,7 @@ const DataTableContent: FunctionComponent<DataTableContentProps> = ({
 						}}
 					>
 						<Link
-							href={`/${'cover' in row ? 'article' : 'chapter'}/${
+							href={`/${'cover' in row ? 'chapter' : 'article'}/${
 								row.id
 							}`}
 							style={{ textDecoration: 'none', color: 'inherit' }}
