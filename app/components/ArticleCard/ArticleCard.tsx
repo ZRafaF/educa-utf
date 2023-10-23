@@ -3,7 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { ArticlesResponse } from '@/types/pocketbase-types';
+import {
+	ArticlesResponse,
+	ArticlesStatsResponse,
+} from '@/types/pocketbase-types';
 import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
 import Stack from '@mui/material/Stack/Stack';
 import Typography from '@mui/material/Typography/Typography';
@@ -15,10 +18,12 @@ import Box from '@mui/material/Box/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import MoreOptions from '../MoreOptions/MoreOptions';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Tooltip from '@mui/material/Tooltip';
 
 interface ArticleCardProps {
 	idx: number;
-	myArticle: ArticlesResponse<ArticlesExpand>;
+	myArticle: ArticlesStatsResponse<ArticlesExpand>;
 }
 
 const articleCard: FunctionComponent<ArticleCardProps> = ({
@@ -29,7 +34,7 @@ const articleCard: FunctionComponent<ArticleCardProps> = ({
 		<CardActionArea
 			LinkComponent={Link}
 			href={`article/${myArticle.id}`}
-			sx={{ p: 2, borderRadius: 3 }}
+			sx={{ p: 1, borderRadius: 3 }}
 		>
 			<Grid container gap={2}>
 				<Grid>
@@ -57,7 +62,7 @@ const articleCard: FunctionComponent<ArticleCardProps> = ({
 						width={'100%'}
 					>
 						<Box
-							minHeight={50}
+							minHeight={65}
 							sx={{
 								display: 'flex',
 								alignItems: 'center',
@@ -69,21 +74,76 @@ const articleCard: FunctionComponent<ArticleCardProps> = ({
 								alignItems={'center'}
 								width={'stretch'}
 							>
-								<Typography
-									variant="body1"
-									fontWeight="700"
-									sx={{
-										overflow: 'hidden',
-										wordBreak: 'break',
-										textOverflow: 'ellipsis',
-										display: '-webkit-box',
-										WebkitLineClamp: '2',
-										WebkitBoxOrient: 'vertical',
-									}}
-								>
-									{myArticle.title}
-								</Typography>
-								<MoreOptions />
+								<Stack>
+									<Typography
+										variant="body1"
+										fontWeight="700"
+										sx={{
+											overflow: 'hidden',
+											wordBreak: 'break',
+											textOverflow: 'ellipsis',
+											display: '-webkit-box',
+											WebkitLineClamp: '2',
+											WebkitBoxOrient: 'vertical',
+										}}
+									>
+										{myArticle.title}
+									</Typography>
+									<Typography
+										variant="body2"
+										color="text.secondary"
+										sx={{
+											overflow: 'hidden',
+											wordBreak: 'break',
+											textOverflow: 'ellipsis',
+											display: '-webkit-box',
+											WebkitBoxOrient: 'vertical',
+											WebkitLineClamp: 2,
+										}}
+									>
+										{myArticle.description}
+									</Typography>
+								</Stack>
+								<Stack spacing={1} color="text.secondary">
+									<Tooltip
+										title="Visualizações"
+										arrow
+										placement="left"
+									>
+										<Stack
+											direction="row"
+											spacing={1}
+											alignItems="center"
+										>
+											<VisibilityIcon fontSize="small" />
+											<Typography
+												variant="body2"
+												component="p"
+											>
+												{myArticle.views}
+											</Typography>
+										</Stack>
+									</Tooltip>
+									<Tooltip
+										title="Likes"
+										arrow
+										placement="left"
+									>
+										<Stack
+											direction="row"
+											spacing={1}
+											alignItems="center"
+										>
+											<FavoriteIcon fontSize="small" />
+											<Typography
+												variant="body2"
+												component="p"
+											>
+												{myArticle.likes}
+											</Typography>
+										</Stack>
+									</Tooltip>
+								</Stack>
 							</Stack>
 						</Box>
 						<Stack
@@ -94,15 +154,9 @@ const articleCard: FunctionComponent<ArticleCardProps> = ({
 							gap={1}
 						>
 							<TagsComponent tags={myArticle.expand?.tags} />
-							<Stack direction="row" gap={1} alignItems="center">
-								<VisibilityIcon
-									color="action"
-									fontSize="small"
-								/>
-								<Typography variant="caption">
-									{myArticle.views}
-								</Typography>
-							</Stack>
+							<Box>
+								<MoreOptions />
+							</Box>
 						</Stack>
 					</Stack>
 				</Grid>

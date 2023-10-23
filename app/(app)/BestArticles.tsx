@@ -22,7 +22,7 @@ async function BestArticles() {
 			</Typography>
 			<Grid
 				container
-				spacing={2}
+				spacing={1}
 				sx={{
 					justifyContent: {
 						xs: 'center',
@@ -37,7 +37,7 @@ async function BestArticles() {
 						xs={15}
 						sm={6}
 						md={6}
-						lg={6}
+						lg={4}
 						xl={4}
 					>
 						<ArticleCard myArticle={article} idx={idx} />

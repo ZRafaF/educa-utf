@@ -45,8 +45,8 @@ export async function getArticleStatsById(articleId: string) {
 export async function getBestArticlesOf(time: 'week' | 'month' | 'year') {
 	try {
 		return await pb
-			.collection('articles')
-			.getFullList<ArticlesResponse<ArticlesExpand>>({
+			.collection('articles_stats')
+			.getFullList<ArticlesStatsResponse<ArticlesExpand>>({
 				skipTotal: true,
 				expand: 'tags',
 			});
