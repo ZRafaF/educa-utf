@@ -185,7 +185,10 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 								direction="row"
 								justifyContent="space-between"
 							>
-								<TagsComponent tags={myChapter.expand?.tags} />
+								<TagsComponent
+									tags={myChapter.expand?.tags}
+									expanded
+								/>
 
 								<Stack direction="row">
 									<IconButton
