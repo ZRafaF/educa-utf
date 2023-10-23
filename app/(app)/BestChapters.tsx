@@ -3,11 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import ChapterCard from '@/components/ChapterCard/ChapterCard';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import React from 'react';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
-import ChapterCard from '@/components/ChapterCard/ChapterCard';
+import { getRandomImageUrl } from '@/lib/helper';
 import { getBestChaptersOf } from '@/lib/apiHelpers/chaptersAPI';
 
 export const revalidate = 30;
@@ -22,25 +23,31 @@ async function BestChapters() {
 			</Typography>
 			<Grid
 				container
-				spacing={2}
+				spacing={1}
 				sx={{
 					justifyContent: {
 						xs: 'center',
-						sm: 'center',
-						lg: 'left',
+						sm: 'left',
+						md: 'space-between',
+						lg: 'space-between',
 					},
 				}}
 			>
 				{chapters.map((chapter, idx) => (
 					<Grid
 						key={`chapter_${idx}`}
-						xs={15}
-						sm={6}
-						md={6}
-						lg={6}
-						xl={4}
+						xs={6}
+						sm={4}
+						md={3}
+						lg={2.4}
+						xl={2.4}
 					>
-						<ChapterCard myChapter={chapter} idx={idx} />
+						<ChapterCard
+							myChapter={chapter}
+							href={`/chapter/${chapter.id}`}
+							isExpanded={false}
+							imgSrc={getRandomImageUrl()}
+						/>
 					</Grid>
 				))}
 			</Grid>

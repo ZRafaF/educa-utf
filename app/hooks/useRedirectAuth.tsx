@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react'; // Add useCallback import
 import usePbAuth from './usePbAuth';
 import { useRouter } from 'next/navigation';
 
@@ -12,16 +12,17 @@ const useRedirectAuth = (shouldRedirectIfLoggedOut?: boolean) => {
 	const [, user] = usePbAuth();
 	const router = useRouter();
 
-	const triggerRoute = () => {
+	// Wrap triggerRoute in useCallback
+	const triggerRoute = useCallback(() => {
 		if (user) {
 			router.back();
 		}
 		if (shouldRedirectIfLoggedOut && user === null) router.back();
-	};
+	}, [user, shouldRedirectIfLoggedOut, router]);
 
 	useEffect(() => {
 		triggerRoute();
-	}, [user, shouldRedirectIfLoggedOut, router]);
+	}, [user, shouldRedirectIfLoggedOut, router, triggerRoute]);
 
 	return [triggerRoute] as const;
 };

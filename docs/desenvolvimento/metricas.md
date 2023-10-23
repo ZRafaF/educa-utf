@@ -19,3 +19,12 @@ O repositório no DockerHub pode ser acessado em <https://hub.docker.com/r/zrafa
 A aplicação está acessível através do proxy reverso em <https://educautf.td.utfpr.edu.br/umami>.
 
 Você também pode visualizar os dados públicos em <https://educautf.td.utfpr.edu.br/umami/share/NmknLrXmtHfUfTwY/EducaUTF>
+
+## Segredos
+O `docker-compose.yaml` depende da variável de ambiente `UMAMI_APP_SECRET`, essa deve ser setada dentro de um arquivo `.env` no mesmo diretório do `docker-compose.yaml`.
+
+Exemplo de `.env`
+
+```sh
+UMAMI_APP_SECRET=meusegredoumami
+```

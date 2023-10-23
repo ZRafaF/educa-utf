@@ -16,6 +16,8 @@ services:
             - 8090:8090
         volumes:
             - ./pocketbase_data:/pb/pb_data
+        environment:
+            UTF_AUTH_TOKEN: '${UTF_AUTH_TOKEN}'
 
     watchtower:
         image: containrrr/watchtower

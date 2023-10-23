@@ -30,7 +30,7 @@ export async function getAttachmentFileURL(
 	return pb.files.getUrl(record, file, original ? {} : { thumb: '300x300' });
 }
 
-export async function attachFile(articleId: string, file: File) {
+export async function attachFile(articleId: string, file: File | Blob) {
 	const form = new FormData();
 
 	form.append('files', file);
@@ -38,4 +38,17 @@ export async function attachFile(articleId: string, file: File) {
 	return pb
 		.collection('attachments')
 		.update<AttachmentsResponse>(articleId, form);
+}
+
+export async function uploadAndGetURL(file: File | Blob, articleId: string) {
+	if (file.size > 2000000) throw new Error('Imagem muito grande!');
+	const attachmentsRecord = await attachFile(articleId, file);
+
+	const imageUrl = await getAttachmentFileURL(
+		articleId,
+		attachmentsRecord.files[attachmentsRecord.files.length - 1],
+		true
+	);
+
+	return imageUrl;
 }

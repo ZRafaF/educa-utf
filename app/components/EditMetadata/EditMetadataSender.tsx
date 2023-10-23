@@ -21,8 +21,6 @@ interface EditMetadataSenderProps {
 const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 	children,
 }) => {
-	const [selectedCoverFile, setSelectedCoverFile] = useState<File>();
-
 	const [, user] = usePbAuth();
 	const router = useRouter();
 
@@ -74,8 +72,7 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 					visibility: submitVisibility,
 					document: '',
 				},
-				baseFile,
-				selectedCoverFile
+				baseFile
 			);
 			toast.success('Artigo criado com sucesso!');
 
@@ -104,11 +101,7 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 			component="form"
 			onSubmit={handleSubmit}
 		>
-			<ArticleCoverContext.Provider
-				value={[selectedCoverFile, setSelectedCoverFile]}
-			>
-				{children}
-			</ArticleCoverContext.Provider>
+			{children}
 		</Paper>
 	);
 };

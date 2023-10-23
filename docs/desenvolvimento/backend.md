@@ -24,13 +24,13 @@ Para iniciar o backend é necessário criar as seguintes **Variáveis de Ambient
 UTF_AUTH_TOKEN=meutokendeautenticacao
 ```
 
-#### Container
-Ex:
-```yaml
-services:
-  my_app:
-    environment:
-      - UTF_AUTH_TOKEN=meutokendeautenticacao
+#### Docker compose
+O docker-compose da aplicação carrega os segredos a partir de um arquivo `.env`. Portanto a variável `UTF_AUTH_TOKEN` deve estar lá.
+
+Exemplo de `.env`
+
+```sh
+UTF_AUTH_TOKEN=meutokendeautenticacao
 ```
 
 

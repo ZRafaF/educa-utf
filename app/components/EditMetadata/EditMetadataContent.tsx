@@ -92,49 +92,36 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 
 				<Grid xs={12}>
 					<Stack
-						direction={{
-							xs: 'column',
-							sm: 'column',
-							md: 'row-reverse',
-						}}
-						justifyContent="space-between"
+						direction="column"
+						justifyContent="center"
 						alignItems="flex-start"
 						spacing={2}
 					>
-						<DropZoneComponent />
-
-						<Stack
-							direction="column"
-							justifyContent="center"
-							alignItems="flex-start"
-							spacing={2}
-						>
-							<Box>
-								<FormLabel>
-									<Typography variant="body2">
-										Visibilidade:
-									</Typography>
-								</FormLabel>
-								<RadioGroup
-									aria-labelledby="visibility-radio-buttons"
-									defaultValue={defaultValues.visibility}
-									name="visibility-radio-buttons"
-									row
-								>
-									<FormControlLabel
-										value="public"
-										control={<Radio size="small" />}
-										label="Publico"
-									/>
-									<FormControlLabel
-										value="private"
-										control={<Radio size="small" />}
-										label="Privado"
-									/>
-								</RadioGroup>
-							</Box>
-							{sendButton && <SendMetadataButton />}
-						</Stack>
+						<Box>
+							<FormLabel>
+								<Typography variant="body2">
+									Visibilidade:
+								</Typography>
+							</FormLabel>
+							<RadioGroup
+								aria-labelledby="visibility-radio-buttons"
+								defaultValue={defaultValues.visibility}
+								name="visibility-radio-buttons"
+								row
+							>
+								<FormControlLabel
+									value="public"
+									control={<Radio size="small" />}
+									label="Publico"
+								/>
+								<FormControlLabel
+									value="private"
+									control={<Radio size="small" />}
+									label="Privado"
+								/>
+							</RadioGroup>
+						</Box>
+						{sendButton && <SendMetadataButton />}
 					</Stack>
 				</Grid>
 			</Grid>

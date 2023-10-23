@@ -11,12 +11,9 @@ import 'react-markdown-editor-lite/lib/index.css';
 import dynamic from 'next/dynamic';
 
 import Editor, { Plugins } from 'react-markdown-editor-lite';
-import {
-	attachFile,
-	getAttachmentFileURL,
-} from '@/lib/apiHelpers/attachmentsAPI';
-import { toast } from 'react-toastify';
 import useUploadFile from '@/hooks/useUploadFile';
+import { compressImage, uploadFile } from '@/lib/fileHelper';
+import { uploadAndGetURL } from '@/lib/apiHelpers/attachmentsAPI';
 
 const ArticleContent = dynamic(
 	() => import('@/components/ArticleComponent/ArticleContent/ArticleContent')
@@ -67,46 +64,6 @@ const MarkdownEditorComponent: FunctionComponent<
 	const editorRef = useRef<Editor>(null);
 	const [uploadImage, InputComponent] = useUploadFile();
 
-	const uploadFile = async (file: File) => {
-		const id = toast.loading('Fazendo upload do arquivo, aguarde...');
-
-		try {
-			const attachmentsRecord = await attachFile(articleId, file);
-
-			const imageUrl = await getAttachmentFileURL(
-				articleId,
-				attachmentsRecord.files[attachmentsRecord.files.length - 1],
-				true
-			);
-			toast.update(id, {
-				render: 'Arquivo enviado com sucesso!',
-				type: 'success',
-				isLoading: false,
-				autoClose: 5000,
-				pauseOnFocusLoss: true,
-				draggable: true,
-				pauseOnHover: true,
-				closeOnClick: true,
-			});
-			return imageUrl;
-		} catch (error) {
-			console.error(error);
-
-			toast.update(id, {
-				render: 'Algo deu errado2!',
-				type: 'error',
-				isLoading: false,
-				autoClose: 5000,
-				pauseOnFocusLoss: true,
-				draggable: true,
-				pauseOnHover: true,
-				closeOnClick: true,
-			});
-
-			throw new Error('Error message ' + error);
-		}
-	};
-
 	function handleEditorChange(
 		{
 			text,
@@ -122,17 +79,18 @@ const MarkdownEditorComponent: FunctionComponent<
 		setMyArticleDocument(text);
 	}
 
-	const handleImageUpload = (file: File) => {
-		return uploadFile(file);
+	const handleImageUpload = async (file: File) => {
+		const url = await uploadFile(file, articleId);
+		return url;
 	};
 
 	const onCustomImageUpload = async (
 		event: any
 	): Promise<{ url: string; text?: string | undefined }> => {
 		const selectedFile = await uploadImage();
-		const uploadedFileURL = await uploadFile(selectedFile);
+		const url = await uploadFile(selectedFile, articleId);
 		return {
-			url: uploadedFileURL,
+			url: url,
 			text: selectedFile.name,
 		};
 	};

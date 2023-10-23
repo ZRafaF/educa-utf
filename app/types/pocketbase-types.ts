@@ -45,7 +45,6 @@ export enum ArticlesVisibilityOptions {
 }
 export type ArticlesRecord = {
 	attachments?: RecordIdString
-	cover?: string
 	description?: string
 	document: string
 	tags?: RecordIdString[]
@@ -63,7 +62,6 @@ export type ArticlesStatsRecord = {
 	author_avatar?: string
 	author_name: string
 	author_username?: string
-	cover?: string
 	description?: string
 	document: string
 	likes?: number
@@ -86,6 +84,7 @@ export enum ChaptersVisibilityOptions {
 }
 export type ChaptersRecord = {
 	articles?: RecordIdString[]
+	cover?: string
 	description?: string
 	tags?: RecordIdString[]
 	title?: string
@@ -103,6 +102,7 @@ export type ChaptersStatsRecord = {
 	author_avatar?: string
 	author_name: string
 	author_username?: string
+	cover?: string
 	description?: string
 	likes?: number
 	tags?: RecordIdString[]
