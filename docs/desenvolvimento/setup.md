@@ -8,7 +8,7 @@ Esta página definirá o passo a passo para compilar este projeto.
 ```bash
 git clone https://github.com/ZRafaF/educa-utf
 
-cd bolinho
+cd educa-utf
 ```
 
 

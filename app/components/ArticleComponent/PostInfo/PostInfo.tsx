@@ -102,7 +102,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 						</Stack>
 					</Stack>
 
-					<TagsComponent tags={myArticle.expand?.tags} />
+					<TagsComponent tags={myArticle.expand?.tags} expanded />
 				</Grid>
 				<Divider
 					orientation="vertical"
