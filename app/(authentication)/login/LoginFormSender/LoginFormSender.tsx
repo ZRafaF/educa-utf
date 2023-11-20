@@ -12,7 +12,8 @@ import useRedirectAuth from '@/hooks/useRedirectAuth';
 import { isUTFPRUser } from '@/lib/helper';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useRouter } from 'next/navigation';
-
+import Stack from '@mui/material/Stack';
+import SchoolIcon from '@mui/icons-material/School';
 interface LoginFormSenderProps {
 	children: ReactNode;
 }
@@ -23,6 +24,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	const [manualTrigger] = useRedirectAuth();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [loginType, setLoginType] = useState<'normal' | 'utfpr'>('normal');
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -37,22 +39,32 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		if (submitRemember) {
 			//setPersistence(auth, browserSessionPersistence);
 		}
+
 		try {
-			if (isUTFPRUser(submitLogin)) {
-				await loginUTFPR(submitLogin, submitPassword);
-			} else {
+			if (loginType === 'normal') {
 				await loginWithPassword(submitLogin, submitPassword);
+				toast.success('Login com sucesso!');
+				manualTrigger();
+			} else {
+				await loginUTFPR(submitLogin, submitPassword);
+				toast.success('Login com sucesso!');
+				manualTrigger();
 			}
-			toast.success('Login com sucesso!');
-			manualTrigger();
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error);
 				switch (error.message) {
 					case 'Failed to authenticate.':
-						toast.error('Falha na autenticação');
+						toast.error('Falha na autenticação.');
 						break;
-
+					case "UTFPR's API is not working properly.":
+						toast.error(
+							'Falha no servidor da UTFPR, tente novamente mais tarde.'
+						);
+						break;
+					case 'Invalid user or password.':
+						toast.error('Usuário ou senha inválido.');
+						break;
 					default:
 						toast.error(error.message);
 						break;
@@ -73,15 +85,28 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			sx={{ mt: 1 }}
 		>
 			{children}
-			<LoadingButton
-				type="submit"
-				fullWidth
-				variant="contained"
-				sx={{ mt: 3, mb: 2, fontWeight: 'bold' }}
-				loading={isLoading}
-			>
-				Login
-			</LoadingButton>
+			<Stack direction="row" spacing={4} sx={{ my: 2 }}>
+				<LoadingButton
+					type="submit"
+					fullWidth
+					variant="contained"
+					loading={isLoading}
+					onClick={() => setLoginType('normal')}
+				>
+					Login
+				</LoadingButton>
+				<LoadingButton
+					type="submit"
+					fullWidth
+					variant="contained"
+					color="secondary"
+					loading={isLoading}
+					endIcon={<SchoolIcon />}
+					onClick={() => setLoginType('utfpr')}
+				>
+					Login UTFPR
+				</LoadingButton>
+			</Stack>
 		</Box>
 	);
 };

@@ -111,5 +111,5 @@ export function isUTFPRUser(username: string): boolean {
 	// Checks if follows the Pattern: 'a' followed by numbers
 	const regex = /^a\d+$/;
 
-	return regex.test(username);
+	return true;
 }
