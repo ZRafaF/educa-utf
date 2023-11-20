@@ -12,6 +12,7 @@ import {
 	getFullListOfChapters,
 } from '@/lib/apiHelpers/chaptersAPI';
 import type { Metadata } from 'next';
+import { ChaptersResponse } from '@/types/pocketbase-types';
 
 export const revalidate = 30;
 

@@ -133,7 +133,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 							}}
 						>
 							{tags.map((tag, idx) =>
-								idx === 1 ? (
+								idx === 0 ? (
 									<></>
 								) : (
 									<Chip
