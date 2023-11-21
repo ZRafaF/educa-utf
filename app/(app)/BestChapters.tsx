@@ -44,7 +44,6 @@ async function BestChapters() {
 					>
 						<ChapterCard
 							myChapter={chapter}
-							href={`/chapter/${chapter.id}`}
 							isExpanded={false}
 							imgSrc={getRandomImageUrl()}
 						/>

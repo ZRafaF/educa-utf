@@ -43,7 +43,6 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 					myChapter={myChapter}
 					isExpanded={true}
 					isClickable={imActive}
-					href={`/chapter/${myChapter.id}`}
 				/>
 				<div
 					style={{

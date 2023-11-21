@@ -15,10 +15,11 @@ import { ArticlesExpand } from '@/types/expanded-types';
 import { Suspense } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import ArticleContent from './ArticleContent/ArticleContent';
-import { getFormattedDate } from '@/lib/helper';
+import { getFormattedDate, getFormattedVisibility } from '@/lib/helper';
 import Stack from '@mui/material/Stack';
 import dynamic from 'next/dynamic';
 import PageMessage from '../PageMessage/PageMessage';
+import Tooltip from '@mui/material/Tooltip';
 const EditPostIcon = dynamic(() => import('./PostInfo/EditPostIcon'), {
 	ssr: false,
 });
@@ -72,14 +73,34 @@ function ArticleComponent({
 							articleAuthorId={myArticle.user}
 						/>
 					</Stack>
-					<Typography
-						color="text.secondary"
-						variant="subtitle2"
-						component="p"
-						gutterBottom
+					<Stack
+						direction="row"
+						spacing={1}
+						justifyContent="space-between"
 					>
-						{getFormattedDate(myArticle.created, 'PPP')}
-					</Typography>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+							gutterBottom
+						>
+							{getFormattedDate(myArticle.created, 'PPP')}
+						</Typography>
+						<Tooltip title="Visibilidade" arrow>
+							<Typography
+								variant="subtitle2"
+								component="p"
+								fontWeight={600}
+								color={
+									myArticle.visibility === 'public'
+										? 'success.main'
+										: 'text.secondary'
+								}
+							>
+								{getFormattedVisibility(myArticle.visibility)}
+							</Typography>
+						</Tooltip>
+					</Stack>
 				</Grid>
 				<Grid xs={20} sm={20} md={20} lg={5} xl={5}>
 					<Suspense

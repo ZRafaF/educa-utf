@@ -119,9 +119,13 @@ export async function getListOfArticlesStats(
 	try {
 		return await pb
 			.collection('articles_stats')
-			.getList<ArticlesStatsResponse>(page, itemsPerPage, options);
+			.getList<ArticlesStatsResponse<ArticlesExpand>>(
+				page,
+				itemsPerPage,
+				options
+			);
 	} catch (error) {
 		console.error(error);
-		return {} as ListResult<ArticlesStatsResponse>;
+		return {} as ListResult<ArticlesStatsResponse<ArticlesExpand>>;
 	}
 }

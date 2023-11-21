@@ -18,7 +18,10 @@ import Divider from '@mui/material/Divider/Divider';
 import Stack from '@mui/material/Stack/Stack';
 import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
-import { ChaptersResponse } from '@/types/pocketbase-types';
+import {
+	ChaptersResponse,
+	ChaptersStatsResponse,
+} from '@/types/pocketbase-types';
 import TagsComponent from '../TagsComponent/TagsComponent';
 import { ChaptersExpandTags } from '@/types/expanded-types';
 import React from 'react';
@@ -31,8 +34,9 @@ interface ChapterCardProps {
 	imgSrc?: string;
 	isExpanded?: boolean;
 	isClickable?: boolean;
-	myChapter: ChaptersResponse<ChaptersExpandTags>;
-	href: string;
+	myChapter:
+		| ChaptersResponse<ChaptersExpandTags>
+		| ChaptersStatsResponse<ChaptersExpandTags>;
 }
 
 const ChapterCard: FunctionComponent<ChapterCardProps> = ({
@@ -40,7 +44,6 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 	isExpanded = true,
 	isClickable = true,
 	myChapter,
-	href,
 }) => {
 	const getFormattedDate = (date: string) => {
 		const parsedDate = parseISO(date);
@@ -160,7 +163,10 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 			}}
 			variant="outlined"
 		>
-			<CardActionArea LinkComponent={Link} href={href}>
+			<CardActionArea
+				LinkComponent={Link}
+				href={`/chapter/${myChapter.id}`}
+			>
 				<CardMedia
 					component="img"
 					sx={{

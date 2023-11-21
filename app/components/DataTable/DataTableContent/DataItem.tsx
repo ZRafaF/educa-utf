@@ -20,9 +20,12 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import Box from '@mui/material/Box';
 import MoreDataOptions from './MoreDataOptions';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
+import { ArticlesExpand, ChaptersExpandTags } from '@/types/expanded-types';
 
 interface DataItemProps {
-	data: ArticlesStatsResponse | ChaptersStatsResponse;
+	data:
+		| ArticlesStatsResponse<ArticlesExpand>
+		| ChaptersStatsResponse<ChaptersExpandTags>;
 }
 
 const DataItem: FunctionComponent<DataItemProps> = ({ data }) => {

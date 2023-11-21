@@ -22,18 +22,18 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
 
 interface ArticleCardProps {
-	idx: number;
+	idx?: number | undefined;
 	myArticle: ArticlesStatsResponse<ArticlesExpand>;
 }
 
-const articleCard: FunctionComponent<ArticleCardProps> = ({
+const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 	idx,
 	myArticle,
 }) => {
 	return (
 		<CardActionArea
 			LinkComponent={Link}
-			href={`article/${myArticle.id}`}
+			href={`/article/${myArticle.id}`}
 			sx={{ p: 1, borderRadius: 3 }}
 		>
 			<Grid container gap={2}>
@@ -45,13 +45,15 @@ const articleCard: FunctionComponent<ArticleCardProps> = ({
 							alignItems: 'center',
 						}}
 					>
-						<Typography
-							variant="h2"
-							fontWeight="700"
-							color={'#E0E0E0'}
-						>
-							{idx + 1}
-						</Typography>
+						{idx !== undefined && (
+							<Typography
+								variant="h2"
+								fontWeight="700"
+								color={'#E0E0E0'}
+							>
+								{idx + 1}
+							</Typography>
+						)}
 					</Box>
 				</Grid>
 				<Grid xs>
@@ -165,4 +167,4 @@ const articleCard: FunctionComponent<ArticleCardProps> = ({
 	);
 };
 
-export default articleCard;
+export default ArticleCard;
