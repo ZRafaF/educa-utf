@@ -25,6 +25,9 @@ import {
 import { ChaptersExpand } from '@/types/expanded-types';
 import { getChapterById } from '@/lib/apiHelpers/chaptersAPI';
 import DrawerController from './DrawerController';
+import Tooltip from '@mui/material/Tooltip';
+import { getFormattedVisibility } from '@/lib/helper';
+import Stack from '@mui/material/Stack';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -54,7 +57,6 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 			</Paper>
 			<List sx={{ width: '100%' }}>
 				<Divider component="li" />
-
 				{chapter?.expand?.articles?.map((post: ArticlesResponse) => (
 					<Box
 						key={'link_to_article' + post.id}
@@ -62,13 +64,18 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 							bgcolor:
 								post.visibility ===
 								ArticlesVisibilityOptions.private
-									? 'red'
+									? 'rgba(130, 130, 130, 0.15)'
 									: 'initial',
+							opacity:
+								post.visibility ===
+								ArticlesVisibilityOptions.private
+									? 0.7
+									: 1,
 						}}
+						my={1}
 						color={'text.primary'}
 					>
 						<ListItemButton
-							alignItems="flex-start"
 							LinkComponent={Link}
 							href={`/chapter/${chapter.id}/${post.id}`}
 						>
@@ -77,10 +84,32 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 							</ListItemAvatar>
 							<ListItemText
 								primary={post.title}
-								secondary={post.description}
+								secondary={
+									<>
+										{post.description}
+										<Stack direction="row" spacing={2}>
+											<Tooltip title="Visibilidade" arrow>
+												<Typography
+													variant="subtitle2"
+													component="p"
+													fontWeight={600}
+													color={
+														post.visibility ===
+														'public'
+															? 'success.main'
+															: 'text.secondary'
+													}
+												>
+													{getFormattedVisibility(
+														post.visibility
+													)}
+												</Typography>
+											</Tooltip>
+										</Stack>
+									</>
+								}
 							/>
 						</ListItemButton>
-
 						<Divider component="li" />
 					</Box>
 				))}

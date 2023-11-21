@@ -40,7 +40,14 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 	};
 
 	if (tags === undefined || tags.length === 0)
-		return <Chip size="small" label={'nada aqui'} variant="outlined" />;
+		return (
+			<Chip
+				size="small"
+				label={'nada aqui'}
+				variant="outlined"
+				sx={{ mb: 2 }}
+			/>
+		);
 
 	const firstTag = tags[0];
 
@@ -133,7 +140,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 							}}
 						>
 							{tags.map((tag, idx) =>
-								idx === 1 ? (
+								idx === 0 ? (
 									<></>
 								) : (
 									<Chip

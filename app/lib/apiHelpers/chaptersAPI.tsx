@@ -86,10 +86,14 @@ export async function getListOfChaptersStats(
 	try {
 		return await pb
 			.collection('chapters_stats')
-			.getList<ChaptersStatsResponse>(page, itemsPerPage, options);
+			.getList<ChaptersStatsResponse<ChaptersExpandTags>>(
+				page,
+				itemsPerPage,
+				options
+			);
 	} catch (error) {
 		console.error(error);
-		return {} as ListResult<ChaptersStatsResponse>;
+		return {} as ListResult<ChaptersStatsResponse<ChaptersExpandTags>>;
 	}
 }
 

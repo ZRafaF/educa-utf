@@ -20,6 +20,7 @@ import {
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
 import { Box } from '@mui/material';
+import { ArticlesExpand, ChaptersExpandTags } from '@/types/expanded-types';
 
 interface DataTableProps {
 	fetchType: FetchType;
@@ -40,7 +41,8 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 		sort: '-created',
 	});
 	const [rows, setRows] = useState<
-		ArticlesStatsResponse[] | ChaptersStatsResponse[]
+		| ArticlesStatsResponse<ArticlesExpand>[]
+		| ChaptersStatsResponse<ChaptersExpandTags>[]
 	>([]);
 	const [totalItems, setTotalItems] = useState<number>(0);
 	const [loading, setLoading] = useState(true);

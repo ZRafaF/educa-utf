@@ -11,10 +11,12 @@ import {
 import DataItem from './DataItem';
 import MoreDataOptions from './MoreDataOptions';
 import Link from 'next/link';
-import Box from '@mui/material/Box';
+import { ArticlesExpand, ChaptersExpandTags } from '@/types/expanded-types';
 
 interface DataTableContentProps {
-	rows: ArticlesStatsResponse[] | ChaptersStatsResponse[];
+	rows:
+		| ArticlesStatsResponse<ArticlesExpand>[]
+		| ChaptersStatsResponse<ChaptersExpandTags>[];
 	emptyRows: number;
 }
 

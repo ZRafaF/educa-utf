@@ -1,6 +1,12 @@
-import AppFooter from '@/components/AppFooter/AppFooter';
-import Box from '@mui/material/Box/Box';
-import Toolbar from '@mui/material/Toolbar/Toolbar';
+import Container from '@mui/material/Container';
+import dynamic from 'next/dynamic';
+
+const QueryBuilder = dynamic(
+	() => import('@/components/BrowseTables/QueryBuilder'),
+	{
+		ssr: false,
+	}
+);
 
 export default function RootLayout({
 	children,
@@ -8,14 +14,16 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<Box
+		<Container
 			sx={{
 				minHeight: '100vh',
+				my: 2,
 			}}
+			maxWidth={false}
 		>
-			<Toolbar />
-			Browse
+			<QueryBuilder />
+
 			{children}
-		</Box>
+		</Container>
 	);
 }

@@ -2,6 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-export default function Page() {
-	return <div>Todos os Artigos</div>;
+
+import ArticlesTable from '@/components/BrowseTables/ArticlesTable';
+
+export default function Page({
+	params,
+	searchParams,
+}: {
+	params: { slug: string };
+	searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+	return <ArticlesTable searchParams={searchParams} />;
 }
