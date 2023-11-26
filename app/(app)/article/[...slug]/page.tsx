@@ -15,6 +15,14 @@ import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import PageMessage from '@/components/PageMessage/PageMessage';
+
+const ViewsBumper = dynamic(
+	() => import('@/components/ViewsBumper/ViewsBumper'),
+	{
+		ssr: false,
+	}
+);
+
 const NoSSRClientSideArticle = dynamic(() => import('./ClientSideArticle'), {
 	ssr: false,
 });
@@ -83,23 +91,32 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 
 		if (articleDocument)
 			return (
-				<ArticleComponent
-					myArticle={article}
-					articleStats={articleStats}
-					fullWidth={fullWidth}
-					articleDocument={articleDocument}
-					authorAvatarUrl={authorAvatarUrl}
-				/>
+				<>
+					<ArticleComponent
+						myArticle={article}
+						articleStats={articleStats}
+						fullWidth={fullWidth}
+						articleDocument={articleDocument}
+						authorAvatarUrl={authorAvatarUrl}
+					/>
+					<ViewsBumper
+						collectionName="articles"
+						recordId={articleId}
+					/>
+				</>
 			);
 		else {
 			return <PageMessage message="Artigo não encontrado" />;
 		}
 	} catch (error) {
 		return (
-			<NoSSRClientSideArticle
-				articleId={articleId}
-				fullWidth={fullWidth}
-			/>
+			<>
+				<NoSSRClientSideArticle
+					articleId={articleId}
+					fullWidth={fullWidth}
+				/>
+				<ViewsBumper collectionName="articles" recordId={articleId} />
+			</>
 		);
 	}
 };

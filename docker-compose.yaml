@@ -91,3 +91,8 @@ services:
             interval: 5s
             timeout: 5s
             retries: 5
+    olc:
+        image: zrafaf/educa_utf_olc:latest
+        restart: unless-stopped
+        ports:
+            - 3005:3005
