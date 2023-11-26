@@ -12,7 +12,14 @@ import {
 	getFullListOfChapters,
 } from '@/lib/apiHelpers/chaptersAPI';
 import type { Metadata } from 'next';
-import { ChaptersResponse } from '@/types/pocketbase-types';
+
+import dynamic from 'next/dynamic';
+const ViewsBumper = dynamic(
+	() => import('@/components/ViewsBumper/ViewsBumper'),
+	{
+		ssr: false,
+	}
+);
 
 export const revalidate = 30;
 
@@ -66,9 +73,15 @@ export default function Layout({
 	children: ReactNode;
 }) {
 	return (
-		<Grid container flexGrow={1}>
-			<ArticlesList chapterId={params.chapterId} />
-			<Grid xs>{children}</Grid>
-		</Grid>
+		<>
+			<Grid container flexGrow={1}>
+				<ArticlesList chapterId={params.chapterId} />
+				<Grid xs>{children}</Grid>
+			</Grid>
+			<ViewsBumper
+				collectionName="chapters"
+				recordId={params.chapterId}
+			/>
+		</>
 	);
 }
