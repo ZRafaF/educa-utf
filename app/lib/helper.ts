@@ -26,26 +26,6 @@ export async function waitSeconds(time: number = 1) {
 	await fetch(`https://hub.dummyapis.com/delay?seconds=${time}`);
 }
 
-export const defaultPostResponse: ArticlesResponse = {
-	created: '123',
-	title: 'string',
-	description:
-		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt scelerisque sagittis. Vivamus ultrices odio vel risus rhoncus eleifend sit amet ut magna. Cras sed enim lectus. Suspendisse',
-	user: '123',
-	id: 'RecordIdString',
-	visibility: ArticlesVisibilityOptions.public,
-	views: 0,
-	views_day: 0,
-	views_month: 0,
-	views_week: 0,
-	document: 'string',
-	tags: [],
-	updated: 'IsoDateString',
-	collectionId: 'string',
-	attachments: '123',
-	collectionName: Collections.Articles,
-};
-
 export const getRandomImageUrl = () => {
 	return `https://picsum.photos/seed/${Math.random()}/400/200`;
 };
