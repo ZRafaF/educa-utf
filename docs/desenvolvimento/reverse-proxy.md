@@ -25,6 +25,8 @@ Com as seguintes configurações:
 
 ![Configuração proxy host](../resources/asdasdsadasda12.png)
 
+![Alt text](../resources/nahdsj2.png)
+
 !!! Attention "Atenção"
     As configurações podem estar desatualizadas.
 
