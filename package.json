@@ -22,6 +22,7 @@
 		"@types/node": "20.6.3",
 		"@types/react": "18.2.22",
 		"@types/react-dom": "18.2.7",
+		"@types/react-scroll-sync": "^0.9.0",
 		"autoprefixer": "10.4.16",
 		"compressorjs": "^1.2.1",
 		"date-fns": "^2.30.0",

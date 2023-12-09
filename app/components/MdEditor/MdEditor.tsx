@@ -5,19 +5,15 @@
 
 'use client';
 import './MdEditorDarkmode.css';
-import ReactDOMServer from 'react-dom/server';
 
 import { SimpleMdeReact } from 'react-simplemde-editor';
 import {
 	Dispatch,
 	FunctionComponent,
 	SetStateAction,
-	UIEventHandler,
-	createElement,
 	useCallback,
 	useEffect,
 	useMemo,
-	useRef,
 	useState,
 } from 'react';
 import 'easymde/dist/easymde.min.css';
@@ -34,15 +30,6 @@ import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
-import ReactDOM from 'react-dom';
-
-interface EditorWrapperProps {
-	children?: any;
-}
-
-const EditorWrapper: FunctionComponent<EditorWrapperProps> = ({ children }) => {
-	return <ScrollSyncPane>{children}</ScrollSyncPane>;
-};
 
 enum ViewMode {
 	Editor = 0,
@@ -54,25 +41,30 @@ interface MdEditorProps {
 	articleId: string;
 	myArticleDocument: string;
 	setMyArticleDocument: Dispatch<SetStateAction<string | undefined>>;
+	saveFunction?: () => void;
 }
 
 const MdEditor: FunctionComponent<MdEditorProps> = ({
 	articleId,
 	myArticleDocument,
 	setMyArticleDocument,
+	saveFunction,
 }) => {
 	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Split);
 
-	const onChange = useCallback((value: string) => {
-		if (setMyArticleDocument) setMyArticleDocument(value);
-	}, []);
+	const onChange = useCallback(
+		(value: string) => {
+			if (setMyArticleDocument) setMyArticleDocument(value);
+		},
+		[setMyArticleDocument]
+	);
 
 	const autofocusNoSpellcheckerOptions = useMemo(() => {
 		return {
 			autofocus: true,
 			spellChecker: false,
 			placeholder: '# Escreva aqui Seu artigo\n\nUsando **markdown**...',
-			maxHeight: '70vh',
+			// maxHeight: '70vh',
 			uploadImage: true,
 			imageUploadFunction(file, onSuccess, onError) {
 				uploadFile(file, articleId)
@@ -102,20 +94,23 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'redo',
 				'|',
 				'guide',
+				{
+					name: 'saveCurrent',
+					action: function customFunction() {
+						if (saveFunction) saveFunction();
+					},
+					className: 'fa fa-save',
+					title: 'Salvar mudanças',
+				},
 			],
+			shortcuts: {
+				saveCurrent: 'Cmd-S',
+			},
+			previewImagesInEditor: true,
 			status: false,
 			promptURLs: true,
 		} as SimpleMDE.Options;
-	}, []);
-
-	useEffect(() => {
-		const wrapper = document.createElement('div');
-		console.log(wrapper);
-
-		ReactDOM.render(<h1>asdasd</h1>, wrapper);
-
-		console.log(wrapper);
-	}, []);
+	}, [articleId]);
 
 	return (
 		<Box>
@@ -158,33 +153,28 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 								: 'none'
 						}
 					>
-						<SimpleMdeReact
-							options={autofocusNoSpellcheckerOptions}
-							value={myArticleDocument}
-							onChange={onChange}
-							getMdeInstance={(instance: SimpleMDE) => {
-								const scrollElem =
-									instance.codemirror.getScrollerElement();
-
-								// Wraps the scroll element with the element of wrapperRef
-								const wrapper = document.createElement('div');
-								console.log(wrapper);
-
-								instance.codemirror.getScrollInfo();
-								// wrapper.innerHTML =
-								// 	ReactDOMServer.renderToStaticMarkup(
-								// 		<ScrollSyncPane />
-								// 	);
-
-								// console.log(wrapper);
-
-								scrollElem.parentNode?.replaceChild(
-									wrapper,
-									scrollElem
-								);
-								wrapper.appendChild(scrollElem);
+						<Paper
+							variant="outlined"
+							sx={{
+								overflow: 'auto',
 							}}
-						/>
+							className="mui-tab-previewer"
+						>
+							<ScrollSyncPane>
+								<Box
+									sx={{
+										height: 'calc(70vh + 60px)',
+										overflowY: 'auto',
+									}}
+								>
+									<SimpleMdeReact
+										options={autofocusNoSpellcheckerOptions}
+										value={myArticleDocument}
+										onChange={onChange}
+									/>
+								</Box>
+							</ScrollSyncPane>
+						</Paper>
 					</Grid>
 					<Grid
 						xs={8}

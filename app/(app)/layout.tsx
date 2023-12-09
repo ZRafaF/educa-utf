@@ -13,7 +13,7 @@ export default function RootLayout({
 				minHeight="100vh"
 				display={'flex'}
 				flexDirection={'column'}
-				mt={{ xs: 7, sm: 8 }}
+				// mt={{ xs: 7, sm: 8 }}
 			>
 				<Toolbar />
 

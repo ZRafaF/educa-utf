@@ -7,8 +7,8 @@
 .CodeMirror,
 .editor-preview {
 	color: rgb(var(--colors-secondary-dark)) !important;
-	border-radius: 0 0 8px 8px !important;
-	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+	border-radius: 0px !important;
+	border-color: transparent !important;
 	background-color: var(--mui-palette-background-default) !important;
 	padding-top: 0px !important;
 }
@@ -23,14 +23,16 @@
 .editor-toolbar {
 	color: rgb(var(--colors-tertiary-dark)) !important;
 	background-color: var(--mui-palette-grey-A700) !important;
-	border-radius: 8px 8px 0 0 !important;
-	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+	border-radius: 0 !important;
+	border-color: transparent !important;
+
+	border-bottom: 1px solid var(--mui-palette-Chip-defaultBorder) !important;
 
 	/* Toolbar fixes to top of screen once scrolled, the top should be relative*/
-	/* position: sticky !important;
-	top: 64px !important;
+	position: sticky !important;
+	top: 0px !important;
 
-	z-index: 99999 !important; */
+	z-index: 1 !important;
 }
 /*
 

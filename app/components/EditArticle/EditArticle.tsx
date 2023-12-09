@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import {
 	ArticlesResponse,
@@ -48,8 +48,9 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		string | undefined
 	>(undefined);
 	const [, user] = usePbAuth();
-	const [accept, setAccept] = useState<boolean>(false);
+	const [accept, setAccept] = useState<boolean>(true);
 	const router = useRouter();
+	const saveButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	useEffect(() => {
 		const fetchArticleInfo = async () => {
@@ -66,6 +67,12 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 			setLoading(false);
 		});
 	}, [articleId, user]);
+
+	const simulateButtonPress = () => {
+		if (saveButtonRef.current) {
+			saveButtonRef.current.click();
+		}
+	};
 
 	if (loading) {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
@@ -114,6 +121,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 				toast.error('Você precisa estar logado!');
 				return;
 			}
+			const id = toast.loading('Fazendo upload do arquivo, aguarde...');
 
 			try {
 				const baseFile = new Blob([myArticleDocument], {
@@ -132,17 +140,46 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 					baseFile
 				);
 
-				toast.success('Artigo atualizado com sucesso!');
+				toast.update(id, {
+					render: 'Artigo atualizado com sucesso!',
+					type: 'success',
+					isLoading: false,
+					autoClose: 5000,
+					pauseOnFocusLoss: true,
+					draggable: true,
+					pauseOnHover: true,
+					closeOnClick: true,
+				});
 				if (saveAndFinish) router.push(`/article/${updatedRecord.id}`);
 			} catch (error) {
 				if (error instanceof Error) {
 					console.error(error);
 					switch (error.message) {
 						case 'Failed to create record.':
-							toast.error('Falha ao salvar o artigo');
+							toast.update(id, {
+								render: 'Falha ao salvar o artigo!',
+								type: 'error',
+								isLoading: false,
+								autoClose: 5000,
+								pauseOnFocusLoss: true,
+								draggable: true,
+								pauseOnHover: true,
+								closeOnClick: true,
+							});
+
 							break;
 
 						default:
+							toast.update(id, {
+								render: 'Algo deu errado!',
+								type: 'error',
+								isLoading: false,
+								autoClose: 5000,
+								pauseOnFocusLoss: true,
+								draggable: true,
+								pauseOnHover: true,
+								closeOnClick: true,
+							});
 							toast.error(error.message);
 							break;
 					}
@@ -207,6 +244,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 								articleId={myArticle.id}
 								myArticleDocument={myArticleDocument}
 								setMyArticleDocument={setMyArticleDocument}
+								saveFunction={simulateButtonPress}
 							/>
 						</Box>
 					</AccordionDetails>
@@ -227,6 +265,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 									p: 1.5,
 								}}
 								disabled={!accept}
+								ref={saveButtonRef}
 							>
 								Salvar
 							</Button>
