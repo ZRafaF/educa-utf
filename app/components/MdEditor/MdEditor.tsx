@@ -51,8 +51,6 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 }) => {
 	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Split);
 
-	const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-
 	const onChange = useCallback((value: string) => {
 		if (setMyArticleDocument) setMyArticleDocument(value);
 	}, []);
@@ -92,35 +90,8 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'|',
 				'guide',
 			],
+			status: false,
 			promptURLs: true,
-			onToggleFullScreen(goingIntoFullScreen) {
-				setIsFullscreen(goingIntoFullScreen);
-			},
-
-			sideBySideFullscreen: false,
-
-			previewClass: 'custom-preview-class',
-
-			previewRender: (plainText) => {
-				return ReactDOMServer.renderToString(
-					<ArticleContent article={plainText} />
-				);
-			},
-
-			// previewRender: (plainText, preview) => {
-			// 	// Async method
-			// 	setTimeout(() => {
-			// 		preview.innerHTML = ReactDOMServer.renderToString(
-			// 			<ArticleContent article={myArticleDocument} />
-			// 		);
-			// 	}, 500);
-			// 	// If you return null, the innerHTML of the preview will not
-			// 	// be overwritten. Useful if you control the preview node's content via
-			// 	// vdom diffing.
-			// 	// return null;
-
-			// 	return 'Loading...';
-			// },
 		} as SimpleMDE.Options;
 	}, []);
 
@@ -162,33 +133,31 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 							options={autofocusNoSpellcheckerOptions}
 							value={myArticleDocument}
 							onChange={onChange}
-							style={{
-								zIndex: isFullscreen
-									? '999999 !important'
-									: 'inherit',
-							}}
 						/>
 					</Grid>
 				)}
-				<Grid xs={8}>
-					<Paper
-						variant="outlined"
-						sx={{
-							overflow: 'hidden',
-						}}
-						className="mui-tab-previewer"
-					>
-						<Box
+				{(viewMode === ViewMode.Preview ||
+					viewMode === ViewMode.Split) && (
+					<Grid xs={8}>
+						<Paper
+							variant="outlined"
 							sx={{
-								p: 2,
-								height: 'calc(70vh + 60px)',
-								overflowY: 'scroll',
+								overflow: 'hidden',
 							}}
+							className="mui-tab-previewer"
 						>
-							<ArticleContent article={myArticleDocument} />
-						</Box>
-					</Paper>
-				</Grid>
+							<Box
+								sx={{
+									p: { xs: 1, sm: 1.5, md: 1.5, lg: 2 },
+									height: 'calc(70vh + 60px)',
+									overflowY: 'scroll',
+								}}
+							>
+								<ArticleContent article={myArticleDocument} />
+							</Box>
+						</Paper>
+					</Grid>
+				)}
 			</Grid>
 		</Box>
 	);

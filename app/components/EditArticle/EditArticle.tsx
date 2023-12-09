@@ -18,7 +18,6 @@ import {
 	getArticleDocumentUrl,
 	updateArticle,
 } from '@/lib/apiHelpers/articlesAPI';
-import MarkdownEditorComponent from './MarkdownEditorComponent/MarkdownEditorComponent';
 import Typography from '@mui/material/Typography/Typography';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -197,22 +196,6 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						id="panel1a-header"
 					>
 						<Typography>Editar Artigo</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<MarkdownEditorComponent
-							articleId={myArticle.id}
-							myArticleDocument={myArticleDocument}
-							setMyArticleDocument={setMyArticleDocument}
-						/>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion variant="outlined" defaultExpanded sx={{}}>
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
-					>
-						<Typography>Editar Artigo 2</Typography>
 					</AccordionSummary>
 					<AccordionDetails>
 						<Box
