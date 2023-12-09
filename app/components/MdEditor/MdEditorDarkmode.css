@@ -1,0 +1,75 @@
+/**
+ * Copyright (c) 2023 Rafael Farias
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+.CodeMirror,
+.editor-preview {
+	color: rgb(var(--colors-secondary-dark)) !important;
+	border-radius: 0px !important;
+	border-color: transparent !important;
+	background-color: var(--mui-palette-background-default) !important;
+	padding-top: 0px !important;
+}
+.CodeMirror-sided {
+	border-radius: 0px !important;
+}
+
+.cm-s-easymde .CodeMirror-cursor {
+	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+}
+
+.editor-toolbar {
+	color: rgb(var(--colors-tertiary-dark)) !important;
+	background-color: var(--mui-palette-grey-A700) !important;
+	border-radius: 0 !important;
+	border-color: transparent !important;
+
+	border-bottom: 1px solid var(--mui-palette-Chip-defaultBorder) !important;
+
+	/* Toolbar fixes to top of screen once scrolled, the top should be relative*/
+	position: sticky !important;
+	top: 0px !important;
+
+	z-index: 1 !important;
+}
+/*
+
+
+.separator {
+	border-color: rgb(var(--border-color-line-dark)) !important;
+}
+
+.editor-preview {
+	background-color: rgb(var(--background-color-bg-white-dark)) !important;
+}
+
+*/
+
+.editor-toolbar > .active,
+.editor-toolbar > button:hover,
+.editor-preview pre,
+.editor-preview-side,
+.cm-s-easymde .cm-comment {
+	color: rgb(var(--colors-secondary-dark)) !important;
+	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+	background-color: var(--mui-palette-background-default) !important;
+}
+/* .editor-toolbar.fullscreen,
+.CodeMirror-fullscreen,
+.custom-preview-class {
+	z-index: 99999 !important;
+} */
+
+.custom-preview-class {
+	padding: 10px;
+	min-height: calc(70vh + 11px) !important;
+}
+
+.mui-tab-previewer {
+	color: rgb(var(--colors-secondary-dark)) !important;
+	border-radius: 8px !important;
+	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+	background-color: var(--mui-palette-background-default) !important;
+}
