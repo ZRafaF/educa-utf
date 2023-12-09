@@ -9,7 +9,12 @@ export default function RootLayout({
 }) {
 	return (
 		<>
-			<Box minHeight="100vh" display={'flex'} flexDirection={'column'}>
+			<Box
+				minHeight="100vh"
+				display={'flex'}
+				flexDirection={'column'}
+				// mt={{ xs: 7, sm: 8 }}
+			>
 				<Toolbar />
 
 				{children}

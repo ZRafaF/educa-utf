@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import {
 	ArticlesResponse,
@@ -18,7 +18,6 @@ import {
 	getArticleDocumentUrl,
 	updateArticle,
 } from '@/lib/apiHelpers/articlesAPI';
-import MarkdownEditorComponent from './MarkdownEditorComponent/MarkdownEditorComponent';
 import Typography from '@mui/material/Typography/Typography';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -34,6 +33,8 @@ import { toast } from 'react-toastify';
 import EditMetadataContent from '../EditMetadata/EditMetadataContent';
 import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
+import MdEditor from '../MdEditor/MdEditor';
+import Box from '@mui/material/Box';
 
 interface EditArticleProps {
 	articleId: string;
@@ -47,8 +48,9 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		string | undefined
 	>(undefined);
 	const [, user] = usePbAuth();
-	const [accept, setAccept] = useState<boolean>(false);
+	const [accept, setAccept] = useState<boolean>(true);
 	const router = useRouter();
+	const saveButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	useEffect(() => {
 		const fetchArticleInfo = async () => {
@@ -65,6 +67,12 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 			setLoading(false);
 		});
 	}, [articleId, user]);
+
+	const simulateButtonPress = () => {
+		if (saveButtonRef.current) {
+			saveButtonRef.current.click();
+		}
+	};
 
 	if (loading) {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
@@ -113,6 +121,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 				toast.error('Você precisa estar logado!');
 				return;
 			}
+			const id = toast.loading('Fazendo upload do arquivo, aguarde...');
 
 			try {
 				const baseFile = new Blob([myArticleDocument], {
@@ -131,17 +140,46 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 					baseFile
 				);
 
-				toast.success('Artigo atualizado com sucesso!');
+				toast.update(id, {
+					render: 'Artigo atualizado com sucesso!',
+					type: 'success',
+					isLoading: false,
+					autoClose: 5000,
+					pauseOnFocusLoss: true,
+					draggable: true,
+					pauseOnHover: true,
+					closeOnClick: true,
+				});
 				if (saveAndFinish) router.push(`/article/${updatedRecord.id}`);
 			} catch (error) {
 				if (error instanceof Error) {
 					console.error(error);
 					switch (error.message) {
 						case 'Failed to create record.':
-							toast.error('Falha ao salvar o artigo');
+							toast.update(id, {
+								render: 'Falha ao salvar o artigo!',
+								type: 'error',
+								isLoading: false,
+								autoClose: 5000,
+								pauseOnFocusLoss: true,
+								draggable: true,
+								pauseOnHover: true,
+								closeOnClick: true,
+							});
+
 							break;
 
 						default:
+							toast.update(id, {
+								render: 'Algo deu errado!',
+								type: 'error',
+								isLoading: false,
+								autoClose: 5000,
+								pauseOnFocusLoss: true,
+								draggable: true,
+								pauseOnHover: true,
+								closeOnClick: true,
+							});
 							toast.error(error.message);
 							break;
 					}
@@ -151,8 +189,12 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 
 		return (
 			<Container
-				maxWidth={'lg'}
-				sx={{ py: 4, flexGrow: 1, px: { sm: 0, md: 2, lg: 3 } }}
+				maxWidth={false}
+				sx={{
+					py: 4,
+					flexGrow: 1,
+					px: { sm: 0, md: 2, lg: 3 },
+				}}
 				disableGutters
 				component="form"
 				onSubmit={handleSubmit}
@@ -193,11 +235,18 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						<Typography>Editar Artigo</Typography>
 					</AccordionSummary>
 					<AccordionDetails>
-						<MarkdownEditorComponent
-							articleId={myArticle.id}
-							myArticleDocument={myArticleDocument}
-							setMyArticleDocument={setMyArticleDocument}
-						/>
+						<Box
+							sx={{
+								mx: { xs: -2, sm: -2, md: 0 },
+							}}
+						>
+							<MdEditor
+								articleId={myArticle.id}
+								myArticleDocument={myArticleDocument}
+								setMyArticleDocument={setMyArticleDocument}
+								saveFunction={simulateButtonPress}
+							/>
+						</Box>
 					</AccordionDetails>
 				</Accordion>
 				<Grid container spacing={2} p={2}>
@@ -216,6 +265,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 									p: 1.5,
 								}}
 								disabled={!accept}
+								ref={saveButtonRef}
 							>
 								Salvar
 							</Button>
