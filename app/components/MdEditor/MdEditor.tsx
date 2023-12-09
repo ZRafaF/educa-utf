@@ -12,7 +12,10 @@ import {
 	Dispatch,
 	FunctionComponent,
 	SetStateAction,
+	UIEventHandler,
+	createElement,
 	useCallback,
+	useEffect,
 	useMemo,
 	useRef,
 	useState,
@@ -27,10 +30,19 @@ import Tab from '@mui/material/Tab';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import VerticalSplitIcon from '@mui/icons-material/VerticalSplit';
 import PreviewIcon from '@mui/icons-material/Preview';
-import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
+import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
+import ReactDOM from 'react-dom';
+
+interface EditorWrapperProps {
+	children?: any;
+}
+
+const EditorWrapper: FunctionComponent<EditorWrapperProps> = ({ children }) => {
+	return <ScrollSyncPane>{children}</ScrollSyncPane>;
+};
 
 enum ViewMode {
 	Editor = 0,
@@ -71,6 +83,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 						onError(error);
 					});
 			},
+
 			horizontalRule: false,
 			toolbar: [
 				'heading',
@@ -93,6 +106,15 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 			status: false,
 			promptURLs: true,
 		} as SimpleMDE.Options;
+	}, []);
+
+	useEffect(() => {
+		const wrapper = document.createElement('div');
+		console.log(wrapper);
+
+		ReactDOM.render(<h1>asdasd</h1>, wrapper);
+
+		console.log(wrapper);
 	}, []);
 
 	return (
@@ -121,44 +143,87 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				</Tabs>
 			</Box>
 
-			<Grid
-				container
-				columns={viewMode === ViewMode.Split ? 16 : 8}
-				spacing={{ sm: 0, md: 1 }}
-			>
-				{(viewMode === ViewMode.Editor ||
-					viewMode === ViewMode.Split) && (
-					<Grid xs={8}>
+			<ScrollSync>
+				<Grid
+					container
+					columns={viewMode === ViewMode.Split ? 16 : 8}
+					spacing={{ sm: 0, md: 1 }}
+				>
+					<Grid
+						xs={8}
+						display={
+							viewMode === ViewMode.Editor ||
+							viewMode === ViewMode.Split
+								? 'block'
+								: 'none'
+						}
+					>
 						<SimpleMdeReact
 							options={autofocusNoSpellcheckerOptions}
 							value={myArticleDocument}
 							onChange={onChange}
+							getMdeInstance={(instance: SimpleMDE) => {
+								const scrollElem =
+									instance.codemirror.getScrollerElement();
+
+								// Wraps the scroll element with the element of wrapperRef
+								const wrapper = document.createElement('div');
+								console.log(wrapper);
+
+								instance.codemirror.getScrollInfo();
+								// wrapper.innerHTML =
+								// 	ReactDOMServer.renderToStaticMarkup(
+								// 		<ScrollSyncPane />
+								// 	);
+
+								// console.log(wrapper);
+
+								scrollElem.parentNode?.replaceChild(
+									wrapper,
+									scrollElem
+								);
+								wrapper.appendChild(scrollElem);
+							}}
 						/>
 					</Grid>
-				)}
-				{(viewMode === ViewMode.Preview ||
-					viewMode === ViewMode.Split) && (
-					<Grid xs={8}>
+					<Grid
+						xs={8}
+						display={
+							viewMode === ViewMode.Preview ||
+							viewMode === ViewMode.Split
+								? 'block'
+								: 'none'
+						}
+					>
 						<Paper
 							variant="outlined"
 							sx={{
-								overflow: 'hidden',
+								overflow: 'auto',
 							}}
 							className="mui-tab-previewer"
 						>
-							<Box
-								sx={{
-									p: { xs: 1, sm: 1.5, md: 1.5, lg: 2 },
-									height: 'calc(70vh + 60px)',
-									overflowY: 'scroll',
-								}}
-							>
-								<ArticleContent article={myArticleDocument} />
-							</Box>
+							<ScrollSyncPane>
+								<Box
+									sx={{
+										p: {
+											xs: 1,
+											sm: 1.5,
+											md: 1.5,
+											lg: 2,
+										},
+										height: 'calc(70vh + 60px)',
+										overflowY: 'auto',
+									}}
+								>
+									<ArticleContent
+										article={myArticleDocument}
+									/>
+								</Box>
+							</ScrollSyncPane>
 						</Paper>
 					</Grid>
-				)}
-			</Grid>
+				</Grid>
+			</ScrollSync>
 		</Box>
 	);
 };

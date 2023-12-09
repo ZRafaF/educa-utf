@@ -25,6 +25,12 @@
 	background-color: var(--mui-palette-grey-A700) !important;
 	border-radius: 8px 8px 0 0 !important;
 	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+
+	/* Toolbar fixes to top of screen once scrolled, the top should be relative*/
+	/* position: sticky !important;
+	top: 64px !important;
+
+	z-index: 99999 !important; */
 }
 /*
 
