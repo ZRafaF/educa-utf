@@ -34,6 +34,8 @@ import { toast } from 'react-toastify';
 import EditMetadataContent from '../EditMetadata/EditMetadataContent';
 import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
+import MdEditor from '../MdEditor/MdEditor';
+import Box from '@mui/material/Box';
 
 interface EditArticleProps {
 	articleId: string;
@@ -151,8 +153,12 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 
 		return (
 			<Container
-				maxWidth={'lg'}
-				sx={{ py: 4, flexGrow: 1, px: { sm: 0, md: 2, lg: 3 } }}
+				maxWidth={false}
+				sx={{
+					py: 4,
+					flexGrow: 1,
+					px: { sm: 0, md: 2, lg: 3 },
+				}}
 				disableGutters
 				component="form"
 				onSubmit={handleSubmit}
@@ -198,6 +204,28 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 							myArticleDocument={myArticleDocument}
 							setMyArticleDocument={setMyArticleDocument}
 						/>
+					</AccordionDetails>
+				</Accordion>
+				<Accordion variant="outlined" defaultExpanded sx={{}}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
+					>
+						<Typography>Editar Artigo 2</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Box
+							sx={{
+								mx: { xs: -2, sm: -1, md: 0 },
+							}}
+						>
+							<MdEditor
+								articleId={myArticle.id}
+								myArticleDocument={myArticleDocument}
+								setMyArticleDocument={setMyArticleDocument}
+							/>
+						</Box>
 					</AccordionDetails>
 				</Accordion>
 				<Grid container spacing={2} p={2}>
