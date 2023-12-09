@@ -21,6 +21,22 @@ import 'easymde/dist/easymde.min.css';
 import SimpleMDE from 'easymde';
 import { uploadFile } from '@/lib/fileHelper';
 import ArticleContent from '../ArticleComponent/ArticleContent/ArticleContent';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import VerticalSplitIcon from '@mui/icons-material/VerticalSplit';
+import PreviewIcon from '@mui/icons-material/Preview';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import Grid from '@mui/material/Unstable_Grid2';
+import Paper from '@mui/material/Paper';
+
+enum ViewMode {
+	Editor = 0,
+	Split = 1,
+	Preview = 2,
+}
 
 interface MdEditorProps {
 	articleId: string;
@@ -33,7 +49,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	myArticleDocument,
 	setMyArticleDocument,
 }) => {
-	const editorRef = useRef();
+	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Split);
 
 	const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
@@ -70,12 +86,10 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'horizontal-rule',
 				'link',
 				'|',
-				'preview',
-				'side-by-side',
-				'|',
 				'upload-image',
 				'undo',
 				'redo',
+				'|',
 				'guide',
 			],
 			promptURLs: true,
@@ -111,16 +125,72 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	}, []);
 
 	return (
-		<>
-			<SimpleMdeReact
-				options={autofocusNoSpellcheckerOptions}
-				value={myArticleDocument}
-				onChange={onChange}
-				style={{
-					zIndex: isFullscreen ? '999999 !important' : 'inherit',
-				}}
-			/>
-		</>
+		<Box>
+			<Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+				<Tabs
+					value={viewMode}
+					onChange={(
+						event: React.SyntheticEvent,
+						newValue: number
+					) => {
+						setViewMode(newValue as ViewMode);
+					}}
+					aria-label="basic tabs example"
+				>
+					<Tooltip title="Editar" arrow placement="bottom">
+						<Tab icon={<EditNoteIcon />} />
+					</Tooltip>
+					<Tooltip title="Dividir" arrow placement="bottom">
+						<Tab icon={<VerticalSplitIcon />} />
+					</Tooltip>
+
+					<Tooltip title="Visualizar" arrow placement="bottom">
+						<Tab icon={<PreviewIcon />} />
+					</Tooltip>
+				</Tabs>
+			</Box>
+
+			<Grid
+				container
+				columns={viewMode === ViewMode.Split ? 16 : 8}
+				spacing={{ sm: 0, md: 1 }}
+			>
+				{(viewMode === ViewMode.Editor ||
+					viewMode === ViewMode.Split) && (
+					<Grid xs={8}>
+						<SimpleMdeReact
+							options={autofocusNoSpellcheckerOptions}
+							value={myArticleDocument}
+							onChange={onChange}
+							style={{
+								zIndex: isFullscreen
+									? '999999 !important'
+									: 'inherit',
+							}}
+						/>
+					</Grid>
+				)}
+				<Grid xs={8}>
+					<Paper
+						variant="outlined"
+						sx={{
+							overflow: 'hidden',
+						}}
+						className="mui-tab-previewer"
+					>
+						<Box
+							sx={{
+								p: 2,
+								height: 'calc(70vh + 60px)',
+								overflowY: 'scroll',
+							}}
+						>
+							<ArticleContent article={myArticleDocument} />
+						</Box>
+					</Paper>
+				</Grid>
+			</Grid>
+		</Box>
 	);
 };
 

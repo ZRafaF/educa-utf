@@ -217,7 +217,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 					<AccordionDetails>
 						<Box
 							sx={{
-								mx: { xs: -2, sm: -1, md: 0 },
+								mx: { xs: -2, sm: -2, md: 0 },
 							}}
 						>
 							<MdEditor
