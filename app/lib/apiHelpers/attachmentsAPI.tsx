@@ -13,9 +13,14 @@ export async function getAttachmentFilesURL(
 		.collection('attachments')
 		.getOne<AttachmentsResponse>(articleId);
 
-	return record.files.map((file) =>
-		pb.files.getUrl(record, file, original ? {} : { thumb: '300x300' })
-	);
+	try {
+		return await record.files.map((file) =>
+			pb.files.getUrl(record, file, original ? {} : { thumb: '300x300' })
+		);
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 }
 
 export async function getAttachmentFileURL(
@@ -51,4 +56,10 @@ export async function uploadAndGetURL(file: File | Blob, articleId: string) {
 	);
 
 	return imageUrl;
+}
+
+export async function deleteAttachmentFile(articleId: string, file: string) {
+	return await pb.collection('attachments').update(articleId, {
+		'files-': [`${file}`],
+	});
 }
