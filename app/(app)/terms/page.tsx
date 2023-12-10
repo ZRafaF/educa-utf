@@ -7,7 +7,7 @@ import Container from '@mui/material/Container/Container';
 import { FunctionComponent } from 'react';
 import terms from './terms.md';
 import type { Metadata } from 'next/types';
-import ArticleContentSSR from '@/components/ArticleComponent/ArticleContent/ArticleContentSSR';
+import ArticleContent from '@/components/ArticleComponent/ArticleContent/ArticleContent';
 
 export const metadata: Metadata = {
 	title: 'Termos de Serviço - EducaUTF',
@@ -24,7 +24,7 @@ interface PageProps {}
 const Page: FunctionComponent<PageProps> = () => {
 	return (
 		<Container sx={{ pb: 2 }}>
-			<ArticleContentSSR article={terms} />
+			<ArticleContent article={terms} />
 		</Container>
 	);
 };

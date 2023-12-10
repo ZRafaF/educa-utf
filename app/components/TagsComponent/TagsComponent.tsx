@@ -132,6 +132,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 							vertical: 'bottom',
 							horizontal: 'left',
 						}}
+						disableScrollLock
 					>
 						<Stack
 							spacing={1}

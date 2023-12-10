@@ -36,10 +36,12 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
+		event.stopPropagation();
 	};
 	const isMenuOpen = Boolean(anchorEl);
-	const handleMenuClose = () => {
+	const handleMenuClose = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(null);
+		event.stopPropagation();
 	};
 	const [, user] = usePbAuth();
 
@@ -107,6 +109,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			keepMounted
 			onClose={handleMenuClose}
 			data-mui-color-scheme="dark"
+			disableScrollLock
 		>
 			<ListItem>
 				<Typography variant="caption">

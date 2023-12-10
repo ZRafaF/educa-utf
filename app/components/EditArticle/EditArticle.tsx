@@ -35,6 +35,7 @@ import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
 import MdEditor from '../MdEditor/MdEditor';
 import Box from '@mui/material/Box';
+import AttachmentsComponent from './AttachmentsComponent/AttachmentsComponent';
 
 interface EditArticleProps {
 	articleId: string;
@@ -67,12 +68,6 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 			setLoading(false);
 		});
 	}, [articleId, user]);
-
-	const simulateButtonPress = () => {
-		if (saveButtonRef.current) {
-			saveButtonRef.current.click();
-		}
-	};
 
 	if (loading) {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
@@ -188,17 +183,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		};
 
 		return (
-			<Container
-				maxWidth={false}
-				sx={{
-					py: 4,
-					flexGrow: 1,
-					px: { sm: 0, md: 2, lg: 3 },
-				}}
-				disableGutters
-				component="form"
-				onSubmit={handleSubmit}
-			>
+			<Box component="form" onSubmit={handleSubmit}>
 				<Typography
 					component="h1"
 					variant="h4"
@@ -241,10 +226,31 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 							}}
 						>
 							<MdEditor
-								articleId={myArticle.id}
+								myArticle={myArticle}
 								myArticleDocument={myArticleDocument}
 								setMyArticleDocument={setMyArticleDocument}
-								saveFunction={simulateButtonPress}
+								saveButtonRef={saveButtonRef}
+							/>
+						</Box>
+					</AccordionDetails>
+				</Accordion>
+				<Accordion variant="outlined" defaultExpanded sx={{}}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
+					>
+						<Typography>Editar Anexos</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Box
+							sx={{
+								mx: { xs: -2, sm: -2, md: 0 },
+							}}
+						>
+							<AttachmentsComponent
+								myArticle={myArticle}
+								myArticleDocument={myArticleDocument}
 							/>
 						</Box>
 					</AccordionDetails>
@@ -325,7 +331,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						/>
 					</Grid>
 				</Grid>
-			</Container>
+			</Box>
 		);
 	}
 	return (

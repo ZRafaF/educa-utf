@@ -81,6 +81,7 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 				MenuListProps={{
 					'aria-labelledby': 'basic-button',
 				}}
+				disableScrollLock
 			>
 				<MenuItem
 					onClick={() => {
