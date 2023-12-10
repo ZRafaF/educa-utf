@@ -35,7 +35,7 @@ const AttachmentsComponent: FunctionComponent<AttachmentsComponentProps> = ({
 				setAttachmentURLS(attachmentURLS);
 			});
 		}
-	}, [forceUpdate, lastAttachmentsCount]);
+	}, [forceUpdate, lastAttachmentsCount, myArticle.id]);
 
 	useEffect(() => {
 		const count = countSubstrings(myArticleDocument, 'http');

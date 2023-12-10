@@ -3,6 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+'use client';
+
 import { FunctionComponent } from 'react';
 import { addStyles, StaticMathField } from 'react-mathquill';
 
@@ -12,6 +14,8 @@ interface EquationProps {
 
 const Equation: FunctionComponent<EquationProps> = ({ latex }) => {
 	addStyles();
+	if (typeof window === 'undefined') return <></>;
+
 	return <StaticMathField>{latex}</StaticMathField>;
 };
 

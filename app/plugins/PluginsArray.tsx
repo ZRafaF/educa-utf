@@ -9,6 +9,10 @@ import EquationEditor from './Equation/EquationEditor';
 import Equation from './Equation/Equation';
 import { PluginType } from './PluginsTypes';
 
+// export const PluginsOverride: PluginsOverrideType = {
+// 	Equation: Equation,
+// };
+
 const PluginsArray: PluginType[] = [
 	{
 		key: 'equationPlugin',

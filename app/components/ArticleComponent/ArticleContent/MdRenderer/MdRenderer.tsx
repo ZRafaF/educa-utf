@@ -16,11 +16,13 @@ interface MdRendererProps {
 
 const MdRenderer: FunctionComponent<MdRendererProps> = ({ article }) => {
 	const renderers: { [key: string]: FunctionComponent<any> } = useMemo(() => {
-		const renderers: { [key: string]: FunctionComponent<any> } = {};
+		const rendererMap: { [key: string]: FunctionComponent<any> } = {};
+
 		PluginsArray.forEach((plugin) => {
-			renderers[plugin.render.name] = plugin.render;
+			rendererMap[plugin.render.name] = plugin.render;
 		});
-		return renderers;
+
+		return rendererMap;
 	}, []);
 
 	return (
