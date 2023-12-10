@@ -32,6 +32,7 @@ import Paper from '@mui/material/Paper';
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/material/styles/useTheme';
+import PluginDialog from './PluginDialog/PluginDialog';
 
 enum ViewMode {
 	Editor = 0,
@@ -55,6 +56,9 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	const theme = useTheme();
 	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Split);
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+	const [currentPluginKey, setCurrentPluginKey] = useState<
+		string | undefined
+	>(undefined);
 
 	const onChange = useCallback(
 		(value: string) => {
@@ -111,6 +115,14 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 					},
 					className: 'fa fa-save',
 					title: 'Salvar mudanças',
+				},
+				{
+					name: 'equationPlugin',
+					action: function customFunction() {
+						setCurrentPluginKey('equationPlugin');
+					},
+					className: 'fa fa-superscript',
+					title: 'Adicionar equação',
 				},
 			],
 			shortcuts: {
@@ -174,7 +186,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 							<ScrollSyncPane>
 								<Box
 									sx={{
-										height: 'calc(70vh + 60px)',
+										height: 'calc(75vh)',
 										overflowY: 'auto',
 									}}
 								>
@@ -212,7 +224,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 											md: 1.5,
 											lg: 2,
 										},
-										height: 'calc(70vh + 60px)',
+										height: 'calc(75vh)',
 										overflowY: 'auto',
 									}}
 								>
@@ -225,6 +237,10 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 					</Grid>
 				</Grid>
 			</ScrollSync>
+			<PluginDialog
+				currentPluginKey={currentPluginKey}
+				setCurrentPluginKey={setCurrentPluginKey}
+			/>
 		</Box>
 	);
 };

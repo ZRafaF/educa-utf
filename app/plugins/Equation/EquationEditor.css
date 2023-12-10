@@ -1,0 +1,14 @@
+/**
+ * Copyright (c) 2023 Rafael Farias
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+.mq-cursor {
+	border-color: var(--mui-palette-text-primary) !important;
+}
+
+.mq-empty {
+	background-color: var(--mui-palette-Chip-defaultBorder) !important;
+}
