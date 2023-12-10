@@ -5,21 +5,27 @@
 
 import { FunctionComponent } from 'react';
 import Markdown from 'markdown-to-jsx';
-import CustomButton from '../CustomButton';
 import PreBlock from './PreBlock';
+import PluginsArray from '@/plugins/PluginsArray';
 
 interface MdRendererAsyncProps {
 	article: string;
 }
 
+// DEPRECATED
 const MdRendererAsync: FunctionComponent<MdRendererAsyncProps> = async ({
 	article,
 }) => {
+	const renderers: { [key: string]: FunctionComponent<any> } = {};
+	PluginsArray.forEach((plugin) => {
+		renderers[plugin.render.name] = plugin.render;
+	});
+
 	return (
 		<Markdown
 			options={{
 				overrides: {
-					CustomButton,
+					...renderers,
 					pre: PreBlock,
 				},
 			}}

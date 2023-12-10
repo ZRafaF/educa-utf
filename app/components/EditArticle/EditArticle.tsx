@@ -35,6 +35,7 @@ import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
 import MdEditor from '../MdEditor/MdEditor';
 import Box from '@mui/material/Box';
+import AttachmentsComponent from './AttachmentsComponent/AttachmentsComponent';
 
 interface EditArticleProps {
 	articleId: string;
@@ -231,10 +232,31 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 							}}
 						>
 							<MdEditor
-								articleId={myArticle.id}
+								myArticle={myArticle}
 								myArticleDocument={myArticleDocument}
 								setMyArticleDocument={setMyArticleDocument}
 								saveFunction={simulateButtonPress}
+							/>
+						</Box>
+					</AccordionDetails>
+				</Accordion>
+				<Accordion variant="outlined" defaultExpanded sx={{}}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
+					>
+						<Typography>Editar Anexos</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Box
+							sx={{
+								mx: { xs: -2, sm: -2, md: 0 },
+							}}
+						>
+							<AttachmentsComponent
+								myArticle={myArticle}
+								myArticleDocument={myArticleDocument}
 							/>
 						</Box>
 					</AccordionDetails>

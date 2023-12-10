@@ -6,13 +6,13 @@
 import { FunctionComponent } from 'react';
 import { addStyles, StaticMathField } from 'react-mathquill';
 
-interface EquationProps {}
+interface EquationProps {
+	latex?: string;
+}
 
-const Equation: FunctionComponent<EquationProps> = () => {
+const Equation: FunctionComponent<EquationProps> = ({ latex }) => {
 	addStyles();
-	return (
-		<StaticMathField>{'\\frac{1+2}{\\sqrt{2}}\\cdot 2'}</StaticMathField>
-	);
+	return <StaticMathField>{latex}</StaticMathField>;
 };
 
 export default Equation;

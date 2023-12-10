@@ -5,21 +5,29 @@
 
 'use client';
 
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 import Markdown from 'markdown-to-jsx';
-import CustomButton from '../CustomButton';
 import PreBlock from './PreBlock';
+import PluginsArray from '@/plugins/PluginsArray';
 
 interface MdRendererProps {
 	article: string;
 }
 
 const MdRenderer: FunctionComponent<MdRendererProps> = ({ article }) => {
+	const renderers: { [key: string]: FunctionComponent<any> } = useMemo(() => {
+		const renderers: { [key: string]: FunctionComponent<any> } = {};
+		PluginsArray.forEach((plugin) => {
+			renderers[plugin.render.name] = plugin.render;
+		});
+		return renderers;
+	}, []);
+
 	return (
 		<Markdown
 			options={{
 				overrides: {
-					CustomButton,
+					...renderers,
 					pre: PreBlock,
 				},
 			}}

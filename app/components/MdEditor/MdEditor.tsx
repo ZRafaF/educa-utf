@@ -33,6 +33,8 @@ import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/material/styles/useTheme';
 import PluginDialog from './PluginDialog/PluginDialog';
+import { ArticlesResponse } from '@/types/pocketbase-types';
+import { ArticlesExpand } from '@/types/expanded-types';
 
 enum ViewMode {
 	Editor = 0,
@@ -41,14 +43,14 @@ enum ViewMode {
 }
 
 interface MdEditorProps {
-	articleId: string;
+	myArticle: ArticlesResponse<ArticlesExpand>;
 	myArticleDocument: string;
 	setMyArticleDocument: Dispatch<SetStateAction<string | undefined>>;
-	saveFunction?: () => void;
+	saveFunction: () => void;
 }
 
 const MdEditor: FunctionComponent<MdEditorProps> = ({
-	articleId,
+	myArticle,
 	myArticleDocument,
 	setMyArticleDocument,
 	saveFunction,
@@ -59,7 +61,9 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	const [currentPluginKey, setCurrentPluginKey] = useState<
 		string | undefined
 	>(undefined);
-
+	const [currentGetMdeInstance, setCurrentGetMdeInstance] = useState<
+		SimpleMDE | undefined
+	>(undefined);
 	const onChange = useCallback(
 		(value: string) => {
 			if (setMyArticleDocument) setMyArticleDocument(value);
@@ -73,6 +77,14 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 		}
 	}, [isSmallScreen]);
 
+	const handlePluginReturn = (rawString: string | undefined) => {
+		if (currentGetMdeInstance && rawString) {
+			const pos = currentGetMdeInstance.codemirror.getCursor();
+			currentGetMdeInstance.codemirror.setSelection(pos, pos);
+			currentGetMdeInstance.codemirror.replaceSelection(rawString);
+		}
+	};
+
 	const autofocusNoSpellcheckerOptions = useMemo(() => {
 		return {
 			autofocus: true,
@@ -81,7 +93,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 			// maxHeight: '70vh',
 			uploadImage: true,
 			imageUploadFunction(file, onSuccess, onError) {
-				uploadFile(file, articleId)
+				uploadFile(file, myArticle.id)
 					.then((url) => {
 						onSuccess(url);
 					})
@@ -104,18 +116,6 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'link',
 				'|',
 				'upload-image',
-				'undo',
-				'redo',
-				'|',
-				'guide',
-				{
-					name: 'saveCurrent',
-					action: function customFunction() {
-						if (saveFunction) saveFunction();
-					},
-					className: 'fa fa-save',
-					title: 'Salvar mudanças',
-				},
 				{
 					name: 'equationPlugin',
 					action: function customFunction() {
@@ -124,15 +124,34 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 					className: 'fa fa-superscript',
 					title: 'Adicionar equação',
 				},
+				{
+					name: 'expandPlugins',
+					action: function customFunction() {
+						alert('Expand plugins');
+					},
+					className: 'fa fa-puzzle-piece',
+					title: 'Expandir plugins',
+				},
+				'|',
+				'undo',
+				'redo',
+				'guide',
+				{
+					name: 'saveCurrent',
+					action: saveFunction,
+					className: 'fa fa-save',
+					title: 'Salvar mudanças',
+				},
 			],
 			shortcuts: {
 				saveCurrent: 'Cmd-S',
+				equationPlugin: 'Ctrl-M',
 			},
-			previewImagesInEditor: true,
+			previewImagesInEditor: false,
 			status: false,
 			promptURLs: true,
 		} as SimpleMDE.Options;
-	}, [articleId]);
+	}, [myArticle]);
 
 	return (
 		<Box>
@@ -194,6 +213,9 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 										options={autofocusNoSpellcheckerOptions}
 										value={myArticleDocument}
 										onChange={onChange}
+										getMdeInstance={(instance) => {
+											setCurrentGetMdeInstance(instance);
+										}}
 									/>
 								</Box>
 							</ScrollSyncPane>
@@ -237,9 +259,11 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 					</Grid>
 				</Grid>
 			</ScrollSync>
+
 			<PluginDialog
 				currentPluginKey={currentPluginKey}
 				setCurrentPluginKey={setCurrentPluginKey}
+				returnFunction={handlePluginReturn}
 			/>
 		</Box>
 	);

@@ -96,3 +96,8 @@ export function isUTFPRUser(username: string): boolean {
 
 	return true;
 }
+
+export function countSubstrings(mainString: string, substring: string) {
+	const count = mainString.split(substring).length - 1;
+	return count;
+}

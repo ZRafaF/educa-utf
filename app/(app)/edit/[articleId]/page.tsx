@@ -54,7 +54,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 				paddingRight: 1,
 			}}
 		>
-			<EditArticle articleId={articleId} />;
+			<EditArticle articleId={articleId} />
 		</Box>
 	);
 };

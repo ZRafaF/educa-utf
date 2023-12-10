@@ -3,6 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+'use client';
+
 import EquationEditor from './Equation/EquationEditor';
 import Equation from './Equation/Equation';
 import { PluginType } from './PluginsTypes';

@@ -21,19 +21,18 @@ import CloseIcon from '@mui/icons-material/Close';
 interface PluginDialogProps {
 	currentPluginKey: string | undefined;
 	setCurrentPluginKey: Dispatch<SetStateAction<string | undefined>>;
+	returnFunction: (componentRawString: string | undefined) => void;
 }
 
 const PluginDialog: FunctionComponent<PluginDialogProps> = ({
 	currentPluginKey,
 	setCurrentPluginKey,
+	returnFunction,
 }) => {
 	const open = useMemo(
 		() => currentPluginKey !== undefined,
 		[currentPluginKey]
 	);
-	const returnFunction = (componentRawString: string | undefined) => {
-		alert(componentRawString);
-	};
 
 	const currentPlugin = useMemo(() => {
 		return PluginsArray.find((plugin) => plugin.key === currentPluginKey);
@@ -43,10 +42,15 @@ const PluginDialog: FunctionComponent<PluginDialogProps> = ({
 		setCurrentPluginKey(undefined);
 	};
 
+	const handleReturnFunction = (componentRawString: string | undefined) => {
+		returnFunction(componentRawString);
+		handleClose();
+	};
+
 	if (!currentPlugin) return <></>;
 
 	return (
-		<Dialog onClose={handleClose} open={open}>
+		<Dialog onClose={handleClose} open={open} maxWidth={'md'}>
 			<DialogTitle mr={5}>{currentPlugin.title}</DialogTitle>
 			<IconButton
 				aria-label="close"
@@ -62,7 +66,7 @@ const PluginDialog: FunctionComponent<PluginDialogProps> = ({
 			</IconButton>
 
 			<DialogContent dividers>
-				{<currentPlugin.editor returnFunction={returnFunction} />}
+				{<currentPlugin.editor returnFunction={handleReturnFunction} />}
 			</DialogContent>
 		</Dialog>
 	);
