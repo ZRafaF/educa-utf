@@ -51,7 +51,7 @@ const DrawerController: FunctionComponent<ControllerProps> = ({ children }) => {
 	}, [pathname, setOpen]);
 
 	return (
-		<Drawer variant="permanent" open={open}>
+		<Drawer variant="permanent" open={open} disableScrollLock>
 			<Backdrop
 				open={open}
 				onClick={() => {

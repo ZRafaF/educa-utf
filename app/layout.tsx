@@ -48,7 +48,7 @@ export default function RootLayout({
 			<body
 				style={{
 					margin: 0,
-					minHeight: '100vh',
+					padding: 0,
 				}}
 			>
 				<Providers>

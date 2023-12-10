@@ -188,17 +188,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		};
 
 		return (
-			<Container
-				maxWidth={false}
-				sx={{
-					py: 4,
-					flexGrow: 1,
-					px: { sm: 0, md: 2, lg: 3 },
-				}}
-				disableGutters
-				component="form"
-				onSubmit={handleSubmit}
-			>
+			<Box component="form" onSubmit={handleSubmit}>
 				<Typography
 					component="h1"
 					variant="h4"
@@ -325,7 +315,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 						/>
 					</Grid>
 				</Grid>
-			</Container>
+			</Box>
 		);
 	}
 	return (

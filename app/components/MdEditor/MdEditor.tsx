@@ -30,6 +30,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import useTheme from '@mui/material/styles/useTheme';
 
 enum ViewMode {
 	Editor = 0,
@@ -50,7 +52,9 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	setMyArticleDocument,
 	saveFunction,
 }) => {
+	const theme = useTheme();
 	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Split);
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
 	const onChange = useCallback(
 		(value: string) => {
@@ -58,6 +62,12 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 		},
 		[setMyArticleDocument]
 	);
+
+	useEffect(() => {
+		if (isSmallScreen) {
+			setViewMode(ViewMode.Editor);
+		}
+	}, [isSmallScreen]);
 
 	const autofocusNoSpellcheckerOptions = useMemo(() => {
 		return {
@@ -122,6 +132,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 						newValue: number
 					) => {
 						setViewMode(newValue as ViewMode);
+						event.preventDefault();
 					}}
 					aria-label="basic tabs example"
 				>
