@@ -9,8 +9,6 @@ export interface PluginEditorProps {
 	returnFunction: (componentRawString: string | undefined) => void;
 }
 
-// export type PluginsOverrideType = { [key: string]: FunctionComponent<any> };
-
 export type PluginType = {
 	key: string;
 	title: string;

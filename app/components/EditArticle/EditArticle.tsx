@@ -69,12 +69,6 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		});
 	}, [articleId, user]);
 
-	const simulateButtonPress = () => {
-		if (saveButtonRef.current) {
-			saveButtonRef.current.click();
-		}
-	};
-
 	if (loading) {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
 	} else if (myArticle && myArticleDocument !== undefined) {
@@ -235,7 +229,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 								myArticle={myArticle}
 								myArticleDocument={myArticleDocument}
 								setMyArticleDocument={setMyArticleDocument}
-								saveFunction={simulateButtonPress}
+								saveButtonRef={saveButtonRef}
 							/>
 						</Box>
 					</AccordionDetails>

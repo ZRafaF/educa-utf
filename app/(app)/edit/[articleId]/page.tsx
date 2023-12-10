@@ -6,13 +6,16 @@
 import { FunctionComponent } from 'react';
 import { Metadata } from 'next/types';
 import { getArticleById } from '@/lib/apiHelpers/articlesAPI';
-import EditArticle from '@/components/EditArticle/EditArticle';
+// import EditArticle from '@/components/EditArticle/EditArticle';
 import dynamic from 'next/dynamic';
 import Box from '@mui/material/Box';
 
-// const EditArticle = dynamic(() => import('@/components/EditArticle/EditArticle'), {
-// 	ssr: false,
-// });
+const EditArticle = dynamic(
+	() => import('@/components/EditArticle/EditArticle'),
+	{
+		ssr: false,
+	}
+);
 
 interface PageProps {
 	params: { articleId: string };

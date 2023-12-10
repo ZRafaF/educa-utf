@@ -10,6 +10,7 @@ import { SimpleMdeReact } from 'react-simplemde-editor';
 import {
 	Dispatch,
 	FunctionComponent,
+	MutableRefObject,
 	SetStateAction,
 	useCallback,
 	useEffect,
@@ -46,14 +47,14 @@ interface MdEditorProps {
 	myArticle: ArticlesResponse<ArticlesExpand>;
 	myArticleDocument: string;
 	setMyArticleDocument: Dispatch<SetStateAction<string | undefined>>;
-	saveFunction: () => void;
+	saveButtonRef: MutableRefObject<HTMLButtonElement | null>;
 }
 
 const MdEditor: FunctionComponent<MdEditorProps> = ({
 	myArticle,
 	myArticleDocument,
 	setMyArticleDocument,
-	saveFunction,
+	saveButtonRef,
 }) => {
 	const theme = useTheme();
 	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Split);
@@ -138,7 +139,11 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'guide',
 				{
 					name: 'saveCurrent',
-					action: saveFunction,
+					action: function customFunction() {
+						if (saveButtonRef.current) {
+							saveButtonRef.current.click();
+						}
+					},
 					className: 'fa fa-save',
 					title: 'Salvar mudanças',
 				},
@@ -151,7 +156,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 			status: false,
 			promptURLs: true,
 		} as SimpleMDE.Options;
-	}, [myArticle]);
+	}, [myArticle, saveButtonRef]);
 
 	return (
 		<Box>

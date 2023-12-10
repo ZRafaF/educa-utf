@@ -5,33 +5,21 @@
 
 'use client';
 
-import { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent } from 'react';
 import Markdown from 'markdown-to-jsx';
-import PreBlock from './PreBlock';
-import PluginsArray from '@/plugins/PluginsArray';
+import useOverridePlugins from '@/hooks/useOverridePlugins';
 
 interface MdRendererProps {
 	article: string;
 }
 
 const MdRenderer: FunctionComponent<MdRendererProps> = ({ article }) => {
-	const renderers: { [key: string]: FunctionComponent<any> } = useMemo(() => {
-		const rendererMap: { [key: string]: FunctionComponent<any> } = {};
-
-		PluginsArray.forEach((plugin) => {
-			rendererMap[plugin.render.name] = plugin.render;
-		});
-
-		return rendererMap;
-	}, []);
+	const [pluginsOverrides] = useOverridePlugins();
 
 	return (
 		<Markdown
 			options={{
-				overrides: {
-					...renderers,
-					pre: PreBlock,
-				},
+				overrides: pluginsOverrides,
 			}}
 		>
 			{article}

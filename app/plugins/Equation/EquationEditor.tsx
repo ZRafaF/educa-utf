@@ -5,8 +5,8 @@
 
 'use client';
 
-import { FunctionComponent, useRef, useState } from 'react';
-import { addStyles, EditableMathField, StaticMathField } from 'react-mathquill';
+import { FunctionComponent, useState } from 'react';
+import { addStyles, EditableMathField } from 'react-mathquill';
 
 import './EquationEditor.css';
 import { PluginEditorProps } from '../PluginsTypes';
@@ -14,7 +14,6 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import FormLabel from '@mui/material/FormLabel';
-import Box from '@mui/material/Box';
 
 const EquationEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,

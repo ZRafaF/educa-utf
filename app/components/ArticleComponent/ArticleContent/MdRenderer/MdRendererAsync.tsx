@@ -5,8 +5,7 @@
 
 import { FunctionComponent } from 'react';
 import Markdown from 'markdown-to-jsx';
-import PreBlock from './PreBlock';
-import PluginsArray from '@/plugins/PluginsArray';
+import useOverridePlugins from '@/hooks/useOverridePlugins';
 
 interface MdRendererAsyncProps {
 	article: string;
@@ -16,18 +15,12 @@ interface MdRendererAsyncProps {
 const MdRendererAsync: FunctionComponent<MdRendererAsyncProps> = async ({
 	article,
 }) => {
-	const renderers: { [key: string]: FunctionComponent<any> } = {};
-	PluginsArray.forEach((plugin) => {
-		renderers[plugin.render.name] = plugin.render;
-	});
+	const [pluginsOverrides] = useOverridePlugins();
 
 	return (
 		<Markdown
 			options={{
-				overrides: {
-					...renderers,
-					pre: PreBlock,
-				},
+				overrides: pluginsOverrides,
 			}}
 		>
 			{article}

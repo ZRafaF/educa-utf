@@ -5,13 +5,10 @@
 
 'use client';
 
+import dynamic from 'next/dynamic';
 import EquationEditor from './Equation/EquationEditor';
-import Equation from './Equation/Equation';
 import { PluginType } from './PluginsTypes';
-
-// export const PluginsOverride: PluginsOverrideType = {
-// 	Equation: Equation,
-// };
+import Equation from './Equation/Equation';
 
 const PluginsArray: PluginType[] = [
 	{
