@@ -5,7 +5,7 @@
 
 import { FunctionComponent } from 'react';
 
-export interface PluginsEditorProps {
+export interface PluginEditorProps {
 	returnFunction: (componentRawString: string | undefined) => void;
 }
 
@@ -13,7 +13,7 @@ export type PluginType = {
 	key: string;
 	title: string;
 	tooltip: string;
-	editor: FunctionComponent<PluginsEditorProps>;
+	editor: FunctionComponent<PluginEditorProps>;
 	render: FunctionComponent<any>;
 	hidden?: boolean;
 	category: string;

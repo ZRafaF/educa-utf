@@ -9,9 +9,9 @@ import { FunctionComponent, useState } from 'react';
 import { addStyles, EditableMathField, StaticMathField } from 'react-mathquill';
 
 import './EquationEditor.css';
-import { PluginsEditorProps } from '../PluginsTypes';
+import { PluginEditorProps } from '../PluginsTypes';
 
-const EquationEditor: FunctionComponent<PluginsEditorProps> = ({
+const EquationEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
 }) => {
 	addStyles();
@@ -28,7 +28,7 @@ const EquationEditor: FunctionComponent<PluginsEditorProps> = ({
 			<p>{latex}</p>
 			<button
 				onClick={() => {
-					returnFunction('asdasd');
+					returnFunction('<Equation>' + latex + '</Equation>');
 				}}
 			>
 				Confirmar

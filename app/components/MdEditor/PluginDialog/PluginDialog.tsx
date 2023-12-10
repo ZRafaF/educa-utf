@@ -10,7 +10,7 @@ import {
 	useMemo,
 	useState,
 } from 'react';
-import PluginsArray, { PluginType } from '@/plugins/PluginsArray';
+import PluginsArray from '@/plugins/PluginsArray';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
