@@ -9,11 +9,8 @@ import Box from '@mui/material/Box/Box';
 import { loginUTFPR, loginWithPassword } from '@/lib/apiHelpers/authAPI';
 import { toast } from 'react-toastify';
 import useRedirectAuth from '@/hooks/useRedirectAuth';
-import { isUTFPRUser } from '@/lib/helper';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
-import SchoolIcon from '@mui/icons-material/School';
 interface LoginFormSenderProps {
 	children: ReactNode;
 }
@@ -24,7 +21,96 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	const [manualTrigger] = useRedirectAuth();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [loginType, setLoginType] = useState<'normal' | 'utfpr'>('normal');
+
+	const handleLoginError = (
+		toastId: number | string,
+		authProvider: string,
+		toastType: 'error' | 'warning',
+		error: unknown
+	) => {
+		if (error instanceof Error) {
+			console.error(error);
+
+			switch (error.message) {
+				case 'Failed to authenticate.':
+					toast.update(toastId, {
+						render: `Autenticação pela ${authProvider}: Falha na autenticação.`,
+						type: toastType,
+						isLoading: false,
+						autoClose: 5000,
+						pauseOnFocusLoss: true,
+						draggable: true,
+						pauseOnHover: true,
+						closeOnClick: true,
+					});
+					break;
+				case "UTFPR's API is not working properly.":
+					toast.update(toastId, {
+						render: `Autenticação pela ${authProvider}: Falha no servidor da UTFPR, tente novamente mais tarde.`,
+						type: toastType,
+						isLoading: false,
+						autoClose: 5000,
+						pauseOnFocusLoss: true,
+						draggable: true,
+						pauseOnHover: true,
+						closeOnClick: true,
+					});
+					break;
+				case 'Invalid user or password.':
+					toast.update(toastId, {
+						render: `Autenticação pela ${authProvider}: Usuário ou senha inválido.`,
+						type: toastType,
+						isLoading: false,
+						autoClose: 5000,
+						pauseOnFocusLoss: true,
+						draggable: true,
+						pauseOnHover: true,
+						closeOnClick: true,
+					});
+					break;
+				default:
+					toast.update(toastId, {
+						render: `Autenticação pela ${authProvider}: ${error.message}.`,
+						type: toastType,
+						isLoading: false,
+						autoClose: 5000,
+						pauseOnFocusLoss: true,
+						draggable: true,
+						pauseOnHover: true,
+						closeOnClick: true,
+					});
+					break;
+			}
+		} else {
+			toast.update(toastId, {
+				render: `Não foi possível fazer login com o ${authProvider}.`,
+				type: 'error',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
+		}
+	};
+
+	const handleLoginSuccess = (
+		toastId: number | string,
+		authProvider: string
+	) => {
+		toast.update(toastId, {
+			render: `Login com ${authProvider} com sucesso. Bem vindo!`,
+			type: 'success',
+			isLoading: false,
+			autoClose: 5000,
+			pauseOnFocusLoss: true,
+			draggable: true,
+			pauseOnHover: true,
+			closeOnClick: true,
+		});
+		manualTrigger();
+	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -39,37 +125,22 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		if (submitRemember) {
 			//setPersistence(auth, browserSessionPersistence);
 		}
+		const id = toast.loading('Fazendo login com o EducaUTF...');
 
 		try {
-			if (loginType === 'normal') {
-				await loginWithPassword(submitLogin, submitPassword);
-				toast.success('Login com sucesso!');
-				manualTrigger();
-			} else {
-				await loginUTFPR(submitLogin, submitPassword);
-				toast.success('Login com sucesso!');
-				manualTrigger();
-			}
+			const auth = await loginWithPassword(submitLogin, submitPassword);
+			return handleLoginSuccess(id, 'EducaUTF');
 		} catch (error) {
-			if (error instanceof Error) {
-				console.error(error);
-				switch (error.message) {
-					case 'Failed to authenticate.':
-						toast.error('Falha na autenticação.');
-						break;
-					case "UTFPR's API is not working properly.":
-						toast.error(
-							'Falha no servidor da UTFPR, tente novamente mais tarde.'
-						);
-						break;
-					case 'Invalid user or password.':
-						toast.error('Usuário ou senha inválido.');
-						break;
-					default:
-						toast.error(error.message);
-						break;
-				}
-			}
+			handleLoginError(id, 'EducaUTF', 'warning', error);
+		}
+
+		const id2 = toast.loading('Fazendo login com a UTFPR...');
+
+		try {
+			const auth = await loginUTFPR(submitLogin, submitPassword);
+			return handleLoginSuccess(id2, 'UTFPR');
+		} catch (error) {
+			handleLoginError(id2, 'UTFPR', 'error', error);
 		}
 	};
 
@@ -91,20 +162,8 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 					fullWidth
 					variant="contained"
 					loading={isLoading}
-					onClick={() => setLoginType('normal')}
 				>
 					Login
-				</LoadingButton>
-				<LoadingButton
-					type="submit"
-					fullWidth
-					variant="contained"
-					color="secondary"
-					loading={isLoading}
-					endIcon={<SchoolIcon />}
-					onClick={() => setLoginType('utfpr')}
-				>
-					Login UTFPR
 				</LoadingButton>
 			</Stack>
 		</Box>
