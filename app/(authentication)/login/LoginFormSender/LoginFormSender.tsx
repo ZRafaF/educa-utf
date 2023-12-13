@@ -128,7 +128,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		const id = toast.loading('Fazendo login com o EducaUTF...');
 
 		try {
-			const auth = await loginWithPassword(submitLogin, submitPassword);
+			await loginWithPassword(submitLogin, submitPassword);
 			return handleLoginSuccess(id, 'EducaUTF');
 		} catch (error) {
 			handleLoginError(id, 'EducaUTF', 'warning', error);
@@ -137,7 +137,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		const id2 = toast.loading('Fazendo login com a UTFPR...');
 
 		try {
-			const auth = await loginUTFPR(submitLogin, submitPassword);
+			await loginUTFPR(submitLogin, submitPassword);
 			return handleLoginSuccess(id2, 'UTFPR');
 		} catch (error) {
 			handleLoginError(id2, 'UTFPR', 'error', error);
