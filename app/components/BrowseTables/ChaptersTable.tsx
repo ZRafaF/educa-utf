@@ -30,7 +30,6 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 
 	const chaptersList = await getListOfChaptersStats(page, items, {
 		sort: sort,
-		expand: 'tags',
 	});
 
 	return (

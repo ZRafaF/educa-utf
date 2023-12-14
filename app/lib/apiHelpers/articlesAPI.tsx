@@ -30,7 +30,7 @@ export async function getArticleById(id: string) {
 		.collection('articles')
 		.getOne<ArticlesResponse<ArticlesExpand>>(id, {
 			skipTotal: true,
-			expand: 'tags',
+			expand: 'tag, key_words',
 		});
 }
 
@@ -48,7 +48,7 @@ export async function getBestArticlesOf(time: 'week' | 'month' | 'year') {
 			.collection('articles_stats')
 			.getFullList<ArticlesStatsResponse<ArticlesExpand>>({
 				skipTotal: true,
-				expand: 'tags',
+				expand: 'tag, key_words',
 			});
 	} catch (error) {
 		console.error(error);
@@ -122,7 +122,10 @@ export async function getListOfArticlesStats(
 			.getList<ArticlesStatsResponse<ArticlesExpand>>(
 				page,
 				itemsPerPage,
-				options
+				{
+					...options,
+					expand: 'tag, key_words',
+				}
 			);
 	} catch (error) {
 		console.error(error);

@@ -42,20 +42,13 @@ export async function generateMetadata({
 	try {
 		const chapterStats = await getChaptersStatsById(chapterId);
 		const chapter = await getChapterById(chapterId);
-		let tags = chapter.expand?.tags.map((tag) => tag.name);
-		if (tags === undefined) tags = [''];
+		let tag = chapter.expand?.tag?.name ?? '';
 		return {
 			title: `${chapter.title} - EducaUTF`,
 			description: chapter.description,
 			applicationName: 'EducaUTF',
 			authors: [{ name: chapterStats.author_name }],
-			keywords: [
-				'EducaUTF',
-				'Educa UTF',
-				'capitulo',
-				chapter.title,
-				...tags,
-			],
+			keywords: ['EducaUTF', 'Educa UTF', 'capitulo', chapter.title, tag],
 		};
 	} catch (error) {
 		return {

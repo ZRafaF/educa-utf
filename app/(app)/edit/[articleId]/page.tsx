@@ -28,15 +28,14 @@ export async function generateMetadata({
 
 	try {
 		const article = await getArticleById(articleId);
-		let tags = article.expand?.tags.map((tag) => tag.name);
-		if (tags === undefined) tags = [''];
+		let tag = article.expand?.tag?.name ?? '';
 		return {
 			title: `Editar artigo (${article.title}) - EducaUTF`,
 			description: 'Edite seu artigo do EducaUTF',
 			applicationName: 'EducaUTF',
 
 			robots: 'noindex,nofollow',
-			keywords: ['EducaUTF', 'Educa UTF', 'edit', article.title, ...tags],
+			keywords: ['EducaUTF', 'Educa UTF', 'edit', article.title, tag],
 		};
 	} catch (error) {
 		return {
