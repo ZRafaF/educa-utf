@@ -155,7 +155,10 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 							width={'stretch'}
 							gap={1}
 						>
-							<TagsComponent tags={myArticle.expand?.tags} />
+							<TagsComponent
+								tag={myArticle.expand?.tag}
+								keyWords={myArticle.expand?.key_words}
+							/>
 							<Box>
 								<MoreOptions />
 							</Box>

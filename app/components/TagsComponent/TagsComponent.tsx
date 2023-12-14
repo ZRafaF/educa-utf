@@ -5,7 +5,7 @@
 
 'use client';
 
-import { TagsResponse } from '@/types/pocketbase-types';
+import { KeyWordsRecord, TagsResponse } from '@/types/pocketbase-types';
 import Chip from '@mui/material/Chip/Chip';
 import Stack from '@mui/material/Stack/Stack';
 import { FunctionComponent, useState } from 'react';
@@ -14,12 +14,14 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Popover from '@mui/material/Popover';
 
 interface TagsComponentProps {
-	tags: TagsResponse[] | undefined;
+	keyWords: KeyWordsRecord[] | undefined;
+	tag: TagsResponse | undefined;
 	expanded?: boolean;
 }
 
 const TagsComponent: FunctionComponent<TagsComponentProps> = ({
-	tags,
+	keyWords,
+	tag,
 	expanded,
 }) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -39,7 +41,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 		setAnchorEl(null);
 	};
 
-	if (tags === undefined || tags.length === 0)
+	if (tag === undefined || keyWords === undefined)
 		return (
 			<Chip
 				size="small"
@@ -48,8 +50,6 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				sx={{ mb: 2 }}
 			/>
 		);
-
-	const firstTag = tags[0];
 
 	if (expanded)
 		return (
@@ -69,14 +69,14 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				gap={0.5}
 				pb={1}
 			>
-				{tags.map((tag) => (
+				{keyWords?.map((keyWord) => (
 					<Chip
 						size="small"
-						label={tag.name}
-						key={`tag_${tag.name}`}
+						label={keyWord.word}
+						key={`tag_${keyWord.word}`}
 						clickable
 						onMouseDown={(event) => event.stopPropagation()}
-						onClick={(event) => {
+						onClick={(event: any) => {
 							event.stopPropagation();
 							event.preventDefault();
 							console.log('Button clicked');
@@ -90,8 +90,8 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 		<Stack direction="row" gap={0.5}>
 			<Chip
 				size="small"
-				label={firstTag.name}
-				key={`tag_list${firstTag.name}`}
+				label={tag.name}
+				key={`tag_list${tag.name}`}
 				clickable
 				onMouseDown={(event) => event.stopPropagation()}
 				onClick={(event) => {
@@ -100,7 +100,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 					console.log('Button clicked');
 				}}
 			/>
-			{tags.length > 1 && (
+			{keyWords.length > 0 && (
 				<>
 					<Chip
 						size="small"
@@ -111,7 +111,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 								<ExpandMoreIcon fontSize="large" />
 							)
 						}
-						label={`+${tags.length - 1}`}
+						label={`+${keyWords.length}`}
 						clickable
 						sx={{
 							color: 'text.secondary',
@@ -140,27 +140,23 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 								p: 1,
 							}}
 						>
-							{tags.map((tag, idx) =>
-								idx === 0 ? (
-									<></>
-								) : (
-									<Chip
-										size="small"
-										label={tag.name}
-										key={`tag_exp${tag.name}`}
-										clickable
-										onMouseDown={(event) =>
-											event.stopPropagation()
-										}
-										onClick={(event) => {
-											event.stopPropagation();
-											event.preventDefault();
-											handleClose(event);
-											console.log('Button clicked');
-										}}
-									/>
-								)
-							)}
+							{keyWords.map((keyWord, idx) => (
+								<Chip
+									size="small"
+									label={keyWord.word}
+									key={`tag_exp${keyWord.word}_${idx}`}
+									clickable
+									onMouseDown={(event) =>
+										event.stopPropagation()
+									}
+									onClick={(event) => {
+										event.stopPropagation();
+										event.preventDefault();
+										handleClose(event);
+										console.log('Button clicked');
+									}}
+								/>
+							))}
 						</Stack>
 					</Popover>
 				</>

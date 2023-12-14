@@ -18,7 +18,7 @@ interface LoginFormSenderProps {
 const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	children,
 }) => {
-	const [manualTrigger] = useRedirectAuth();
+	useRedirectAuth();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -109,7 +109,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			pauseOnHover: true,
 			closeOnClick: true,
 		});
-		manualTrigger();
+		// manualTrigger();
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
