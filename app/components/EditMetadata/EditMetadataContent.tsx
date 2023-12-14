@@ -14,29 +14,25 @@ import Radio from '@mui/material/Radio/Radio';
 import FormLabel from '@mui/material/FormLabel/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import Stack from '@mui/material/Stack/Stack';
-import DropZoneComponent from '@/components/DropZoneComponent/DropZoneComponent';
 import SendMetadataButton from './SendMetadataButton';
+import TagPicker from './TagPicker';
+import { TagsResponse } from '@/types/pocketbase-types';
 
 interface DefaultValues {
 	title: string;
-	tags: string | string[];
+	tag: TagsResponse | undefined;
 	description: string;
 	visibility: 'public' | 'private';
 }
 
 interface EditMetadataContentProps {
 	sendButton?: boolean;
-	defaultValues?: DefaultValues;
+	defaultValues: DefaultValues;
 }
 
 const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 	sendButton,
-	defaultValues = {
-		description: '',
-		tags: '',
-		title: '',
-		visibility: 'public',
-	},
+	defaultValues,
 }) => {
 	return (
 		<>
@@ -64,14 +60,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 							autoComplete="article-title"
 							defaultValue={defaultValues.title}
 						/>
-						<TextField
-							name="article-tag"
-							label="Tags..."
-							helperText="Tags devem ser em minusculo e separadas por espaço"
-							fullWidth
-							autoComplete="article-tag"
-							defaultValue={defaultValues.tags}
-						/>
+						<TagPicker defaultTag={defaultValues.tag} />
 					</Stack>
 				</Grid>
 				<Grid xs={12} md={6}>
