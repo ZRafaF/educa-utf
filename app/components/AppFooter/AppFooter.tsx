@@ -17,6 +17,7 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import NextLink from 'next/link';
 import Link from '@mui/material/Link/Link';
 import Divider from '@mui/material/Divider/Divider';
+import { MIN_FOOTER_HEIGHT } from '@/lib/helper';
 
 function Copyright() {
 	return (
@@ -42,8 +43,9 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 				square
 				sx={{
 					marginTop: 'auto',
-					py: { xs: 2, sm: 3, md: 4 },
+					py: { xs: 3, sm: 4, md: 6 },
 					backgroundColor: 'grey.A400',
+					minHeight: MIN_FOOTER_HEIGHT,
 				}}
 			>
 				<Container maxWidth="md">

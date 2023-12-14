@@ -91,7 +91,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 			<Chip
 				size="small"
 				label={firstTag.name}
-				key={`tag_${firstTag.name}`}
+				key={`tag_list${firstTag.name}`}
 				clickable
 				onMouseDown={(event) => event.stopPropagation()}
 				onClick={(event) => {
@@ -147,7 +147,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 									<Chip
 										size="small"
 										label={tag.name}
-										key={`tag_${tag.name}`}
+										key={`tag_exp${tag.name}`}
 										clickable
 										onMouseDown={(event) =>
 											event.stopPropagation()

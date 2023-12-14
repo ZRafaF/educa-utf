@@ -23,6 +23,7 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				name="login"
 				type="text"
 				autoComplete="login"
+				helperText='Para alunos da UTFPR, utilize "a + RA". ex.: a12345678.'
 				autoFocus
 			/>
 			<TextField
