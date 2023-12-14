@@ -10,6 +10,8 @@ import SortComponent from './SortComponent';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import BrowseTitle from './BrowseTitle';
+import OrderComponent from './OrderComponent';
+import Divider from '@mui/material/Divider';
 
 interface QueryBuilderProps {}
 
@@ -46,8 +48,19 @@ const QueryBuilder: FunctionComponent<QueryBuilderProps> = () => {
 					<Grid>
 						<BrowseTitle />
 					</Grid>
-					<Grid>
-						<SortComponent />
+					<Grid
+						container
+						spacing={2}
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Grid>
+							<SortComponent />
+						</Grid>
+
+						<Grid>
+							<OrderComponent />
+						</Grid>
 					</Grid>
 				</Grid>
 			</Box>

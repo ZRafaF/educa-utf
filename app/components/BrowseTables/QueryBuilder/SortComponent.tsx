@@ -86,11 +86,11 @@ const SortComponent: FunctionComponent<SortComponentProps> = () => {
 	return (
 		<Stack
 			direction="row"
-			spacing={2}
+			spacing={1}
 			justifyContent="flex-start"
 			alignItems="center"
 		>
-			<Typography>Ordenar por: </Typography>
+			<Typography>Ordenar por:</Typography>
 			<Select
 				labelId="demo-simple-select-label"
 				id="demo-simple-select"

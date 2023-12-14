@@ -93,7 +93,12 @@ const PaginationComponent: FunctionComponent<PaginationComponentProps> = ({
 
 	return (
 		<>
-			<Divider variant="middle" />
+			<Divider
+				variant="middle"
+				sx={{
+					mt: 2,
+				}}
+			/>
 			<Grid
 				container
 				spacing={2}
