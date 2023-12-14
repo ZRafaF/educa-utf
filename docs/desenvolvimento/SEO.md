@@ -37,8 +37,7 @@ export async function generateMetadata({
 		const article = await getArticleById(articleId);
 		const articleStats = await getArticleStatsById(articleId);
 		const ArticleCoverUrl = getArticleCoverURL(article);
-		let tags = article.expand?.tags.map((tag) => tag.name);
-		if (tags === undefined) tags = [''];
+		let tag = article.expand?.tag?.name ?? '';
 		return {
 			title: article.title,
 			description: article.description,
@@ -52,7 +51,7 @@ export async function generateMetadata({
 				locale: 'pt_BR',
 				type: 'website',
 			},
-			keywords: ['EducaUTF', 'artigo', article.title, ...tags],
+			keywords: ['EducaUTF', 'artigo', article.title, tag],
 		};
 	} catch (error) {
 		return {

@@ -27,7 +27,7 @@ interface DefaultValues {
 
 interface EditMetadataContentProps {
 	sendButton?: boolean;
-	defaultValues: DefaultValues;
+	defaultValues?: DefaultValues;
 }
 
 const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
@@ -58,9 +58,9 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 							}}
 							fullWidth
 							autoComplete="article-title"
-							defaultValue={defaultValues.title}
+							defaultValue={defaultValues?.title}
 						/>
-						<TagPicker defaultTag={defaultValues.tag} />
+						<TagPicker defaultTag={defaultValues?.tag} />
 					</Stack>
 				</Grid>
 				<Grid xs={12} md={6}>
@@ -75,7 +75,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 						multiline
 						rows={5}
 						autoComplete="article-description"
-						defaultValue={defaultValues.description}
+						defaultValue={defaultValues?.description}
 					/>
 				</Grid>
 
@@ -94,7 +94,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 							</FormLabel>
 							<RadioGroup
 								aria-labelledby="visibility-radio-buttons"
-								defaultValue={defaultValues.visibility}
+								defaultValue={defaultValues?.visibility}
 								name="visibility-radio-buttons"
 								row
 							>

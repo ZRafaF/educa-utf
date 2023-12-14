@@ -31,17 +31,24 @@ interface TagPickerProps {
 	defaultTag: TagsResponse | undefined;
 }
 
-const TagPicker: FunctionComponent<TagPickerProps> = async ({ defaultTag }) => {
+const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 	const [tags, setTags] = useState<TagsResponse[]>([]);
 	const [tagCategory, setTagCategory] = useState<string | undefined>(
 		undefined
 	);
 
 	useEffect(() => {
-		getFullListOfTags().then((response) => {
-			setTags(response);
-		});
-	}, [setTags]);
+		const fetchData = async () => {
+			try {
+				const response = await getFullListOfTags();
+				setTags(response);
+			} catch (error) {
+				console.error('Error fetching tags:', error);
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	return (
 		<>
@@ -53,6 +60,12 @@ const TagPicker: FunctionComponent<TagPickerProps> = async ({ defaultTag }) => {
 				fullWidth
 				onChange={(_, newValue) => {
 					setTagCategory(newValue?.category);
+				}}
+				isOptionEqualToValue={(option, value) => {
+					return (
+						option.name === value.name &&
+						option.category === value.category
+					);
 				}}
 				defaultValue={defaultTag}
 				renderInput={(params) => (

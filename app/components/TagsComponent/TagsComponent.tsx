@@ -44,7 +44,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 		setAnchorEl(null);
 	};
 
-	if (tag === undefined || keyWords === undefined) {
+	if (tag === undefined) {
 		return (
 			<Chip
 				size="small"
@@ -106,7 +106,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 					event.preventDefault();
 				}}
 			/>
-			{keyWords.length > 0 && (
+			{keyWords && keyWords.length > 0 && (
 				<ClickAwayListener onClickAway={handleClose}>
 					<div>
 						<Tooltip
