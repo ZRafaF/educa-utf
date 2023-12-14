@@ -25,7 +25,7 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 }) => {
 	const sort = searchParams?.sort ?? '-created';
 	const page = Number(searchParams?.page ?? 1);
-	const items = Number(searchParams?.items ?? 25);
+	const items = Number(searchParams?.items ?? 50);
 
 	const articleList = await getListOfArticlesStats(page, items, {
 		sort: sort,
