@@ -11,8 +11,11 @@ import Stack from '@mui/material/Stack/Stack';
 import { FunctionComponent, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import Popover from '@mui/material/Popover';
-
+import Tooltip from '@mui/material/Tooltip';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import KeyIcon from '@mui/icons-material/Key';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 interface TagsComponentProps {
 	keyWords: KeyWordsRecord[] | undefined;
 	tag: TagsResponse | undefined;
@@ -41,7 +44,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 		setAnchorEl(null);
 	};
 
-	if (tag === undefined || keyWords === undefined)
+	if (tag === undefined || keyWords === undefined) {
 		return (
 			<Chip
 				size="small"
@@ -50,8 +53,9 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				sx={{ mb: 2 }}
 			/>
 		);
+	}
 
-	if (expanded)
+	if (expanded) {
 		return (
 			<Stack
 				direction="row"
@@ -69,22 +73,24 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				gap={0.5}
 				pb={1}
 			>
-				{keyWords?.map((keyWord) => (
+				<Chip
+					size="small"
+					label={tag.name}
+					key={`tag_list${tag.name}`}
+					clickable
+					color="primary"
+				/>
+				{keyWords?.map((keyWord, idx) => (
 					<Chip
 						size="small"
 						label={keyWord.word}
-						key={`tag_${keyWord.word}`}
-						clickable
-						onMouseDown={(event) => event.stopPropagation()}
-						onClick={(event: any) => {
-							event.stopPropagation();
-							event.preventDefault();
-							console.log('Button clicked');
-						}}
+						key={`tag_${keyWord.word}_${idx}`}
+						variant="outlined"
 					/>
 				))}
 			</Stack>
 		);
+	}
 
 	return (
 		<Stack direction="row" gap={0.5}>
@@ -93,73 +99,61 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				label={tag.name}
 				key={`tag_list${tag.name}`}
 				clickable
+				color="primary"
 				onMouseDown={(event) => event.stopPropagation()}
 				onClick={(event) => {
 					event.stopPropagation();
 					event.preventDefault();
-					console.log('Button clicked');
 				}}
 			/>
 			{keyWords.length > 0 && (
-				<>
-					<Chip
-						size="small"
-						icon={
-							anchorEl ? (
-								<ExpandLessIcon fontSize="large" />
-							) : (
-								<ExpandMoreIcon fontSize="large" />
-							)
-						}
-						label={`+${keyWords.length}`}
-						clickable
-						sx={{
-							color: 'text.secondary',
-						}}
-						onMouseDown={(event) => event.stopPropagation()}
-						onClick={(event) => {
-							event.stopPropagation();
-							event.preventDefault();
-							handleClick(event);
-						}}
-					/>
-					<Popover
-						id={id}
-						open={open}
-						anchorEl={anchorEl}
-						onClose={handleClose}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'left',
-						}}
-						disableScrollLock
-					>
-						<Stack
-							spacing={1}
-							sx={{
-								p: 1,
+				<ClickAwayListener onClickAway={handleClose}>
+					<div>
+						<Tooltip
+							PopperProps={{
+								disablePortal: true,
 							}}
+							onClose={handleClose}
+							open={open}
+							disableFocusListener
+							disableTouchListener
+							title={
+								<span style={{ whiteSpace: 'pre-line' }}>
+									{keyWords.map((keyWord, idx) => (
+										<Typography
+											key={`tag_exp${keyWord.word}_${idx}`}
+											variant="caption"
+										>
+											• {keyWord.word} {'\n'}
+										</Typography>
+									))}
+								</span>
+							}
+							arrow
 						>
-							{keyWords.map((keyWord, idx) => (
-								<Chip
-									size="small"
-									label={keyWord.word}
-									key={`tag_exp${keyWord.word}_${idx}`}
-									clickable
-									onMouseDown={(event) =>
-										event.stopPropagation()
-									}
-									onClick={(event) => {
-										event.stopPropagation();
-										event.preventDefault();
-										handleClose(event);
-										console.log('Button clicked');
-									}}
-								/>
-							))}
-						</Stack>
-					</Popover>
-				</>
+							<Chip
+								size="small"
+								icon={
+									anchorEl ? (
+										<ExpandLessIcon fontSize="large" />
+									) : (
+										<ExpandMoreIcon fontSize="large" />
+									)
+								}
+								label={`+${keyWords.length}`}
+								clickable
+								sx={{
+									color: 'text.secondary',
+								}}
+								onMouseDown={(event) => event.stopPropagation()}
+								onClick={(event) => {
+									if (open) handleClose(event);
+									else handleClick(event);
+								}}
+							/>
+						</Tooltip>
+					</div>
+				</ClickAwayListener>
 			)}
 		</Stack>
 	);
