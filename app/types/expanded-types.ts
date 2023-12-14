@@ -3,17 +3,24 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { ArticlesResponse, TagsResponse } from './pocketbase-types';
+import {
+	ArticlesResponse,
+	KeyWordsResponse,
+	TagsResponse,
+} from './pocketbase-types';
 
 export type ArticlesExpand = {
-	tags: TagsResponse[];
+	tag: TagsResponse;
+	key_words: KeyWordsResponse[];
 };
 
 export type ChaptersExpand = {
 	articles: ArticlesResponse[];
-	tags: TagsResponse[];
+	tag: TagsResponse;
+	key_words: KeyWordsResponse[];
 };
 
 export type ChaptersExpandTags = {
-	tags: TagsResponse[];
+	tag: TagsResponse;
+	key_words: KeyWordsResponse[];
 };

@@ -5,18 +5,13 @@
 'use client';
 
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
-import Container from '@mui/material/Container';
-import {
-	ArticlesResponse,
-	ArticlesVisibilityOptions,
-} from '@/types/pocketbase-types';
+import { ArticlesResponse } from '@/types/pocketbase-types';
 import { ArticlesExpand } from '@/types/expanded-types';
 import PageMessage from '../PageMessage/PageMessage';
 import usePbAuth from '@/hooks/usePbAuth';
 import {
 	getArticleById,
 	getArticleDocumentUrl,
-	updateArticle,
 } from '@/lib/apiHelpers/articlesAPI';
 import Typography from '@mui/material/Typography/Typography';
 import Accordion from '@mui/material/Accordion';
@@ -29,13 +24,13 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import Link from '@mui/material/Link/Link';
-import { toast } from 'react-toastify';
 import EditMetadataContent from '../EditMetadata/EditMetadataContent';
-import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
 import MdEditor from '../MdEditor/MdEditor';
 import Box from '@mui/material/Box';
 import AttachmentsComponent from './AttachmentsComponent/AttachmentsComponent';
+import DeleteIcon from '@mui/icons-material/Delete';
+import useSendMetadata from '@/hooks/useSendMetadata';
 
 interface EditArticleProps {
 	articleId: string;
@@ -50,8 +45,12 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 	>(undefined);
 	const [, user] = usePbAuth();
 	const [accept, setAccept] = useState<boolean>(true);
-	const router = useRouter();
 	const saveButtonRef = useRef<HTMLButtonElement | null>(null);
+	const [handleSubmit] = useSendMetadata(
+		'update',
+		myArticle,
+		myArticleDocument
+	);
 
 	useEffect(() => {
 		const fetchArticleInfo = async () => {
@@ -72,126 +71,27 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 	if (loading) {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
 	} else if (myArticle && myArticleDocument !== undefined) {
-		const handleSubmit = async (
-			event: React.FormEvent<HTMLFormElement>
-		) => {
-			event.preventDefault();
-			const data: FormData = new FormData(event.currentTarget);
-			const submitTitle = data.get('article-title')?.toString();
-			const submitTag = data.get('article-tag')?.toString();
-			const submitDescription = data
-				.get('article-description')
-				?.toString();
-
-			const getVis = () => {
-				const visibRaw = data
-					.get('visibility-radio-buttons')
-					?.toString();
-				switch (visibRaw) {
-					case 'public':
-						return ArticlesVisibilityOptions.public;
-					case 'private':
-						return ArticlesVisibilityOptions.private;
-
-					default:
-						return myArticle.visibility;
-				}
-			};
-			const saveAndFinish =
-				(event as any).nativeEvent.submitter.name === 'saveAndFinish';
-
-			const submitVisibility = getVis();
-
-			if (submitTitle === undefined) {
-				toast.error('Titulo inválido!');
-				return;
-			}
-
-			if (submitDescription === undefined) {
-				toast.error('Descrição inválida');
-				return;
-			}
-
-			if (user === null) {
-				toast.error('Você precisa estar logado!');
-				return;
-			}
-			const id = toast.loading('Fazendo upload do arquivo, aguarde...');
-
-			try {
-				const baseFile = new Blob([myArticleDocument], {
-					type: 'text/markdown',
-				});
-
-				const updatedRecord = await updateArticle(
-					myArticle?.id,
-					{
-						title: submitTitle,
-						user: user.id,
-						description: submitDescription,
-						visibility: submitVisibility,
-						document: '',
-					},
-					baseFile
-				);
-
-				toast.update(id, {
-					render: 'Artigo atualizado com sucesso!',
-					type: 'success',
-					isLoading: false,
-					autoClose: 5000,
-					pauseOnFocusLoss: true,
-					draggable: true,
-					pauseOnHover: true,
-					closeOnClick: true,
-				});
-				if (saveAndFinish) router.push(`/article/${updatedRecord.id}`);
-			} catch (error) {
-				if (error instanceof Error) {
-					console.error(error);
-					switch (error.message) {
-						case 'Failed to create record.':
-							toast.update(id, {
-								render: 'Falha ao salvar o artigo!',
-								type: 'error',
-								isLoading: false,
-								autoClose: 5000,
-								pauseOnFocusLoss: true,
-								draggable: true,
-								pauseOnHover: true,
-								closeOnClick: true,
-							});
-
-							break;
-
-						default:
-							toast.update(id, {
-								render: 'Algo deu errado!',
-								type: 'error',
-								isLoading: false,
-								autoClose: 5000,
-								pauseOnFocusLoss: true,
-								draggable: true,
-								pauseOnHover: true,
-								closeOnClick: true,
-							});
-							toast.error(error.message);
-							break;
-					}
-				}
-			}
-		};
-
 		return (
 			<Box component="form" onSubmit={handleSubmit}>
-				<Typography
-					component="h1"
-					variant="h4"
-					align="center"
-					gutterBottom
+				<Stack
+					spacing={2}
+					p={2}
+					direction="row"
+					justifyContent="space-around"
+					alignItems="center"
 				>
-					Editando [{myArticle.title}]
-				</Typography>
+					<Box />
+					<Typography component="h1" variant="h4">
+						Editando [{myArticle.title}]
+					</Typography>
+					<Button
+						color="error"
+						variant="outlined"
+						startIcon={<DeleteIcon />}
+					>
+						Excluir
+					</Button>
+				</Stack>
 				<Accordion sx={{}} variant="outlined">
 					<AccordionSummary
 						expandIcon={<ExpandMoreIcon />}
@@ -205,7 +105,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 							defaultValues={{
 								title: myArticle.title,
 								description: myArticle.description,
-								tags: myArticle.tags,
+								tag: myArticle.expand?.tag,
 								visibility: myArticle.visibility,
 							}}
 						/>

@@ -192,7 +192,8 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 								justifyContent="space-between"
 							>
 								<TagsComponent
-									tags={myChapter.expand?.tags}
+									tag={myChapter.expand?.tag}
+									keyWords={myChapter.expand?.key_words}
 									expanded
 								/>
 

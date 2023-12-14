@@ -32,7 +32,7 @@ export async function getBestChaptersOf(time: 'week' | 'month' | 'year') {
 			.collection('chapters')
 			.getFullList<ChaptersResponse<ChaptersExpandTags>>({
 				skipTotal: true,
-				expand: 'tags',
+				expand: 'tag, key_words',
 			});
 	} catch (error) {
 		console.error(error);
@@ -89,7 +89,10 @@ export async function getListOfChaptersStats(
 			.getList<ChaptersStatsResponse<ChaptersExpandTags>>(
 				page,
 				itemsPerPage,
-				options
+				{
+					...options,
+					expand: 'tag, key_words',
+				}
 			);
 	} catch (error) {
 		console.error(error);
@@ -104,7 +107,7 @@ export async function getNewChapters() {
 			.getList<ChaptersResponse<ChaptersExpandTags>>(1, 8, {
 				sort: '-created',
 				skipTotal: true,
-				expand: 'tags',
+				expand: 'tag, key_words',
 			});
 		return response.items;
 	} catch (error) {

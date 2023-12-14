@@ -29,7 +29,6 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 
 	const articleList = await getListOfArticlesStats(page, items, {
 		sort: sort,
-		expand: 'tags',
 	});
 
 	return (

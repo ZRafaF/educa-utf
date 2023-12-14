@@ -5,14 +5,9 @@
 
 'use client';
 
-import ArticleCoverContext from '@/contexts/ArticleCoverContext';
-import usePbAuth from '@/hooks/usePbAuth';
-import { createArticle } from '@/lib/apiHelpers/articlesAPI';
-import { ArticlesVisibilityOptions } from '@/types/pocketbase-types';
+import useSendMetadata from '@/hooks/useSendMetadata';
 import Paper from '@mui/material/Paper/Paper';
-import { useRouter } from 'next/navigation';
-import { FunctionComponent, ReactNode, useState } from 'react';
-import { toast } from 'react-toastify';
+import { FunctionComponent, ReactNode } from 'react';
 
 interface EditMetadataSenderProps {
 	children: ReactNode;
@@ -21,77 +16,7 @@ interface EditMetadataSenderProps {
 const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 	children,
 }) => {
-	const [, user] = usePbAuth();
-	const router = useRouter();
-
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data: FormData = new FormData(event.currentTarget);
-		const submitTitle = data.get('article-title')?.toString();
-		const submitTag = data.get('article-tag')?.toString();
-		const submitDescription = data.get('article-description')?.toString();
-
-		const getVis = () => {
-			const visibRaw = data.get('visibility-radio-buttons')?.toString();
-			switch (visibRaw) {
-				case 'public':
-					return ArticlesVisibilityOptions.public;
-				case 'private':
-					return ArticlesVisibilityOptions.private;
-
-				default:
-					return ArticlesVisibilityOptions.public;
-			}
-		};
-
-		const submitVisibility = getVis();
-
-		if (submitTitle === undefined) {
-			toast.error('Titulo inválido!');
-			return;
-		}
-
-		if (submitDescription === undefined) {
-			toast.error('Descrição inválida');
-			return;
-		}
-
-		if (user === null) {
-			toast.error('Você precisa estar logado!');
-			return;
-		}
-
-		try {
-			const baseFile = new Blob([''], { type: 'text/markdown' });
-
-			const newRecord = await createArticle(
-				{
-					title: submitTitle,
-					user: user.id,
-					description: submitDescription,
-					visibility: submitVisibility,
-					document: '',
-				},
-				baseFile
-			);
-			toast.success('Artigo criado com sucesso!');
-
-			router.push(`/edit/${newRecord.id}`);
-		} catch (error) {
-			if (error instanceof Error) {
-				console.error(error);
-				switch (error.message) {
-					case 'Failed to create record.':
-						toast.error('Falha ao criar o artigo');
-						break;
-
-					default:
-						toast.error(error.message);
-						break;
-				}
-			}
-		}
-	};
+	const [handleSubmit] = useSendMetadata('create');
 
 	return (
 		<Paper
