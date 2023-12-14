@@ -1,12 +1,12 @@
+import QueryBuilder from '@/components/BrowseTables/QueryBuilder/QueryBuilder';
+import {
+	MIN_FOOTER_HEIGHT,
+	MIN_PAGINATION_HEIGHT,
+	MIN_TOOLBAR_HEIGHT,
+} from '@/lib/helper';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import dynamic from 'next/dynamic';
-
-const QueryBuilder = dynamic(
-	() => import('@/components/BrowseTables/QueryBuilder'),
-	{
-		ssr: false,
-	}
-);
+import Divider from '@mui/material/Divider';
 
 export default function RootLayout({
 	children,
@@ -14,16 +14,27 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<Container
-			sx={{
-				minHeight: '100vh',
-				my: 2,
-			}}
-			maxWidth={false}
-		>
-			<QueryBuilder />
-
-			{children}
-		</Container>
+		<>
+			<Box
+				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
+			>
+				<QueryBuilder />
+				<Divider
+					sx={{
+						mb: 2,
+					}}
+					variant="middle"
+				/>
+				<Container
+					sx={{
+						my: 2,
+						position: 'relative',
+					}}
+					maxWidth={false}
+				>
+					{children}
+				</Container>
+			</Box>
+		</>
 	);
 }

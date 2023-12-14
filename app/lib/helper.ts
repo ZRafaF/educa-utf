@@ -14,6 +14,10 @@ import {
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, parseISO } from 'date-fns';
 
+export const MIN_TOOLBAR_HEIGHT = '56px';
+export const MIN_FOOTER_HEIGHT = '200px';
+export const MIN_PAGINATION_HEIGHT = '64px';
+
 export function formatString(input: string): string {
 	const sanitized = input
 		.replace(/\s+/g, '-')
