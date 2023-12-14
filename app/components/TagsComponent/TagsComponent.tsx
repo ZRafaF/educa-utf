@@ -13,9 +13,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Tooltip from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import KeyIcon from '@mui/icons-material/Key';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+
 interface TagsComponentProps {
 	keyWords: KeyWordsRecord[] | undefined;
 	tag: TagsResponse | undefined;
@@ -100,14 +99,21 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				key={`tag_list${tag.name}`}
 				clickable
 				color="primary"
-				onMouseDown={(event) => event.stopPropagation()}
+				onMouseDown={(event) => {
+					event.stopPropagation();
+					event.preventDefault();
+				}}
 				onClick={(event) => {
 					event.stopPropagation();
 					event.preventDefault();
 				}}
 			/>
 			{keyWords && keyWords.length > 0 && (
-				<ClickAwayListener onClickAway={handleClose}>
+				<ClickAwayListener
+					onClickAway={() => {
+						setAnchorEl(null);
+					}}
+				>
 					<div>
 						<Tooltip
 							PopperProps={{
@@ -117,6 +123,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 							open={open}
 							disableFocusListener
 							disableTouchListener
+							disableHoverListener
 							title={
 								<span style={{ whiteSpace: 'pre-line' }}>
 									{keyWords.map((keyWord, idx) => (
