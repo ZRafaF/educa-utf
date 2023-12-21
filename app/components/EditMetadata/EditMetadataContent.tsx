@@ -17,6 +17,8 @@ import Stack from '@mui/material/Stack/Stack';
 import SendMetadataButton from './SendMetadataButton';
 import TagPicker from './TagPicker';
 import { TagsResponse } from '@/types/pocketbase-types';
+import KeyWordsPicker from './KeyWordsPicker';
+import Divider from '@mui/material/Divider';
 
 interface DefaultValues {
 	title: string;
@@ -78,42 +80,45 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 						defaultValue={defaultValues?.description}
 					/>
 				</Grid>
-
-				<Grid xs={12}>
-					<Stack
-						direction="column"
-						justifyContent="center"
-						alignItems="flex-start"
-						spacing={2}
-					>
-						<Box>
-							<FormLabel>
-								<Typography variant="body2">
-									Visibilidade:
-								</Typography>
-							</FormLabel>
-							<RadioGroup
-								aria-labelledby="visibility-radio-buttons"
-								defaultValue={defaultValues?.visibility}
-								name="visibility-radio-buttons"
-								row
-							>
-								<FormControlLabel
-									value="public"
-									control={<Radio size="small" />}
-									label="Publico"
-								/>
-								<FormControlLabel
-									value="private"
-									control={<Radio size="small" />}
-									label="Privado"
-								/>
-							</RadioGroup>
-						</Box>
-						{sendButton && <SendMetadataButton />}
-					</Stack>
+			</Grid>
+			<Grid
+				container
+				spacing={3}
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Grid xs={12} md={8} lg={9}>
+					<KeyWordsPicker />
+				</Grid>
+				<Grid>
+					<Box>
+						<FormLabel>
+							<Typography variant="body2">
+								Visibilidade:
+							</Typography>
+						</FormLabel>
+						<RadioGroup
+							aria-labelledby="visibility-radio-buttons"
+							defaultValue={defaultValues?.visibility}
+							name="visibility-radio-buttons"
+							row
+						>
+							<FormControlLabel
+								value="public"
+								control={<Radio size="small" />}
+								label="Publico"
+							/>
+							<FormControlLabel
+								value="private"
+								control={<Radio size="small" />}
+								label="Privado"
+							/>
+						</RadioGroup>
+					</Box>
 				</Grid>
 			</Grid>
+
+			{sendButton && <SendMetadataButton />}
 		</>
 	);
 };

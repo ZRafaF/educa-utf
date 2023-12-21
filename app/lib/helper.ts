@@ -105,3 +105,11 @@ export function countSubstrings(mainString: string, substring: string) {
 	const count = mainString.split(substring).length - 1;
 	return count;
 }
+
+export function sleep(duration: number): Promise<void> {
+	return new Promise<void>((resolve) => {
+		setTimeout(() => {
+			resolve();
+		}, duration);
+	});
+}
