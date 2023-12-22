@@ -31,6 +31,7 @@ import Box from '@mui/material/Box';
 import AttachmentsComponent from './AttachmentsComponent/AttachmentsComponent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useSendMetadata from '@/hooks/useSendMetadata';
+import Container from '@mui/material/Container';
 
 interface EditArticleProps {
 	articleId: string;
@@ -72,166 +73,174 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
 	} else if (myArticle && myArticleDocument !== undefined) {
 		return (
-			<Box component="form" onSubmit={handleSubmit}>
-				<Stack
-					spacing={2}
-					p={2}
-					direction="row"
-					justifyContent="space-around"
-					alignItems="center"
-				>
-					<Box />
-					<Typography component="h1" variant="h4">
-						Editando [{myArticle.title}]
-					</Typography>
-					<Button
-						color="error"
-						variant="outlined"
-						startIcon={<DeleteIcon />}
+			<Container maxWidth={'xl'} disableGutters>
+				<Box component="form" onSubmit={handleSubmit}>
+					<Stack
+						spacing={2}
+						p={2}
+						direction="row"
+						justifyContent="space-around"
+						alignItems="center"
 					>
-						Excluir
-					</Button>
-				</Stack>
-				<Accordion sx={{}} variant="outlined">
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
-					>
-						<Typography>Editar metadados</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<EditMetadataContent
-							defaultValues={{
-								title: myArticle.title,
-								description: myArticle.description,
-								tag: myArticle.expand?.tag,
-								visibility: myArticle.visibility,
-							}}
-						/>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion variant="outlined" defaultExpanded sx={{}}>
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
-					>
-						<Typography>Editar Artigo</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Box
-							sx={{
-								mx: { xs: -2, sm: -2, md: 0 },
-							}}
+						<Box />
+						<Typography component="h1" variant="h4">
+							Editando [{myArticle.title}]
+						</Typography>
+						<Button
+							color="error"
+							variant="outlined"
+							startIcon={<DeleteIcon />}
 						>
-							<MdEditor
-								myArticle={myArticle}
-								myArticleDocument={myArticleDocument}
-								setMyArticleDocument={setMyArticleDocument}
-								saveButtonRef={saveButtonRef}
-							/>
-						</Box>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion variant="outlined" defaultExpanded sx={{}}>
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
-					>
-						<Typography>Editar Anexos</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Box
-							sx={{
-								mx: { xs: -2, sm: -2, md: 0 },
-							}}
+							Excluir
+						</Button>
+					</Stack>
+					<Accordion sx={{}} variant="outlined">
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
 						>
-							<AttachmentsComponent
-								myArticle={myArticle}
-								myArticleDocument={myArticleDocument}
-							/>
-						</Box>
-					</AccordionDetails>
-				</Accordion>
-				<Grid container spacing={2} p={2}>
-					<Grid xs="auto">
-						<Stack
-							direction="row"
-							justifyContent="center"
-							alignItems="center"
-							spacing={2}
-						>
-							<Button
-								type="submit"
-								name="save"
-								variant="outlined"
-								sx={{
-									p: 1.5,
+							<Typography>Editar metadados</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<EditMetadataContent
+								defaultValues={{
+									title: myArticle.title,
+									description: myArticle.description,
+									tag: myArticle.expand?.tag,
+									visibility: myArticle.visibility,
+									key_words: myArticle.expand?.key_words,
 								}}
-								disabled={!accept}
-								ref={saveButtonRef}
-							>
-								Salvar
-							</Button>
-							<Button
-								type="submit"
-								name="saveAndFinish"
-								variant="contained"
+							/>
+						</AccordionDetails>
+					</Accordion>
+
+					<Accordion variant="outlined" defaultExpanded sx={{}}>
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
+						>
+							<Typography>Editar Artigo</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
 								sx={{
-									p: 1.5,
+									mx: { xs: -2, sm: -2, md: 0 },
 								}}
-								disabled={!accept}
 							>
-								Salvar e finalizar
-							</Button>
-						</Stack>
-					</Grid>
-					<Grid>
-						<FormControlLabel
-							control={
-								<Checkbox
-									required
-									value="accept-terms"
-									name="accept-terms"
-									id="accept-terms"
-									checked={accept}
-									onChange={(e) => {
-										setAccept(e.target.checked);
-									}}
+								<MdEditor
+									myArticle={myArticle}
+									myArticleDocument={myArticleDocument}
+									setMyArticleDocument={setMyArticleDocument}
+									saveButtonRef={saveButtonRef}
 								/>
-							}
-							label={
-								<>
-									<Typography variant="body2" fontSize={13}>
-										Declaro que li e concordo com os{' '}
-										<Link
-											href="/terms"
-											component={NextLink}
-											underline="hover"
-											alignItems="center"
-											target="_blank"
+							</Box>
+						</AccordionDetails>
+					</Accordion>
+
+					<Accordion variant="outlined" defaultExpanded sx={{}}>
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
+						>
+							<Typography>Editar Anexos</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Box
+								sx={{
+									mx: { xs: -2, sm: -2, md: 0 },
+								}}
+							>
+								<AttachmentsComponent
+									myArticle={myArticle}
+									myArticleDocument={myArticleDocument}
+								/>
+							</Box>
+						</AccordionDetails>
+					</Accordion>
+					<Grid container spacing={2} p={2}>
+						<Grid xs="auto">
+							<Stack
+								direction="row"
+								justifyContent="center"
+								alignItems="center"
+								spacing={2}
+							>
+								<Button
+									type="submit"
+									name="save"
+									variant="outlined"
+									sx={{
+										p: 1.5,
+									}}
+									disabled={!accept}
+									ref={saveButtonRef}
+								>
+									Salvar
+								</Button>
+								<Button
+									type="submit"
+									name="saveAndFinish"
+									variant="contained"
+									sx={{
+										p: 1.5,
+									}}
+									disabled={!accept}
+								>
+									Salvar e finalizar
+								</Button>
+							</Stack>
+						</Grid>
+						<Grid>
+							<FormControlLabel
+								control={
+									<Checkbox
+										required
+										value="accept-terms"
+										name="accept-terms"
+										id="accept-terms"
+										checked={accept}
+										onChange={(e) => {
+											setAccept(e.target.checked);
+										}}
+									/>
+								}
+								label={
+									<>
+										<Typography
+											variant="body2"
+											fontSize={13}
 										>
-											Termos de Serviço
-										</Link>
-										{' e '}
-										<Link
-											href="/privacy"
-											component={NextLink}
-											underline="hover"
-											alignItems="center"
-											target="_blank"
-										>
-											Política de Privacidade
-										</Link>
-									</Typography>
-								</>
-							}
-						/>
+											Declaro que li e concordo com os{' '}
+											<Link
+												href="/terms"
+												component={NextLink}
+												underline="hover"
+												alignItems="center"
+												target="_blank"
+											>
+												Termos de Serviço
+											</Link>
+											{' e '}
+											<Link
+												href="/privacy"
+												component={NextLink}
+												underline="hover"
+												alignItems="center"
+												target="_blank"
+											>
+												Política de Privacidade
+											</Link>
+										</Typography>
+									</>
+								}
+							/>
+						</Grid>
 					</Grid>
-				</Grid>
-			</Box>
+				</Box>
+			</Container>
 		);
 	}
 	return (

@@ -50,6 +50,8 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 		fetchData();
 	}, []);
 
+	// TODO - Fix the console error on Autocomplete
+
 	return (
 		<>
 			<Autocomplete
@@ -58,6 +60,8 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 				groupBy={(option) => option.category}
 				getOptionLabel={(option) => option.name}
 				fullWidth
+				autoComplete
+				autoHighlight
 				onChange={(_, newValue) => {
 					setTagCategory(newValue?.category);
 				}}
@@ -76,6 +80,7 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 						name="tag-picker"
 					/>
 				)}
+				noOptionsText={'Nenhuma opção'}
 				renderGroup={(params) => (
 					<li key={params.key}>
 						<GroupHeader>{params.group}</GroupHeader>
