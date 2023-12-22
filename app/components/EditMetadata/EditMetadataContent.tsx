@@ -89,7 +89,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 			>
 				<Grid xs={12} md={8} lg={9}>
 					<KeyWordsPicker
-						defaultKeyWordsId={defaultValues?.key_words}
+						defaultKeyWords={defaultValues?.key_words}
 					/>
 				</Grid>
 				<Grid>

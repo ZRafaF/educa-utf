@@ -5,11 +5,8 @@
 
 'use client';
 
-import {
-	getKeyWordById,
-	getKeyWordListBySimilar,
-} from '@/lib/apiHelpers/keyWordsAPI';
-import { Collections, KeyWordsResponse } from '@/types/pocketbase-types';
+import { getKeyWordListBySimilar } from '@/lib/apiHelpers/keyWordsAPI';
+import { KeyWordsResponse } from '@/types/pocketbase-types';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -18,7 +15,6 @@ import {
 	Dispatch,
 	FunctionComponent,
 	SetStateAction,
-	useEffect,
 	useMemo,
 	useState,
 } from 'react';
@@ -27,13 +23,12 @@ import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import usePbAuth from '@/hooks/usePbAuth';
-import Typography from '@mui/material/Typography';
 
 interface InsertKeyWordButtonProps {
 	inputValue: string | undefined;
-	setSelectedKeyWords: Dispatch<SetStateAction<KeyWordsResponse[]>>;
-	selectedKeyWords: KeyWordsResponse[];
-	keyWords: KeyWordsResponse[];
+	setSelectedKeyWords: Dispatch<SetStateAction<string[]>>;
+	selectedKeyWords: string[];
+	keyWords: string[];
 	invalidWord: boolean;
 }
 
@@ -50,16 +45,7 @@ const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
 		if (inputValue === undefined || inputValue === '' || user === null)
 			return;
 
-		const newFakeKeyWord: KeyWordsResponse = {
-			id: 'fake',
-			word: inputValue,
-			user: user.id,
-			collectionId: 'fake',
-			collectionName: Collections.KeyWords,
-			created: new Date().toISOString(),
-			updated: new Date().toISOString(),
-		};
-		setSelectedKeyWords((prev) => [...prev, newFakeKeyWord]);
+		setSelectedKeyWords((prev) => [...prev, inputValue]);
 	};
 
 	return (
@@ -71,8 +57,8 @@ const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
 					textTransform: 'none',
 				}}
 				disabled={
-					keyWords.some((word) => word.word === inputValue) ||
-					selectedKeyWords.some((word) => word.word === inputValue) ||
+					keyWords.some((word) => word === inputValue) ||
+					selectedKeyWords.some((word) => word === inputValue) ||
 					invalidWord
 				}
 				onClick={() => {
@@ -86,15 +72,16 @@ const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
 };
 
 interface KeyWordsPickerProps {
-	defaultKeyWordsId: KeyWordsResponse[] | undefined;
+	defaultKeyWords: KeyWordsResponse[] | undefined;
 }
 
 const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
-	defaultKeyWordsId = [],
+	defaultKeyWords = [],
 }) => {
-	const [selectedKeyWords, setSelectedKeyWords] =
-		useState<KeyWordsResponse[]>(defaultKeyWordsId);
-	const [keyWords, setKeyWords] = useState<KeyWordsResponse[]>([]);
+	const [selectedKeyWords, setSelectedKeyWords] = useState<string[]>(
+		defaultKeyWords.map((word) => word.word)
+	);
+	const [keyWords, setKeyWords] = useState<string[]>([]);
 	const [fetchingKeyWords, setFetchingKeyWords] = useState<boolean>(false);
 	const [inputValue, setInputValue] = useState<string | undefined>(undefined);
 
@@ -109,12 +96,15 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 		async (value: string | undefined) => {
 			setFetchingKeyWords(true);
 			if (value === undefined || value.length < 1) {
-				setKeyWords([]);
+				setKeyWords([...selectedKeyWords]);
 			} else {
 				try {
 					const response = await getKeyWordListBySimilar(value);
 
-					setKeyWords(response);
+					setKeyWords([
+						...selectedKeyWords,
+						...response.map((word) => word.word),
+					]);
 				} catch (error) {
 					console.error('Error fetching key words:', error);
 				}
@@ -133,13 +123,13 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 				multiple
 				id="tags-outlined"
 				options={keyWords}
-				getOptionLabel={(option) => option.word}
+				getOptionLabel={(option) => option}
 				filterSelectedOptions
 				defaultValue={[]}
-				isOptionEqualToValue={(option, value) => {
-					return option.word === value.word && option.id === value.id;
-				}}
 				fullWidth
+				autoHighlight
+				includeInputInList
+				autoComplete
 				renderInput={(params) => (
 					<TextField
 						{...params}
@@ -152,7 +142,7 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 						label="Até 5 Palavras-chave..."
 						error={invalidWord}
 						helperText={
-							'Palavras devem ser minúsculas, sem espaços ou acentos. ex.: calculo-numerico,'
+							'Palavras devem ser minúsculas, sem espaços ou acentos. ex.: calculo-numerico.'
 						}
 						InputProps={{
 							...params.InputProps,
@@ -231,7 +221,7 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 			/>
 			<input
 				name="keywords"
-				value={selectedKeyWords.map((word) => word.word).join(',')}
+				value={selectedKeyWords.map((word) => word).join(',')}
 				style={{
 					display: 'none',
 				}}

@@ -60,6 +60,8 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 				groupBy={(option) => option.category}
 				getOptionLabel={(option) => option.name}
 				fullWidth
+				autoComplete
+				autoHighlight
 				onChange={(_, newValue) => {
 					setTagCategory(newValue?.category);
 				}}
