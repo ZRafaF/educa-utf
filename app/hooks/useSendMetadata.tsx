@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import usePbAuth from './usePbAuth';
 import { ArticlesExpand } from '@/types/expanded-types';
+import { createKeyWord, getKeyWord } from '@/lib/apiHelpers/keyWordsAPI';
 
 const useSendMetadata = (
 	type: 'create' | 'update',
@@ -68,7 +69,8 @@ const useSendMetadata = (
 		submitDescription: string,
 		submitVisibility: ArticlesVisibilityOptions,
 		author: UsersResponse,
-		fetchedTag: TagsResponse
+		fetchedTag: TagsResponse,
+		keywords: string[]
 	) => {
 		const baseFile = new Blob([''], { type: 'text/markdown' });
 
@@ -81,7 +83,8 @@ const useSendMetadata = (
 				document: '',
 				tag: fetchedTag.id,
 			},
-			baseFile
+			baseFile,
+			keywords
 		);
 		toast.update(toastId, {
 			render: 'Artigo criado com sucesso!',
@@ -103,7 +106,8 @@ const useSendMetadata = (
 		submitDescription: string,
 		submitVisibility: ArticlesVisibilityOptions,
 		author: UsersResponse,
-		fetchedTag: TagsResponse
+		fetchedTag: TagsResponse,
+		keywords: string[]
 	) => {
 		if (myArticle === undefined || myArticleDocument === undefined) {
 			throw new Error('Artigo ou documento inválido!');
@@ -123,7 +127,8 @@ const useSendMetadata = (
 				tag: fetchedTag.id,
 				document: '',
 			},
-			baseFile
+			baseFile,
+			keywords
 		);
 
 		toast.update(toastId, {
@@ -147,6 +152,8 @@ const useSendMetadata = (
 		const submitTag = data.get('tag-picker')?.toString();
 		const submitTagCategory = data.get('tag-category')?.toString();
 		const submitDescription = data.get('article-description')?.toString();
+		const submitKeyWords = data.get('keywords')?.toString();
+		const keywords = submitKeyWords?.split(',');
 
 		const getVis = () => {
 			const visibRaw = data.get('visibility-radio-buttons')?.toString();
@@ -202,6 +209,42 @@ const useSendMetadata = (
 				submitTagCategory
 			);
 
+			const listOfKeyWordsId = await (async () => {
+				let listOfKeyWordsId: string[] = [];
+
+				if (keywords === undefined) return listOfKeyWordsId;
+
+				for (let i = 0; i < keywords.length; i++) {
+					const word = keywords[i];
+
+					try {
+						const keyWord = await getKeyWord(word);
+						listOfKeyWordsId.push(keyWord.id);
+					} catch (error) {
+						if (error instanceof Error) {
+							if (
+								error.message ===
+								"The requested resource wasn't found."
+							) {
+								try {
+									const createdKeyWord = await createKeyWord(
+										word,
+										user.id
+									);
+									listOfKeyWordsId.push(createdKeyWord.id);
+								} catch (error) {
+									handleError(id, error);
+								}
+							} else {
+								handleError(id, error);
+							}
+						}
+					}
+				}
+
+				return listOfKeyWordsId;
+			})();
+
 			if (type === 'create') {
 				await handleCreateArticle(
 					id,
@@ -209,7 +252,8 @@ const useSendMetadata = (
 					submitDescription,
 					submitVisibility,
 					user,
-					fetchedTag
+					fetchedTag,
+					listOfKeyWordsId
 				);
 			} else {
 				const updatedRecord = await handleUpdateArticle(
@@ -218,7 +262,8 @@ const useSendMetadata = (
 					submitDescription,
 					submitVisibility,
 					user,
-					fetchedTag
+					fetchedTag,
+					listOfKeyWordsId
 				);
 				if (saveAndFinish) router.push(`/article/${updatedRecord.id}`);
 			}

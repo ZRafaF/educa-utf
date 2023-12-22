@@ -16,13 +16,13 @@ import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import Stack from '@mui/material/Stack/Stack';
 import SendMetadataButton from './SendMetadataButton';
 import TagPicker from './TagPicker';
-import { TagsResponse } from '@/types/pocketbase-types';
+import { KeyWordsResponse, TagsResponse } from '@/types/pocketbase-types';
 import KeyWordsPicker from './KeyWordsPicker';
-import Divider from '@mui/material/Divider';
 
 interface DefaultValues {
 	title: string;
 	tag: TagsResponse | undefined;
+	key_words: KeyWordsResponse[] | undefined;
 	description: string;
 	visibility: 'public' | 'private';
 }
@@ -88,7 +88,9 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 				alignItems="center"
 			>
 				<Grid xs={12} md={8} lg={9}>
-					<KeyWordsPicker />
+					<KeyWordsPicker
+						defaultKeyWordsId={defaultValues?.key_words}
+					/>
 				</Grid>
 				<Grid>
 					<Box>

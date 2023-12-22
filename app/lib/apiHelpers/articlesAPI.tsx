@@ -77,11 +77,15 @@ export async function getArticleDocumentUrl(article: ArticlesResponse) {
 
 export async function createArticle(
 	newArticle: ArticlesRecord,
-	baseFile: Blob
+	baseFile: Blob,
+	keyWords: string[]
 ) {
 	const form = getFormData(newArticle);
 	form.append('document', baseFile, 'article.md');
 
+	for (const word of keyWords) {
+		form.append('key_words', word);
+	}
 	return pb.collection('articles').create<ArticlesResponse>(form);
 }
 
@@ -103,11 +107,14 @@ export async function getRandomArticle() {
 export async function updateArticle(
 	articleId: string,
 	updatedArticleRecord: ArticlesRecord,
-	baseFile: Blob
+	baseFile: Blob,
+	keyWords: string[]
 ) {
 	const form = getFormData(updatedArticleRecord);
 	form.append('document', baseFile, 'article.md');
-
+	for (const word of keyWords) {
+		form.append('key_words', word);
+	}
 	return pb.collection('articles').update<ArticlesResponse>(articleId, form);
 }
 

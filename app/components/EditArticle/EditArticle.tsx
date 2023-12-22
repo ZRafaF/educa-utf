@@ -109,6 +109,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 									description: myArticle.description,
 									tag: myArticle.expand?.tag,
 									visibility: myArticle.visibility,
+									key_words: myArticle.expand?.key_words,
 								}}
 							/>
 						</AccordionDetails>

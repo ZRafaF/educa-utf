@@ -10,3 +10,27 @@ export async function getKeyWordListBySimilar(input: string) {
 		filter: `word~'${input}'`,
 	});
 }
+
+export async function getKeyWord(word: string) {
+	return pb
+		.collection('key_words')
+		.getFirstListItem<KeyWordsResponse>(`word='${word}'`);
+}
+
+export async function getKeyWordById(id: string) {
+	return pb
+		.collection('key_words')
+		.getFirstListItem<KeyWordsResponse>(`id='${id}'`);
+}
+
+export async function createKeyWord(word: string, userId: string) {
+	const data = {
+		word: word,
+		user: userId,
+	};
+
+	const record = await pb
+		.collection('key_words')
+		.create<KeyWordsResponse>(data);
+	return record;
+}
