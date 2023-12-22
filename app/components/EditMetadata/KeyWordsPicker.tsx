@@ -27,12 +27,14 @@ import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import usePbAuth from '@/hooks/usePbAuth';
+import Typography from '@mui/material/Typography';
 
 interface InsertKeyWordButtonProps {
 	inputValue: string | undefined;
 	setSelectedKeyWords: Dispatch<SetStateAction<KeyWordsResponse[]>>;
 	selectedKeyWords: KeyWordsResponse[];
 	keyWords: KeyWordsResponse[];
+	invalidWord: boolean;
 }
 
 const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
@@ -40,6 +42,7 @@ const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
 	setSelectedKeyWords,
 	selectedKeyWords,
 	keyWords,
+	invalidWord,
 }) => {
 	const [, user] = usePbAuth();
 
@@ -69,7 +72,8 @@ const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
 				}}
 				disabled={
 					keyWords.some((word) => word.word === inputValue) ||
-					selectedKeyWords.some((word) => word.word === inputValue)
+					selectedKeyWords.some((word) => word.word === inputValue) ||
+					invalidWord
 				}
 				onClick={() => {
 					createAndInsertKeyWord();
@@ -95,7 +99,7 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 	const [inputValue, setInputValue] = useState<string | undefined>(undefined);
 
 	const invalidWord = useMemo(() => {
-		// checks if the keywords is only lowercase letters, numbers and -, no spaces or _
+		// checks if the keywords is only lowercase letters, numbers and -
 
 		if (inputValue === undefined || inputValue === '') return false;
 		return !/^[a-z0-9-]+$/.test(inputValue);
@@ -139,10 +143,17 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 				renderInput={(params) => (
 					<TextField
 						{...params}
-						placeholder="palavras-chave..."
+						placeholder={
+							selectedKeyWords.length < 5
+								? 'palavra-chave...'
+								: undefined
+						}
 						name="keywords-picker"
+						label="Até 5 Palavras-chave..."
 						error={invalidWord}
-						helperText={invalidWord ? 'Palavra inválida' : ''}
+						helperText={
+							'Palavras devem ser minúsculas, sem espaços ou acentos. ex.: calculo-numerico,'
+						}
 						InputProps={{
 							...params.InputProps,
 							endAdornment: (
@@ -160,9 +171,12 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 					/>
 				)}
 				onInputChange={(_, newInputValue) => {
-					debounce(newInputValue);
-					setFetchingKeyWords(true);
 					setInputValue(newInputValue);
+
+					if (selectedKeyWords.length < 5) {
+						debounce(newInputValue);
+						setFetchingKeyWords(true);
+					}
 				}}
 				value={selectedKeyWords}
 				onChange={(_, newValue) => {
@@ -186,24 +200,34 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 								setSelectedKeyWords={setSelectedKeyWords}
 								selectedKeyWords={selectedKeyWords}
 								keyWords={keyWords}
+								invalidWord={invalidWord}
 							/>
 						</Box>
 					</li>
 				)}
-				noOptionsText={
-					fetchingKeyWords ? (
-						'Buscando palavras...'
-					) : inputValue ? (
-						<InsertKeyWordButton
-							inputValue={inputValue}
-							selectedKeyWords={selectedKeyWords}
-							setSelectedKeyWords={setSelectedKeyWords}
-							keyWords={keyWords}
-						/>
-					) : (
-						'Insira uma palavra-chave'
-					)
-				}
+				noOptionsText={(() => {
+					if (selectedKeyWords.length >= 5) {
+						return (
+							<Box color={'error.main'}>
+								Limite de palavras-chave atingido
+							</Box>
+						);
+					}
+					if (fetchingKeyWords) return 'Buscando palavras...';
+
+					if (inputValue)
+						return (
+							<InsertKeyWordButton
+								inputValue={inputValue}
+								selectedKeyWords={selectedKeyWords}
+								setSelectedKeyWords={setSelectedKeyWords}
+								keyWords={keyWords}
+								invalidWord={invalidWord}
+							/>
+						);
+
+					return 'Insira uma palavra-chave';
+				})()}
 			/>
 			<input
 				name="keywords"
