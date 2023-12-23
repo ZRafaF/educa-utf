@@ -19,7 +19,6 @@ import { toast } from 'react-toastify';
 import usePbAuth from './usePbAuth';
 import { ArticlesExpand } from '@/types/expanded-types';
 import { createKeyWord, getKeyWord } from '@/lib/apiHelpers/keyWordsAPI';
-import { revalidatePath } from 'next/cache';
 
 const useSendMetadata = (
 	type: 'create' | 'update',
@@ -97,7 +96,6 @@ const useSendMetadata = (
 			pauseOnHover: true,
 			closeOnClick: true,
 		});
-		revalidatePath(`/edit/${newRecord.id}`);
 
 		router.push(`/edit/${newRecord.id}`);
 	};
@@ -143,7 +141,6 @@ const useSendMetadata = (
 			pauseOnHover: true,
 			closeOnClick: true,
 		});
-		//revalidatePath(`/edit/${updatedRecord.id}`);
 
 		return updatedRecord;
 	};

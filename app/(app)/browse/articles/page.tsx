@@ -5,7 +5,7 @@
 
 import ArticlesTable from '@/components/BrowseTables/ArticlesTable';
 
-export const revalidate = 86400;
+export const revalidate = 30;
 
 export default function Page({
 	params,
