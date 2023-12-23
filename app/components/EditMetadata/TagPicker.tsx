@@ -34,7 +34,7 @@ interface TagPickerProps {
 const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 	const [tags, setTags] = useState<TagsResponse[]>([]);
 	const [tagCategory, setTagCategory] = useState<string | undefined>(
-		undefined
+		defaultTag?.category
 	);
 
 	useEffect(() => {
