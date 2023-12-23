@@ -86,7 +86,7 @@ export async function createArticle(
 	for (const word of keyWords) {
 		form.append('key_words', word);
 	}
-	return pb.collection('articles').create<ArticlesResponse>(form);
+	return await pb.collection('articles').create<ArticlesResponse>(form);
 }
 
 export async function getRandomArticle() {
@@ -115,7 +115,9 @@ export async function updateArticle(
 	for (const word of keyWords) {
 		form.append('key_words', word);
 	}
-	return pb.collection('articles').update<ArticlesResponse>(articleId, form);
+	return await pb
+		.collection('articles')
+		.update<ArticlesResponse>(articleId, form);
 }
 
 export async function getListOfArticlesStats(
