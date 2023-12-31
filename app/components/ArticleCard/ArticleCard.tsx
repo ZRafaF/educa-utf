@@ -34,7 +34,11 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 		<CardActionArea
 			LinkComponent={Link}
 			href={`/article/${myArticle.id}`}
-			sx={{ p: 1, borderRadius: 3 }}
+			sx={{
+				p: 1,
+				borderRadius: 3,
+				border: '1px solid var(--mui-palette-divider)',
+			}}
 		>
 			<Grid container gap={2}>
 				<Grid>

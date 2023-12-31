@@ -5,7 +5,13 @@
 
 'use client';
 
-import { FunctionComponent, useEffect, useState } from 'react';
+import {
+	Dispatch,
+	FunctionComponent,
+	SetStateAction,
+	useEffect,
+	useState,
+} from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled, lighten, darken } from '@mui/system';
@@ -27,28 +33,45 @@ const GroupItems = styled('ul')({
 	padding: 0,
 });
 
-interface TagPickerProps {
-	defaultTag?: TagsResponse;
+interface FilterTagPickerProps {
+	defaultTagsIds?: string[];
+	setSelectedTags: Dispatch<SetStateAction<TagsResponse[]>>;
 }
 
-const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
+const FilterTagPicker: FunctionComponent<FilterTagPickerProps> = ({
+	defaultTagsIds,
+	setSelectedTags,
+}) => {
 	const [tags, setTags] = useState<TagsResponse[]>([]);
-	const [tagCategory, setTagCategory] = useState<string | undefined>(
-		defaultTag?.category
-	);
+	const [defaultTags, setDefaultTags] = useState<TagsResponse[]>([]);
+	const [hasInitialized, setHasInitialized] = useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await getFullListOfTags();
 				setTags(response);
+				if (defaultTagsIds) {
+					let defaultTagsArray: TagsResponse[] = [];
+
+					defaultTagsIds.forEach((tagId) => {
+						const tag = response.find((tag) => tag.id === tagId);
+						if (tag) {
+							defaultTagsArray.push(tag);
+						}
+					});
+					setDefaultTags(defaultTagsArray);
+				}
 			} catch (error) {
 				console.error('Error fetching tags:', error);
 			}
+			setHasInitialized(true);
 		};
 
 		fetchData();
 	}, []);
+
+	if (!hasInitialized) return <p>Loading...</p>;
 
 	// TODO - Fix the console error on Autocomplete
 
@@ -61,9 +84,10 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 				getOptionLabel={(option) => option.name}
 				fullWidth
 				autoComplete
+				multiple
 				autoHighlight
 				onChange={(_, newValue) => {
-					setTagCategory(newValue?.category);
+					setSelectedTags(newValue);
 				}}
 				isOptionEqualToValue={(option, value) => {
 					return (
@@ -71,7 +95,8 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 						option.category === value.category
 					);
 				}}
-				defaultValue={defaultTag}
+				disableCloseOnSelect
+				defaultValue={defaultTags}
 				renderInput={(params) => (
 					<TextField
 						{...params}
@@ -88,15 +113,8 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 					</li>
 				)}
 			/>
-			<input
-				name="tag-category"
-				value={tagCategory}
-				style={{
-					display: 'none',
-				}}
-			/>
 		</>
 	);
 };
 
-export default TagPicker;
+export default FilterTagPicker;

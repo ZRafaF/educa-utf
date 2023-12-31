@@ -14,6 +14,7 @@ import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
 	MIN_TOOLBAR_HEIGHT,
+	sleep,
 } from '@/lib/helper';
 
 interface ArticlesTableProps {
@@ -26,11 +27,14 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 	const sort = searchParams?.sort ?? '-created';
 	const page = Number(searchParams?.page ?? 1);
 	const items = Number(searchParams?.items ?? 50);
+	const filter = searchParams?.filter ?? '';
 
 	const articleList = await getListOfArticlesStats(page, items, {
 		sort: sort,
+		filter: filter,
 	});
 
+	await sleep(1000);
 	return (
 		<>
 			<Box
@@ -47,9 +51,9 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 					spacing={1}
 					sx={{
 						justifyContent: {
-							xs: 'space-around',
-							sm: 'space-around',
-							lg: 'space-around',
+							xs: 'start',
+							sm: 'start',
+							lg: 'start',
 						},
 					}}
 				>
@@ -64,7 +68,7 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 						>
 							<ArticleCard
 								myArticle={article}
-								idx={(page - 1) * items + idx}
+								// idx={(page - 1) * items + idx}
 							/>
 						</Grid>
 					))}

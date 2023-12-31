@@ -27,9 +27,11 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 	const sort = searchParams?.sort ?? '-created';
 	const page = Number(searchParams?.page ?? 1);
 	const items = Number(searchParams?.items ?? 50);
+	const filter = searchParams?.filter ?? '';
 
 	const chaptersList = await getListOfChaptersStats(page, items, {
 		sort: sort,
+		filter: filter,
 	});
 
 	return (
