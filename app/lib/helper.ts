@@ -113,3 +113,13 @@ export function sleep(duration: number): Promise<void> {
 		}, duration);
 	});
 }
+
+export function formatNumber(num: number, decimalPlaces: number = 1): string {
+	if (num >= 1000 && num < 1000000) {
+		return (num / 1000).toFixed(decimalPlaces) + 'k';
+	} else if (num >= 1000000) {
+		return (num / 1000000).toFixed(decimalPlaces) + 'M';
+	} else {
+		return num.toString();
+	}
+}

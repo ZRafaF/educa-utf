@@ -79,44 +79,41 @@ const FilterTagPicker: FunctionComponent<FilterTagPickerProps> = ({
 	// TODO - Fix the console error on Autocomplete
 
 	return (
-		<>
-			<Autocomplete
-				id="tag-picker-autocomplete"
-				options={tags}
-				groupBy={(option) => option.category}
-				getOptionLabel={(option) => option.name}
-				fullWidth
-				autoComplete
-				multiple
-				autoHighlight
-				onChange={(_, newValue) => {
-					setSelectedTags(newValue);
-				}}
-				isOptionEqualToValue={(option, value) => {
-					return (
-						option.name === value.name &&
-						option.category === value.category
-					);
-				}}
-				disableCloseOnSelect
-				defaultValue={defaultTags}
-				renderInput={(params) => (
-					<TextField
-						{...params}
-						required
-						label="Tag principal..."
-						name="tag-picker"
-					/>
-				)}
-				noOptionsText={'Nenhuma opção'}
-				renderGroup={(params) => (
-					<li key={params.key}>
-						<GroupHeader>{params.group}</GroupHeader>
-						<GroupItems>{params.children}</GroupItems>
-					</li>
-				)}
-			/>
-		</>
+		<Autocomplete
+			id="tag-picker-autocomplete"
+			options={tags}
+			groupBy={(option) => option.category}
+			getOptionLabel={(option) => option.name}
+			autoComplete
+			multiple
+			autoHighlight
+			fullWidth
+			onChange={(_, newValue) => {
+				setSelectedTags(newValue);
+			}}
+			isOptionEqualToValue={(option, value) => {
+				return (
+					option.name === value.name &&
+					option.category === value.category
+				);
+			}}
+			// disableCloseOnSelect
+			defaultValue={defaultTags}
+			renderInput={(params) => (
+				<TextField
+					{...params}
+					label="Contem uma das tags"
+					name="tag-picker"
+				/>
+			)}
+			noOptionsText={'Nenhuma opção'}
+			renderGroup={(params) => (
+				<li key={params.key}>
+					<GroupHeader>{params.group}</GroupHeader>
+					<GroupItems>{params.children}</GroupItems>
+				</li>
+			)}
+		/>
 	);
 };
 

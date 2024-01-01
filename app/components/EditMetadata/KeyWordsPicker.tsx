@@ -72,11 +72,15 @@ const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
 };
 
 interface KeyWordsPickerProps {
-	defaultKeyWords: KeyWordsResponse[] | undefined;
+	defaultKeyWords?: KeyWordsResponse[];
+	maxKeyWords?: number;
+	disableCreation?: boolean;
 }
 
 const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 	defaultKeyWords = [],
+	maxKeyWords = 5,
+	disableCreation,
 }) => {
 	const [selectedKeyWords, setSelectedKeyWords] = useState<string[]>(
 		defaultKeyWords.map((word) => word.word)
@@ -134,12 +138,12 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 					<TextField
 						{...params}
 						placeholder={
-							selectedKeyWords.length < 5
+							selectedKeyWords.length < maxKeyWords
 								? 'palavra-chave...'
 								: undefined
 						}
 						name="keywords-picker"
-						label="Até 5 Palavras-chave..."
+						label={`Até ${maxKeyWords} Palavras-chave...`}
 						error={invalidWord}
 						helperText={
 							'Palavras devem ser minúsculas, sem espaços ou acentos. ex.: calculo-numerico.'
@@ -163,7 +167,7 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 				onInputChange={(_, newInputValue) => {
 					setInputValue(newInputValue);
 
-					if (selectedKeyWords.length < 5) {
+					if (selectedKeyWords.length < maxKeyWords) {
 						debounce(newInputValue);
 						setFetchingKeyWords(true);
 					}
@@ -176,27 +180,30 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 				renderGroup={(params) => (
 					<li key={params.key}>
 						<ul style={{ padding: 0 }}>{params.children}</ul>
-						<Box px={2} pb={1}>
-							<Divider
-								sx={{
-									my: 1,
-									color: 'GrayText',
-								}}
-							>
-								Inserir palavra
-							</Divider>
-							<InsertKeyWordButton
-								inputValue={inputValue}
-								setSelectedKeyWords={setSelectedKeyWords}
-								selectedKeyWords={selectedKeyWords}
-								keyWords={keyWords}
-								invalidWord={invalidWord}
-							/>
-						</Box>
+						{!disableCreation && (
+							<Box px={2} pb={1}>
+								<Divider
+									sx={{
+										my: 1,
+										color: 'GrayText',
+									}}
+								>
+									Inserir palavra
+								</Divider>
+
+								<InsertKeyWordButton
+									inputValue={inputValue}
+									setSelectedKeyWords={setSelectedKeyWords}
+									selectedKeyWords={selectedKeyWords}
+									keyWords={keyWords}
+									invalidWord={invalidWord}
+								/>
+							</Box>
+						)}
 					</li>
 				)}
 				noOptionsText={(() => {
-					if (selectedKeyWords.length >= 5) {
+					if (selectedKeyWords.length >= maxKeyWords) {
 						return (
 							<Box color={'error.main'}>
 								Limite de palavras-chave atingido
@@ -204,6 +211,9 @@ const KeyWordsPicker: FunctionComponent<KeyWordsPickerProps> = ({
 						);
 					}
 					if (fetchingKeyWords) return 'Buscando palavras...';
+
+					if (disableCreation)
+						return 'Nenhuma palavra-chave encontrada';
 
 					if (inputValue)
 						return (

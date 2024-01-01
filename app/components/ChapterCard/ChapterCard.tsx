@@ -29,6 +29,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoreOptions from '../MoreOptions/MoreOptions';
 import dynamic from 'next/dynamic';
+import { formatNumber } from '@/lib/helper';
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),
 	{
@@ -102,7 +103,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					>
 						<VisibilityIcon color="action" fontSize="small" />
 						<Typography variant="caption">
-							{myChapter.views}
+							{formatNumber(myChapter.views)}
 						</Typography>
 					</Stack>
 				</Stack>
@@ -153,7 +154,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					<Stack direction="row" spacing={1} alignItems="center">
 						<VisibilityIcon color="action" fontSize="small" />
 						<Typography variant="caption">
-							{myChapter.views}
+							{formatNumber(myChapter.views)}
 						</Typography>
 						<MoreOptions />
 					</Stack>
