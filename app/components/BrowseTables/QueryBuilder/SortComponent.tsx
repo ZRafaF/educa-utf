@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import useLoadingQuery from '@/hooks/useLoadingQuery';
 
 const sortTypeList = [
 	{
@@ -42,10 +43,11 @@ const sortTypeList = [
 
 interface SortComponentProps {}
 
-const SortComponent: FunctionComponent<SortComponentProps> = () => {
+const SortComponent: FunctionComponent<SortComponentProps> = ({}) => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
+	const [updateLoadingState] = useLoadingQuery();
 
 	const sort = searchParams.get('sort') ?? '-created';
 
@@ -76,7 +78,10 @@ const SortComponent: FunctionComponent<SortComponentProps> = () => {
 	}, [sort]);
 
 	const handleChangeItems = (sortLabel: string) => {
-		router.push(pathname + '?' + createQueryString('sort', sortLabel));
+		const newSearchParams = createQueryString('sort', sortLabel);
+		updateLoadingState(searchParams.toString(), newSearchParams);
+		router.push(pathname + '?' + newSearchParams);
+
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth',

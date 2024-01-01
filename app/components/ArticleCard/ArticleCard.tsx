@@ -12,7 +12,6 @@ import Stack from '@mui/material/Stack/Stack';
 import Typography from '@mui/material/Typography/Typography';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
-import TagsComponent from '../TagsComponent/TagsComponent';
 import { ArticlesExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
@@ -20,6 +19,11 @@ import MoreOptions from '../MoreOptions/MoreOptions';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
+
+import dynamic from 'next/dynamic';
+const TagsComponent = dynamic(() => import('../TagsComponent/TagsComponent'), {
+	ssr: false,
+});
 
 interface ArticleCardProps {
 	idx?: number | undefined;
@@ -41,15 +45,15 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 			}}
 		>
 			<Grid container gap={2}>
-				<Grid>
-					<Box
-						height={'100%'}
-						sx={{
-							display: 'flex',
-							alignItems: 'center',
-						}}
-					>
-						{idx !== undefined && (
+				{idx !== undefined && (
+					<Grid>
+						<Box
+							height={'100%'}
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+							}}
+						>
 							<Typography
 								variant="h2"
 								fontWeight="700"
@@ -57,9 +61,9 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 							>
 								{idx + 1}
 							</Typography>
-						)}
-					</Box>
-				</Grid>
+						</Box>
+					</Grid>
+				)}
 				<Grid xs>
 					<Stack
 						direction="column"

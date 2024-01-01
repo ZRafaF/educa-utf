@@ -50,7 +50,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				size="small"
 				label={'nada aqui'}
 				variant="outlined"
-				sx={{ mb: 2 }}
+				sx={{ mb: expanded ? 1 : 0 }}
 			/>
 		);
 	}
@@ -106,6 +106,8 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 					event.stopPropagation();
 					event.preventDefault();
 				}}
+				component={Link}
+				href={`/browse/articles?filter=tag='${tag.id}'`}
 				onClick={(event) => {
 					event.stopPropagation();
 				}}

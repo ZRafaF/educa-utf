@@ -36,14 +36,17 @@ const GroupItems = styled('ul')({
 interface FilterTagPickerProps {
 	defaultTagsIds?: string[];
 	setSelectedTags: Dispatch<SetStateAction<TagsResponse[]>>;
+	defaultTags: TagsResponse[];
+	setDefaultTags: Dispatch<SetStateAction<TagsResponse[]>>;
 }
 
 const FilterTagPicker: FunctionComponent<FilterTagPickerProps> = ({
 	defaultTagsIds,
 	setSelectedTags,
+	defaultTags,
+	setDefaultTags,
 }) => {
 	const [tags, setTags] = useState<TagsResponse[]>([]);
-	const [defaultTags, setDefaultTags] = useState<TagsResponse[]>([]);
 	const [hasInitialized, setHasInitialized] = useState(false);
 
 	useEffect(() => {

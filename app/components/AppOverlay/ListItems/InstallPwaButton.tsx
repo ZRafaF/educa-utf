@@ -29,7 +29,12 @@ const InstallPwaButton: FunctionComponent<InstallPwaButtonProps> = () => {
 				<ListItemIcon>
 					<DownloadIcon />
 				</ListItemIcon>
-				<ListItemText primary={'Instalar APP'} />
+				<ListItemText
+					primary={'Instalar APP'}
+					sx={{
+						ml: -1.5,
+					}}
+				/>
 			</ListItemButton>
 		</Tooltip>
 	);

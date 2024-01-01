@@ -1,11 +1,4 @@
-import React, {
-	Dispatch,
-	SetStateAction,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -16,18 +9,18 @@ import { TagsResponse } from '@/types/pocketbase-types';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
+import useLoadingQuery from '@/hooks/useLoadingQuery';
 
-interface FiltersComponentProps {
-	setIsLoading: Dispatch<SetStateAction<boolean>>;
-}
+interface FiltersComponentProps {}
 
-const FiltersComponent: React.FunctionComponent<FiltersComponentProps> = ({
-	setIsLoading,
-}) => {
+const FiltersComponent: React.FunctionComponent<
+	FiltersComponentProps
+> = ({}) => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
 	const filter = searchParams.get('filter') ?? '';
+	const [updateLoadingState] = useLoadingQuery();
 
 	const selectedTagsIds = useMemo(() => {
 		// Split the filters by || then get the string in between '
@@ -57,10 +50,13 @@ const FiltersComponent: React.FunctionComponent<FiltersComponentProps> = ({
 			})
 			.join('||');
 
-		setIsLoading(true);
-		router.push(
-			pathname + '?' + createQueryString('filter', `${tagFilterString}`)
+		const newSearchParams = createQueryString(
+			'filter',
+			`${tagFilterString}`
 		);
+
+		updateLoadingState(searchParams.toString(), newSearchParams);
+		router.push(pathname + '?' + newSearchParams);
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth',
@@ -68,10 +64,6 @@ const FiltersComponent: React.FunctionComponent<FiltersComponentProps> = ({
 	};
 
 	// Detects when the router changes and updates the loading state
-
-	useEffect(() => {
-		setIsLoading(false);
-	}, [searchParams]);
 
 	return (
 		<>
@@ -105,12 +97,15 @@ const FiltersComponent: React.FunctionComponent<FiltersComponentProps> = ({
 							open={isOpen}
 							onClick={() => {
 								setIsOpen(false);
+								handleChangeFilters();
 							}}
 							invisible
 						/>
 						<FilterTagPicker
 							setSelectedTags={setSelectedTags}
 							defaultTagsIds={selectedTagsIds}
+							defaultTags={selectedTags}
+							setDefaultTags={setSelectedTags}
 						/>
 						<Button
 							onClick={() => {

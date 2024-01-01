@@ -18,6 +18,7 @@ import { useTheme } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { useSearchParams } from 'next/navigation';
+import LoadingQueryContext from '@/contexts/LoadingQueryContext';
 
 interface QueryBuilderProps {}
 
@@ -44,7 +45,7 @@ const QueryBuilder: FunctionComponent<QueryBuilderProps> = () => {
 	}, [setIsAtTop]);
 
 	return (
-		<>
+		<LoadingQueryContext.Provider value={[isLoading, setIsLoading]}>
 			<Box
 				position={{ sm: 'relative', md: 'sticky' }}
 				top={{ sm: 0, md: 64 }}
@@ -100,13 +101,13 @@ const QueryBuilder: FunctionComponent<QueryBuilderProps> = () => {
 								/>
 							)}
 							<Grid>
-								<FiltersComponent setIsLoading={setIsLoading} />
+								<FiltersComponent />
 							</Grid>
 						</Grid>
 					</Grid>
 				)}
 			</Box>
-		</>
+		</LoadingQueryContext.Provider>
 	);
 };
 
