@@ -106,8 +106,6 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 					event.stopPropagation();
 					event.preventDefault();
 				}}
-				component={Link}
-				href={`/browse/articles?filter=tag='${tag.id}'`}
 				onClick={(event) => {
 					event.stopPropagation();
 				}}
