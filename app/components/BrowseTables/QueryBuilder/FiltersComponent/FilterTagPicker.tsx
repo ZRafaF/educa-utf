@@ -72,7 +72,7 @@ const FilterTagPicker: FunctionComponent<FilterTagPickerProps> = ({
 		};
 
 		fetchData();
-	}, []);
+	}, [defaultTagsIds, setDefaultTags]);
 
 	if (!hasInitialized) return <p>Loading...</p>;
 

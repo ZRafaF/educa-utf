@@ -40,7 +40,7 @@ const FiltersComponent: React.FunctionComponent<
 
 			return decodeURIComponent(params.toString());
 		},
-		[searchParams, filter]
+		[searchParams]
 	);
 
 	const handleChangeFilters = () => {

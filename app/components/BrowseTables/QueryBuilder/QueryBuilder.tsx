@@ -56,10 +56,10 @@ const QueryBuilder: FunctionComponent<QueryBuilderProps> = () => {
 			>
 				{isLoading ? (
 					<Box display={'flex'}>
-						<CircularProgress />
-						<Typography fontWeight={'bold'} variant="h4">
-							Atualizando, aguarde...
+						<Typography fontWeight={'bold'} variant="h4" pr={2}>
+							Atualizando...
 						</Typography>
+						<CircularProgress />
 					</Box>
 				) : (
 					<Grid

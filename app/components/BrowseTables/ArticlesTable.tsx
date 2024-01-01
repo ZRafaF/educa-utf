@@ -16,6 +16,7 @@ import {
 	MIN_TOOLBAR_HEIGHT,
 	sleep,
 } from '@/lib/helper';
+import PageMessage from '../PageMessage/PageMessage';
 
 interface ArticlesTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
@@ -34,7 +35,11 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 		filter: filter,
 	});
 
-	await sleep(1000);
+	if (articleList.totalItems === 0)
+		return (
+			<PageMessage message="Ops. Parece que não ha correspondências a sua pesquisa. Tente alterar seus filtros!" />
+		);
+
 	return (
 		<>
 			<Box
