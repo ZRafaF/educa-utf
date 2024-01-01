@@ -33,7 +33,12 @@ const LinkItem: FunctionComponent<LinkItemProps> = ({
 				<Tooltip title={tooltip} arrow placement="right">
 					<ListItemButton>
 						<ListItemIcon>{icon}</ListItemIcon>
-						<ListItemText primary={title} />
+						<ListItemText
+							primary={title}
+							sx={{
+								ml: -1.5,
+							}}
+						/>
 					</ListItemButton>
 				</Tooltip>
 			</NextLink>

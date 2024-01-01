@@ -11,6 +11,7 @@ import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import useLoadingQuery from '@/hooks/useLoadingQuery';
 
 const orderTypeList = [
 	{
@@ -25,10 +26,11 @@ const orderTypeList = [
 
 interface OrderComponentProps {}
 
-const OrderComponent: FunctionComponent<OrderComponentProps> = () => {
+const OrderComponent: FunctionComponent<OrderComponentProps> = ({}) => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
+	const [updateLoadingState] = useLoadingQuery();
 
 	const sort = searchParams.get('sort') ?? '-created';
 
@@ -59,11 +61,13 @@ const OrderComponent: FunctionComponent<OrderComponentProps> = () => {
 	);
 
 	const handleChangeItems = (orderValue: string) => {
-		router.push(
-			pathname +
-				'?' +
-				createQueryString('sort', `${orderValue}${currentSort}`)
+		const newSearchParams = createQueryString(
+			'sort',
+			`${orderValue}${currentSort}`
 		);
+		updateLoadingState(searchParams.toString(), newSearchParams);
+		router.push(pathname + '?' + newSearchParams);
+
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth',

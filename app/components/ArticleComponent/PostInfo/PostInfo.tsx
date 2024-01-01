@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import TagsComponent from '@/components/TagsComponent/TagsComponent';
 import {
 	ArticlesStatsResponse,
 	ArticlesResponse,
@@ -20,6 +19,15 @@ import { ArticlesExpand } from '@/types/expanded-types';
 import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
 import Link from 'next/link';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import dynamic from 'next/dynamic';
+
+const TagsComponent = dynamic(
+	() => import('@/components/TagsComponent/TagsComponent'),
+	{
+		ssr: false,
+	}
+);
+
 interface PostInfoProps {
 	myArticle: ArticlesResponse<ArticlesExpand>;
 	articleStats: ArticlesStatsResponse;

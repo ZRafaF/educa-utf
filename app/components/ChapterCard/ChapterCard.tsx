@@ -22,13 +22,19 @@ import {
 	ChaptersResponse,
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
-import TagsComponent from '../TagsComponent/TagsComponent';
 import { ChaptersExpandTags } from '@/types/expanded-types';
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoreOptions from '../MoreOptions/MoreOptions';
+import dynamic from 'next/dynamic';
+const TagsComponent = dynamic(
+	() => import('@/components/TagsComponent/TagsComponent'),
+	{
+		ssr: false,
+	}
+);
 
 interface ChapterCardProps {
 	imgSrc?: string;

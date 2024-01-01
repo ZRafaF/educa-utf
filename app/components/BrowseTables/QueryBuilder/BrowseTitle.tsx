@@ -18,19 +18,19 @@ const BrowseTitle: FunctionComponent<BrowseTitleProps> = () => {
 	switch (currentRoute) {
 		case 'articles':
 			return (
-				<Typography fontWeight={'bold'}>
+				<Typography fontWeight={'bold'} variant="h4">
 					Buscando por artigos
 				</Typography>
 			);
 		case 'chapters':
 			return (
-				<Typography fontWeight={'bold'}>
+				<Typography fontWeight={'bold'} variant="h4">
 					Buscando por capítulos
 				</Typography>
 			);
 		default:
 			return (
-				<Typography fontWeight={'bold'}>
+				<Typography fontWeight={'bold'} variant="h4">
 					Buscando por conteúdos
 				</Typography>
 			);

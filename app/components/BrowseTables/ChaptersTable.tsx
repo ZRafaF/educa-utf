@@ -16,6 +16,7 @@ import {
 	MIN_PAGINATION_HEIGHT,
 	MIN_TOOLBAR_HEIGHT,
 } from '@/lib/helper';
+import PageMessage from '../PageMessage/PageMessage';
 
 interface ChaptersTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
@@ -27,10 +28,17 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 	const sort = searchParams?.sort ?? '-created';
 	const page = Number(searchParams?.page ?? 1);
 	const items = Number(searchParams?.items ?? 50);
+	const filter = searchParams?.filter ?? '';
 
 	const chaptersList = await getListOfChaptersStats(page, items, {
 		sort: sort,
+		filter: filter,
 	});
+
+	if (chaptersList.totalItems === 0)
+		return (
+			<PageMessage message="Ops. Parece que não ha correspondências a sua pesquisa. Tente alterar seus filtros!" />
+		);
 
 	return (
 		<>

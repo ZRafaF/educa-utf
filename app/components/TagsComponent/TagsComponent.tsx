@@ -14,6 +14,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Tooltip from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
 
 interface TagsComponentProps {
 	keyWords: KeyWordsRecord[] | undefined;
@@ -49,7 +50,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 				size="small"
 				label={'nada aqui'}
 				variant="outlined"
-				sx={{ mb: 2 }}
+				sx={{ mb: expanded ? 1 : 0 }}
 			/>
 		);
 	}
@@ -78,6 +79,8 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 					key={`tag_list${tag.name}`}
 					clickable
 					color="primary"
+					component={Link}
+					href={`/browse/articles?filter=tag='${tag.id}'`}
 				/>
 				{keyWords?.map((keyWord, idx) => (
 					<Chip
@@ -103,9 +106,10 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 					event.stopPropagation();
 					event.preventDefault();
 				}}
+				component={Link}
+				href={`/browse/articles?filter=tag='${tag.id}'`}
 				onClick={(event) => {
 					event.stopPropagation();
-					event.preventDefault();
 				}}
 			/>
 			{keyWords && keyWords.length > 0 && (
