@@ -5,6 +5,7 @@
 
 'use-client';
 
+import ImgBlock from '@/plugins/ImgBlock/ImgBlock';
 import PreBlock from '@/plugins/PreBlock/PreBlock';
 import { MarkdownToJSX } from 'markdown-to-jsx';
 import dynamic from 'next/dynamic';
@@ -19,6 +20,7 @@ const useOverridePlugins = () => {
 		return {
 			pre: PreBlock,
 			Equation: Equation,
+			img: ImgBlock,
 		};
 	}, []);
 

@@ -8,12 +8,21 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getInitColorSchemeScript } from '@mui/material/styles';
+import pb from '@/lib/PocketBase/pocketbase';
+import { useEffect } from 'react';
+import { logOut } from '@/lib/apiHelpers/authAPI';
 
 interface ProvidersProps {
 	children: React.ReactNode;
 }
 
 export default function Providers({ children }: ProvidersProps) {
+	useEffect(() => {
+		if (!pb.authStore.isValid) {
+			logOut();
+		}
+	}, [pb.authStore]);
+
 	return (
 		<>
 			{getInitColorSchemeScript()}
