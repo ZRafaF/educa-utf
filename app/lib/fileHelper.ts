@@ -11,7 +11,7 @@ import Compressor from 'compressorjs';
 export const compressImage = (
 	file: File | Blob,
 	options: Compressor.Options = {
-		quality: 0.6,
+		quality: 0.75,
 		maxHeight: 1500,
 		maxWidth: 1500,
 	}

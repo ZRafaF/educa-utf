@@ -24,7 +24,9 @@ const ViewsBumper: FunctionComponent<ViewsBumperProps> = ({
 		if (!initialized.current) {
 			initialized.current = true;
 
-			increaseViews(collectionName, recordId);
+			increaseViews(collectionName, recordId).catch((error) => {
+				console.error(error);
+			});
 		}
 	}, [collectionName, recordId]);
 

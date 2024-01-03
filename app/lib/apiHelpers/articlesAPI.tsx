@@ -44,12 +44,13 @@ export async function getArticleStatsById(articleId: string) {
 
 export async function getBestArticlesOf(time: 'week' | 'month' | 'year') {
 	try {
-		return await pb
+		const result = await pb
 			.collection('articles_stats')
-			.getFullList<ArticlesStatsResponse<ArticlesExpand>>({
+			.getList<ArticlesStatsResponse<ArticlesExpand>>(1, 15, {
 				skipTotal: true,
 				expand: 'tag, key_words',
 			});
+		return result.items;
 	} catch (error) {
 		console.error(error);
 		return [];
@@ -140,4 +141,8 @@ export async function getListOfArticlesStats(
 		console.error(error);
 		return {} as ListResult<ArticlesStatsResponse<ArticlesExpand>>;
 	}
+}
+
+export async function deleteArticle(articleId: string) {
+	return await pb.collection('articles').delete(articleId);
 }

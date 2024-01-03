@@ -10,6 +10,7 @@ import { ArticlesExpand } from '@/types/expanded-types';
 import PageMessage from '../PageMessage/PageMessage';
 import usePbAuth from '@/hooks/usePbAuth';
 import {
+	deleteArticle,
 	getArticleById,
 	getArticleDocumentUrl,
 } from '@/lib/apiHelpers/articlesAPI';
@@ -32,6 +33,7 @@ import AttachmentsComponent from './AttachmentsComponent/AttachmentsComponent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useSendMetadata from '@/hooks/useSendMetadata';
 import Container from '@mui/material/Container';
+import { useRouter } from 'next/navigation';
 
 interface EditArticleProps {
 	articleId: string;
@@ -52,6 +54,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		myArticle,
 		myArticleDocument
 	);
+	const router = useRouter();
 
 	useEffect(() => {
 		const fetchArticleInfo = async () => {
@@ -78,21 +81,43 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 					<Stack
 						spacing={2}
 						p={2}
-						direction="row"
+						direction={{ xs: 'column', sm: 'row' }}
 						justifyContent="space-around"
 						alignItems="center"
 					>
 						<Box />
 						<Typography component="h1" variant="h4">
-							Editando [{myArticle.title}]
+							Editando{' '}
+							<Box display={'inline'} color={'primary.main'}>
+								{myArticle.title}
+							</Box>
 						</Typography>
-						<Button
-							color="error"
-							variant="outlined"
-							startIcon={<DeleteIcon />}
+						<Box
+							sx={{
+								display: 'flex',
+								justifyContent: 'flex-end',
+								width: { xs: '100%', sm: 'auto' },
+							}}
 						>
-							Excluir
-						</Button>
+							<Button
+								color="error"
+								variant="outlined"
+								startIcon={<DeleteIcon />}
+								onClick={() => {
+									if (
+										window.confirm(
+											'Você tem certeza que deseja excluir esse artigo?'
+										)
+									) {
+										deleteArticle(myArticle.id).then(() => {
+											router.push('/');
+										});
+									}
+								}}
+							>
+								Excluir
+							</Button>
+						</Box>
 					</Stack>
 					<Accordion sx={{}} variant="outlined">
 						<AccordionSummary
@@ -100,7 +125,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 							aria-controls="panel1a-content"
 							id="panel1a-header"
 						>
-							<Typography>Editar metadados</Typography>
+							<Typography>Editar info</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 							<EditMetadataContent

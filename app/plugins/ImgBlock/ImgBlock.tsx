@@ -3,20 +3,49 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-const ImgBlock = ({ children, ...rest }: { rest: any; children: any }) => {
+import Image from 'next/image';
+
+const ImgBlock = ({
+	children,
+	alt,
+	src,
+	title,
+	className,
+}: {
+	alt: string;
+	src: string;
+	title?: string;
+	className?: string;
+	children: any;
+}) => {
 	return (
-		<img
-			{...rest}
+		<div
 			style={{
-				maxHeight: 350,
-				display: 'block',
-				marginLeft: 'auto',
-				marginRight: 'auto',
+				height: 300,
+				position: 'relative',
 			}}
 		>
-			{children}
-		</img>
+			<Image src={src} objectFit="contain" fill alt={alt}>
+				{children}
+			</Image>
+		</div>
 	);
 };
+
+// const ImgBlock = ({ children, ...rest }: { rest: any; children: any }) => {
+// 	return (
+// 		<img
+// 			{...rest}
+// 			style={{
+// 				maxHeight: 350,
+// 				display: 'block',
+// 				marginLeft: 'auto',
+// 				marginRight: 'auto',
+// 			}}
+// 		>
+// 			{children}
+// 		</img>
+// 	);
+// };
 
 export default ImgBlock;
