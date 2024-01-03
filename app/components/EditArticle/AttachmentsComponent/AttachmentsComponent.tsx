@@ -43,14 +43,23 @@ const AttachmentsComponent: FunctionComponent<AttachmentsComponentProps> = ({
 	}, [myArticleDocument]);
 
 	if (attachmentURLS.length === 0)
-		return <Typography>Nada aqui ainda...</Typography>;
+		return (
+			<Typography
+				sx={{
+					textAlign: 'center',
+				}}
+				color={'GrayText'}
+			>
+				Nada aqui ainda...
+			</Typography>
+		);
 
 	return (
 		<Grid
 			container
 			spacing={{ xs: 1, sm: 1, md: 2, lg: 2, xl: 2 }}
 			sx={{
-				justifyContent: 'space-between',
+				justifyContent: 'start',
 			}}
 			p={1}
 		>

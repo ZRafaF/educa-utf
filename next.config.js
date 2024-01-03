@@ -23,6 +23,9 @@ const nextConfig = {
 		});
 		return config;
 	},
+	images: {
+		domains: ['educautf.td.utfpr.edu.br'],
+	},
 };
 
 module.exports = withBundleAnalyzer(

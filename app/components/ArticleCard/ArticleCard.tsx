@@ -21,6 +21,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
 
 import dynamic from 'next/dynamic';
+import { formatNumber } from '@/lib/helper';
 const TagsComponent = dynamic(() => import('../TagsComponent/TagsComponent'), {
 	ssr: false,
 });
@@ -130,7 +131,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 												variant="body2"
 												component="p"
 											>
-												{myArticle.views}
+												{formatNumber(myArticle.views)}
 											</Typography>
 										</Stack>
 									</Tooltip>
@@ -149,7 +150,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 												variant="body2"
 												component="p"
 											>
-												{myArticle.likes}
+												{formatNumber(myArticle.likes)}
 											</Typography>
 										</Stack>
 									</Tooltip>

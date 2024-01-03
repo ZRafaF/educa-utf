@@ -9,11 +9,11 @@ export async function getAttachmentFilesURL(
 	articleId: string,
 	original?: boolean
 ) {
-	const record = await pb
-		.collection('attachments')
-		.getOne<AttachmentsResponse>(articleId);
-
 	try {
+		const record = await pb
+			.collection('attachments')
+			.getOne<AttachmentsResponse>(articleId);
+
 		return await record.files.map((file) =>
 			pb.files.getUrl(record, file, original ? {} : { thumb: '300x300' })
 		);

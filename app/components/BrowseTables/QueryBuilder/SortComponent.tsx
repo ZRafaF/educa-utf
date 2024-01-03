@@ -43,7 +43,7 @@ const sortTypeList = [
 
 interface SortComponentProps {}
 
-const SortComponent: FunctionComponent<SortComponentProps> = ({}) => {
+const SortComponent: FunctionComponent<SortComponentProps> = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();

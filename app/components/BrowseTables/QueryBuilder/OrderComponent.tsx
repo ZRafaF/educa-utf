@@ -26,7 +26,7 @@ const orderTypeList = [
 
 interface OrderComponentProps {}
 
-const OrderComponent: FunctionComponent<OrderComponentProps> = ({}) => {
+const OrderComponent: FunctionComponent<OrderComponentProps> = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();

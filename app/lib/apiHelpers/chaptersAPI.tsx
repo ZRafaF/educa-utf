@@ -28,12 +28,13 @@ export async function getFullListOfChapters(expand: boolean = false) {
 
 export async function getBestChaptersOf(time: 'week' | 'month' | 'year') {
 	try {
-		return await pb
+		const result = await pb
 			.collection('chapters')
-			.getFullList<ChaptersResponse<ChaptersExpandTags>>({
+			.getList<ChaptersResponse<ChaptersExpandTags>>(1, 15, {
 				skipTotal: true,
 				expand: 'tag, key_words',
 			});
+		return result.items;
 	} catch (error) {
 		console.error(error);
 		return [];
