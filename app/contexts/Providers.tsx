@@ -18,15 +18,17 @@ interface ProvidersProps {
 }
 
 export default function Providers({ children }: ProvidersProps) {
-	const pathname = usePathname();
-	useEffect(() => {
-		if (!pb.authStore.isValid) {
-			logOut().then(() => {
-				window.location.reload();
-				console.log(pathname);
-			});
-		}
-	}, [pathname]);
+	// FIXME - This is not working and is triggering a loop
+
+	// const pathname = usePathname();
+	// useEffect(() => {
+	// 	if (!pb.authStore.isValid) {
+	// 		logOut().then(() => {
+	// 			window.location.reload();
+	// 			console.log(pathname);
+	// 		});
+	// 	}
+	// }, [pathname]);
 
 	return (
 		<>

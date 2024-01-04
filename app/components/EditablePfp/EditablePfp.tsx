@@ -15,10 +15,11 @@ import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import AvatarComponent from '../AvatarComponent/AvatarComponent';
 import Box from '@mui/material/Box';
 import usePbAuth from '@/hooks/usePbAuth';
-import { IconButton, Tooltip } from '@mui/material';
 import useUploadFile from '@/hooks/useUploadFile';
 import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 
 interface EditablePfpProps {
 	userStats: UsersStatsResponse;
