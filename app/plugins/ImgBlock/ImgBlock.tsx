@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import Box from '@mui/material/Box';
 import Image from 'next/image';
 
 const ImgBlock = ({
@@ -19,16 +20,16 @@ const ImgBlock = ({
 	children: any;
 }) => {
 	return (
-		<div
+		<Box
 			style={{
-				height: 300,
+				height: 350,
 				position: 'relative',
 			}}
 		>
 			<Image src={src} objectFit="contain" fill alt={alt}>
 				{children}
 			</Image>
-		</div>
+		</Box>
 	);
 };
 

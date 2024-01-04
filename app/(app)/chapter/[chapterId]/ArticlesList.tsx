@@ -21,13 +21,22 @@ import {
 	ArticlesResponse,
 	ArticlesVisibilityOptions,
 	ChaptersResponse,
+	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
 import { ChaptersExpand } from '@/types/expanded-types';
-import { getChapterById } from '@/lib/apiHelpers/chaptersAPI';
+import {
+	getChapterById,
+	getChaptersStatsById,
+} from '@/lib/apiHelpers/chaptersAPI';
 import DrawerController from './DrawerController';
 import Tooltip from '@mui/material/Tooltip';
-import { getFormattedVisibility } from '@/lib/helper';
+import { getFormattedVisibility, isNullOrUndefined } from '@/lib/helper';
 import Stack from '@mui/material/Stack';
+import LikeButton from '@/components/LikeButton/LikeButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { toast } from 'react-toastify';
+import CircularProgress from '@mui/material/CircularProgress';
+import PageMessage from '@/components/PageMessage/PageMessage';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -35,29 +44,84 @@ interface ArticlesListProps {
 
 const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 	const [chapter, setChapter] = useState<ChaptersResponse<ChaptersExpand>>();
+	const [chapterStats, setChapterStats] = useState<ChaptersStatsResponse>();
+
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		try {
-			getChapterById(chapterId, true).then((chapterResponse) => {
-				if (chapterResponse) setChapter(chapterResponse);
-			});
-		} catch (error) {}
+		const handleFetchData = async () => {
+			try {
+				const [chapterResponse, chapterStatsResponse] =
+					await Promise.all([
+						getChapterById(chapterId, true),
+						getChaptersStatsById(chapterId),
+					]);
+				setChapter(chapterResponse);
+				setChapterStats(chapterStatsResponse);
+			} catch (error) {
+				toast.error('Erro ao carregar capítulo ' + error);
+				console.error(error);
+			}
+			setLoading(false);
+		};
+
+		handleFetchData();
 	}, [chapterId]);
 
+	if (loading) return <PageMessage message="Carregando..." loading pt={4} />;
+
+	if (chapter === undefined || chapterStats === undefined)
+		return (
+			<Typography fontWeight={500}>
+				Falha ao carregar capítulo.
+			</Typography>
+		);
+
 	return (
-		<DrawerController>
-			<Paper sx={{ p: 3, my: 2 }} variant="outlined">
-				<Typography variant="h5" fontWeight={700} pb={3} align="center">
-					{chapter?.title}
-				</Typography>
-				<Divider />
-				<Typography color="text.secondary" mt={3}>
-					{chapter?.description}
-				</Typography>
+		<>
+			<Paper sx={{ p: 2, my: 2 }} variant="outlined">
+				<Stack spacing={2}>
+					<Typography variant="h5" fontWeight={700} align="center">
+						{chapter.title}
+					</Typography>
+					<Divider />
+					<Typography color="text.secondary">
+						{chapter.description.length
+							? chapter.description
+							: 'Sem descrição'}
+					</Typography>
+					<Divider />
+					<Stack
+						direction="row"
+						justifyContent="space-around"
+						alignItems="center"
+					>
+						<Tooltip title="Visualizações" arrow placement="left">
+							<Stack
+								direction="row"
+								spacing={1}
+								alignItems="center"
+								pl={1}
+							>
+								<VisibilityIcon color="action" />
+								<Typography variant="subtitle2" component="p">
+									{chapterStats.views}
+								</Typography>
+							</Stack>
+						</Tooltip>
+						<LikeButton
+							numberOfLikes={chapterStats.likes}
+							item={{
+								id: chapter?.id,
+								type: 'chapters',
+							}}
+						/>
+					</Stack>
+				</Stack>
 			</Paper>
 			<List sx={{ width: '100%' }}>
 				<Divider component="li" />
-				{chapter?.expand?.articles?.map((post: ArticlesResponse) => (
+				{chapter.expand?.articles?.map((post: ArticlesResponse) => (
 					<Box
 						key={'link_to_article' + post.id}
 						sx={{
@@ -114,7 +178,7 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 					</Box>
 				))}
 			</List>
-		</DrawerController>
+		</>
 	);
 };
 

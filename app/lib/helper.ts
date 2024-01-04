@@ -123,3 +123,7 @@ export function formatNumber(num: number, decimalPlaces: number = 1): string {
 		return num.toString();
 	}
 }
+
+export function isNullOrUndefined(value: any) {
+	return value === undefined || value === null;
+}

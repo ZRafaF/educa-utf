@@ -19,8 +19,8 @@ import {
 	ArticlesStatsResponse,
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
-import { Box } from '@mui/material';
 import { ArticlesExpand, ChaptersExpandTags } from '@/types/expanded-types';
+import Box from '@mui/material/Box';
 
 interface DataTableProps {
 	fetchType: FetchType;

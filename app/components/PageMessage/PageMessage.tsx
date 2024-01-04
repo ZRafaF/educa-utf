@@ -11,11 +11,13 @@ import { FunctionComponent } from 'react';
 interface PageMessageProps {
 	message: string;
 	loading?: boolean;
+	pt?: number;
 }
 
 const PageMessage: FunctionComponent<PageMessageProps> = ({
 	message,
 	loading,
+	pt = 10,
 }) => {
 	return (
 		<Box
@@ -23,7 +25,8 @@ const PageMessage: FunctionComponent<PageMessageProps> = ({
 			flexDirection={'column'}
 			alignItems={'center'}
 			justifyContent={'center'}
-			pt={10}
+			pt={pt}
+			gap={1}
 		>
 			<Typography variant="h5" fontWeight={500}>
 				{message}

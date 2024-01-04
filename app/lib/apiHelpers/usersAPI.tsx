@@ -47,3 +47,15 @@ export async function getUserAvatarUrlByUserId(userId: string) {
 
 	return pb.files.getUrl(record, record.avatar, { thumb: '100x100' });
 }
+
+export async function updateLikedArticles(
+	userId: string,
+	articleId: string,
+	action: 'add' | 'remove'
+) {
+	const updateFunc = action === 'add' ? 'liked_articles+' : 'liked_articles-';
+
+	return pb.collection('users').update<UsersStatsResponse>(userId, {
+		[updateFunc]: articleId,
+	});
+}

@@ -9,7 +9,8 @@ import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import Box from '@mui/material/Box/Box';
 import { useEffect } from 'react';
-import { Button, Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 export default function Error({
 	error,

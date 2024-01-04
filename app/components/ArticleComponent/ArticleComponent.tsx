@@ -20,6 +20,7 @@ import Stack from '@mui/material/Stack';
 import dynamic from 'next/dynamic';
 import PageMessage from '../PageMessage/PageMessage';
 import Tooltip from '@mui/material/Tooltip';
+import Divider from '@mui/material/Divider';
 const EditPostIcon = dynamic(() => import('./PostInfo/EditPostIcon'), {
 	ssr: false,
 });
@@ -56,7 +57,7 @@ function ArticleComponent({
 					xl: fullWidth ? 30 : 5,
 				}}
 				pt={{ xs: 3, sm: 4, md: 8 }}
-				pb={2}
+				pb={0}
 			>
 				<Grid xs={20} sm={20} md={20} lg mb={3} pr={2}>
 					<Stack direction="row" spacing={1} alignItems="center">
@@ -68,38 +69,57 @@ function ArticleComponent({
 						>
 							{myArticle.title}
 						</Typography>
+
 						<EditPostIcon
 							articleId={myArticle.id}
 							articleAuthorId={myArticle.user}
 						/>
 					</Stack>
+
 					<Stack
 						direction="row"
 						spacing={1}
-						justifyContent="space-between"
+						alignContent="space-around"
+						mt={2}
 					>
 						<Typography
+							width={'100%'}
 							color="text.secondary"
 							variant="subtitle2"
 							component="p"
-							gutterBottom
 						>
-							{getFormattedDate(myArticle.created, 'PPP')}
+							{myArticle.description}
 						</Typography>
-						<Tooltip title="Visibilidade" arrow>
+						<Divider orientation="vertical" flexItem />
+						<Stack direction="column" px={1}>
 							<Typography
+								color="text.secondary"
 								variant="subtitle2"
 								component="p"
-								fontWeight={600}
-								color={
-									myArticle.visibility === 'public'
-										? 'success.main'
-										: 'text.secondary'
-								}
+								gutterBottom
 							>
-								{getFormattedVisibility(myArticle.visibility)}
+								{getFormattedDate(
+									myArticle.created,
+									'dd/MM/yyyy'
+								)}
 							</Typography>
-						</Tooltip>
+							<Tooltip title="Visibilidade" arrow>
+								<Typography
+									variant="subtitle2"
+									component="p"
+									fontWeight={600}
+									color={
+										myArticle.visibility === 'public'
+											? 'success.main'
+											: 'text.secondary'
+									}
+								>
+									{getFormattedVisibility(
+										myArticle.visibility
+									)}
+								</Typography>
+							</Tooltip>
+						</Stack>
 					</Stack>
 				</Grid>
 				<Grid xs={20} sm={20} md={20} lg={5} xl={5}>

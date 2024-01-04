@@ -14,12 +14,13 @@ import { FunctionComponent } from 'react';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Stack from '@mui/material/Stack/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { ArticlesExpand } from '@/types/expanded-types';
 import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
 import Link from 'next/link';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import dynamic from 'next/dynamic';
+import LikeButton from '@/components/LikeButton/LikeButton';
+import Tooltip from '@mui/material/Tooltip';
 
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),
@@ -120,22 +121,31 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 					orientation="vertical"
 					flexItem
 					variant="middle"
-					sx={{ mx: 2 }}
+					sx={{ mx: 1 }}
 				/>
 				<Grid xs={2}>
 					<Stack spacing={2}>
-						<Stack direction="row" spacing={1} alignItems="center">
-							<VisibilityIcon color="action" />
-							<Typography variant="subtitle2" component="p">
-								{myArticle.views}
-							</Typography>
-						</Stack>
-						<Stack direction="row" spacing={1} alignItems="center">
-							<FavoriteIcon color="action" />
-							<Typography variant="subtitle2" component="p">
-								{articleStats.likes}
-							</Typography>
-						</Stack>
+						<Tooltip title="Visualizações" arrow placement="left">
+							<Stack
+								direction="row"
+								spacing={1}
+								alignItems="center"
+								pl={1}
+							>
+								<VisibilityIcon color="action" />
+								<Typography variant="subtitle2" component="p">
+									{myArticle.views}
+								</Typography>
+							</Stack>
+						</Tooltip>
+
+						<LikeButton
+							numberOfLikes={articleStats.likes}
+							item={{
+								id: myArticle.id,
+								type: 'articles',
+							}}
+						/>
 					</Stack>
 				</Grid>
 			</Grid>
