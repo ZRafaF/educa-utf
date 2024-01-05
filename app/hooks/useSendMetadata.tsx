@@ -10,6 +10,7 @@ import { getTagByFilter } from '@/lib/apiHelpers/tagsAPI';
 import {
 	ArticlesResponse,
 	ArticlesVisibilityOptions,
+	ChaptersResponse,
 	TagsResponse,
 	UsersResponse,
 } from '@/types/pocketbase-types';
@@ -17,16 +18,19 @@ import { useRouter } from 'next/navigation';
 
 import { toast } from 'react-toastify';
 import usePbAuth from './usePbAuth';
-import { ArticlesExpand } from '@/types/expanded-types';
+import { ArticlesExpand, ChaptersExpand } from '@/types/expanded-types';
 import { createKeyWord, getKeyWord } from '@/lib/apiHelpers/keyWordsAPI';
 
 const useSendMetadata = (
 	type: 'create' | 'update',
+	resourceType: 'article' | 'chapter',
 	myArticle?: ArticlesResponse<ArticlesExpand>,
-	myArticleDocument?: string
+	myArticleDocument?: string,
+	myChapter?: ChaptersResponse<ChaptersExpand>
 ) => {
 	const [, user] = usePbAuth();
 	const router = useRouter();
+	const localizedName = resourceType === 'article' ? 'Artigo' : 'Capítulo';
 
 	const handleError = (toastId: string | number, error: unknown) => {
 		if (error instanceof Error) {
@@ -34,7 +38,7 @@ const useSendMetadata = (
 			switch (error.message) {
 				case 'Failed to create record.':
 					toast.update(toastId, {
-						render: 'Falha ao salvar o artigo!',
+						render: `Falha ao salvar o ${localizedName}!`,
 						type: 'error',
 						isLoading: false,
 						autoClose: 5000,
@@ -87,7 +91,7 @@ const useSendMetadata = (
 			keywords
 		);
 		toast.update(toastId, {
-			render: 'Artigo criado com sucesso!',
+			render: `Artigo criado com sucesso!`,
 			type: 'success',
 			isLoading: false,
 			autoClose: 5000,
@@ -145,13 +149,48 @@ const useSendMetadata = (
 		return updatedRecord;
 	};
 
+	const handleCreateChapter = async (
+		toastId: string | number,
+		submitTitle: string,
+		submitDescription: string,
+		submitVisibility: ArticlesVisibilityOptions,
+		author: UsersResponse,
+		fetchedTag: TagsResponse,
+		keywords: string[]
+	) => {
+		// const newRecord = await createArticle(
+		// 	{
+		// 		title: submitTitle,
+		// 		user: author.id,
+		// 		description: submitDescription,
+		// 		visibility: submitVisibility,
+		// 		document: '',
+		// 		tag: fetchedTag.id,
+		// 	},
+		// 	baseFile,
+		// 	keywords
+		// );
+		toast.update(toastId, {
+			render: `Capítulo criado com sucesso!`,
+			type: 'success',
+			isLoading: false,
+			autoClose: 5000,
+			pauseOnFocusLoss: true,
+			draggable: true,
+			pauseOnHover: true,
+			closeOnClick: true,
+		});
+
+		// router.push(`/edit/${newRecord.id}`);
+	};
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
-		const submitTitle = data.get('article-title')?.toString();
+		const submitTitle = data.get('title')?.toString();
 		const submitTag = data.get('tag-picker')?.toString();
 		const submitTagCategory = data.get('tag-category')?.toString();
-		const submitDescription = data.get('article-description')?.toString();
+		const submitDescription = data.get('description')?.toString();
 		const submitKeyWords = data.get('keywords')?.toString();
 		const keywords = submitKeyWords?.split(',');
 
@@ -200,7 +239,7 @@ const useSendMetadata = (
 		const id = toast.loading(
 			`${
 				type === 'create' ? 'Criando' : 'Atualizando'
-			} o artigo, aguarde...`
+			} o ${localizedName}, aguarde...`
 		);
 
 		try {

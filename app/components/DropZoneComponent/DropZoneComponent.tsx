@@ -34,9 +34,10 @@ const baseStyle: CSSProperties = {
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',
-	height: contentHeight,
-	width: contentWidth,
+	height: '100%',
+	width: '100%',
 	flexGrow: 2,
+	paddingRight: 10,
 	cursor: 'pointer',
 };
 
@@ -105,7 +106,7 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 	return (
 		<Box
 			sx={{
-				width: contentWidth,
+				maxWidth: contentWidth,
 			}}
 		>
 			<Stack
@@ -153,8 +154,8 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 					<Box
 						sx={{
 							position: 'absolute',
-							width: contentWidth,
-							height: contentHeight,
+							maxWidth: contentWidth,
+							maxHeight: contentHeight,
 							borderColor: 'text.disabled',
 							borderStyle: 'solid',
 							borderRadius: 2,

@@ -6,10 +6,12 @@
 import { ChaptersExpand, ChaptersExpandTags } from '@/types/expanded-types';
 import pb from '../PocketBase/pocketbase';
 import {
+	ChaptersRecord,
 	ChaptersResponse,
 	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
 import { ListResult, RecordOptions } from 'pocketbase';
+import { getFormData } from '../helper';
 
 export async function getFullListOfChapters(expand: boolean = false) {
 	try {
@@ -132,4 +134,18 @@ export function getChapterCoverURL(
 		chapter.cover,
 		original ? {} : { thumb: '600x300' }
 	);
+}
+
+export async function createChapter(
+	newChapter: ChaptersRecord,
+	cover: Blob,
+	keyWords: string[]
+) {
+	const form = getFormData(newChapter);
+	form.append('cover', cover, 'cover.png');
+
+	for (const word of keyWords) {
+		form.append('key_words', word);
+	}
+	return await pb.collection('chapters').create<ChaptersResponse>(form);
 }

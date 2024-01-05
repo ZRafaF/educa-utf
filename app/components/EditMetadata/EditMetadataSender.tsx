@@ -7,6 +7,7 @@
 
 import useSendMetadata from '@/hooks/useSendMetadata';
 import Paper from '@mui/material/Paper/Paper';
+import { useSearchParams } from 'next/navigation';
 import { FunctionComponent, ReactNode } from 'react';
 
 interface EditMetadataSenderProps {
@@ -16,7 +17,11 @@ interface EditMetadataSenderProps {
 const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 	children,
 }) => {
-	const [handleSubmit] = useSendMetadata('create');
+	const searchParams = useSearchParams();
+	const [handleSubmit] = useSendMetadata(
+		'create',
+		searchParams.get('type') === 'article' ? 'article' : 'chapter'
+	);
 
 	return (
 		<Paper

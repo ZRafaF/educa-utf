@@ -9,9 +9,16 @@ import { Metadata } from 'next/types';
 import EditMetadata from '@/components/EditMetadata/EditMetadata';
 import TypeSelector from './TypeSelector';
 export const metadata: Metadata = {
-	title: 'Novo artigo - EducaUTF',
-	description: 'Crie um novo artigo e publique no EducaUTF!',
-	keywords: ['EducaUTF', 'Educa UTF', 'novo artigo', 'criar', 'novo'],
+	title: 'Criar novo - EducaUTF',
+	description: 'Crie um novo artigo ou capítulo e publique no EducaUTF!',
+	keywords: [
+		'EducaUTF',
+		'Educa UTF',
+		'novo artigo',
+		'criar',
+		'novo',
+		'novo capítulo',
+	],
 };
 
 export default function Page() {

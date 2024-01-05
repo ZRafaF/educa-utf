@@ -6,7 +6,6 @@
 import { FunctionComponent } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
-
 import TextField from '@mui/material/TextField/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
 import Box from '@mui/material/Box/Box';
@@ -18,6 +17,7 @@ import SendMetadataButton from './SendMetadataButton';
 import TagPicker from './TagPicker';
 import { KeyWordsResponse, TagsResponse } from '@/types/pocketbase-types';
 import KeyWordsPicker from '@/components/KeyWordsPicker/KeyWordsPicker';
+import CoverPicker from './CoverPicker';
 
 interface DefaultValues {
 	title: string;
@@ -30,14 +30,16 @@ interface DefaultValues {
 interface EditMetadataContentProps {
 	sendButton?: boolean;
 	defaultValues?: DefaultValues;
+	overrideType?: 'article' | 'chapter';
 }
 
 const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 	sendButton,
 	defaultValues,
+	overrideType,
 }) => {
 	return (
-		<>
+		<Stack spacing={1}>
 			<Typography variant="h6" gutterBottom>
 				Informações básicas
 			</Typography>
@@ -51,7 +53,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 					>
 						<TextField
 							required
-							name="article-title"
+							name="title"
 							label={`Titulo...`}
 							helperText="Máximo de 64 carácteres"
 							inputProps={{
@@ -59,7 +61,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 								maxLength: 64,
 							}}
 							fullWidth
-							autoComplete="article-title"
+							autoComplete="title"
 							defaultValue={defaultValues?.title}
 						/>
 						<TagPicker defaultTag={defaultValues?.tag} />
@@ -67,7 +69,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 				</Grid>
 				<Grid xs={12} md={6}>
 					<TextField
-						name="article-description"
+						name="description"
 						label={`Descrição...`}
 						helperText="Máximo de 256 carácteres"
 						inputProps={{
@@ -76,56 +78,55 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 						fullWidth
 						multiline
 						rows={5}
-						autoComplete="article-description"
+						autoComplete="description"
 						defaultValue={defaultValues?.description}
 					/>
 				</Grid>
 			</Grid>
-			<Grid
-				container
-				spacing={3}
-				justifyContent="space-between"
-				alignItems="center"
-			>
-				<Grid xs={12} md={8} lg={9}>
-					<KeyWordsPicker
-						defaultKeyWords={defaultValues?.key_words}
-					/>
+			<Grid container spacing={3} justifyContent="space-between">
+				<Grid xs={12} sm={12} md>
+					<Stack spacing={3}>
+						<KeyWordsPicker
+							defaultKeyWords={defaultValues?.key_words}
+						/>
+
+						<Box>
+							<FormLabel>
+								<Typography variant="body2">
+									Visibilidade:
+								</Typography>
+							</FormLabel>
+							<RadioGroup
+								aria-labelledby="visibility-radio-buttons"
+								defaultValue={
+									defaultValues
+										? defaultValues.visibility
+										: 'public'
+								}
+								name="visibility-radio-buttons"
+								row
+							>
+								<FormControlLabel
+									value="public"
+									control={<Radio size="small" />}
+									label="Publico"
+								/>
+								<FormControlLabel
+									value="private"
+									control={<Radio size="small" />}
+									label="Privado"
+								/>
+							</RadioGroup>
+						</Box>
+					</Stack>
 				</Grid>
-				<Grid>
-					<Box>
-						<FormLabel>
-							<Typography variant="body2">
-								Visibilidade:
-							</Typography>
-						</FormLabel>
-						<RadioGroup
-							aria-labelledby="visibility-radio-buttons"
-							defaultValue={
-								defaultValues
-									? defaultValues.visibility
-									: 'public'
-							}
-							name="visibility-radio-buttons"
-							row
-						>
-							<FormControlLabel
-								value="public"
-								control={<Radio size="small" />}
-								label="Publico"
-							/>
-							<FormControlLabel
-								value="private"
-								control={<Radio size="small" />}
-								label="Privado"
-							/>
-						</RadioGroup>
-					</Box>
-				</Grid>
+				{overrideType !== 'article' && (
+					<CoverPicker overrideType={overrideType} />
+				)}
 			</Grid>
 
 			{sendButton && <SendMetadataButton />}
-		</>
+		</Stack>
 	);
 };
 

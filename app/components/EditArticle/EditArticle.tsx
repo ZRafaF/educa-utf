@@ -51,6 +51,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 	const saveButtonRef = useRef<HTMLButtonElement | null>(null);
 	const [handleSubmit] = useSendMetadata(
 		'update',
+		'article',
 		myArticle,
 		myArticleDocument
 	);
