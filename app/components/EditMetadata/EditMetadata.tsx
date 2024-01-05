@@ -7,14 +7,17 @@ import { FunctionComponent } from 'react';
 
 import EditMetadataSender from './EditMetadataSender';
 import EditMetadataContent from './EditMetadataContent';
+import ArticleCoverProvider from '@/contexts/ArticleCoverContext';
 
 interface EditMetadataProps {}
 
 const EditMetadata: FunctionComponent<EditMetadataProps> = () => {
 	return (
-		<EditMetadataSender>
-			<EditMetadataContent sendButton />
-		</EditMetadataSender>
+		<ArticleCoverProvider>
+			<EditMetadataSender>
+				<EditMetadataContent sendButton />
+			</EditMetadataSender>
+		</ArticleCoverProvider>
 	);
 };
 

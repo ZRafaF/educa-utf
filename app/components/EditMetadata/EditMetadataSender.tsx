@@ -5,10 +5,11 @@
 
 'use client';
 
+import { ArticleCoverContext } from '@/contexts/ArticleCoverContext';
 import useSendMetadata from '@/hooks/useSendMetadata';
 import Paper from '@mui/material/Paper/Paper';
 import { useSearchParams } from 'next/navigation';
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode, useContext, useState } from 'react';
 
 interface EditMetadataSenderProps {
 	children: ReactNode;
@@ -18,10 +19,13 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 	children,
 }) => {
 	const searchParams = useSearchParams();
-	const [handleSubmit] = useSendMetadata(
-		'create',
-		searchParams.get('type') === 'article' ? 'article' : 'chapter'
-	);
+	const [cover] = useContext(ArticleCoverContext);
+	const [handleSubmit] = useSendMetadata({
+		type: 'create',
+		resourceType:
+			searchParams.get('type') === 'article' ? 'article' : 'chapter',
+		myChapterCover: cover,
+	});
 
 	return (
 		<Paper

@@ -28,7 +28,7 @@ const EditPostIcon: FunctionComponent<EditPostIconProps> = ({
 				<IconButton
 					aria-label="editar artigo"
 					LinkComponent={Link}
-					href={`/edit/${articleId}`}
+					href={`/edit-article/${articleId}`}
 					size="small"
 				>
 					<EditIcon color="disabled" fontSize="small" />

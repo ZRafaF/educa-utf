@@ -24,7 +24,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import Stack from '@mui/material/Stack/Stack';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import ArticleCoverContext from '@/contexts/ArticleCoverContext';
+import { ArticleCoverContext } from '@/contexts/ArticleCoverContext';
 
 const contentWidth = 300;
 const contentHeight = 150;

@@ -11,6 +11,7 @@ import {
 	ArticlesResponse,
 	ArticlesVisibilityOptions,
 	ChaptersResponse,
+	ChaptersVisibilityOptions,
 	TagsResponse,
 	UsersResponse,
 } from '@/types/pocketbase-types';
@@ -20,14 +21,23 @@ import { toast } from 'react-toastify';
 import usePbAuth from './usePbAuth';
 import { ArticlesExpand, ChaptersExpand } from '@/types/expanded-types';
 import { createKeyWord, getKeyWord } from '@/lib/apiHelpers/keyWordsAPI';
+import { createChapter } from '@/lib/apiHelpers/chaptersAPI';
 
-const useSendMetadata = (
-	type: 'create' | 'update',
-	resourceType: 'article' | 'chapter',
-	myArticle?: ArticlesResponse<ArticlesExpand>,
-	myArticleDocument?: string,
-	myChapter?: ChaptersResponse<ChaptersExpand>
-) => {
+const useSendMetadata = ({
+	type,
+	resourceType,
+	myArticle,
+	myArticleDocument,
+	myChapter,
+	myChapterCover,
+}: {
+	type: 'create' | 'update';
+	resourceType: 'article' | 'chapter';
+	myArticle?: ArticlesResponse<ArticlesExpand>;
+	myArticleDocument?: string;
+	myChapter?: ChaptersResponse<ChaptersExpand>;
+	myChapterCover?: File;
+}) => {
 	const [, user] = usePbAuth();
 	const router = useRouter();
 	const localizedName = resourceType === 'article' ? 'Artigo' : 'Capítulo';
@@ -67,48 +77,75 @@ const useSendMetadata = (
 		}
 	};
 
-	const handleCreateArticle = async (
+	const handleCreate = async (
 		toastId: string | number,
 		submitTitle: string,
 		submitDescription: string,
-		submitVisibility: ArticlesVisibilityOptions,
+		submitVisibility: ArticlesVisibilityOptions | ChaptersVisibilityOptions,
 		author: UsersResponse,
 		fetchedTag: TagsResponse,
 		keywords: string[]
 	) => {
-		const baseFile = new Blob([''], { type: 'text/markdown' });
+		if (resourceType === 'article') {
+			const baseFile = new Blob([''], { type: 'text/markdown' });
 
-		const newRecord = await createArticle(
-			{
-				title: submitTitle,
-				user: author.id,
-				description: submitDescription,
-				visibility: submitVisibility,
-				document: '',
-				tag: fetchedTag.id,
-			},
-			baseFile,
-			keywords
-		);
-		toast.update(toastId, {
-			render: `Artigo criado com sucesso!`,
-			type: 'success',
-			isLoading: false,
-			autoClose: 5000,
-			pauseOnFocusLoss: true,
-			draggable: true,
-			pauseOnHover: true,
-			closeOnClick: true,
-		});
-
-		router.push(`/edit/${newRecord.id}`);
+			const newRecord = await createArticle(
+				{
+					title: submitTitle,
+					user: author.id,
+					description: submitDescription,
+					visibility: submitVisibility as ArticlesVisibilityOptions,
+					document: '',
+					tag: fetchedTag.id,
+				},
+				baseFile,
+				keywords
+			);
+			toast.update(toastId, {
+				render: `Artigo criado com sucesso!`,
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
+			router.push(`/edit-article/${newRecord.id}`);
+		} else {
+			if (myChapterCover === undefined) {
+				throw new Error('capa inválida inválido!');
+			}
+			const newRecord = await createChapter(
+				{
+					title: submitTitle,
+					user: author.id,
+					description: submitDescription,
+					visibility: submitVisibility as ChaptersVisibilityOptions,
+					tag: fetchedTag.id,
+				},
+				myChapterCover,
+				keywords
+			);
+			toast.update(toastId, {
+				render: `Capítulo criado com sucesso!`,
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
+			router.push(`/edit-chapter/${newRecord.id}`);
+		}
 	};
 
 	const handleUpdateArticle = async (
 		toastId: string | number,
 		submitTitle: string,
 		submitDescription: string,
-		submitVisibility: ArticlesVisibilityOptions,
+		submitVisibility: ArticlesVisibilityOptions | ChaptersVisibilityOptions,
 		author: UsersResponse,
 		fetchedTag: TagsResponse,
 		keywords: string[]
@@ -127,7 +164,7 @@ const useSendMetadata = (
 				title: submitTitle,
 				user: author.id,
 				description: submitDescription,
-				visibility: submitVisibility,
+				visibility: submitVisibility as ArticlesVisibilityOptions,
 				tag: fetchedTag.id,
 				document: '',
 			},
@@ -149,41 +186,6 @@ const useSendMetadata = (
 		return updatedRecord;
 	};
 
-	const handleCreateChapter = async (
-		toastId: string | number,
-		submitTitle: string,
-		submitDescription: string,
-		submitVisibility: ArticlesVisibilityOptions,
-		author: UsersResponse,
-		fetchedTag: TagsResponse,
-		keywords: string[]
-	) => {
-		// const newRecord = await createArticle(
-		// 	{
-		// 		title: submitTitle,
-		// 		user: author.id,
-		// 		description: submitDescription,
-		// 		visibility: submitVisibility,
-		// 		document: '',
-		// 		tag: fetchedTag.id,
-		// 	},
-		// 	baseFile,
-		// 	keywords
-		// );
-		toast.update(toastId, {
-			render: `Capítulo criado com sucesso!`,
-			type: 'success',
-			isLoading: false,
-			autoClose: 5000,
-			pauseOnFocusLoss: true,
-			draggable: true,
-			pauseOnHover: true,
-			closeOnClick: true,
-		});
-
-		// router.push(`/edit/${newRecord.id}`);
-	};
-
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
@@ -191,6 +193,7 @@ const useSendMetadata = (
 		const submitTag = data.get('tag-picker')?.toString();
 		const submitTagCategory = data.get('tag-category')?.toString();
 		const submitDescription = data.get('description')?.toString();
+
 		const submitKeyWords = data.get('keywords')?.toString();
 		const keywords = submitKeyWords?.split(',');
 
@@ -198,12 +201,17 @@ const useSendMetadata = (
 			const visibRaw = data.get('visibility-radio-buttons')?.toString();
 			switch (visibRaw) {
 				case 'public':
-					return ArticlesVisibilityOptions.public;
+					return resourceType === 'article'
+						? ArticlesVisibilityOptions.public
+						: ChaptersVisibilityOptions.public;
 				case 'private':
-					return ArticlesVisibilityOptions.private;
-
+					return resourceType === 'article'
+						? ArticlesVisibilityOptions.private
+						: ChaptersVisibilityOptions.private;
 				default:
-					return ArticlesVisibilityOptions.public;
+					return resourceType === 'article'
+						? ArticlesVisibilityOptions.public
+						: ChaptersVisibilityOptions.public;
 			}
 		};
 
@@ -285,7 +293,7 @@ const useSendMetadata = (
 			})();
 
 			if (type === 'create') {
-				await handleCreateArticle(
+				await handleCreate(
 					id,
 					submitTitle,
 					submitDescription,
