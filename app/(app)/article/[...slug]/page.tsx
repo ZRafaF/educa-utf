@@ -12,9 +12,9 @@ import {
 } from '@/lib/apiHelpers/articlesAPI';
 import { FunctionComponent } from 'react';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
-import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import PageMessage from '@/components/PageMessage/PageMessage';
+import dynamic from 'next/dynamic';
 
 const ViewsBumper = dynamic(
 	() => import('@/components/ViewsBumper/ViewsBumper'),

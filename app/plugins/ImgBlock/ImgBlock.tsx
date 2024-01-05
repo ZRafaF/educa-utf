@@ -26,7 +26,14 @@ const ImgBlock = ({
 				position: 'relative',
 			}}
 		>
-			<Image src={src} objectFit="contain" fill alt={alt}>
+			<Image
+				src={src}
+				style={{
+					objectFit: 'contain',
+				}}
+				fill
+				alt={alt}
+			>
 				{children}
 			</Image>
 		</Box>
