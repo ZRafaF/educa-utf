@@ -92,7 +92,7 @@ export default async function sitemap() {
 			priority: 0.2,
 		},
 		{
-			url: 'https://educautf.td.utfpr.edu.br/new-article',
+			url: 'https://educautf.td.utfpr.edu.br/new',
 			lastModified: new Date(),
 			changeFrequency: 'yearly',
 			priority: 0.2,

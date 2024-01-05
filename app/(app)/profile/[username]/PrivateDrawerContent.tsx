@@ -65,14 +65,9 @@ const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
 				</CollapsibleList>
 				<Divider />
 				<LinkItem
-					title="Novo artigo"
+					title="Criar artigo ou capítulo"
 					icon={<NoteAddIcon />}
-					href="/new-article"
-				/>
-				<LinkItem
-					title="Novo capítulo"
-					icon={<QueueIcon />}
-					href="/new-chapter"
+					href="/new"
 				/>
 				<Divider />
 				<CollapsibleList icon={<FavoriteIcon />} title="Meus favoritos">

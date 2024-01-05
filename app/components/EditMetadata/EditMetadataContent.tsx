@@ -52,7 +52,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 						<TextField
 							required
 							name="article-title"
-							label="Titulo do artigo..."
+							label={`Titulo...`}
 							helperText="Máximo de 64 carácteres"
 							inputProps={{
 								minLength: 1,
@@ -68,7 +68,7 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 				<Grid xs={12} md={6}>
 					<TextField
 						name="article-description"
-						label="Descrição do artigo..."
+						label={`Descrição...`}
 						helperText="Máximo de 256 carácteres"
 						inputProps={{
 							maxLength: 256,
@@ -101,7 +101,11 @@ const EditMetadataContent: FunctionComponent<EditMetadataContentProps> = ({
 						</FormLabel>
 						<RadioGroup
 							aria-labelledby="visibility-radio-buttons"
-							defaultValue={defaultValues?.visibility}
+							defaultValue={
+								defaultValues
+									? defaultValues.visibility
+									: 'public'
+							}
 							name="visibility-radio-buttons"
 							row
 						>

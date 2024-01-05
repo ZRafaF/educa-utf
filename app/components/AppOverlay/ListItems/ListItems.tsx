@@ -41,17 +41,12 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 				/>
 				<Divider />
 				<LinkItem
-					title="Novo artigo"
-					tooltip="Criar novo artigo"
+					title="Criar novo"
+					tooltip="Criar novo artigo ou capítulo"
 					icon={<NoteAddIcon />}
-					href="/new-article"
+					href="/new"
 				/>
-				<LinkItem
-					title="Novo capítulo"
-					tooltip="Criar novo capítulo"
-					icon={<QueueIcon />}
-					href="/new-chapter"
-				/>
+
 				<Divider />
 				<InstallPwaButton />
 			</List>

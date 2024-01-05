@@ -14,11 +14,15 @@ import Button from '@mui/material/Button/Button';
 import Stack from '@mui/material/Stack/Stack';
 import Typography from '@mui/material/Typography/Typography';
 import Divider from '@mui/material/Divider';
+import { useSearchParams } from 'next/navigation';
 
 interface SendMetadataButtonProps {}
 
-const SendMetadataButton: FunctionComponent<SendMetadataButtonProps> = () => {
+const SendMetadataButton: FunctionComponent<SendMetadataButtonProps> = ({}) => {
 	const [accept, setAccept] = useState<boolean>(false);
+	const searchParams = useSearchParams();
+	const type = searchParams.get('type') ?? 'article';
+	const localizedName = type === 'article' ? 'Artigo' : 'Capítulo';
 
 	return (
 		<>
@@ -84,7 +88,7 @@ const SendMetadataButton: FunctionComponent<SendMetadataButtonProps> = () => {
 					}}
 					disabled={!accept}
 				>
-					Criar artigo
+					Criar {localizedName}
 				</Button>
 			</Stack>
 		</>
