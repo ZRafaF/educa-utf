@@ -24,7 +24,14 @@ const nextConfig = {
 		return config;
 	},
 	images: {
-		domains: ['educautf.td.utfpr.edu.br'],
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'educautf.td.utfpr.edu.br',
+				port: '',
+				pathname: '/db/api/files/**',
+			},
+		],
 	},
 };
 

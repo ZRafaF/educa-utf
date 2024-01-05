@@ -17,7 +17,7 @@ import Stack from '@mui/material/Stack/Stack';
 import SendMetadataButton from './SendMetadataButton';
 import TagPicker from './TagPicker';
 import { KeyWordsResponse, TagsResponse } from '@/types/pocketbase-types';
-import KeyWordsPicker from './KeyWordsPicker';
+import KeyWordsPicker from '@/components/KeyWordsPicker/KeyWordsPicker';
 
 interface DefaultValues {
 	title: string;

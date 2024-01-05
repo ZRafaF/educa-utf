@@ -8,68 +8,13 @@
 import { getKeyWordListBySimilar } from '@/lib/apiHelpers/keyWordsAPI';
 import { KeyWordsResponse } from '@/types/pocketbase-types';
 import Autocomplete from '@mui/material/Autocomplete';
-import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
-import {
-	Dispatch,
-	FunctionComponent,
-	SetStateAction,
-	useMemo,
-	useState,
-} from 'react';
+import { FunctionComponent, useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import usePbAuth from '@/hooks/usePbAuth';
-
-interface InsertKeyWordButtonProps {
-	inputValue: string | undefined;
-	setSelectedKeyWords: Dispatch<SetStateAction<string[]>>;
-	selectedKeyWords: string[];
-	keyWords: string[];
-	invalidWord: boolean;
-}
-
-const InsertKeyWordButton: FunctionComponent<InsertKeyWordButtonProps> = ({
-	inputValue,
-	setSelectedKeyWords,
-	selectedKeyWords,
-	keyWords,
-	invalidWord,
-}) => {
-	const [, user] = usePbAuth();
-
-	const createAndInsertKeyWord = async () => {
-		if (inputValue === undefined || inputValue === '' || user === null)
-			return;
-
-		setSelectedKeyWords((prev) => [...prev, inputValue]);
-	};
-
-	return (
-		<>
-			<Button
-				variant="outlined"
-				startIcon={<AddIcon />}
-				sx={{
-					textTransform: 'none',
-				}}
-				disabled={
-					keyWords.some((word) => word === inputValue) ||
-					selectedKeyWords.some((word) => word === inputValue) ||
-					invalidWord
-				}
-				onClick={() => {
-					createAndInsertKeyWord();
-				}}
-			>
-				{inputValue}
-			</Button>
-		</>
-	);
-};
+import InsertKeyWordButton from './InsertKeyWordButton';
 
 interface KeyWordsPickerProps {
 	defaultKeyWords?: KeyWordsResponse[];

@@ -15,8 +15,6 @@ const usePbAuth = () => {
 	);
 
 	useEffect(() => {
-		pb.collection('users').authRefresh();
-
 		return pb.authStore.onChange((token, model) => {
 			setToken(token);
 			setUser(model as UsersResponse);

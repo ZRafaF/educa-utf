@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 	keywords: ['EducaUTF', 'Educa UTF', 'artigos', 'estudo', 'UTFPR', 'wiki'],
 
 	manifest: '/manifest.json',
-	themeColor: '#121212',
+	// themeColor: '#121212',
 
 	openGraph: {
 		images: '/icon-256x256.png',
@@ -30,6 +30,10 @@ export const metadata: Metadata = {
 		images: '/icon-256x256.png',
 	},
 };
+
+// export const viewport: Viewport = {
+//   themeColor: 'black',
+// }
 
 export default function RootLayout({
 	children,

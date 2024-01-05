@@ -88,7 +88,9 @@ function ArticleComponent({
 							variant="subtitle2"
 							component="p"
 						>
-							{myArticle.description}
+							{myArticle.description.length !== 0
+								? myArticle.description
+								: 'Sem descrição.'}
 						</Typography>
 						<Divider orientation="vertical" flexItem />
 						<Stack direction="column" px={1}>

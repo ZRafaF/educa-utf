@@ -18,17 +18,15 @@ interface ProvidersProps {
 }
 
 export default function Providers({ children }: ProvidersProps) {
-	// FIXME - This is not working and is triggering a loop
+	const pathname = usePathname();
 
-	// const pathname = usePathname();
-	// useEffect(() => {
-	// 	if (!pb.authStore.isValid) {
-	// 		logOut().then(() => {
-	// 			window.location.reload();
-	// 			console.log(pathname);
-	// 		});
-	// 	}
-	// }, [pathname]);
+	useEffect(() => {
+		if (pb.authStore.isValid) {
+			pb.collection('users').authRefresh();
+		} else {
+			logOut();
+		}
+	}, [pathname]);
 
 	return (
 		<>

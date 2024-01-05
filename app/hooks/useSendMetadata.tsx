@@ -216,7 +216,7 @@ const useSendMetadata = (
 
 				for (let i = 0; i < keywords.length; i++) {
 					const word = keywords[i];
-
+					if (word.length === 0) continue;
 					try {
 						const keyWord = await getKeyWord(word);
 						listOfKeyWordsId.push(keyWord.id);
