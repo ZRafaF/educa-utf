@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
 		rules: {
 			userAgent: '*',
 			allow: '/',
-			disallow: ['/umami/', '/pb/', '/edit/'],
+			disallow: ['/umami/', '/pb/', '/edit-article/', '/edit-chapter/'],
 		},
 		sitemap: 'https://educautf.td.utfpr.edu.br/sitemap.xml',
 	};

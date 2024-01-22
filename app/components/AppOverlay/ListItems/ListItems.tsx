@@ -6,15 +6,18 @@
 import { FunctionComponent } from 'react';
 import Divider from '@mui/material/Divider/Divider';
 import List from '@mui/material/List/List';
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import QueueIcon from '@mui/icons-material/Queue';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import React from 'react';
 import LinkItem from '@/components/LinkItem/LinkItem';
-import InstallPwaButton from './InstallPwaButton';
-
+import dynamic from 'next/dynamic';
+const CreateNewButton = dynamic(() => import('./CreateNewButton'), {
+	ssr: false,
+});
+const InstallPwaButton = dynamic(() => import('./InstallPwaButton'), {
+	ssr: false,
+});
 interface ListItemsProps {}
 
 const ListItems: FunctionComponent<ListItemsProps> = () => {
@@ -40,18 +43,8 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					href="/browse/chapters"
 				/>
 				<Divider />
-				<LinkItem
-					title="Novo artigo"
-					tooltip="Criar novo artigo"
-					icon={<NoteAddIcon />}
-					href="/new-article"
-				/>
-				<LinkItem
-					title="Novo capítulo"
-					tooltip="Criar novo capítulo"
-					icon={<QueueIcon />}
-					href="/new-chapter"
-				/>
+				<CreateNewButton />
+
 				<Divider />
 				<InstallPwaButton />
 			</List>

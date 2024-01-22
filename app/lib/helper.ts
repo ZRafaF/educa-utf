@@ -127,3 +127,12 @@ export function formatNumber(num: number, decimalPlaces: number = 1): string {
 export function isNullOrUndefined(value: any) {
 	return value === undefined || value === null;
 }
+
+export function compareStrings(a: string, b: string) {
+	// Compares two strings, removes accents, spaces and converts to lowercase
+
+	const regex = /[^a-zA-Z0-9]/g;
+	const stringA = a.normalize('NFD').replace(regex, '').toLowerCase();
+	const stringB = b.normalize('NFD').replace(regex, '').toLowerCase();
+	return stringA === stringB;
+}

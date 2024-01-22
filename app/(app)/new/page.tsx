@@ -7,18 +7,25 @@ import Typography from '@mui/material/Typography/Typography';
 
 import { Metadata } from 'next/types';
 import EditMetadata from '@/components/EditMetadata/EditMetadata';
-
+import TypeSelector from './TypeSelector';
 export const metadata: Metadata = {
-	title: 'Novo artigo - EducaUTF',
-	description: 'Crie um novo artigo e publique no EducaUTF!',
-	keywords: ['EducaUTF', 'Educa UTF', 'novo artigo', 'criar', 'novo'],
+	title: 'Criar novo - EducaUTF',
+	description: 'Crie um novo artigo ou capítulo e publique no EducaUTF!',
+	keywords: [
+		'EducaUTF',
+		'Educa UTF',
+		'novo artigo',
+		'criar',
+		'novo',
+		'novo capítulo',
+	],
 };
 
 export default function Page() {
 	return (
 		<Container maxWidth={'lg'} sx={{ py: 4, flexGrow: 1 }}>
-			<Typography component="h1" variant="h4" align="center" gutterBottom>
-				Criar novo artigo
+			<Typography component="h1" variant="h4" align="center" pb={2}>
+				Criar novo <TypeSelector />
 			</Typography>
 
 			<EditMetadata />

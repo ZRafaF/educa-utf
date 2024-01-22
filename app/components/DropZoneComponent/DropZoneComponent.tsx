@@ -24,7 +24,8 @@ import HelpIcon from '@mui/icons-material/Help';
 import Stack from '@mui/material/Stack/Stack';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import ArticleCoverContext from '@/contexts/ArticleCoverContext';
+import { ArticleCoverContext } from '@/contexts/ArticleCoverContext';
+import Fab from '@mui/material/Fab';
 
 const contentWidth = 300;
 const contentHeight = 150;
@@ -34,9 +35,10 @@ const baseStyle: CSSProperties = {
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',
-	height: contentHeight,
-	width: contentWidth,
+	height: '100%',
+	width: '100%',
 	flexGrow: 2,
+	paddingRight: 10,
 	cursor: 'pointer',
 };
 
@@ -105,7 +107,7 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 	return (
 		<Box
 			sx={{
-				width: contentWidth,
+				maxWidth: contentWidth,
 			}}
 		>
 			<Stack
@@ -152,38 +154,53 @@ const DropZoneComponent: FunctionComponent<DropZoneComponentProps> = () => {
 				{selectedFile ? (
 					<Box
 						sx={{
-							position: 'absolute',
-							width: contentWidth,
-							height: contentHeight,
+							position: 'relative',
+							maxWidth: contentWidth,
+							maxHeight: contentHeight,
 							borderColor: 'text.disabled',
 							borderStyle: 'solid',
 							borderRadius: 2,
 							borderWidth: 2,
+							width: '100%',
 							overflow: 'hidden',
 						}}
 					>
-						<Image
-							alt={selectedFile.name}
-							src={URL.createObjectURL(selectedFile)}
-							width={contentWidth}
-							height={contentHeight}
-							style={{ objectFit: 'contain' }}
-						/>
-						<IconButton
-							aria-label="delete"
-							size="small"
-							sx={{
-								position: 'absolute',
-								right: 0,
-								top: 0,
-							}}
-							color="primary"
-							onClick={() => {
-								setSelectedFile(undefined);
+						<Box
+							style={{
+								width: '100%',
+								height: '100%',
+								position: 'relative',
 							}}
 						>
-							<CloseIcon fontSize="inherit" />
-						</IconButton>
+							<Image
+								alt={selectedFile.name}
+								src={URL.createObjectURL(selectedFile)}
+								style={{
+									objectFit: 'contain',
+								}}
+								fill
+							/>
+						</Box>
+						<Tooltip title="Remover imagem">
+							<Fab
+								color="error"
+								aria-label="add"
+								sx={{
+									position: 'absolute',
+									right: 0,
+									top: 0,
+									height: 20,
+									m: 1,
+								}}
+								variant="extended"
+								size="small"
+								onClick={() => {
+									setSelectedFile(undefined);
+								}}
+							>
+								<CloseIcon fontSize="inherit" />
+							</Fab>
+						</Tooltip>
 					</Box>
 				) : (
 					<Box

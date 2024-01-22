@@ -45,7 +45,7 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 
 	const editButton = !isChapter && (
 		<Link
-			href={`/edit/${data.id}`}
+			href={`/edit-article/${data.id}`}
 			style={{ textDecoration: 'none', color: 'inherit' }}
 		>
 			<MenuItem onClick={handleClose}>

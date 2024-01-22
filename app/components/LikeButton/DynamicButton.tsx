@@ -78,7 +78,7 @@ const DynamicButton: FunctionComponent<DynamicButtonProps> = ({
 
 	return (
 		<Box display="flex">
-			<Tooltip title="Gosteis" arrow placement="left">
+			<Tooltip title="Likes" arrow placement="left">
 				<Box display="flex" alignItems="center">
 					<IconButton
 						color={userHasLiked ? 'error' : 'default'}
