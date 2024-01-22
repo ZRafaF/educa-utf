@@ -30,6 +30,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoreOptions from '../MoreOptions/MoreOptions';
 import dynamic from 'next/dynamic';
 import { formatNumber } from '@/lib/helper';
+import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),
 	{
@@ -38,7 +39,6 @@ const TagsComponent = dynamic(
 );
 
 interface ChapterCardProps {
-	imgSrc?: string;
 	isExpanded?: boolean;
 	isClickable?: boolean;
 	myChapter:
@@ -47,7 +47,6 @@ interface ChapterCardProps {
 }
 
 const ChapterCard: FunctionComponent<ChapterCardProps> = ({
-	imgSrc = contemplativeReptile.src,
 	isExpanded = true,
 	isClickable = true,
 	myChapter,
@@ -179,8 +178,8 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					sx={{
 						aspectRatio: '2/1',
 					}}
-					image={imgSrc}
-					alt="green iguana"
+					src={getChapterCoverURL(myChapter, false)}
+					alt="chapter-cover-img"
 				/>
 
 				{isExpanded ? <ExpandedContent /> : <CollapsedContent />}
