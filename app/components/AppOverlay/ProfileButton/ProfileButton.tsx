@@ -60,9 +60,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			</Link>
 			<MenuItem
 				onClick={() => {
-					logOut().then(() => {
-						window.location.reload();
-					});
+					logOut();
 				}}
 			>
 				<ListItemIcon>

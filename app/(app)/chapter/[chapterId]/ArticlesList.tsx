@@ -9,13 +9,10 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import List from '@mui/material/List/List';
 import Divider from '@mui/material/Divider/Divider';
 import ListItemText from '@mui/material/ListItemText/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar/ListItemAvatar';
-import Avatar from '@mui/material/Avatar/Avatar';
 import React from 'react';
 import ListItemButton from '@mui/material/ListItemButton/ListItemButton';
 import Link from 'next/link';
 import Box from '@mui/material/Box/Box';
-import Paper from '@mui/material/Paper/Paper';
 import Typography from '@mui/material/Typography/Typography';
 import {
 	ArticlesResponse,
@@ -29,16 +26,15 @@ import {
 	getChapterCoverURL,
 	getChaptersStatsById,
 } from '@/lib/apiHelpers/chaptersAPI';
-import DrawerController from './DrawerController';
 import Tooltip from '@mui/material/Tooltip';
-import { getFormattedVisibility, isNullOrUndefined } from '@/lib/helper';
+import { getFormattedDate, getFormattedVisibility } from '@/lib/helper';
 import Stack from '@mui/material/Stack';
 import LikeButton from '@/components/LikeButton/LikeButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { toast } from 'react-toastify';
-import CircularProgress from '@mui/material/CircularProgress';
 import PageMessage from '@/components/PageMessage/PageMessage';
 import Container from '@mui/material/Container';
+import MoreArticleOptions from '@/components/MoreArticleOptions/MoreArticleOptions';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -178,17 +174,17 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 					<List sx={{ pt: 0, pb: 8 }}>
 						<Divider component="li" />
 						{chapter.expand?.articles?.map(
-							(post: ArticlesResponse) => (
+							(article: ArticlesResponse) => (
 								<Box
-									key={'link_to_article' + post.id}
+									key={'link_to_article' + article.id}
 									sx={{
 										bgcolor:
-											post.visibility ===
+											article.visibility ===
 											ArticlesVisibilityOptions.private
 												? 'rgba(130, 130, 130, 0.15)'
 												: 'initial',
 										opacity:
-											post.visibility ===
+											article.visibility ===
 											ArticlesVisibilityOptions.private
 												? 0.7
 												: 1,
@@ -197,17 +193,63 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 								>
 									<ListItemButton
 										LinkComponent={Link}
-										href={`/chapter/${chapter.id}/${post.id}`}
+										href={`/chapter/${chapter.id}/${article.id}`}
 									>
 										<ListItemText
-											primary={post.title}
+											primary={
+												<span
+													style={{
+														display: 'flex',
+														justifyContent:
+															'space-between',
+														alignItems: 'center',
+														width: '100%',
+													}}
+												>
+													{article.title}
+													<MoreArticleOptions
+														article={article}
+														shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapterId}/${article.id}`}
+														placement="right"
+													/>
+												</span>
+											}
 											secondary={
 												<>
-													{post.description}
+													{article.description}
+
 													<Stack
 														direction="row"
 														spacing={2}
+														mt={2}
+														justifyContent="space-between"
+														alignItems="center"
 													>
+														<Tooltip
+															title="Visualizações"
+															arrow
+														>
+															<Stack
+																direction="row"
+																spacing={0.5}
+																alignItems="center"
+																minWidth={70}
+															>
+																<VisibilityIcon
+																	color="action"
+																	fontSize="small"
+																/>
+																<Typography
+																	variant="subtitle2"
+																	component="p"
+																>
+																	{
+																		article.views
+																	}
+																</Typography>
+															</Stack>
+														</Tooltip>
+
 														<Tooltip
 															title="Visibilidade"
 															arrow
@@ -217,14 +259,31 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 																component="p"
 																fontWeight={600}
 																color={
-																	post.visibility ===
+																	article.visibility ===
 																	'public'
 																		? 'success.main'
 																		: 'text.secondary'
 																}
 															>
 																{getFormattedVisibility(
-																	post.visibility
+																	article.visibility
+																)}
+															</Typography>
+														</Tooltip>
+														<Tooltip
+															title="Data de criação"
+															arrow
+														>
+															<Typography
+																color="text.secondary"
+																variant="subtitle2"
+																component="p"
+																align="right"
+																minWidth={80}
+															>
+																{getFormattedDate(
+																	article.created,
+																	'dd/MM/yyyy'
 																)}
 															</Typography>
 														</Tooltip>

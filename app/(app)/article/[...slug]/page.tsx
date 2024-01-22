@@ -8,7 +8,7 @@ import {
 	getFullListOfArticles,
 	getArticleById,
 	getArticleStatsById,
-	getArticleDocumentUrl,
+	getArticleDocument,
 } from '@/lib/apiHelpers/articlesAPI';
 import { FunctionComponent } from 'react';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
@@ -79,7 +79,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 	try {
 		const article = await getArticleById(articleId);
 		const articleStats = await getArticleStatsById(article.id);
-		const articleDocument = await getArticleDocumentUrl(article);
+		const articleDocument = await getArticleDocument(article);
 		const authorAvatarUrl = await getUserAvatarUrlByUserId(article.user);
 
 		if (articleDocument)

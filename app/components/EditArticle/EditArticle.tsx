@@ -12,7 +12,7 @@ import usePbAuth from '@/hooks/usePbAuth';
 import {
 	deleteArticle,
 	getArticleById,
-	getArticleDocumentUrl,
+	getArticleDocument,
 } from '@/lib/apiHelpers/articlesAPI';
 import Typography from '@mui/material/Typography/Typography';
 import Accordion from '@mui/material/Accordion';
@@ -62,7 +62,7 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 			const article = await getArticleById(articleId);
 
 			if (article.user === user?.id) {
-				const articleDocument = await getArticleDocumentUrl(article);
+				const articleDocument = await getArticleDocument(article);
 
 				setMyArticleDocument(articleDocument);
 				setMyArticle(article);

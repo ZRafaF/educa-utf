@@ -17,10 +17,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ArticlesExpand } from '@/types/expanded-types';
 import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
 import Link from 'next/link';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import dynamic from 'next/dynamic';
 import LikeButton from '@/components/LikeButton/LikeButton';
 import Tooltip from '@mui/material/Tooltip';
+import MoreArticleOptions from '@/components/MoreArticleOptions/MoreArticleOptions';
+import { getArticleDocument } from '@/lib/apiHelpers/articlesAPI';
 
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),
@@ -87,7 +88,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 						<Stack
 							direction="row"
 							spacing={2}
-							py={2}
+							py={1}
 							alignItems="center"
 							justifyContent="space-between"
 							flexGrow={2}
@@ -107,7 +108,10 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 									{articleStats.author_name}
 								</Link>
 							</Typography>
-							<MoreVertIcon color="action" />
+							<MoreArticleOptions
+								article={myArticle}
+								placement="left"
+							/>
 						</Stack>
 					</Stack>
 
