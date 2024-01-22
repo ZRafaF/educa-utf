@@ -19,7 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
-import KeyWordsPicker from '@/components/EditMetadata/KeyWordsPicker';
+import KeyWordsPicker from '@/components/KeyWordsPicker/KeyWordsPicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';

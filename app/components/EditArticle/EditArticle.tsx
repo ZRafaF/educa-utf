@@ -49,11 +49,12 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 	const [, user] = usePbAuth();
 	const [accept, setAccept] = useState<boolean>(true);
 	const saveButtonRef = useRef<HTMLButtonElement | null>(null);
-	const [handleSubmit] = useSendMetadata(
-		'update',
-		myArticle,
-		myArticleDocument
-	);
+	const [handleSubmit] = useSendMetadata({
+		type: 'update',
+		resourceType: 'article',
+		myArticle: myArticle,
+		myArticleDocument: myArticleDocument,
+	});
 	const router = useRouter();
 
 	useEffect(() => {

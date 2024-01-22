@@ -2,6 +2,9 @@
 * This file was @generated using pocketbase-typegen
 */
 
+import type PocketBase from 'pocketbase'
+import type { RecordService } from 'pocketbase'
+
 export enum Collections {
 	Articles = "articles",
 	ArticlesStats = "articles_stats",
@@ -9,8 +12,8 @@ export enum Collections {
 	Chapters = "chapters",
 	ChaptersStats = "chapters_stats",
 	KeyWords = "key_words",
+	KeyWordsStats = "key_words_stats",
 	LatestViews = "latest_views",
-	LatestViewsStats = "latest_views_stats",
 	Tags = "tags",
 	TotalUsersArticlesStats = "total_users_articles_stats",
 	TotalUsersChaptersStats = "total_users_chapters_stats",
@@ -51,7 +54,7 @@ export type ArticlesRecord = {
 	description?: string
 	document: string
 	key_words?: RecordIdString[]
-	tag?: RecordIdString
+	tag: RecordIdString
 	title: string
 	user: RecordIdString
 	views?: number
@@ -71,7 +74,7 @@ export type ArticlesStatsRecord = {
 	key_words?: RecordIdString[]
 	latest_views?: number
 	likes?: number
-	tag?: RecordIdString
+	tag: RecordIdString
 	title: string
 	user: RecordIdString
 	views?: number
@@ -126,14 +129,16 @@ export type KeyWordsRecord = {
 	word: string
 }
 
+export type KeyWordsStatsRecord = {
+	articles_references?: number
+	chapters_references?: number
+	word: string
+}
+
 export type LatestViewsRecord = {
 	articles?: RecordIdString
 	chapters?: RecordIdString
 	user?: RecordIdString
-}
-
-export type LatestViewsStatsRecord = {
-	number?: number
 }
 
 export enum TagsCategoryOptions {
@@ -215,8 +220,8 @@ export type AttachmentsResponse<Texpand = unknown> = Required<AttachmentsRecord>
 export type ChaptersResponse<Texpand = unknown> = Required<ChaptersRecord> & BaseSystemFields<Texpand>
 export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRecord> & BaseSystemFields<Texpand>
 export type KeyWordsResponse<Texpand = unknown> = Required<KeyWordsRecord> & BaseSystemFields<Texpand>
+export type KeyWordsStatsResponse<Texpand = unknown> = Required<KeyWordsStatsRecord> & BaseSystemFields<Texpand>
 export type LatestViewsResponse<Texpand = unknown> = Required<LatestViewsRecord> & BaseSystemFields<Texpand>
-export type LatestViewsStatsResponse<Texpand = unknown> = Required<LatestViewsStatsRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersArticlesStatsResponse<Texpand = unknown> = Required<TotalUsersArticlesStatsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersChaptersStatsResponse<Texpand = unknown> = Required<TotalUsersChaptersStatsRecord> & BaseSystemFields<Texpand>
@@ -232,8 +237,8 @@ export type CollectionRecords = {
 	chapters: ChaptersRecord
 	chapters_stats: ChaptersStatsRecord
 	key_words: KeyWordsRecord
+	key_words_stats: KeyWordsStatsRecord
 	latest_views: LatestViewsRecord
-	latest_views_stats: LatestViewsStatsRecord
 	tags: TagsRecord
 	total_users_articles_stats: TotalUsersArticlesStatsRecord
 	total_users_chapters_stats: TotalUsersChaptersStatsRecord
@@ -248,11 +253,30 @@ export type CollectionResponses = {
 	chapters: ChaptersResponse
 	chapters_stats: ChaptersStatsResponse
 	key_words: KeyWordsResponse
+	key_words_stats: KeyWordsStatsResponse
 	latest_views: LatestViewsResponse
-	latest_views_stats: LatestViewsStatsResponse
 	tags: TagsResponse
 	total_users_articles_stats: TotalUsersArticlesStatsResponse
 	total_users_chapters_stats: TotalUsersChaptersStatsResponse
 	users: UsersResponse
 	users_stats: UsersStatsResponse
+}
+
+// Type for usage with type asserted PocketBase instance
+// https://github.com/pocketbase/js-sdk#specify-typescript-definitions
+
+export type TypedPocketBase = PocketBase & {
+	collection(idOrName: 'articles'): RecordService<ArticlesResponse>
+	collection(idOrName: 'articles_stats'): RecordService<ArticlesStatsResponse>
+	collection(idOrName: 'attachments'): RecordService<AttachmentsResponse>
+	collection(idOrName: 'chapters'): RecordService<ChaptersResponse>
+	collection(idOrName: 'chapters_stats'): RecordService<ChaptersStatsResponse>
+	collection(idOrName: 'key_words'): RecordService<KeyWordsResponse>
+	collection(idOrName: 'key_words_stats'): RecordService<KeyWordsStatsResponse>
+	collection(idOrName: 'latest_views'): RecordService<LatestViewsResponse>
+	collection(idOrName: 'tags'): RecordService<TagsResponse>
+	collection(idOrName: 'total_users_articles_stats'): RecordService<TotalUsersArticlesStatsResponse>
+	collection(idOrName: 'total_users_chapters_stats'): RecordService<TotalUsersChaptersStatsResponse>
+	collection(idOrName: 'users'): RecordService<UsersResponse>
+	collection(idOrName: 'users_stats'): RecordService<UsersStatsResponse>
 }

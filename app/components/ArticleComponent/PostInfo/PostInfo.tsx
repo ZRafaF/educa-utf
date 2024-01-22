@@ -124,7 +124,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 					sx={{ mx: 1 }}
 				/>
 				<Grid xs={2}>
-					<Stack spacing={2}>
+					<Stack spacing={1}>
 						<Tooltip title="Visualizações" arrow placement="left">
 							<Stack
 								direction="row"

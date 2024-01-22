@@ -26,6 +26,7 @@ import {
 import { ChaptersExpand } from '@/types/expanded-types';
 import {
 	getChapterById,
+	getChapterCoverURL,
 	getChaptersStatsById,
 } from '@/lib/apiHelpers/chaptersAPI';
 import DrawerController from './DrawerController';
@@ -37,6 +38,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { toast } from 'react-toastify';
 import CircularProgress from '@mui/material/CircularProgress';
 import PageMessage from '@/components/PageMessage/PageMessage';
+import Container from '@mui/material/Container';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -79,105 +81,165 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 
 	return (
 		<>
-			<Paper sx={{ p: 2, my: 2 }} variant="outlined">
-				<Stack spacing={2}>
-					<Typography variant="h5" fontWeight={700} align="center">
-						{chapter.title}
-					</Typography>
-					<Divider />
-					<Typography color="text.secondary">
-						{chapter.description.length
-							? chapter.description
-							: 'Sem descrição'}
-					</Typography>
-					<Divider />
-					<Stack
-						direction="row"
-						justifyContent="space-around"
-						alignItems="center"
-					>
-						<Tooltip title="Visualizações" arrow placement="left">
-							<Stack
-								direction="row"
-								spacing={1}
-								alignItems="center"
-								pl={1}
-							>
-								<VisibilityIcon color="action" />
-								<Typography variant="subtitle2" component="p">
-									{chapterStats.views}
-								</Typography>
-							</Stack>
-						</Tooltip>
-						<LikeButton
-							numberOfLikes={chapterStats.likes}
-							item={{
-								id: chapter?.id,
-								type: 'chapters',
-							}}
-						/>
-					</Stack>
-				</Stack>
-			</Paper>
-			<List sx={{ width: '100%' }}>
-				<Divider component="li" />
-				{chapter.expand?.articles?.map((post: ArticlesResponse) => (
-					<Box
-						key={'link_to_article' + post.id}
-						sx={{
-							bgcolor:
-								post.visibility ===
-								ArticlesVisibilityOptions.private
-									? 'rgba(130, 130, 130, 0.15)'
-									: 'initial',
-							opacity:
-								post.visibility ===
-								ArticlesVisibilityOptions.private
-									? 0.7
-									: 1,
-						}}
-						my={1}
-						color={'text.primary'}
-					>
-						<ListItemButton
-							LinkComponent={Link}
-							href={`/chapter/${chapter.id}/${post.id}`}
+			<div data-mui-color-scheme="dark">
+				<Box
+					sx={{
+						p: 2,
+						pt: { xs: 8, sm: 8, md: 4 },
+					}}
+					position={{ xs: 'inherit', sm: 'inherit', md: 'relative' }}
+					color="text.primary"
+					boxShadow={6}
+				>
+					<Stack spacing={2}>
+						<Typography
+							variant="h5"
+							fontWeight={700}
+							align="center"
 						>
-							<ListItemAvatar>
-								<Avatar variant="square">N</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary={post.title}
-								secondary={
-									<>
-										{post.description}
-										<Stack direction="row" spacing={2}>
-											<Tooltip title="Visibilidade" arrow>
-												<Typography
-													variant="subtitle2"
-													component="p"
-													fontWeight={600}
-													color={
-														post.visibility ===
-														'public'
-															? 'success.main'
-															: 'text.secondary'
-													}
-												>
-													{getFormattedVisibility(
-														post.visibility
-													)}
-												</Typography>
-											</Tooltip>
-										</Stack>
-									</>
-								}
+							{chapter.title}
+						</Typography>
+						<Divider />
+						<Typography color="text.secondary">
+							{chapter.description.length
+								? chapter.description
+								: 'Sem descrição'}
+						</Typography>
+						<Divider />
+						<Stack
+							direction="row"
+							justifyContent="space-around"
+							alignItems="center"
+						>
+							<Tooltip
+								title="Visualizações"
+								arrow
+								placement="left"
+							>
+								<Stack
+									direction="row"
+									spacing={1}
+									alignItems="center"
+									pl={1}
+								>
+									<VisibilityIcon color="action" />
+									<Typography
+										variant="subtitle2"
+										component="p"
+									>
+										{chapterStats.views}
+									</Typography>
+								</Stack>
+							</Tooltip>
+							<LikeButton
+								numberOfLikes={chapterStats.likes}
+								item={{
+									id: chapter?.id,
+									type: 'chapters',
+								}}
 							/>
-						</ListItemButton>
+						</Stack>
+					</Stack>
+					<Box
+						position={'absolute'}
+						top={0}
+						left={0}
+						right={0}
+						bottom={0}
+						zIndex={-1}
+						sx={{
+							backgroundImage: `url(${getChapterCoverURL(
+								chapter,
+								true
+							)})`,
+							backgroundSize: 'cover',
+
+							backgroundPosition: 'center',
+							backgroundRepeat: 'no-repeat',
+							boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.85)',
+						}}
+						bgcolor={'Background'}
+					/>
+					<Box
+						position={'absolute'}
+						top={0}
+						left={0}
+						right={0}
+						bottom={0}
+						zIndex={-1}
+						sx={{
+							backdropFilter: 'blur(3px)',
+						}}
+					/>
+				</Box>
+			</div>
+			<Box bgcolor="grey.A700">
+				<Container maxWidth="sm" disableGutters>
+					<List sx={{ pt: 0, pb: 8 }}>
 						<Divider component="li" />
-					</Box>
-				))}
-			</List>
+						{chapter.expand?.articles?.map(
+							(post: ArticlesResponse) => (
+								<Box
+									key={'link_to_article' + post.id}
+									sx={{
+										bgcolor:
+											post.visibility ===
+											ArticlesVisibilityOptions.private
+												? 'rgba(130, 130, 130, 0.15)'
+												: 'initial',
+										opacity:
+											post.visibility ===
+											ArticlesVisibilityOptions.private
+												? 0.7
+												: 1,
+									}}
+									color={'text.primary'}
+								>
+									<ListItemButton
+										LinkComponent={Link}
+										href={`/chapter/${chapter.id}/${post.id}`}
+									>
+										<ListItemText
+											primary={post.title}
+											secondary={
+												<>
+													{post.description}
+													<Stack
+														direction="row"
+														spacing={2}
+													>
+														<Tooltip
+															title="Visibilidade"
+															arrow
+														>
+															<Typography
+																variant="subtitle2"
+																component="p"
+																fontWeight={600}
+																color={
+																	post.visibility ===
+																	'public'
+																		? 'success.main'
+																		: 'text.secondary'
+																}
+															>
+																{getFormattedVisibility(
+																	post.visibility
+																)}
+															</Typography>
+														</Tooltip>
+													</Stack>
+												</>
+											}
+										/>
+									</ListItemButton>
+									<Divider component="li" />
+								</Box>
+							)
+						)}
+					</List>
+				</Container>
+			</Box>
 		</>
 	);
 };

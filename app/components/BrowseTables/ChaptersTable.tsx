@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import { getListOfChaptersStats } from '@/lib/apiHelpers/chaptersAPI';
 import ChapterCard from '../ChapterCard/ChapterCard';
-import { getRandomImageUrl } from '@/lib/helper';
 import PaginationComponent from './PaginationComponent';
 import Box from '@mui/material/Box';
 import {
@@ -74,7 +73,6 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 							<ChapterCard
 								myChapter={chapter}
 								isExpanded={false}
-								imgSrc={getRandomImageUrl()}
 							/>
 						</Grid>
 					))}

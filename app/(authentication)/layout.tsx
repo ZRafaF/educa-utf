@@ -48,6 +48,7 @@ export default function LoginLayout({
 							style={{
 								objectFit: 'cover',
 							}}
+							placeholder="blur"
 						/>
 					</div>
 				</Grid>

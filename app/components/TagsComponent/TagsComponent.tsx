@@ -6,16 +6,12 @@
 'use client';
 
 import { KeyWordsRecord, TagsResponse } from '@/types/pocketbase-types';
-import Chip from '@mui/material/Chip/Chip';
-import Stack from '@mui/material/Stack/Stack';
-import { FunctionComponent, useState } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import Tooltip from '@mui/material/Tooltip';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Typography from '@mui/material/Typography';
-import Link from 'next/link';
+import { FunctionComponent } from 'react';
+import dynamic from 'next/dynamic';
 
+const NoSSRTags = dynamic(() => import('./NoSSRTags'), {
+	ssr: false,
+});
 interface TagsComponentProps {
 	keyWords: KeyWordsRecord[] | undefined;
 	tag: TagsResponse | undefined;
@@ -27,147 +23,7 @@ const TagsComponent: FunctionComponent<TagsComponentProps> = ({
 	tag,
 	expanded,
 }) => {
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const open = Boolean(anchorEl);
-	const id = open ? 'simple-popover' : undefined;
-
-	const handleClick = (event: any) => {
-		event.stopPropagation();
-		event.preventDefault();
-
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = (event: any) => {
-		event.stopPropagation();
-		event.preventDefault();
-
-		setAnchorEl(null);
-	};
-
-	if (tag === undefined) {
-		return (
-			<Chip
-				size="small"
-				label={'nada aqui'}
-				variant="outlined"
-				sx={{ mb: expanded ? 1 : 0 }}
-			/>
-		);
-	}
-
-	if (expanded) {
-		return (
-			<Stack
-				direction="row"
-				sx={{
-					overflowX: 'scroll',
-					'::-webkit-scrollbar': {
-						height: '6px',
-					},
-					'::-webkit-scrollbar-thumb:horizontal': {
-						background: 'gray',
-						borderRadius: '6px',
-						cursor: 'grab',
-					},
-				}}
-				gap={0.5}
-				pb={1}
-			>
-				<Chip
-					size="small"
-					label={tag.name}
-					key={`tag_list${tag.name}`}
-					clickable
-					color="primary"
-					component={Link}
-					href={`/browse/articles?filter=tag='${tag.id}'`}
-				/>
-				{keyWords?.map((keyWord, idx) => (
-					<Chip
-						size="small"
-						label={keyWord.word}
-						key={`tag_${keyWord.word}_${idx}`}
-						variant="outlined"
-					/>
-				))}
-			</Stack>
-		);
-	}
-
-	return (
-		<Stack direction="row" gap={0.5}>
-			<Chip
-				size="small"
-				label={tag.name}
-				key={`tag_list${tag.name}`}
-				clickable
-				color="primary"
-				onMouseDown={(event) => {
-					event.stopPropagation();
-					event.preventDefault();
-				}}
-				component={Link}
-				href={`/browse/articles?filter=tag='${tag.id}'`}
-				onClick={(event) => {
-					event.stopPropagation();
-				}}
-			/>
-			{keyWords && keyWords.length > 0 && (
-				<ClickAwayListener
-					onClickAway={() => {
-						setAnchorEl(null);
-					}}
-				>
-					<div>
-						<Tooltip
-							PopperProps={{
-								disablePortal: true,
-							}}
-							onClose={handleClose}
-							open={open}
-							disableFocusListener
-							disableTouchListener
-							disableHoverListener
-							title={
-								<span style={{ whiteSpace: 'pre-line' }}>
-									{keyWords.map((keyWord, idx) => (
-										<Typography
-											key={`tag_exp${keyWord.word}_${idx}`}
-											variant="caption"
-										>
-											• {keyWord.word} {'\n'}
-										</Typography>
-									))}
-								</span>
-							}
-							arrow
-						>
-							<Chip
-								size="small"
-								icon={
-									anchorEl ? (
-										<ExpandLessIcon fontSize="large" />
-									) : (
-										<ExpandMoreIcon fontSize="large" />
-									)
-								}
-								label={`+${keyWords.length}`}
-								clickable
-								sx={{
-									color: 'text.secondary',
-								}}
-								onMouseDown={(event) => event.stopPropagation()}
-								onClick={(event) => {
-									if (open) handleClose(event);
-									else handleClick(event);
-								}}
-							/>
-						</Tooltip>
-					</div>
-				</ClickAwayListener>
-			)}
-		</Stack>
-	);
+	return <NoSSRTags keyWords={keyWords} tag={tag} expanded={expanded} />;
 };
 
 export default TagsComponent;

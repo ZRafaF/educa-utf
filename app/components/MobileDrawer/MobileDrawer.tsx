@@ -17,6 +17,7 @@ import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 import Fab from '@mui/material/Fab';
 import { usePathname } from 'next/navigation';
+import Divider from '@mui/material/Divider';
 
 interface MobileDrawerProps {
 	children: ReactNode;
@@ -24,6 +25,7 @@ interface MobileDrawerProps {
 	fabIcon: ReactNode;
 	zIndex?: number;
 	px?: number;
+	hidden?: boolean;
 }
 
 const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
@@ -32,6 +34,7 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 	fabIcon,
 	px = 4,
 	zIndex = 0,
+	hidden = false,
 }) => {
 	const theme = useTheme();
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -56,11 +59,11 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 				sx={{
 					zIndex: zIndex,
 					left: 7,
+					display: hidden ? 'none' : 'inherit',
 				}}
 				PaperProps={{
 					style: { borderRadius: '20px 20px 0px 0px' },
 					elevation: 0,
-					variant: 'outlined',
 				}}
 			>
 				<Box
@@ -70,35 +73,41 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 					}}
 				>
 					<Grid
-						sx={{
-							backgroundColor: 'grey.A700',
-							// outlineWidth: 5,
-							// outlineStyle: 'solid',
-							// outlineColor: 'InactiveBorder',
-						}}
-						py={2}
+						sx={
+							{
+								// outlineWidth: 5,
+								// outlineStyle: 'solid',
+								// outlineColor: 'InactiveBorder',
+							}
+						}
 						px={px}
-						pb={8}
 						zIndex={1}
 						boxShadow={3}
 					>
-						<Container maxWidth={'sm'} disableGutters>
-							<Stack
-								direction="row"
-								justifyContent="center"
-								alignItems="center"
-								display={{ sm: 'flex', md: 'none' }}
-							>
-								<Button
-									variant="text"
-									sx={{ fontWeight: 'bold' }}
-									onClick={handleClose}
+						<Box>
+							<div data-mui-color-scheme="dark">
+								<Stack
+									direction="row"
+									justifyContent="center"
+									alignItems="center"
+									display={{ sm: 'flex', md: 'none' }}
+									mt={2}
+									height={32}
+									px={2}
 								>
-									FECHAR
-								</Button>
-							</Stack>
-							{children}
-						</Container>
+									<Button
+										variant="text"
+										fullWidth
+										sx={{ fontWeight: 'bold' }}
+										onClick={handleClose}
+									>
+										FECHAR
+									</Button>
+								</Stack>
+							</div>
+
+							<Box my={-6}>{children}</Box>
+						</Box>
 					</Grid>
 				</Box>
 			</Drawer>
@@ -111,6 +120,7 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 						bottom: '30px',
 						right: '30px',
 						zIndex: zIndex,
+						display: hidden ? 'none' : 'block',
 					}}
 					onClick={() => {
 						setIsOpen((o) => !o);

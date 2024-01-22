@@ -8,7 +8,6 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import React from 'react';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
-import { getRandomImageUrl } from '@/lib/helper';
 import { getBestChaptersOf } from '@/lib/apiHelpers/chaptersAPI';
 
 export const revalidate = 30;
@@ -42,11 +41,7 @@ async function BestChapters() {
 						lg={2.4}
 						xl={2.4}
 					>
-						<ChapterCard
-							myChapter={chapter}
-							isExpanded={false}
-							imgSrc={getRandomImageUrl()}
-						/>
+						<ChapterCard myChapter={chapter} isExpanded={false} />
 					</Grid>
 				))}
 			</Grid>

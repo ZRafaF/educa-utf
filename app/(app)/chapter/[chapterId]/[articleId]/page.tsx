@@ -5,13 +5,29 @@
 
 import { FunctionComponent } from 'react';
 import { default as ArticlePage } from '../../../article/[...slug]/page';
+import dynamic from 'next/dynamic';
+
+const PrevNextArticle = dynamic(
+	() => import('@/components/PrevNextArticle/PrevNextArticle'),
+	{
+		ssr: false,
+	}
+);
 
 interface PageProps {
-	params: { articleId: string };
+	params: { chapterId: string; articleId: string };
 }
 
-const Page: FunctionComponent<PageProps> = ({ params }) => {
-	return <ArticlePage params={{ slug: [params.articleId, 'f'] }} />;
+const Page: FunctionComponent<PageProps> = async ({ params }) => {
+	return (
+		<>
+			<ArticlePage params={{ slug: [params.articleId, 'f'] }} />
+			<PrevNextArticle
+				chapterId={params.chapterId}
+				articleId={params.articleId}
+			/>
+		</>
+	);
 };
 
 export default Page;
