@@ -23,6 +23,8 @@ import ReportIcon from '@mui/icons-material/Report';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Box from '@mui/material/Box';
 import { getArticleDocumentUrl } from '@/lib/apiHelpers/articlesAPI';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface MoreArticleOptionsProps {
 	article: ArticlesResponse<ArticlesExpand> | ArticlesResponse;
@@ -71,8 +73,10 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 				id="more-post-options-menu"
 				open={open}
 				keepMounted
-				onClose={() => {
-					handleClose();
+				onClose={(e: unknown) => {
+					handleClose(
+						e as React.MouseEvent<HTMLLIElement, MouseEvent>
+					);
 				}}
 				disableScrollLock
 				anchorOrigin={{
@@ -179,7 +183,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					>
 						<MenuItem
 							sx={{
-								color: 'error.main',
+								color: 'warning.main',
 								py: 1,
 							}}
 							onClick={(e) => {
@@ -187,12 +191,62 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 							}}
 						>
 							<ListItemIcon>
-								<ReportIcon color="error" />
+								<ReportIcon color="warning" />
 							</ListItemIcon>
 							<ListItemText>Reportar</ListItemText>
 						</MenuItem>
 					</Tooltip>
 				</MenuList>
+				{article.user === user?.id && (
+					<MenuList
+						sx={{
+							mb: -1,
+							bgcolor: 'grey.A700',
+						}}
+					>
+						<Divider>Opções do autor</Divider>
+						<Tooltip
+							title="Editar artigo"
+							arrow
+							placement={placement}
+						>
+							<MenuItem
+								onClick={(e) => {
+									handleClose(e);
+								}}
+								sx={{
+									py: 1,
+								}}
+							>
+								<ListItemIcon>
+									<EditIcon />
+								</ListItemIcon>
+								<ListItemText>Editar</ListItemText>
+							</MenuItem>
+						</Tooltip>
+						<Divider />
+						<Tooltip
+							title="Excluir esse artigo"
+							arrow
+							placement={placement}
+						>
+							<MenuItem
+								sx={{
+									color: 'error.main',
+									py: 1,
+								}}
+								onClick={(e) => {
+									handleClose(e);
+								}}
+							>
+								<ListItemIcon>
+									<DeleteIcon color="error" />
+								</ListItemIcon>
+								<ListItemText>Excluir</ListItemText>
+							</MenuItem>
+						</Tooltip>
+					</MenuList>
+				)}
 			</Menu>
 		</>
 	);
