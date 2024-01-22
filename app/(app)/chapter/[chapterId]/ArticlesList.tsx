@@ -175,7 +175,7 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 			</div>
 			<Box bgcolor="grey.A700">
 				<Container maxWidth="sm" disableGutters>
-					<List sx={{ pt: 0 }}>
+					<List sx={{ pt: 0, pb: 8 }}>
 						<Divider component="li" />
 						{chapter.expand?.articles?.map(
 							(post: ArticlesResponse) => (

@@ -74,6 +74,7 @@ export default function Layout({
 				</DrawerController>
 				<Grid xs>{children}</Grid>
 			</Grid>
+
 			<ViewsBumper
 				collectionName="chapters"
 				recordId={params.chapterId}

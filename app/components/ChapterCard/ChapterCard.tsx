@@ -16,7 +16,6 @@ import Link from 'next/link';
 import CardMedia from '@mui/material/CardMedia/CardMedia';
 import Divider from '@mui/material/Divider/Divider';
 import Stack from '@mui/material/Stack/Stack';
-import contemplativeReptile from '@/resources/contemplative-reptile.jpg';
 import ShareButton from '../ShareButton/ShareButton';
 import {
 	ChaptersResponse,

@@ -24,31 +24,6 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 	const notSmallScreens = useMediaQuery(theme.breakpoints.up('md'));
 	const onlyMediumScreen = useMediaQuery(theme.breakpoints.only('md'));
 
-	const fixedDrawer = (
-		<Grid
-			sx={{
-				backgroundColor: 'grey.A700',
-				width: onlyMediumScreen ? 300 : 350,
-			}}
-			zIndex={1}
-			boxShadow={3}
-		>
-			{children}
-		</Grid>
-	);
-	const dynamicDrawer = (
-		<React.Fragment>
-			<MobileDrawer
-				fabTooltip="Abrir gaveta de posts"
-				fabIcon={<FormatListBulletedIcon />}
-				px={0}
-				zIndex={1}
-			>
-				{children}
-			</MobileDrawer>
-		</React.Fragment>
-	);
-
 	return (
 		<>
 			<Grid
@@ -73,8 +48,6 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 			</MobileDrawer>
 		</>
 	);
-
-	return notSmallScreens ? fixedDrawer : dynamicDrawer;
 };
 
 export default DrawerController;
