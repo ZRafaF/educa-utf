@@ -57,14 +57,18 @@ export async function getBestArticlesOf(time: 'week' | 'month' | 'year') {
 	}
 }
 
-export async function getArticleDocumentUrl(article: ArticlesResponse) {
+export function getArticleDocumentUrl(article: ArticlesResponse) {
 	const record = {
 		id: article.id,
 		collectionId: article.collectionId,
 		collectionName: article.collectionName,
 	};
 
-	const documentUrl = pb.files.getUrl(record, article.document);
+	return pb.files.getUrl(record, article.document);
+}
+
+export async function getArticleDocument(article: ArticlesResponse) {
+	const documentUrl = getArticleDocumentUrl(article);
 
 	try {
 		if (documentUrl) {

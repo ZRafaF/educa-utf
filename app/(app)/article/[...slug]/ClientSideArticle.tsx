@@ -10,7 +10,7 @@ import ArticleComponentLoading from '@/components/ArticleComponent/ArticleCompon
 import PageMessage from '@/components/PageMessage/PageMessage';
 import {
 	getArticleById,
-	getArticleDocumentUrl,
+	getArticleDocument,
 	getArticleStatsById,
 } from '@/lib/apiHelpers/articlesAPI';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
@@ -45,7 +45,7 @@ const ClientSideArticle: FunctionComponent<ClientSideArticleProps> = ({
 				const fetchedArticleStats = await getArticleStatsById(
 					articleId
 				);
-				const fetchedArticleDocument = await getArticleDocumentUrl(
+				const fetchedArticleDocument = await getArticleDocument(
 					fetchedArticle
 				);
 				const fetchedAuthorAvatarUrl = await getUserAvatarUrlByUserId(

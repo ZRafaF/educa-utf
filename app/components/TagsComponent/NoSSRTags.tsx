@@ -109,7 +109,7 @@ const NoSSRTags: FunctionComponent<NoSSRTagsProps> = ({
 				}}
 				onClick={(event) => {
 					event.stopPropagation();
-					router.replace(`/browse/articles?filter=tag='${tag.id}'`);
+					router.push(`/browse/articles?filter=tag='${tag.id}'`);
 				}}
 			/>
 			{keyWords && keyWords.length > 0 && (
