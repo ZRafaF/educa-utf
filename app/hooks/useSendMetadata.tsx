@@ -36,7 +36,7 @@ const useSendMetadata = ({
 	myArticle?: ArticlesResponse<ArticlesExpand>;
 	myArticleDocument?: string;
 	myChapter?: ChaptersResponse<ChaptersExpand>;
-	myChapterCover?: File;
+	myChapterCover?: File | Blob;
 }) => {
 	const [, user] = usePbAuth();
 	const router = useRouter();
@@ -113,7 +113,15 @@ const useSendMetadata = ({
 			});
 			router.push(`/edit-article/${newRecord.id}`);
 		} else {
-			if (myChapterCover === undefined) {
+			let coverFile = myChapterCover;
+			if (coverFile === undefined) {
+				const res = await fetch(
+					`/api/chapter-cover?tag=${fetchedTag.category}`
+				);
+				coverFile = await res.blob();
+				console.log(coverFile);
+			}
+			if (coverFile === undefined) {
 				throw new Error('capa inválida inválido!');
 			}
 			const newRecord = await createChapter(
@@ -124,7 +132,7 @@ const useSendMetadata = ({
 					visibility: submitVisibility as ChaptersVisibilityOptions,
 					tag: fetchedTag.id,
 				},
-				myChapterCover,
+				coverFile,
 				keywords
 			);
 			toast.update(toastId, {
