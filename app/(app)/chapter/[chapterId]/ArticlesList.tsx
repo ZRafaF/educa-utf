@@ -194,6 +194,10 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 									<ListItemButton
 										LinkComponent={Link}
 										href={`/chapter/${chapter.id}/${article.id}`}
+										sx={{
+											display: 'flex',
+											flexDirection: 'column',
+										}}
 									>
 										<ListItemText
 											primary={
@@ -214,83 +218,80 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 													/>
 												</span>
 											}
-											secondary={
-												<>
-													{article.description}
-
-													<Stack
-														direction="row"
-														spacing={2}
-														mt={2}
-														justifyContent="space-between"
-														alignItems="center"
-													>
-														<Tooltip
-															title="Visualizações"
-															arrow
-														>
-															<Stack
-																direction="row"
-																spacing={0.5}
-																alignItems="center"
-																minWidth={70}
-															>
-																<VisibilityIcon
-																	color="action"
-																	fontSize="small"
-																/>
-																<Typography
-																	variant="subtitle2"
-																	component="p"
-																>
-																	{
-																		article.views
-																	}
-																</Typography>
-															</Stack>
-														</Tooltip>
-
-														<Tooltip
-															title="Visibilidade"
-															arrow
-														>
-															<Typography
-																variant="subtitle2"
-																component="p"
-																fontWeight={600}
-																color={
-																	article.visibility ===
-																	'public'
-																		? 'success.main'
-																		: 'text.secondary'
-																}
-															>
-																{getFormattedVisibility(
-																	article.visibility
-																)}
-															</Typography>
-														</Tooltip>
-														<Tooltip
-															title="Data de criação"
-															arrow
-														>
-															<Typography
-																color="text.secondary"
-																variant="subtitle2"
-																component="p"
-																align="right"
-																minWidth={80}
-															>
-																{getFormattedDate(
-																	article.created,
-																	'dd/MM/yyyy'
-																)}
-															</Typography>
-														</Tooltip>
-													</Stack>
-												</>
-											}
+											secondary={article.description}
 										/>
+										<Stack
+											direction="row"
+											width={'100%'}
+											spacing={2}
+											mt={2}
+											justifyContent="space-between"
+											alignItems="center"
+										>
+											<Tooltip
+												title="Visualizações"
+												arrow
+												placement="top"
+											>
+												<Stack
+													direction="row"
+													spacing={0.5}
+													alignItems="center"
+													minWidth={70}
+												>
+													<VisibilityIcon
+														color="action"
+														fontSize="small"
+													/>
+													<Typography
+														variant="subtitle2"
+														component="p"
+													>
+														{article.views}
+													</Typography>
+												</Stack>
+											</Tooltip>
+
+											<Tooltip
+												title="Visibilidade"
+												arrow
+												placement="top"
+											>
+												<Typography
+													variant="subtitle2"
+													component="p"
+													fontWeight={600}
+													color={
+														article.visibility ===
+														'public'
+															? 'success.main'
+															: 'text.secondary'
+													}
+												>
+													{getFormattedVisibility(
+														article.visibility
+													)}
+												</Typography>
+											</Tooltip>
+											<Tooltip
+												title="Data de criação"
+												arrow
+												placement="top"
+											>
+												<Typography
+													color="text.secondary"
+													variant="subtitle2"
+													component="p"
+													align="right"
+													minWidth={80}
+												>
+													{getFormattedDate(
+														article.created,
+														'dd/MM/yyyy'
+													)}
+												</Typography>
+											</Tooltip>
+										</Stack>
 									</ListItemButton>
 									<Divider component="li" />
 								</Box>

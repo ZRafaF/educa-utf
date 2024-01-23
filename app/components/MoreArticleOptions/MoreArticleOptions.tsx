@@ -16,7 +16,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
-import { ArticlesResponse } from '@/types/pocketbase-types';
+import {
+	ArticlesResponse,
+	ArticlesStatsResponse,
+} from '@/types/pocketbase-types';
 import { ArticlesExpand } from '@/types/expanded-types';
 import ShareIcon from '@mui/icons-material/Share';
 import ReportIcon from '@mui/icons-material/Report';
@@ -27,7 +30,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface MoreArticleOptionsProps {
-	article: ArticlesResponse<ArticlesExpand> | ArticlesResponse;
+	article:
+		| ArticlesResponse<ArticlesExpand>
+		| ArticlesResponse
+		| ArticlesStatsResponse<ArticlesExpand>;
 	shareUrl?: string;
 	placement: 'left' | 'right';
 }
@@ -63,7 +69,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 
 	return (
 		<>
-			<Tooltip title="Mais opções" arrow placement={placement}>
+			<Tooltip title="Mais opções" arrow placement="right">
 				<IconButton onClick={handleClick} size="small">
 					<MoreVertIcon color="action" />
 				</IconButton>
@@ -91,13 +97,13 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 				<MenuList
 					sx={{
 						py: 0,
-						minWidth: '200px',
+						minWidth: '250px',
 					}}
 				>
 					<Tooltip
 						title="Compartilhar artigo"
 						arrow
-						placement={placement}
+						placement="right"
 					>
 						<MenuItem
 							onClick={(e) => {
@@ -124,7 +130,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					<Tooltip
 						title="Baixar artigo em MarkDown"
 						arrow
-						placement={placement}
+						placement="right"
 					>
 						<MenuItem
 							sx={{
@@ -156,7 +162,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 							</span>
 						}
 						arrow
-						placement={placement}
+						placement="right"
 					>
 						<Box>
 							<MenuItem
@@ -179,7 +185,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					<Tooltip
 						title="Reportar esse artigo"
 						arrow
-						placement={placement}
+						placement="right"
 					>
 						<MenuItem
 							sx={{
@@ -205,11 +211,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						}}
 					>
 						<Divider>Opções do autor</Divider>
-						<Tooltip
-							title="Editar artigo"
-							arrow
-							placement={placement}
-						>
+						<Tooltip title="Editar artigo" arrow placement="right">
 							<MenuItem
 								onClick={(e) => {
 									handleClose(e);
@@ -228,7 +230,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						<Tooltip
 							title="Excluir esse artigo"
 							arrow
-							placement={placement}
+							placement="right"
 						>
 							<MenuItem
 								sx={{

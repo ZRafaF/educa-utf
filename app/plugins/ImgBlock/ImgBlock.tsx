@@ -24,7 +24,11 @@ const ImgBlock = ({
 			style={{
 				height: 350,
 				position: 'relative',
+				display: 'block',
 			}}
+			component={'a'}
+			href={src}
+			target="_blank"
 		>
 			<Image
 				src={src}
