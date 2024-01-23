@@ -9,28 +9,28 @@ import Card from '@mui/material/Card/Card';
 import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
 import CardActions from '@mui/material/CardActions/CardActions';
 import CardContent from '@mui/material/CardContent/CardContent';
-import IconButton from '@mui/material/IconButton/IconButton';
 import Typography from '@mui/material/Typography/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Link from 'next/link';
 import CardMedia from '@mui/material/CardMedia/CardMedia';
 import Divider from '@mui/material/Divider/Divider';
 import Stack from '@mui/material/Stack/Stack';
-import ShareButton from '../ShareButton/ShareButton';
-import {
-	ChaptersResponse,
-	ChaptersStatsResponse,
-} from '@/types/pocketbase-types';
+import { ChaptersStatsResponse } from '@/types/pocketbase-types';
 import { ChaptersExpandTags } from '@/types/expanded-types';
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import MoreOptions from '../MoreOptions/MoreOptions';
 import dynamic from 'next/dynamic';
 import { formatNumber } from '@/lib/helper';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import Box from '@mui/material/Box';
+import Badge from '@mui/material/Badge';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),
 	{
@@ -41,9 +41,7 @@ const TagsComponent = dynamic(
 interface ChapterCardProps {
 	isExpanded?: boolean;
 	isClickable?: boolean;
-	myChapter:
-		| ChaptersResponse<ChaptersExpandTags>
-		| ChaptersStatsResponse<ChaptersExpandTags>;
+	myChapter: ChaptersStatsResponse<ChaptersExpandTags>;
 }
 
 const ChapterCard: FunctionComponent<ChapterCardProps> = ({
@@ -90,20 +88,24 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					direction="column"
 					justifyContent="center"
 					alignItems="end"
+					spacing={0.5}
 				>
-					<Typography variant="caption">
-						{getFormattedDate(myChapter.created)}
-					</Typography>
 					<Stack
 						direction="row"
 						spacing={1}
 						alignItems="center"
 						justifyContent="center"
 					>
-						<VisibilityIcon color="action" fontSize="small" />
 						<Typography variant="caption">
 							{formatNumber(myChapter.views)}
 						</Typography>
+						<VisibilityIcon color="action" fontSize="small" />
+					</Stack>
+					<Stack direction="row" spacing={1} alignItems="center">
+						<Typography variant="caption">
+							{formatNumber(myChapter.likes)}
+						</Typography>
+						<FavoriteIcon color="action" fontSize="small" />
 					</Stack>
 				</Stack>
 			</Stack>
@@ -147,20 +149,26 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					alignItems={'center'}
 					width={'stretch'}
 				>
-					<Typography variant="caption">
-						{getFormattedDate(myChapter.created)}
-					</Typography>
-					<Stack direction="row" spacing={1} alignItems="center">
-						<VisibilityIcon color="action" fontSize="small" />
-						<Typography variant="caption">
-							{formatNumber(myChapter.views)}
-						</Typography>
-						<MoreChapterOptions
-							chapter={myChapter}
-							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
-							placement="left"
-						/>
+					<Stack direction="row" spacing={2} alignItems="center">
+						<Stack direction="row" spacing={1} alignItems="center">
+							<VisibilityIcon color="action" fontSize="small" />
+							<Typography variant="caption">
+								{formatNumber(myChapter.views)}
+							</Typography>
+						</Stack>
+						<Stack direction="row" spacing={1} alignItems="center">
+							<FavoriteIcon color="action" fontSize="small" />
+							<Typography variant="caption">
+								{formatNumber(myChapter.likes)}
+							</Typography>
+						</Stack>
 					</Stack>
+					<MoreChapterOptions
+						chapter={myChapter}
+						shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
+						placement="left"
+						size="small"
+					/>
 				</Stack>
 			</Stack>
 		</CardContent>
@@ -177,14 +185,40 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 				LinkComponent={Link}
 				href={`/chapter/${myChapter.id}`}
 			>
-				<CardMedia
-					component="img"
-					sx={{
-						aspectRatio: '2/1',
-					}}
-					src={getChapterCoverURL(myChapter, false)}
-					alt="chapter-cover-img"
-				/>
+				<Box position="relative">
+					<CardMedia
+						component="img"
+						sx={{
+							aspectRatio: '2/1',
+						}}
+						src={getChapterCoverURL(myChapter, false)}
+						alt="chapter-cover-img"
+					/>
+					<Tooltip
+						title="Numero de artigos"
+						arrow
+						placement="left-start"
+					>
+						<Box
+							position="absolute"
+							top={-1}
+							right={-1}
+							sx={{
+								width: isExpanded ? 24 : 20,
+								height: isExpanded ? 24 : 20,
+								fontWeight: 'bold',
+							}}
+							borderRadius={'0 0 0 10px'}
+							bgcolor={'Background'}
+							display={'flex'}
+							alignItems={'center'}
+							justifyContent={'center'}
+							boxShadow={4}
+						>
+							{myChapter.articles.length}
+						</Box>
+					</Tooltip>
+				</Box>
 
 				{isExpanded ? <ExpandedContent /> : <CollapsedContent />}
 			</CardActionArea>
@@ -210,6 +244,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 									chapter={myChapter}
 									shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
 									placement="left"
+									size="medium"
 								/>
 							</Stack>
 						</Stack>

@@ -59,11 +59,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 		event.stopPropagation();
 		event.preventDefault();
 	};
-	const handleClose = (
-		event?:
-			| React.MouseEvent<HTMLButtonElement>
-			| React.MouseEvent<HTMLLIElement, MouseEvent>
-	) => {
+	const handleClose = (event?: React.MouseEvent) => {
 		if (event) {
 			event.stopPropagation();
 			event.preventDefault();
@@ -169,7 +165,11 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						arrow
 						placement="right"
 					>
-						<Box>
+						<Box
+							onClick={(e) => {
+								if (user === null) handleClose(e);
+							}}
+						>
 							<MenuItem
 								sx={{
 									py: 1,
@@ -188,24 +188,37 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					</Tooltip>
 					<Divider />
 					<Tooltip
-						title="Reportar esse artigo"
+						title={
+							<span style={{ whiteSpace: 'pre-line' }}>
+								{
+									'Reportar esse artigo \n (Você precisa estar logado)'
+								}
+							</span>
+						}
 						arrow
 						placement="right"
 					>
-						<MenuItem
-							sx={{
-								color: 'warning.main',
-								py: 1,
-							}}
+						<Box
 							onClick={(e) => {
-								handleClose(e);
+								if (user === null) handleClose(e);
 							}}
 						>
-							<ListItemIcon>
-								<ReportIcon color="warning" />
-							</ListItemIcon>
-							<ListItemText>Reportar</ListItemText>
-						</MenuItem>
+							<MenuItem
+								sx={{
+									color: 'warning.main',
+									py: 1,
+								}}
+								disabled={user === null}
+								onClick={(e) => {
+									handleClose(e);
+								}}
+							>
+								<ListItemIcon>
+									<ReportIcon color="warning" />
+								</ListItemIcon>
+								<ListItemText>Reportar</ListItemText>
+							</MenuItem>
+						</Box>
 					</Tooltip>
 				</MenuList>
 				{article.user === user?.id && (

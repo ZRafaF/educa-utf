@@ -10,10 +10,10 @@ import Button from '@mui/material/Button/Button';
 import NewChaptersCarousel from './NewChaptersCarousel/NewChaptersCarousel';
 import styleModule from './TextGradientAnimation.module.css';
 import Link from 'next/link';
-import { getNewChapters } from '@/lib/apiHelpers/chaptersAPI';
+import { getNewChaptersStats } from '@/lib/apiHelpers/chaptersAPI';
 
 async function BannerSomethingNew() {
-	const chapters = await getNewChapters();
+	const chapters = await getNewChaptersStats();
 
 	return (
 		<Box

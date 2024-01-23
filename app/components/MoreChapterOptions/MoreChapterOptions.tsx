@@ -24,7 +24,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
-import FolderCopyIcon from '@mui/icons-material/FolderCopy';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { deleteChapter } from '@/lib/apiHelpers/chaptersAPI';
@@ -33,12 +33,14 @@ interface MoreChapterOptionsProps {
 	chapter: ChaptersResponse | ChaptersStatsResponse;
 	shareUrl: string;
 	placement: 'left' | 'right';
+	size: 'small' | 'medium' | 'large';
 }
 
 const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 	chapter,
 	shareUrl,
 	placement,
+	size,
 }) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -50,11 +52,7 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 		event.stopPropagation();
 		event.preventDefault();
 	};
-	const handleClose = (
-		event?:
-			| React.MouseEvent<HTMLButtonElement>
-			| React.MouseEvent<HTMLLIElement, MouseEvent>
-	) => {
+	const handleClose = (event?: React.MouseEvent) => {
 		if (event) {
 			event.stopPropagation();
 			event.preventDefault();
@@ -65,11 +63,13 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 
 	return (
 		<>
-			<Tooltip title="Mais opções" arrow placement="right">
-				<IconButton onClick={handleClick} size="small">
-					<MoreVertIcon color="action" fontSize="small" />
-				</IconButton>
-			</Tooltip>
+			<Box>
+				<Tooltip title="Mais opções" arrow placement="right">
+					<IconButton onClick={handleClick} size="small">
+						<MoreVertIcon color="action" fontSize={size} />
+					</IconButton>
+				</Tooltip>
+			</Box>
 			<Menu
 				anchorEl={anchorEl}
 				id="more-post-options-menu"
@@ -132,7 +132,11 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 						arrow
 						placement="right"
 					>
-						<Box>
+						<Box
+							onClick={(e) => {
+								if (user === null) handleClose(e);
+							}}
+						>
 							<MenuItem
 								sx={{
 									py: 1,
@@ -143,7 +147,7 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 								}}
 							>
 								<ListItemIcon>
-									<FolderCopyIcon />
+									<FileCopyIcon />
 								</ListItemIcon>
 								<ListItemText>Copiar</ListItemText>
 							</MenuItem>
@@ -151,24 +155,37 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 					</Tooltip>
 					<Divider />
 					<Tooltip
-						title="Reportar esse capítulo"
+						title={
+							<span style={{ whiteSpace: 'pre-line' }}>
+								{
+									'Reportar esse capítulo \n (Você precisa estar logado)'
+								}
+							</span>
+						}
 						arrow
 						placement="right"
 					>
-						<MenuItem
-							sx={{
-								color: 'warning.main',
-								py: 1,
-							}}
+						<Box
 							onClick={(e) => {
-								handleClose(e);
+								if (user === null) handleClose(e);
 							}}
 						>
-							<ListItemIcon>
-								<ReportIcon color="warning" />
-							</ListItemIcon>
-							<ListItemText>Reportar</ListItemText>
-						</MenuItem>
+							<MenuItem
+								sx={{
+									color: 'warning.main',
+									py: 1,
+								}}
+								disabled={user === null}
+								onClick={(e) => {
+									handleClose(e);
+								}}
+							>
+								<ListItemIcon>
+									<ReportIcon color="warning" />
+								</ListItemIcon>
+								<ListItemText>Reportar</ListItemText>
+							</MenuItem>
+						</Box>
 					</Tooltip>
 				</MenuList>
 				{chapter.user === user?.id && (

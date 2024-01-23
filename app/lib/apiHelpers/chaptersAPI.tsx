@@ -31,8 +31,8 @@ export async function getFullListOfChapters(expand: boolean = false) {
 export async function getBestChaptersOf(time: 'week' | 'month' | 'year') {
 	try {
 		const result = await pb
-			.collection('chapters')
-			.getList<ChaptersResponse<ChaptersExpandTags>>(1, 15, {
+			.collection('chapters_stats')
+			.getList<ChaptersStatsResponse<ChaptersExpandTags>>(1, 15, {
 				skipTotal: true,
 				expand: 'tag, key_words',
 			});
@@ -103,11 +103,11 @@ export async function getListOfChaptersStats(
 	}
 }
 
-export async function getNewChapters() {
+export async function getNewChaptersStats() {
 	try {
 		const response = await pb
-			.collection('chapters')
-			.getList<ChaptersResponse<ChaptersExpandTags>>(1, 8, {
+			.collection('chapters_stats')
+			.getList<ChaptersStatsResponse<ChaptersExpandTags>>(1, 8, {
 				sort: '-created',
 				skipTotal: true,
 				expand: 'tag, key_words',
