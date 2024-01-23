@@ -25,10 +25,7 @@ import dynamic from 'next/dynamic';
 import { formatNumber } from '@/lib/helper';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 
 const TagsComponent = dynamic(

@@ -33,7 +33,7 @@ interface MoreChapterOptionsProps {
 	chapter: ChaptersResponse | ChaptersStatsResponse;
 	shareUrl: string;
 	placement: 'left' | 'right';
-	size: 'small' | 'medium' | 'large';
+	size: 'small' | 'medium';
 }
 
 const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({

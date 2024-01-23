@@ -91,14 +91,16 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 									justifyContent="center"
 									alignItems="center"
 									display={{ sm: 'flex', md: 'none' }}
-									mt={2}
+									mt={1}
 									height={32}
 									px={2}
 								>
 									<Button
 										variant="text"
-										fullWidth
-										sx={{ fontWeight: 'bold' }}
+										sx={{
+											fontWeight: 'bold',
+											width: '50%',
+										}}
 										onClick={handleClose}
 									>
 										FECHAR

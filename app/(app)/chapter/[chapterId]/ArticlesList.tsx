@@ -35,6 +35,7 @@ import { toast } from 'react-toastify';
 import PageMessage from '@/components/PageMessage/PageMessage';
 import Container from '@mui/material/Container';
 import MoreArticleOptions from '@/components/MoreArticleOptions/MoreArticleOptions';
+import MoreChapterOptions from '@/components/MoreChapterOptions/MoreChapterOptions';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -92,14 +93,16 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 							variant="h5"
 							fontWeight={700}
 							align="center"
+							width={'100%'}
 						>
 							{chapter.title}
 						</Typography>
+
 						<Divider />
 						<Typography color="text.secondary">
 							{chapter.description.length
 								? chapter.description
-								: 'Sem descrição'}
+								: 'Sem descrição...'}
 						</Typography>
 						<Divider />
 						<Stack
@@ -167,6 +170,14 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 							backdropFilter: 'blur(3px)',
 						}}
 					/>
+					<Box position={'absolute'} top={0} right={0} m={1}>
+						<MoreChapterOptions
+							chapter={chapter}
+							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapter.id}`}
+							placement="left"
+							size="medium"
+						/>
+					</Box>
 				</Box>
 			</div>
 			<Box bgcolor="grey.A700">
@@ -199,27 +210,29 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 											flexDirection: 'column',
 										}}
 									>
-										<ListItemText
-											primary={
-												<span
-													style={{
-														display: 'flex',
-														justifyContent:
-															'space-between',
-														alignItems: 'center',
-														width: '100%',
-													}}
-												>
-													{article.title}
-													<MoreArticleOptions
-														article={article}
-														shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapterId}/${article.id}`}
-														placement="right"
-													/>
-												</span>
-											}
-											secondary={article.description}
-										/>
+										<Stack
+											direction="row"
+											width={'100%'}
+											justifyContent="space-between"
+											alignItems="center"
+										>
+											<ListItemText>
+												{article.title}
+											</ListItemText>
+											<MoreArticleOptions
+												article={article}
+												shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapterId}/${article.id}`}
+												placement="right"
+												size="small"
+											/>
+										</Stack>
+										<Typography
+											color="text.secondary"
+											variant="subtitle2"
+											component="p"
+										>
+											{article.description}
+										</Typography>
 										<Stack
 											direction="row"
 											width={'100%'}
