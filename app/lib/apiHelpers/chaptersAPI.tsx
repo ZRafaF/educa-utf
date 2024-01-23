@@ -149,3 +149,7 @@ export async function createChapter(
 	}
 	return await pb.collection('chapters').create<ChaptersResponse>(form);
 }
+
+export async function deleteChapter(chapterId: string) {
+	return await pb.collection('chapters').delete(chapterId);
+}

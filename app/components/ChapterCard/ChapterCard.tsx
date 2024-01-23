@@ -30,6 +30,7 @@ import MoreOptions from '../MoreOptions/MoreOptions';
 import dynamic from 'next/dynamic';
 import { formatNumber } from '@/lib/helper';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
+import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),
 	{
@@ -154,7 +155,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 						<Typography variant="caption">
 							{formatNumber(myChapter.views)}
 						</Typography>
-						<MoreOptions />
+						<MoreChapterOptions
+							chapter={myChapter}
+							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
+							placement="left"
+						/>
 					</Stack>
 				</Stack>
 			</Stack>
@@ -201,24 +206,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 									keyWords={myChapter.expand?.key_words}
 									expanded
 								/>
-
-								<Stack direction="row">
-									<IconButton
-										aria-label="add to favorites"
-										key={'favorite-post'}
-									>
-										<FavoriteIcon />
-									</IconButton>
-
-									<ShareButton
-										key={'share-button'}
-										shareData={{
-											title: `${myChapter.title} - EducaUTF`,
-											text: `Aqui: ${myChapter.description}`,
-											url: `https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`,
-										}}
-									/>
-								</Stack>
+								<MoreChapterOptions
+									chapter={myChapter}
+									shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
+									placement="left"
+								/>
 							</Stack>
 						</Stack>
 					</CardActions>

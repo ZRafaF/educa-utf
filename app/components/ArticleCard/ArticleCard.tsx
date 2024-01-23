@@ -172,6 +172,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 								<MoreArticleOptions
 									article={myArticle}
 									placement="left"
+									shareUrl={`https://educautf.td.utfpr.edu.br/article/${myArticle.id}`}
 								/>
 							</Box>
 						</Stack>
