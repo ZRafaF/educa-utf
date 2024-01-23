@@ -15,42 +15,37 @@ import MenuList from '@mui/material/MenuList';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
-import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import {
-	ArticlesResponse,
-	ArticlesStatsResponse,
+	ChaptersResponse,
+	ChaptersStatsResponse,
 } from '@/types/pocketbase-types';
 import ShareIcon from '@mui/icons-material/Share';
 import ReportIcon from '@mui/icons-material/Report';
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
-import Box from '@mui/material/Box';
-import {
-	deleteArticle,
-	getArticleDocumentUrl,
-} from '@/lib/apiHelpers/articlesAPI';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
+import { deleteChapter } from '@/lib/apiHelpers/chaptersAPI';
 
-interface MoreArticleOptionsProps {
-	article: ArticlesResponse | ArticlesStatsResponse;
-	shareUrl: string | undefined;
+interface MoreChapterOptionsProps {
+	chapter: ChaptersResponse | ChaptersStatsResponse;
+	shareUrl: string;
 	placement: 'left' | 'right';
-	size?: 'small' | 'medium';
+	size: 'small' | 'medium';
 }
 
-const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
-	article,
+const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
+	chapter,
 	shareUrl,
 	placement,
-	size = 'medium',
+	size,
 }) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const [, user] = usePbAuth();
 	const router = useRouter();
-	const downloadUrl = getArticleDocumentUrl(article);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -69,7 +64,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 	return (
 		<>
 			<Box>
-				<Tooltip title="Mais opções" arrow placement={placement}>
+				<Tooltip title="Mais opções" arrow placement="right">
 					<IconButton onClick={handleClick} size="small">
 						<MoreVertIcon color="action" fontSize={size} />
 					</IconButton>
@@ -102,18 +97,16 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					}}
 				>
 					<Tooltip
-						title="Compartilhar artigo"
+						title="Compartilhar capítulo"
 						arrow
-						placement={placement}
+						placement="right"
 					>
 						<MenuItem
 							onClick={(e) => {
 								navigator.share({
-									title: `Olhe esse artigo que encontrei no EducaUTF!`,
-									text: `Ele se chama ${article.title}`,
-									url: shareUrl
-										? shareUrl
-										: window.location.protocol,
+									title: `Olhe esse capitulo que encontrei no EducaUTF!`,
+									text: `Ele se chama ${chapter.title}`,
+									url: shareUrl,
 								});
 								handleClose(e);
 							}}
@@ -129,41 +122,15 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					</Tooltip>
 
 					<Tooltip
-						title="Baixar artigo em MarkDown"
-						arrow
-						placement={placement}
-					>
-						<MenuItem
-							sx={{
-								py: 1,
-							}}
-							onClick={(e) => {
-								window.open(
-									downloadUrl,
-									'_blank',
-									'noopener,noreferrer'
-								);
-
-								handleClose(e);
-							}}
-						>
-							<ListItemIcon>
-								<SimCardDownloadIcon />
-							</ListItemIcon>
-							<ListItemText>Baixar</ListItemText>
-						</MenuItem>
-					</Tooltip>
-
-					<Tooltip
 						title={
 							<span style={{ whiteSpace: 'pre-line' }}>
 								{
-									'Adicionar artigo a um capítulo \n (Você precisa estar logado)'
+									'Fazer cópia do capítulo \n (Você precisa estar logado)'
 								}
 							</span>
 						}
 						arrow
-						placement={placement}
+						placement="right"
 					>
 						<Box
 							onClick={(e) => {
@@ -180,9 +147,9 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 								}}
 							>
 								<ListItemIcon>
-									<LibraryAddIcon />
+									<FileCopyIcon />
 								</ListItemIcon>
-								<ListItemText>Adicionar</ListItemText>
+								<ListItemText>Copiar</ListItemText>
 							</MenuItem>
 						</Box>
 					</Tooltip>
@@ -191,12 +158,12 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						title={
 							<span style={{ whiteSpace: 'pre-line' }}>
 								{
-									'Reportar esse artigo \n (Você precisa estar logado)'
+									'Reportar esse capítulo \n (Você precisa estar logado)'
 								}
 							</span>
 						}
 						arrow
-						placement={placement}
+						placement="right"
 					>
 						<Box
 							onClick={(e) => {
@@ -221,7 +188,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						</Box>
 					</Tooltip>
 				</MenuList>
-				{article.user === user?.id && (
+				{chapter.user === user?.id && (
 					<MenuList
 						sx={{
 							mb: -1,
@@ -230,13 +197,13 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					>
 						<Divider>Opções do autor</Divider>
 						<Tooltip
-							title="Editar artigo"
+							title="Editar capítulo"
 							arrow
-							placement={placement}
+							placement="right"
 						>
 							<MenuItem
 								onClick={(e) => {
-									router.push(`/edit-article/${article.id}`);
+									router.push(`/edit-chapter/${chapter.id}`);
 									handleClose(e);
 								}}
 								sx={{
@@ -251,9 +218,9 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						</Tooltip>
 						<Divider />
 						<Tooltip
-							title="Excluir esse artigo"
+							title="Excluir esse capítulo"
 							arrow
-							placement={placement}
+							placement="right"
 						>
 							<MenuItem
 								sx={{
@@ -263,18 +230,18 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 								onClick={(e) => {
 									if (
 										window.confirm(
-											'Você tem certeza que deseja excluir esse artigo?'
+											'Você tem certeza que deseja excluir esse capítulo?'
 										)
 									) {
-										deleteArticle(article.id)
+										deleteChapter(chapter.id)
 											.then((success) => {
 												if (success)
 													toast.success(
-														'Artigo excluído com sucesso!'
+														'Capítulo excluído com sucesso!'
 													);
 												else
 													toast.error(
-														'Erro ao excluir artigo!'
+														'Erro ao excluir capítulo!'
 													);
 											})
 											.catch((error) => {
@@ -297,4 +264,4 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 	);
 };
 
-export default MoreArticleOptions;
+export default MoreChapterOptions;

@@ -15,14 +15,17 @@ import Stack from '@mui/material/Stack/Stack';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton/IconButton';
-import { ArticlesResponse, ChaptersResponse } from '@/types/pocketbase-types';
-import { ArticlesExpand, ChaptersExpandTags } from '@/types/expanded-types';
+import {
+	ChaptersResponse,
+	ChaptersStatsResponse,
+} from '@/types/pocketbase-types';
+import { ChaptersExpandTags } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
 
 interface CardSlideProps {
 	myId: number;
 	sliderRef: RefObject<SwiperRef>;
-	myChapter: ChaptersResponse<ChaptersExpandTags>;
+	myChapter: ChaptersStatsResponse<ChaptersExpandTags>;
 }
 
 const CardSlide: FunctionComponent<CardSlideProps> = ({
@@ -61,7 +64,7 @@ const CardSlide: FunctionComponent<CardSlideProps> = ({
 };
 
 interface NewChaptersCarouselProps {
-	myChapters: ChaptersResponse<ChaptersExpandTags>[];
+	myChapters: ChaptersStatsResponse<ChaptersExpandTags>[];
 }
 
 const NewChaptersCarousel: FunctionComponent<NewChaptersCarouselProps> = ({

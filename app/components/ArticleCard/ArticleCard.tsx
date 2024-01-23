@@ -15,13 +15,13 @@ import { FunctionComponent } from 'react';
 import { ArticlesExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import MoreOptions from '../MoreOptions/MoreOptions';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
 
 import dynamic from 'next/dynamic';
 import { formatNumber } from '@/lib/helper';
+import MoreArticleOptions from '../MoreArticleOptions/MoreArticleOptions';
 const TagsComponent = dynamic(() => import('../TagsComponent/TagsComponent'), {
 	ssr: false,
 });
@@ -169,7 +169,11 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 								keyWords={myArticle.expand?.key_words}
 							/>
 							<Box>
-								<MoreOptions />
+								<MoreArticleOptions
+									article={myArticle}
+									placement="left"
+									shareUrl={`https://educautf.td.utfpr.edu.br/article/${myArticle.id}`}
+								/>
 							</Box>
 						</Stack>
 					</Stack>

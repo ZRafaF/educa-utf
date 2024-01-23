@@ -23,7 +23,7 @@ const EditMetadataSender: FunctionComponent<EditMetadataSenderProps> = ({
 	const [handleSubmit] = useSendMetadata({
 		type: 'create',
 		resourceType:
-			searchParams.get('type') === 'article' ? 'article' : 'chapter',
+			searchParams.get('type') === 'chapter' ? 'chapter' : 'article',
 		myChapterCover: cover,
 	});
 

@@ -111,6 +111,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 							<MoreArticleOptions
 								article={myArticle}
 								placement="left"
+								shareUrl={undefined}
 							/>
 						</Stack>
 					</Stack>

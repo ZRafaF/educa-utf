@@ -86,6 +86,8 @@ const useSendMetadata = ({
 		fetchedTag: TagsResponse,
 		keywords: string[]
 	) => {
+		console.log(resourceType);
+
 		if (resourceType === 'article') {
 			const baseFile = new Blob([''], { type: 'text/markdown' });
 

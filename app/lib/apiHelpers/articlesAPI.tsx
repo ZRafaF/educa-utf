@@ -57,7 +57,9 @@ export async function getBestArticlesOf(time: 'week' | 'month' | 'year') {
 	}
 }
 
-export function getArticleDocumentUrl(article: ArticlesResponse) {
+export function getArticleDocumentUrl(
+	article: ArticlesResponse | ArticlesStatsResponse
+) {
 	const record = {
 		id: article.id,
 		collectionId: article.collectionId,
