@@ -27,7 +27,10 @@ const PrevNextArticle: FunctionComponent<PrevNextArticleProps> = ({
 
 	const myIdx = useMemo(() => {
 		if (chapter === undefined) return -1;
-		return chapter.articles.findIndex((element) => element === articleId);
+		if (chapter.expand === undefined) return -1;
+		return chapter.expand.articles.findIndex(
+			(element) => element.id === articleId
+		);
 	}, [chapter, articleId]);
 
 	useEffect(() => {

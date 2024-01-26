@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import { ArticlesResponse, ChaptersResponse } from '@/types/pocketbase-types';
-import { Dispatch, FunctionComponent, SetStateAction, useMemo } from 'react';
+import { Dispatch, FunctionComponent, SetStateAction } from 'react';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import ArticlesListItem from './ArticlesListItem';
 import Divider from '@mui/material/Divider';
