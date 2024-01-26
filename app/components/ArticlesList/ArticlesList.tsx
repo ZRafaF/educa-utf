@@ -30,8 +30,8 @@ import { toast } from 'react-toastify';
 import PageMessage from '@/components/PageMessage/PageMessage';
 import Container from '@mui/material/Container';
 import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
-import ArticlesListItem from './ArticlesListItem';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import EditableList from './EditableList';
 
 interface ArticlesListProps {
 	chapterId: string;
@@ -43,6 +43,11 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const pathname = usePathname();
 	const paths = pathname.split('/');
+	const [articles, setArticles] = useState<ArticlesResponse[]>(
+		chapter?.expand?.articles ?? []
+	);
+	const searchParams = useSearchParams();
+	const editMode = searchParams.get('edit');
 
 	useEffect(() => {
 		const handleFetchData = async () => {
@@ -54,6 +59,7 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 					]);
 				setChapter(chapterResponse);
 				setChapterStats(chapterStatsResponse);
+				setArticles(chapterResponse.expand?.articles ?? []);
 			} catch (error) {
 				toast.error('Erro ao carregar capítulo ' + error);
 				console.error(error);
@@ -179,24 +185,13 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 			</div>
 			<Box bgcolor="grey.A700">
 				<Container maxWidth="sm" disableGutters>
-					<List sx={{ pt: 0, pb: 8 }}>
-						<Divider component="li" />
-						{chapter.expand?.articles?.map(
-							(article: ArticlesResponse) => (
-								<>
-									<ArticlesListItem
-										article={article}
-										chapter={chapter}
-										active={
-											paths[paths.length - 1] ===
-											article.id
-										}
-									/>
-									<Divider component="li" />
-								</>
-							)
-						)}
-					</List>
+					<EditableList
+						articles={articles}
+						setArticles={setArticles}
+						chapter={chapter}
+						paths={paths}
+						editMode={Boolean(editMode)}
+					/>
 				</Container>
 			</Box>
 		</>
@@ -204,6 +199,3 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({ chapterId }) => {
 };
 
 export default ArticlesList;
-function useCallback(arg0: (result: any) => void, arg1: never[]) {
-	throw new Error('Function not implemented.');
-}
