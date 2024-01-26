@@ -3,9 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
-import ArticlesList from './ArticlesList';
 import {
 	getChapterById,
 	getChaptersStatsById,
@@ -15,6 +14,7 @@ import type { Metadata } from 'next';
 
 import dynamic from 'next/dynamic';
 import DrawerController from './DrawerController';
+import ChapterInspector from '@/components/ChapterInspector/ChapterInspector';
 const ViewsBumper = dynamic(
 	() => import('@/components/ViewsBumper/ViewsBumper'),
 	{
@@ -42,7 +42,7 @@ export async function generateMetadata({
 
 	try {
 		const chapterStats = await getChaptersStatsById(chapterId);
-		const chapter = await getChapterById(chapterId);
+		const chapter = await getChapterById(chapterId, true);
 		let tag = chapter.expand?.tag?.name ?? '';
 		return {
 			title: `${chapter.title} - EducaUTF`,
@@ -69,10 +69,16 @@ export default function Layout({
 	return (
 		<>
 			<Grid container flexGrow={1}>
-				<DrawerController>
-					<ArticlesList chapterId={params.chapterId} />
-				</DrawerController>
-				<Grid xs>{children}</Grid>
+				<Suspense fallback={<div>Carregando...</div>}>
+					<DrawerController>
+						<ChapterInspector chapterId={params.chapterId} />
+					</DrawerController>
+				</Suspense>
+				<Grid xs>
+					<Suspense fallback={<div>Carregando...</div>}>
+						{children}
+					</Suspense>
+				</Grid>
 			</Grid>
 
 			<ViewsBumper

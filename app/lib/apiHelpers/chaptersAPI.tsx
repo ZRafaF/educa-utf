@@ -19,7 +19,7 @@ export async function getFullListOfChapters(expand: boolean = false) {
 			.collection('chapters')
 			.getFullList<ChaptersResponse<ChaptersExpand>>({
 				skipTotal: true,
-				expand: expand ? 'articles' : undefined,
+				expand: expand ? 'articles, tag, key_words' : undefined,
 				batch: 9999,
 			});
 	} catch (error) {
@@ -48,7 +48,7 @@ export async function getChapterById(id: string, expand: boolean = false) {
 		.collection('chapters')
 		.getOne<ChaptersResponse<ChaptersExpand>>(id, {
 			skipTotal: true,
-			expand: expand ? 'articles' : undefined,
+			expand: expand ? 'articles, tag, key_words' : undefined,
 		});
 }
 

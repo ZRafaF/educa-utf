@@ -142,30 +142,22 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 				</Typography>
 				<Stack
 					direction={'row'}
-					justifyContent={'space-between'}
+					justifyContent={'space-around'}
 					alignItems={'center'}
-					width={'stretch'}
+					width={'100%'}
 				>
-					<Stack direction="row" spacing={2} alignItems="center">
-						<Stack direction="row" spacing={1} alignItems="center">
-							<VisibilityIcon color="action" fontSize="small" />
-							<Typography variant="caption">
-								{formatNumber(myChapter.views)}
-							</Typography>
-						</Stack>
-						<Stack direction="row" spacing={1} alignItems="center">
-							<FavoriteIcon color="action" fontSize="small" />
-							<Typography variant="caption">
-								{formatNumber(myChapter.likes)}
-							</Typography>
-						</Stack>
+					<Stack direction="row" spacing={1} alignItems="center">
+						<VisibilityIcon color="action" fontSize="small" />
+						<Typography variant="caption">
+							{formatNumber(myChapter.views)}
+						</Typography>
 					</Stack>
-					<MoreChapterOptions
-						chapter={myChapter}
-						shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
-						placement="left"
-						size="small"
-					/>
+					<Stack direction="row" spacing={1} alignItems="center">
+						<FavoriteIcon color="action" fontSize="small" />
+						<Typography variant="caption">
+							{formatNumber(myChapter.likes)}
+						</Typography>
+					</Stack>
 				</Stack>
 			</Stack>
 		</CardContent>
@@ -219,37 +211,34 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 
 				{isExpanded ? <ExpandedContent /> : <CollapsedContent />}
 			</CardActionArea>
-			{isExpanded ? (
-				<>
-					<Divider />
-					<CardActions>
-						<Stack
-							sx={{
-								width: '100%',
-							}}
-						>
-							<Stack
-								direction="row"
-								justifyContent="space-between"
-							>
-								<TagsComponent
-									tag={myChapter.expand?.tag}
-									keyWords={myChapter.expand?.key_words}
-									expanded
-								/>
-								<MoreChapterOptions
-									chapter={myChapter}
-									shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
-									placement="left"
-									size="medium"
-								/>
-							</Stack>
-						</Stack>
-					</CardActions>
-				</>
-			) : (
-				<></>
-			)}
+
+			<Divider />
+			<CardActions>
+				<Stack
+					sx={{
+						width: '100%',
+					}}
+				>
+					<Stack
+						direction="row"
+						justifyContent="space-between"
+						alignItems="center"
+						spacing={1}
+					>
+						<TagsComponent
+							tag={myChapter.expand?.tag}
+							keyWords={myChapter.expand?.key_words}
+							expanded={isExpanded}
+						/>
+						<MoreChapterOptions
+							chapter={myChapter}
+							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
+							placement="left"
+							size="small"
+						/>
+					</Stack>
+				</Stack>
+			</CardActions>
 		</Card>
 	);
 };

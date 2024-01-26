@@ -30,7 +30,6 @@ const NoSSRTags: FunctionComponent<NoSSRTagsProps> = ({
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const router = useRouter();
 	const open = Boolean(anchorEl);
-	const id = open ? 'simple-popover' : undefined;
 
 	const handleClick = (event: any) => {
 		event.stopPropagation();
@@ -96,7 +95,7 @@ const NoSSRTags: FunctionComponent<NoSSRTagsProps> = ({
 	}
 
 	return (
-		<Stack direction="row" gap={0.5}>
+		<Stack direction="row" gap={0.5} alignItems="center">
 			<Chip
 				size="small"
 				label={tag.name}

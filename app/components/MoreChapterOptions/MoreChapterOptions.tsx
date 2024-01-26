@@ -203,7 +203,9 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 						>
 							<MenuItem
 								onClick={(e) => {
-									router.push(`/edit-chapter/${chapter.id}`);
+									router.push(
+										`/chapter/${chapter.id}?edit=true`
+									);
 									handleClose(e);
 								}}
 								sx={{

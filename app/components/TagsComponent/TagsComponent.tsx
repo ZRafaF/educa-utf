@@ -3,15 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-'use client';
-
 import { KeyWordsRecord, TagsResponse } from '@/types/pocketbase-types';
 import { FunctionComponent } from 'react';
-import dynamic from 'next/dynamic';
+import NoSSRTags from './NoSSRTags';
 
-const NoSSRTags = dynamic(() => import('./NoSSRTags'), {
-	ssr: false,
-});
 interface TagsComponentProps {
 	keyWords: KeyWordsRecord[] | undefined;
 	tag: TagsResponse | undefined;
