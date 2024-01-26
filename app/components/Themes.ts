@@ -11,7 +11,9 @@ export const cssTheme = extendTheme({
 		dark: {
 			palette: {
 				mode: 'dark',
-				primary: { main: '#58A6FF' },
+				primary: {
+					main: '#58A6FF',
+				},
 				secondary: { main: '#FFCA02' },
 				background: {
 					//default: '#161616',
