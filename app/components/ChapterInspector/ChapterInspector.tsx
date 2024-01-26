@@ -5,7 +5,7 @@
 
 'use client';
 
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import React from 'react';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
@@ -17,7 +17,6 @@ import {
 import { ChaptersExpand } from '@/types/expanded-types';
 import {
 	getChapterById,
-	getChapterCoverURL,
 	getChaptersStatsById,
 } from '@/lib/apiHelpers/chaptersAPI';
 import { toast } from 'react-toastify';
@@ -26,6 +25,7 @@ import Container from '@mui/material/Container';
 import { usePathname, useSearchParams } from 'next/navigation';
 import ArticlesList from './ArticlesList/ArticlesList';
 import ChapterInspectorHeader from './ChapterInspectorHeader/ChapterInspectorHeader';
+import usePbAuth from '@/hooks/usePbAuth';
 
 interface ChapterInspectorProps {
 	chapterId: string;
@@ -43,7 +43,12 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 		chapter?.expand?.articles ?? []
 	);
 	const searchParams = useSearchParams();
-	const editMode = Boolean(searchParams.get('edit'));
+	const [, user] = usePbAuth();
+	const editMode = useMemo(() => {
+		if (!user || !chapter) return false;
+		const isEdit = Boolean(searchParams.get('edit'));
+		return isEdit && user.id === chapter.user;
+	}, [searchParams, user, chapter]);
 
 	useEffect(() => {
 		const handleFetchData = async () => {

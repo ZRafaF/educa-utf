@@ -21,6 +21,10 @@ import {
 } from '@/types/pocketbase-types';
 import { ChaptersExpand } from '@/types/expanded-types';
 import MoreChapterOptions from '@/components/MoreChapterOptions/MoreChapterOptions';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
@@ -36,126 +40,188 @@ const ChapterInspectorHeader: FunctionComponent<
 		chapter.description
 	);
 
+	const pathname = usePathname();
+
 	return (
-		<div data-mui-color-scheme="dark">
-			<Box
-				sx={{
-					p: 2,
-					pt: { xs: 8, sm: 8, md: 5 },
-				}}
-				position={{ xs: 'inherit', sm: 'inherit', md: 'relative' }}
-				color="text.primary"
-				boxShadow={6}
-			>
-				<Stack spacing={1}>
-					<Typography
-						variant="h5"
-						fontWeight={700}
-						align="center"
-						width={'100%'}
-						suppressContentEditableWarning={true}
-						contentEditable={editMode}
-						sx={{
-							':hover': {
-								border: editMode ? 1 : 0,
-							},
-						}}
-						py={1}
-						onInput={(e: any) => {
-							setEditedTitle(e.target.innerText);
-						}}
-					>
-						{chapter.title}
-					</Typography>
-
-					<Divider />
-					<Typography
-						color="text.secondary"
-						suppressContentEditableWarning={true}
-						contentEditable={editMode}
-						py={1}
-						sx={{
-							':hover': {
-								border: editMode ? 1 : 0,
-							},
-						}}
-						onInput={(e: any) => {
-							setEditedDescription(e.target.innerText);
-						}}
-					>
-						{chapter.description.length
-							? chapter.description
-							: 'Sem descrição...'}
-					</Typography>
-					<Divider />
-					<Stack
-						direction="row"
-						justifyContent="space-around"
-						alignItems="center"
-					>
-						<Tooltip title="Visualizações" arrow placement="left">
-							<Stack
-								direction="row"
-								spacing={1}
-								alignItems="center"
-								pl={1}
-							>
-								<VisibilityIcon color="action" />
-								<Typography variant="subtitle2" component="p">
-									{chapterStats.views}
-								</Typography>
-							</Stack>
-						</Tooltip>
-						<LikeButton
-							numberOfLikes={chapterStats.likes}
-							item={{
-								id: chapter?.id,
-								type: 'chapters',
+		<>
+			<div data-mui-color-scheme="dark">
+				<Box
+					sx={{
+						p: 2,
+						pt: { xs: 8, sm: 8, md: 5 },
+					}}
+					position={{ xs: 'inherit', sm: 'inherit', md: 'relative' }}
+					color="text.primary"
+					boxShadow={6}
+				>
+					<Stack spacing={1}>
+						<Typography
+							variant="h5"
+							fontWeight={700}
+							align="center"
+							width={'100%'}
+							suppressContentEditableWarning={true}
+							contentEditable={editMode}
+							sx={{
+								':hover': {
+									border: editMode ? 1 : 0,
+								},
 							}}
-						/>
-					</Stack>
-				</Stack>
-				<Box
-					position={'absolute'}
-					top={0}
-					left={0}
-					right={0}
-					bottom={0}
-					zIndex={-1}
-					sx={{
-						backgroundImage: `url(${getChapterCoverURL(
-							chapter,
-							true
-						)})`,
-						backgroundSize: 'cover',
+							py={1}
+							onInput={(e: any) => {
+								setEditedTitle(e.target.innerText);
+							}}
+						>
+							{chapter.title}
+						</Typography>
 
-						backgroundPosition: 'center',
-						backgroundRepeat: 'no-repeat',
-						boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.75)',
-					}}
-					bgcolor={'Background'}
-				/>
-				<Box
-					position={'absolute'}
-					top={0}
-					left={0}
-					right={0}
-					bottom={0}
-					zIndex={-1}
-					sx={{
-						backdropFilter: 'blur(3px)',
-					}}
-				/>
-				<Box position={'absolute'} top={0} right={0} m={1}>
-					<MoreChapterOptions
-						chapter={chapter}
-						shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapter.id}`}
-						placement="left"
-						size="medium"
+						<Divider />
+						<Typography
+							color="text.secondary"
+							suppressContentEditableWarning={true}
+							contentEditable={editMode}
+							py={1}
+							sx={{
+								':hover': {
+									border: editMode ? 1 : 0,
+								},
+							}}
+							onInput={(e: any) => {
+								setEditedDescription(e.target.innerText);
+							}}
+						>
+							{chapter.description.length
+								? chapter.description
+								: 'Sem descrição...'}
+						</Typography>
+						<Divider />
+						<Stack
+							direction="row"
+							justifyContent="space-around"
+							alignItems="center"
+						>
+							<Tooltip
+								title="Visualizações"
+								arrow
+								placement="left"
+							>
+								<Stack
+									direction="row"
+									spacing={1}
+									alignItems="center"
+									pl={1}
+								>
+									<VisibilityIcon color="action" />
+									<Typography
+										variant="subtitle2"
+										component="p"
+									>
+										{chapterStats.views}
+									</Typography>
+								</Stack>
+							</Tooltip>
+							<LikeButton
+								numberOfLikes={chapterStats.likes}
+								item={{
+									id: chapter?.id,
+									type: 'chapters',
+								}}
+							/>
+						</Stack>
+					</Stack>
+					<Box
+						position={'absolute'}
+						top={0}
+						left={0}
+						right={0}
+						bottom={0}
+						zIndex={-1}
+						sx={{
+							backgroundImage: `url(${getChapterCoverURL(
+								chapter,
+								true
+							)})`,
+							backgroundSize: 'cover',
+
+							backgroundPosition: 'center',
+							backgroundRepeat: 'no-repeat',
+							boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.75)',
+						}}
+						bgcolor={'Background'}
 					/>
+					<Box
+						position={'absolute'}
+						top={0}
+						left={0}
+						right={0}
+						bottom={0}
+						zIndex={-1}
+						sx={{
+							backdropFilter: 'blur(3px)',
+						}}
+					/>
+					<Box position={'absolute'} top={0} right={0} m={1}>
+						<MoreChapterOptions
+							chapter={chapter}
+							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapter.id}`}
+							placement="left"
+							size="medium"
+						/>
+					</Box>
+					{editMode && (
+						<Box position={'absolute'} top={0} left={0} m={1}>
+							<Button
+								size="small"
+								color="error"
+								variant="outlined"
+								startIcon={<DeleteIcon />}
+							>
+								Excluir
+							</Button>
+						</Box>
+					)}
 				</Box>
-			</Box>
-		</div>
+			</div>
+			{editMode && (
+				<Box bgcolor={'background.default'} p={2}>
+					<Stack
+						direction="column"
+						justifyContent="center"
+						alignItems="center"
+						spacing={1}
+						width={'100%'}
+					>
+						<Button fullWidth color="success" variant="contained">
+							Adicionar Artigo
+						</Button>
+						<Stack
+							direction="row"
+							justifyContent="center"
+							alignItems="center"
+							spacing={2}
+							width={'100%'}
+						>
+							<Button
+								fullWidth
+								color="primary"
+								variant="outlined"
+								href={pathname}
+								LinkComponent={Link}
+							>
+								Cancelar
+							</Button>
+							<Button
+								fullWidth
+								color="primary"
+								variant="contained"
+							>
+								Salvar
+							</Button>
+						</Stack>
+					</Stack>
+				</Box>
+			)}
+		</>
 	);
 };
 

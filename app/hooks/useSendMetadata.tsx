@@ -147,7 +147,7 @@ const useSendMetadata = ({
 				pauseOnHover: true,
 				closeOnClick: true,
 			});
-			router.push(`/edit-chapter/${newRecord.id}`);
+			router.push(`/chapter/${newRecord.id}?edit=true`);
 		}
 	};
 
