@@ -50,6 +50,9 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 						article.visibility === ArticlesVisibilityOptions.private
 							? 'rgba(130, 130, 130, 0.15)'
 							: 'grey.A700',
+					':hover': {
+						border: editMode ? 1 : 0,
+					},
 				}}
 				position={'relative'}
 				color={'text.primary'}

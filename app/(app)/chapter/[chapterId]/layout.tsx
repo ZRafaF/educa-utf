@@ -14,7 +14,7 @@ import type { Metadata } from 'next';
 
 import dynamic from 'next/dynamic';
 import DrawerController from './DrawerController';
-import ArticlesList from '@/components/ArticlesList/ArticlesList';
+import ChapterInspector from '@/components/ChapterInspector/ChapterInspector';
 const ViewsBumper = dynamic(
 	() => import('@/components/ViewsBumper/ViewsBumper'),
 	{
@@ -70,7 +70,7 @@ export default function Layout({
 		<>
 			<Grid container flexGrow={1}>
 				<DrawerController>
-					<ArticlesList chapterId={params.chapterId} />
+					<ChapterInspector chapterId={params.chapterId} />
 				</DrawerController>
 				<Grid xs>{children}</Grid>
 			</Grid>

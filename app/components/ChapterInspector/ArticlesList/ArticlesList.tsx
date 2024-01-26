@@ -9,8 +9,9 @@ import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import ArticlesListItem from './ArticlesListItem';
 import Divider from '@mui/material/Divider';
 import { ChaptersExpand } from '@/types/expanded-types';
+import Box from '@mui/material/Box';
 
-interface EditableListProps {
+interface ArticlesListProps {
 	articles: ArticlesResponse[];
 	setArticles: Dispatch<SetStateAction<ArticlesResponse[]>>;
 	chapter: ChaptersResponse<ChaptersExpand>;
@@ -18,7 +19,7 @@ interface EditableListProps {
 	editMode: boolean;
 }
 
-const EditableList: FunctionComponent<EditableListProps> = ({
+const ArticlesList: FunctionComponent<ArticlesListProps> = ({
 	articles,
 	setArticles,
 	chapter,
@@ -39,19 +40,23 @@ const EditableList: FunctionComponent<EditableListProps> = ({
 				{(provided) => (
 					<div ref={provided.innerRef} {...provided.droppableProps}>
 						{articles.map((article: ArticlesResponse, index) => (
-							<>
-								<Draggable
-									draggableId={article.id}
-									index={index}
-									key={article.id}
-									isDragDisabled={!editMode}
-								>
-									{(provided) => {
-										return (
-											<div
-												ref={provided.innerRef}
-												{...provided.draggableProps}
-												{...provided.dragHandleProps}
+							<Draggable
+								draggableId={article.id}
+								index={index}
+								key={article.id}
+								isDragDisabled={!editMode}
+							>
+								{(provided, snapshot) => {
+									return (
+										<div
+											ref={provided.innerRef}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
+										>
+											<Box
+												border={
+													snapshot.isDragging ? 1 : 0
+												}
 											>
 												<ArticlesListItem
 													article={article}
@@ -63,12 +68,12 @@ const EditableList: FunctionComponent<EditableListProps> = ({
 													}
 													editMode={editMode}
 												/>
-												<Divider />
-											</div>
-										);
-									}}
-								</Draggable>
-							</>
+											</Box>
+											<Divider />
+										</div>
+									);
+								}}
+							</Draggable>
 						))}
 						{provided.placeholder}
 					</div>
@@ -78,4 +83,4 @@ const EditableList: FunctionComponent<EditableListProps> = ({
 	);
 };
 
-export default EditableList;
+export default ArticlesList;
