@@ -16,7 +16,7 @@ import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
 import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 import Fab from '@mui/material/Fab';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Divider from '@mui/material/Divider';
 
 interface MobileDrawerProps {
@@ -37,17 +37,18 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 	hidden = false,
 }) => {
 	const theme = useTheme();
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const searchParams = useSearchParams();
+	const isEdit = Boolean(searchParams.get('edit'));
+	const [isOpen, setIsOpen] = useState<boolean>(isEdit);
 	const pathname = usePathname();
-
 	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 
 	const handleClose = () => {
-		setIsOpen(false);
+		if (!isEdit) setIsOpen(false);
 	};
 
 	useEffect(() => {
-		setIsOpen(false);
+		if (!isEdit) setIsOpen(false);
 	}, [pathname]);
 
 	return (
@@ -68,7 +69,7 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 			>
 				<Box
 					sx={{
-						maxHeight: '67dvh',
+						height: isEdit ? '90dvh' : '67dvh',
 						ml: onlySmallScreen ? 7 : 0,
 					}}
 				>
@@ -85,28 +86,30 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 						boxShadow={3}
 					>
 						<Box>
-							<div data-mui-color-scheme="dark">
-								<Stack
-									direction="row"
-									justifyContent="center"
-									alignItems="center"
-									display={{ sm: 'flex', md: 'none' }}
-									mt={1}
-									height={32}
-									px={2}
-								>
-									<Button
-										variant="text"
-										sx={{
-											fontWeight: 'bold',
-											width: '50%',
-										}}
-										onClick={handleClose}
+							{!isEdit && (
+								<div data-mui-color-scheme="dark">
+									<Stack
+										direction="row"
+										justifyContent="center"
+										alignItems="center"
+										display={{ sm: 'flex', md: 'none' }}
+										mt={1}
+										height={32}
+										px={2}
 									>
-										FECHAR
-									</Button>
-								</Stack>
-							</div>
+										<Button
+											variant="text"
+											sx={{
+												fontWeight: 'bold',
+												width: '50%',
+											}}
+											onClick={handleClose}
+										>
+											FECHAR
+										</Button>
+									</Stack>
+								</div>
+							)}
 
 							<Box my={-6}>{children}</Box>
 						</Box>
