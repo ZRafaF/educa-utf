@@ -63,11 +63,11 @@ const EditableList: FunctionComponent<EditableListProps> = ({
 													}
 													editMode={editMode}
 												/>
+												<Divider />
 											</div>
 										);
 									}}
 								</Draggable>
-								<Divider />
 							</>
 						))}
 						{provided.placeholder}

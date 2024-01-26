@@ -46,15 +46,12 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 							? 0.8
 							: 1,
 
-					pointerEvents: editMode ? 'none' : 'auto',
 					bgcolor:
 						article.visibility === ArticlesVisibilityOptions.private
 							? 'rgba(130, 130, 130, 0.15)'
 							: 'grey.A700',
 				}}
 				position={'relative'}
-				borderLeft={active ? 5 : 0}
-				borderColor={'primary.main'}
 				color={'text.primary'}
 			>
 				<ListItemButton
@@ -63,7 +60,10 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
+						borderLeft: active ? 5 : 0,
+						borderColor: 'primary.main',
 					}}
+					disabled={editMode}
 				>
 					<Stack
 						direction="row"
