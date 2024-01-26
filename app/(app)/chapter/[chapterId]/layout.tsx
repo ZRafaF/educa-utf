@@ -5,7 +5,6 @@
 
 import { ReactNode } from 'react';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
-import ArticlesList from './ArticlesList';
 import {
 	getChapterById,
 	getChaptersStatsById,
@@ -15,6 +14,7 @@ import type { Metadata } from 'next';
 
 import dynamic from 'next/dynamic';
 import DrawerController from './DrawerController';
+import ArticlesList from '@/components/ArticlesList/ArticlesList';
 const ViewsBumper = dynamic(
 	() => import('@/components/ViewsBumper/ViewsBumper'),
 	{
