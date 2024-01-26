@@ -7,6 +7,7 @@ import {
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
+import { Suspense } from 'react';
 
 export default function RootLayout({
 	children,
@@ -32,7 +33,9 @@ export default function RootLayout({
 					}}
 					maxWidth={false}
 				>
-					{children}
+					<Suspense fallback={<div>Loading...</div>}>
+						{children}
+					</Suspense>
 				</Container>
 			</Box>
 		</>

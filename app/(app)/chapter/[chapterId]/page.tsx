@@ -32,7 +32,7 @@ const Page: FunctionComponent<PageProps> = ({ params }) => {
 				);
 			} else setRedirecting(false);
 		});
-	}, [chapterId, setRedirecting, router]);
+	}, [chapterId, setRedirecting, router, isEdit, searchParams]);
 
 	if (redirecting)
 		return <PageMessage message="Redirecionando, aguarde...." loading />;

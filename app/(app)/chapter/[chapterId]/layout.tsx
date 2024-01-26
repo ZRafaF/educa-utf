@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
 import {
 	getChapterById,
@@ -69,10 +69,16 @@ export default function Layout({
 	return (
 		<>
 			<Grid container flexGrow={1}>
-				<DrawerController>
-					<ChapterInspector chapterId={params.chapterId} />
-				</DrawerController>
-				<Grid xs>{children}</Grid>
+				<Suspense fallback={<div>Carregando...</div>}>
+					<DrawerController>
+						<ChapterInspector chapterId={params.chapterId} />
+					</DrawerController>
+				</Suspense>
+				<Grid xs>
+					<Suspense fallback={<div>Carregando...</div>}>
+						{children}
+					</Suspense>
+				</Grid>
 			</Grid>
 
 			<ViewsBumper
