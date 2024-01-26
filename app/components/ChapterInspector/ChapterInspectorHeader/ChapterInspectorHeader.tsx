@@ -22,9 +22,11 @@ import {
 import { ChaptersExpand } from '@/types/expanded-types';
 import MoreChapterOptions from '@/components/MoreChapterOptions/MoreChapterOptions';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import TagsComponent from '@/components/TagsComponent/TagsComponent';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 
 interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
@@ -47,14 +49,14 @@ const ChapterInspectorHeader: FunctionComponent<
 			<div data-mui-color-scheme="dark">
 				<Box
 					sx={{
-						p: 2,
-						pt: { xs: 8, sm: 8, md: 5 },
+						pt: { xs: 8, sm: 8, md: 4 },
+						pb: 0,
 					}}
 					position={{ xs: 'inherit', sm: 'inherit', md: 'relative' }}
 					color="text.primary"
 					boxShadow={6}
 				>
-					<Stack spacing={1}>
+					<Stack spacing={1} px={2}>
 						<Typography
 							variant="h5"
 							fontWeight={700}
@@ -129,6 +131,20 @@ const ChapterInspectorHeader: FunctionComponent<
 							/>
 						</Stack>
 					</Stack>
+					<Stack direction="row" alignItems="end" px={1} spacing={1}>
+						<TagsComponent
+							tag={chapter.expand?.tag}
+							keyWords={chapter.expand?.key_words}
+							expanded
+						/>
+						{editMode && (
+							<Box pb={1}>
+								<IconButton aria-label="edit-tag-and-keywords">
+									<EditIcon fontSize="small" />
+								</IconButton>
+							</Box>
+						)}
+					</Stack>
 					<Box
 						position={'absolute'}
 						top={0}
@@ -168,18 +184,6 @@ const ChapterInspectorHeader: FunctionComponent<
 							size="medium"
 						/>
 					</Box>
-					{editMode && (
-						<Box position={'absolute'} top={0} left={0} m={1}>
-							<Button
-								size="small"
-								color="error"
-								variant="outlined"
-								startIcon={<DeleteIcon />}
-							>
-								Excluir
-							</Button>
-						</Box>
-					)}
 				</Box>
 			</div>
 			{editMode && (

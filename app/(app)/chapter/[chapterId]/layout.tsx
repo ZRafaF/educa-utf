@@ -42,7 +42,7 @@ export async function generateMetadata({
 
 	try {
 		const chapterStats = await getChaptersStatsById(chapterId);
-		const chapter = await getChapterById(chapterId);
+		const chapter = await getChapterById(chapterId, true);
 		let tag = chapter.expand?.tag?.name ?? '';
 		return {
 			title: `${chapter.title} - EducaUTF`,
