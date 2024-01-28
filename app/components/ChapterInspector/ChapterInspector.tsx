@@ -51,6 +51,10 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 	}, [searchParams, user, chapter]);
 
 	useEffect(() => {
+		if (chapter && !editMode) setArticles(chapter.expand?.articles ?? []);
+	}, [chapter, editMode]);
+
+	useEffect(() => {
 		const handleFetchData = async () => {
 			try {
 				const [chapterResponse, chapterStatsResponse] =
@@ -60,7 +64,6 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 					]);
 				setChapter(chapterResponse);
 				setChapterStats(chapterStatsResponse);
-				setArticles(chapterResponse.expand?.articles ?? []);
 			} catch (error) {
 				toast.error('Erro ao carregar capítulo ' + error);
 				console.error(error);
