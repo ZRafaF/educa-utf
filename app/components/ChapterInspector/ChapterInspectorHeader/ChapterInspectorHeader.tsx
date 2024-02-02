@@ -5,7 +5,7 @@
 
 'use client';
 
-import { FunctionComponent, useState } from 'react';
+import { Dispatch, FunctionComponent, SetStateAction, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
 import LikeButton from '@/components/LikeButton/LikeButton';
@@ -22,8 +22,7 @@ import {
 import { ChaptersExpand } from '@/types/expanded-types';
 import MoreChapterOptions from '@/components/MoreChapterOptions/MoreChapterOptions';
 import Button from '@mui/material/Button';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import TagsComponent from '@/components/TagsComponent/TagsComponent';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
@@ -32,17 +31,17 @@ interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
 	chapterStats: ChaptersStatsResponse;
 	editMode: boolean;
+	editedChapter: ChaptersResponse<ChaptersExpand>;
+	setEditedChapter: Dispatch<
+		SetStateAction<ChaptersResponse<ChaptersExpand> | undefined>
+	>;
 }
 
 const ChapterInspectorHeader: FunctionComponent<
 	ChapterInspectorHeaderProps
-> = ({ chapter, chapterStats, editMode }) => {
-	const [editedTitle, setEditedTitle] = useState(chapter.title);
-	const [editedDescription, setEditedDescription] = useState(
-		chapter.description
-	);
-
+> = ({ chapter, chapterStats, editMode, editedChapter, setEditedChapter }) => {
 	const pathname = usePathname();
+	const router = useRouter();
 
 	return (
 		<>
@@ -57,45 +56,75 @@ const ChapterInspectorHeader: FunctionComponent<
 					boxShadow={6}
 				>
 					<Stack spacing={1} px={2}>
+						{editMode && (
+							<Typography
+								variant="h5"
+								fontWeight={700}
+								align="center"
+								width={'100%'}
+								suppressContentEditableWarning={true}
+								contentEditable={editMode}
+								sx={{
+									':hover': {
+										border: editMode ? 1 : 0,
+									},
+								}}
+								py={1}
+								onInput={(e: any) => {
+									setEditedChapter({
+										...editedChapter,
+										title: e.target.innerText,
+									});
+								}}
+							>
+								{chapter.title}
+							</Typography>
+						)}
 						<Typography
 							variant="h5"
 							fontWeight={700}
+							display={editMode ? 'none' : 'block'}
 							align="center"
 							width={'100%'}
-							suppressContentEditableWarning={true}
-							contentEditable={editMode}
-							sx={{
-								':hover': {
-									border: editMode ? 1 : 0,
-								},
-							}}
 							py={1}
-							onInput={(e: any) => {
-								setEditedTitle(e.target.innerText);
-							}}
 						>
 							{chapter.title}
 						</Typography>
 
 						<Divider />
+						{editMode && (
+							<Typography
+								color="text.secondary"
+								suppressContentEditableWarning={true}
+								contentEditable={editMode}
+								py={1}
+								sx={{
+									':hover': {
+										border: editMode ? 1 : 0,
+									},
+								}}
+								onInput={(e: any) => {
+									// setEditedDescription(e.target.innerText);
+									setEditedChapter({
+										...editedChapter,
+										description: e.target.innerText,
+									});
+								}}
+							>
+								{chapter.description}
+							</Typography>
+						)}
+
 						<Typography
 							color="text.secondary"
-							suppressContentEditableWarning={true}
-							contentEditable={editMode}
 							py={1}
-							sx={{
-								':hover': {
-									border: editMode ? 1 : 0,
-								},
-							}}
-							onInput={(e: any) => {
-								setEditedDescription(e.target.innerText);
-							}}
+							display={editMode ? 'none' : 'block'}
 						>
 							{chapter.description.length
 								? chapter.description
 								: 'Sem descrição...'}
 						</Typography>
+
 						<Divider />
 						<Stack
 							direction="row"
@@ -209,8 +238,9 @@ const ChapterInspectorHeader: FunctionComponent<
 								fullWidth
 								color="primary"
 								variant="outlined"
-								href={pathname}
-								LinkComponent={Link}
+								onClick={() => {
+									router.replace(pathname);
+								}}
 							>
 								Cancelar
 							</Button>

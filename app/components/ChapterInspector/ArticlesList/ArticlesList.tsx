@@ -12,26 +12,36 @@ import { ChaptersExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box';
 
 interface ArticlesListProps {
-	articles: ArticlesResponse[];
-	setArticles: Dispatch<SetStateAction<ArticlesResponse[]>>;
 	chapter: ChaptersResponse<ChaptersExpand>;
 	paths: string[];
 	editMode: boolean;
+	editedChapter: ChaptersResponse<ChaptersExpand>;
+	setEditedChapter: Dispatch<
+		SetStateAction<ChaptersResponse<ChaptersExpand> | undefined>
+	>;
 }
 
 const ArticlesList: FunctionComponent<ArticlesListProps> = ({
-	articles,
-	setArticles,
 	chapter,
 	paths,
 	editMode,
+	editedChapter,
+	setEditedChapter,
 }) => {
+	const articles = editedChapter.expand?.articles ?? [];
 	const handleOnDragEnd = (result: any) => {
-		if (!result.destination) return;
+		if (!result.destination || !editedChapter.expand) return;
 		const itemsArray = Array.from(articles);
 		const [reorderedItem] = itemsArray.splice(result.source.index, 1);
 		itemsArray.splice(result.destination.index, 0, reorderedItem);
-		setArticles(itemsArray);
+
+		setEditedChapter({
+			...editedChapter,
+			expand: {
+				...editedChapter.expand,
+				articles: itemsArray,
+			},
+		});
 	};
 
 	return (
