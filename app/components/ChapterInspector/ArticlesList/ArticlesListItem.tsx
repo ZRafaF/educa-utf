@@ -59,15 +59,17 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 			>
 				<ListItemButton
 					LinkComponent={Link}
-					href={`/chapter/${chapter.id}/${article.id}${
-						editMode ? '?edit=true' : ''
+					href={`/chapter/${chapter.id}/${
+						editMode ? 'edit' : article.id
 					}`}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
 						borderLeft: active ? 5 : 0,
 						borderColor: 'primary.main',
+						// pointerEvents: editMode ? 'none' : 'auto',
 					}}
+					disabled={editMode}
 				>
 					<Stack
 						direction="row"

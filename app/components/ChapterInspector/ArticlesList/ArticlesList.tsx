@@ -10,10 +10,10 @@ import ArticlesListItem from './ArticlesListItem';
 import Divider from '@mui/material/Divider';
 import { ChaptersExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box';
+import { usePathname } from 'next/navigation';
 
 interface ArticlesListProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
-	paths: string[];
 	editMode: boolean;
 	editedChapter: ChaptersResponse<ChaptersExpand>;
 	setEditedChapter: Dispatch<
@@ -23,12 +23,14 @@ interface ArticlesListProps {
 
 const ArticlesList: FunctionComponent<ArticlesListProps> = ({
 	chapter,
-	paths,
 	editMode,
 	editedChapter,
 	setEditedChapter,
 }) => {
 	const articles = editedChapter.expand?.articles ?? [];
+	const pathname = usePathname();
+	const paths = pathname.split('/');
+
 	const handleOnDragEnd = (result: any) => {
 		if (!result.destination || !editedChapter.expand) return;
 		const itemsArray = Array.from(articles);

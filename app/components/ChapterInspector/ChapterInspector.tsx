@@ -26,6 +26,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import ArticlesList from './ArticlesList/ArticlesList';
 import ChapterInspectorHeader from './ChapterInspectorHeader/ChapterInspectorHeader';
 import usePbAuth from '@/hooks/usePbAuth';
+import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
 
 interface ChapterInspectorProps {
 	chapterId: string;
@@ -39,16 +40,10 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 		useState<ChaptersResponse<ChaptersExpand>>();
 	const [chapterStats, setChapterStats] = useState<ChaptersStatsResponse>();
 	const [loading, setLoading] = useState<boolean>(true);
-	const pathname = usePathname();
-	const paths = pathname.split('/');
 
-	const searchParams = useSearchParams();
+	const [editMode] = useIsChapterEditMode();
+
 	const [, user] = usePbAuth();
-	const editMode = useMemo(() => {
-		if (!user || !chapter) return false;
-		const isEdit = Boolean(searchParams.get('edit'));
-		return isEdit && user.id === chapter.user;
-	}, [searchParams, user, chapter]);
 
 	useEffect(() => {
 		if (chapter && !editMode) {
@@ -103,7 +98,6 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 				<Container maxWidth="sm" disableGutters>
 					<ArticlesList
 						chapter={chapter}
-						paths={paths}
 						editMode={editMode}
 						editedChapter={editedChapter}
 						setEditedChapter={setEditedChapter}

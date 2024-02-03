@@ -17,7 +17,8 @@ import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 import Fab from '@mui/material/Fab';
 import { usePathname, useSearchParams } from 'next/navigation';
-import Divider from '@mui/material/Divider';
+import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
+import Toolbar from '@mui/material/Toolbar';
 
 interface MobileDrawerProps {
 	children: ReactNode;
@@ -37,25 +38,34 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 	hidden = false,
 }) => {
 	const theme = useTheme();
-	const searchParams = useSearchParams();
-	const isEdit = Boolean(searchParams.get('edit'));
+	const [isEdit] = useIsChapterEditMode();
 	const [isOpen, setIsOpen] = useState<boolean>(isEdit);
 	const pathname = usePathname();
 	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 
+	console.log(isOpen, isEdit);
+
 	const handleClose = () => {
-		if (!isEdit) setIsOpen(false);
+		if (isEdit) return;
+		setIsOpen(false);
 	};
 
 	useEffect(() => {
-		if (!isEdit) setIsOpen(false);
+		if (isEdit) return;
+
+		setIsOpen(false);
 	}, [pathname]);
+
+	useEffect(() => {
+		if (isEdit) setIsOpen(true);
+	}, [isEdit]);
 
 	return (
 		<>
 			<Drawer
 				anchor={'bottom'}
 				open={isOpen}
+				keepMounted
 				onClose={handleClose}
 				sx={{
 					zIndex: zIndex,
@@ -63,13 +73,18 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 					display: hidden ? 'none' : 'inherit',
 				}}
 				PaperProps={{
-					style: { borderRadius: '20px 20px 0px 0px' },
+					style: { borderRadius: isEdit ? '0' : '20px 20px 0px 0px' },
 					elevation: 0,
 				}}
 			>
 				<Box
 					sx={{
-						height: isEdit ? '90dvh' : '67dvh',
+						height: isEdit
+							? {
+									xs: `calc(100svh - 56px)`,
+									sm: `calc(100svh - 64px)`,
+							  }
+							: '67svh',
 						ml: onlySmallScreen ? 7 : 0,
 					}}
 				>

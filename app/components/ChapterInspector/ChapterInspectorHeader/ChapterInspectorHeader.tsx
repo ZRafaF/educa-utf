@@ -257,7 +257,7 @@ const ChapterInspectorHeader: FunctionComponent<
 								color="primary"
 								variant="outlined"
 								onClick={() => {
-									router.replace(pathname);
+									router.push(`/chapter/${chapter.id}`);
 								}}
 							>
 								Cancelar
