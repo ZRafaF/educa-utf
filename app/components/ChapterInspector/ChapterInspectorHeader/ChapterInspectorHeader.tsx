@@ -10,6 +10,7 @@ import {
 	FunctionComponent,
 	SetStateAction,
 	useContext,
+	useEffect,
 	useMemo,
 	useState,
 } from 'react';
@@ -51,17 +52,18 @@ const ChapterInspectorHeader: FunctionComponent<
 	ChapterInspectorHeaderProps
 > = ({ chapter, chapterStats, editMode, editedChapter, setEditedChapter }) => {
 	const router = useRouter();
-	const [selectedCoverFile] = useContext(ArticleCoverContext);
+	const [selectedCoverFile, setSelectedCoverFile] =
+		useContext(ArticleCoverContext);
 
 	const [editTagsIsOpen, setEditTagsIsOpen] = useState(false);
 	const [coverPickerIsOpen, setCoverPickerIsOpen] = useState(false);
 
 	const backgroundImageUrl = useMemo(() => {
-		if (selectedCoverFile) {
-			return URL.createObjectURL(selectedCoverFile);
-		}
-		return getChapterCoverURL(chapter, true);
-	}, [chapter, selectedCoverFile]);
+		if (selectedCoverFile === undefined || !editMode)
+			return getChapterCoverURL(chapter, true);
+
+		return URL.createObjectURL(selectedCoverFile);
+	}, [chapter, selectedCoverFile, editMode]);
 
 	const handleCloseEditTags = () => {
 		setEditTagsIsOpen(false);
@@ -69,6 +71,9 @@ const ChapterInspectorHeader: FunctionComponent<
 	const handleCloseCoverPicker = () => {
 		setCoverPickerIsOpen(false);
 	};
+	useEffect(() => {
+		setSelectedCoverFile(undefined);
+	}, [editMode]);
 
 	return (
 		<>
