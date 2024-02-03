@@ -37,15 +37,18 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 			>
 				{children}
 			</Grid>
-			<MobileDrawer
-				fabTooltip="Abrir gaveta de posts"
-				fabIcon={<FormatListBulletedIcon />}
-				px={0}
-				zIndex={1}
-				hidden={notSmallScreens}
-			>
-				{children}
-			</MobileDrawer>
+
+			{!notSmallScreens && (
+				<MobileDrawer
+					fabTooltip="Abrir gaveta de posts"
+					fabIcon={<FormatListBulletedIcon />}
+					px={0}
+					zIndex={1}
+					hidden={notSmallScreens}
+				>
+					{children}
+				</MobileDrawer>
+			)}
 		</>
 	);
 };

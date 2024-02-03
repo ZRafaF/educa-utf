@@ -26,6 +26,8 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import ArticlesList from './ArticlesList/ArticlesList';
 import ChapterInspectorHeader from './ChapterInspectorHeader/ChapterInspectorHeader';
 import usePbAuth from '@/hooks/usePbAuth';
+import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
+import ArticleCoverProvider from '@/contexts/ArticleCoverContext';
 
 interface ChapterInspectorProps {
 	chapterId: string;
@@ -35,20 +37,20 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 	chapterId,
 }) => {
 	const [chapter, setChapter] = useState<ChaptersResponse<ChaptersExpand>>();
+	const [editedChapter, setEditedChapter] =
+		useState<ChaptersResponse<ChaptersExpand>>();
 	const [chapterStats, setChapterStats] = useState<ChaptersStatsResponse>();
 	const [loading, setLoading] = useState<boolean>(true);
-	const pathname = usePathname();
-	const paths = pathname.split('/');
-	const [articles, setArticles] = useState<ArticlesResponse[]>(
-		chapter?.expand?.articles ?? []
-	);
-	const searchParams = useSearchParams();
+
+	const [editMode] = useIsChapterEditMode();
+
 	const [, user] = usePbAuth();
-	const editMode = useMemo(() => {
-		if (!user || !chapter) return false;
-		const isEdit = Boolean(searchParams.get('edit'));
-		return isEdit && user.id === chapter.user;
-	}, [searchParams, user, chapter]);
+
+	useEffect(() => {
+		if (chapter && !editMode) {
+			setEditedChapter(chapter);
+		}
+	}, [chapter, editMode]);
 
 	useEffect(() => {
 		const handleFetchData = async () => {
@@ -60,7 +62,7 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 					]);
 				setChapter(chapterResponse);
 				setChapterStats(chapterStatsResponse);
-				setArticles(chapterResponse.expand?.articles ?? []);
+				setEditedChapter(chapterResponse);
 			} catch (error) {
 				toast.error('Erro ao carregar capítulo ' + error);
 				console.error(error);
@@ -73,7 +75,11 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 
 	if (loading) return <PageMessage message="Carregando..." loading pt={4} />;
 
-	if (chapter === undefined || chapterStats === undefined)
+	if (
+		chapter === undefined ||
+		chapterStats === undefined ||
+		editedChapter === undefined
+	)
 		return (
 			<Typography fontWeight={500}>
 				Falha ao carregar capítulo.
@@ -82,19 +88,23 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 
 	return (
 		<>
-			<ChapterInspectorHeader
-				chapter={chapter}
-				chapterStats={chapterStats}
-				editMode={editMode}
-			/>
+			<ArticleCoverProvider>
+				<ChapterInspectorHeader
+					chapter={chapter}
+					chapterStats={chapterStats}
+					editMode={editMode}
+					editedChapter={editedChapter}
+					setEditedChapter={setEditedChapter}
+				/>
+			</ArticleCoverProvider>
+
 			<Box bgcolor="grey.A700">
 				<Container maxWidth="sm" disableGutters>
 					<ArticlesList
-						articles={articles}
-						setArticles={setArticles}
 						chapter={chapter}
-						paths={paths}
 						editMode={editMode}
+						editedChapter={editedChapter}
+						setEditedChapter={setEditedChapter}
 					/>
 				</Container>
 			</Box>

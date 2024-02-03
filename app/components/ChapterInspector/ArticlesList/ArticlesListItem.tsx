@@ -59,12 +59,15 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 			>
 				<ListItemButton
 					LinkComponent={Link}
-					href={`/chapter/${chapter.id}/${article.id}`}
+					href={`/chapter/${chapter.id}/${
+						editMode ? 'edit' : article.id
+					}`}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
 						borderLeft: active ? 5 : 0,
 						borderColor: 'primary.main',
+						// pointerEvents: editMode ? 'none' : 'auto',
 					}}
 					disabled={editMode}
 				>
@@ -92,6 +95,7 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 						color="text.secondary"
 						variant="subtitle2"
 						component="p"
+						width={'100%'}
 					>
 						{article.description}
 					</Typography>
