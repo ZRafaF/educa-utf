@@ -26,6 +26,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import TagsComponent from '@/components/TagsComponent/TagsComponent';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
+import TagsKeywordsEditor from './TagsKeywordsEditor';
 
 interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
@@ -42,6 +43,12 @@ const ChapterInspectorHeader: FunctionComponent<
 > = ({ chapter, chapterStats, editMode, editedChapter, setEditedChapter }) => {
 	const pathname = usePathname();
 	const router = useRouter();
+
+	const [editTagsIsOpen, setEditTagsIsOpen] = useState(false);
+
+	const handleClose = () => {
+		setEditTagsIsOpen(false);
+	};
 
 	return (
 		<>
@@ -168,9 +175,20 @@ const ChapterInspectorHeader: FunctionComponent<
 						/>
 						{editMode && (
 							<Box pb={1}>
-								<IconButton aria-label="edit-tag-and-keywords">
-									<EditIcon fontSize="small" />
-								</IconButton>
+								<Tooltip
+									title="Editar tags e palavras-chave"
+									arrow
+									placement="right"
+								>
+									<IconButton
+										aria-label="edit-tag-and-keywords"
+										onClick={() => {
+											setEditTagsIsOpen(true);
+										}}
+									>
+										<EditIcon fontSize="small" />
+									</IconButton>
+								</Tooltip>
 							</Box>
 						)}
 					</Stack>
@@ -255,6 +273,12 @@ const ChapterInspectorHeader: FunctionComponent<
 					</Stack>
 				</Box>
 			)}
+			<TagsKeywordsEditor
+				handleClose={handleClose}
+				open={editTagsIsOpen}
+				editedChapter={editedChapter}
+				setEditedChapter={setEditedChapter}
+			/>
 		</>
 	);
 };
