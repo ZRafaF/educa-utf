@@ -8,6 +8,7 @@ import PageMessage from '@/components/PageMessage/PageMessage';
 import { getChapterById } from '@/lib/apiHelpers/chaptersAPI';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
 
 interface PageProps {
 	params: {
@@ -20,15 +21,13 @@ const Page: FunctionComponent<PageProps> = ({ params }) => {
 	const router = useRouter();
 	const [redirecting, setRedirecting] = useState<boolean>(true);
 	const searchParams = useSearchParams();
-	const isEdit = Boolean(searchParams.get('edit'));
+	const [isEdit] = useIsChapterEditMode();
 
 	useEffect(() => {
 		getChapterById(chapterId, true).then((chapter) => {
 			if (chapter?.expand?.articles.length) {
 				router.replace(
-					`/chapter/${chapterId}/${chapter.expand.articles[0].id}${
-						isEdit ? `?edit=${searchParams.get('edit')}` : ''
-					}`
+					`/chapter/${chapterId}/${chapter.expand.articles[0].id}`
 				);
 			} else setRedirecting(false);
 		});

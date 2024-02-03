@@ -60,7 +60,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 					>
 						<Grid container gap={2}>
 							<Grid>
-								<Tooltip title="Repositório no GitHub">
+								<Tooltip title="Repositório no GitHub" arrow>
 									<IconButton
 										aria-label="github"
 										href="https://github.com/ZRafaF/educa-utf"
@@ -71,7 +71,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 								</Tooltip>
 							</Grid>
 							<Grid>
-								<Tooltip title="Documentação">
+								<Tooltip title="Documentação" arrow>
 									<IconButton
 										aria-label="documentation"
 										href="https://zrafaf.github.io/educa-utf/"
@@ -82,7 +82,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 								</Tooltip>
 							</Grid>
 							<Grid>
-								<Tooltip title="Repositório no DockerHub">
+								<Tooltip title="Repositório no DockerHub" arrow>
 									<IconButton
 										aria-label="DockerHub-link"
 										href="https://hub.docker.com/r/zrafaf/educa_utf_nextjs"
@@ -122,6 +122,18 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 									>
 										<Typography variant="body2">
 											Política de Privacidade
+										</Typography>
+									</Link>
+								</Grid>
+								<Grid>
+									<Link
+										href="/attributions"
+										component={NextLink}
+										underline="hover"
+										color={'white'}
+									>
+										<Typography variant="body2">
+											Atribuições
 										</Typography>
 									</Link>
 								</Grid>

@@ -16,8 +16,9 @@ import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
 import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 import Fab from '@mui/material/Fab';
-import { usePathname } from 'next/navigation';
-import Divider from '@mui/material/Divider';
+import { usePathname, useSearchParams } from 'next/navigation';
+import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
+import Toolbar from '@mui/material/Toolbar';
 
 interface MobileDrawerProps {
 	children: ReactNode;
@@ -37,24 +38,32 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 	hidden = false,
 }) => {
 	const theme = useTheme();
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [isEdit] = useIsChapterEditMode();
+	const [isOpen, setIsOpen] = useState<boolean>(isEdit);
 	const pathname = usePathname();
-
 	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 
 	const handleClose = () => {
+		if (isEdit) return;
 		setIsOpen(false);
 	};
 
 	useEffect(() => {
+		if (isEdit) return;
+
 		setIsOpen(false);
-	}, [pathname]);
+	}, [pathname, setIsOpen]);
+
+	useEffect(() => {
+		if (isEdit) setIsOpen(true);
+	}, [isEdit]);
 
 	return (
 		<>
 			<Drawer
 				anchor={'bottom'}
 				open={isOpen}
+				keepMounted
 				onClose={handleClose}
 				sx={{
 					zIndex: zIndex,
@@ -62,13 +71,20 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 					display: hidden ? 'none' : 'inherit',
 				}}
 				PaperProps={{
-					style: { borderRadius: '20px 20px 0px 0px' },
+					style: {
+						borderRadius: isEdit ? '0' : '20px 20px 0px 0px',
+					},
 					elevation: 0,
 				}}
 			>
 				<Box
 					sx={{
-						maxHeight: '67dvh',
+						height: isEdit
+							? {
+									xs: `calc(100dvh - 56px)`,
+									sm: `calc(100dvh - 64px)`,
+							  }
+							: '67svh',
 						ml: onlySmallScreen ? 7 : 0,
 					}}
 				>
@@ -85,30 +101,32 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 						boxShadow={3}
 					>
 						<Box>
-							<div data-mui-color-scheme="dark">
-								<Stack
-									direction="row"
-									justifyContent="center"
-									alignItems="center"
-									display={{ sm: 'flex', md: 'none' }}
-									mt={1}
-									height={32}
-									px={2}
-								>
-									<Button
-										variant="text"
-										sx={{
-											fontWeight: 'bold',
-											width: '50%',
-										}}
-										onClick={handleClose}
+							{!isEdit && (
+								<div data-mui-color-scheme="dark">
+									<Stack
+										direction="row"
+										justifyContent="center"
+										alignItems="center"
+										display={{ sm: 'flex', md: 'none' }}
+										mt={1}
+										height={32}
+										px={2}
 									>
-										FECHAR
-									</Button>
-								</Stack>
-							</div>
+										<Button
+											variant="text"
+											sx={{
+												fontWeight: 'bold',
+												width: '50%',
+											}}
+											onClick={handleClose}
+										>
+											FECHAR
+										</Button>
+									</Stack>
+								</div>
+							)}
 
-							<Box my={-6}>{children}</Box>
+							<Box my={isEdit ? -3 : -7}>{children}</Box>
 						</Box>
 					</Grid>
 				</Box>
