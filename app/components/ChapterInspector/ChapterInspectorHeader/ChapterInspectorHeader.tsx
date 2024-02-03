@@ -74,7 +74,7 @@ const ChapterInspectorHeader: FunctionComponent<
 	};
 	useEffect(() => {
 		setSelectedCoverFile(undefined);
-	}, [editMode]);
+	}, [editMode, setSelectedCoverFile]);
 
 	return (
 		<>

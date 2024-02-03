@@ -52,7 +52,7 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 		if (isEdit) return;
 
 		setIsOpen(false);
-	}, [pathname]);
+	}, [pathname, setIsOpen]);
 
 	useEffect(() => {
 		if (isEdit) setIsOpen(true);
