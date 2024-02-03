@@ -5,7 +5,14 @@
 
 'use client';
 
-import { Dispatch, FunctionComponent, SetStateAction, useState } from 'react';
+import {
+	Dispatch,
+	FunctionComponent,
+	SetStateAction,
+	useContext,
+	useMemo,
+	useState,
+} from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
 import LikeButton from '@/components/LikeButton/LikeButton';
@@ -27,7 +34,9 @@ import TagsComponent from '@/components/TagsComponent/TagsComponent';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import TagsKeywordsEditor from './TagsKeywordsEditor';
-
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import CoverPickerDialog from './CoverPickerDialog';
+import { ArticleCoverContext } from '@/contexts/ArticleCoverContext';
 interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
 	chapterStats: ChaptersStatsResponse;
@@ -41,13 +50,24 @@ interface ChapterInspectorHeaderProps {
 const ChapterInspectorHeader: FunctionComponent<
 	ChapterInspectorHeaderProps
 > = ({ chapter, chapterStats, editMode, editedChapter, setEditedChapter }) => {
-	const pathname = usePathname();
 	const router = useRouter();
+	const [selectedCoverFile] = useContext(ArticleCoverContext);
 
 	const [editTagsIsOpen, setEditTagsIsOpen] = useState(false);
+	const [coverPickerIsOpen, setCoverPickerIsOpen] = useState(false);
 
-	const handleClose = () => {
+	const backgroundImageUrl = useMemo(() => {
+		if (selectedCoverFile) {
+			return URL.createObjectURL(selectedCoverFile);
+		}
+		return getChapterCoverURL(chapter, true);
+	}, [chapter, selectedCoverFile]);
+
+	const handleCloseEditTags = () => {
 		setEditTagsIsOpen(false);
+	};
+	const handleCloseCoverPicker = () => {
+		setCoverPickerIsOpen(false);
 	};
 
 	return (
@@ -62,7 +82,7 @@ const ChapterInspectorHeader: FunctionComponent<
 					color="text.primary"
 					boxShadow={6}
 				>
-					<Stack spacing={1} px={2}>
+					<Stack spacing={1} px={2} pt={1}>
 						{editMode && (
 							<Typography
 								variant="h5"
@@ -76,7 +96,7 @@ const ChapterInspectorHeader: FunctionComponent<
 										border: editMode ? 1 : 0,
 									},
 								}}
-								py={1}
+								py={0.5}
 								onInput={(e: any) => {
 									setEditedChapter({
 										...editedChapter,
@@ -93,7 +113,7 @@ const ChapterInspectorHeader: FunctionComponent<
 							display={editMode ? 'none' : 'block'}
 							align="center"
 							width={'100%'}
-							py={1}
+							py={0.5}
 						>
 							{chapter.title}
 						</Typography>
@@ -104,10 +124,10 @@ const ChapterInspectorHeader: FunctionComponent<
 								color="text.secondary"
 								suppressContentEditableWarning={true}
 								contentEditable={editMode}
-								py={1}
+								py={0.5}
 								sx={{
 									':hover': {
-										border: editMode ? 1 : 0,
+										border: 1,
 									},
 								}}
 								onInput={(e: any) => {
@@ -124,7 +144,7 @@ const ChapterInspectorHeader: FunctionComponent<
 
 						<Typography
 							color="text.secondary"
-							py={1}
+							py={0.5}
 							display={editMode ? 'none' : 'block'}
 						>
 							{chapter.description.length
@@ -167,7 +187,13 @@ const ChapterInspectorHeader: FunctionComponent<
 							/>
 						</Stack>
 					</Stack>
-					<Stack direction="row" alignItems="end" px={1} spacing={1}>
+					<Stack
+						direction="row"
+						alignItems="end"
+						justifyContent={'space-between'}
+						px={1}
+						spacing={1}
+					>
 						<TagsComponent
 							tag={chapter.expand?.tag}
 							keyWords={chapter.expand?.key_words}
@@ -200,10 +226,7 @@ const ChapterInspectorHeader: FunctionComponent<
 						bottom={0}
 						zIndex={-1}
 						sx={{
-							backgroundImage: `url(${getChapterCoverURL(
-								chapter,
-								true
-							)})`,
+							backgroundImage: `url(${backgroundImageUrl})`,
 							backgroundSize: 'cover',
 
 							backgroundPosition: 'center',
@@ -224,12 +247,32 @@ const ChapterInspectorHeader: FunctionComponent<
 						}}
 					/>
 					<Box position={'absolute'} top={0} right={0} m={1}>
-						<MoreChapterOptions
-							chapter={chapter}
-							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapter.id}`}
-							placement="left"
-							size="medium"
-						/>
+						{editMode ? (
+							<Tooltip
+								title="Trocar imagem de capa"
+								arrow
+								placement="right"
+							>
+								<IconButton
+									size="small"
+									onClick={() => {
+										setCoverPickerIsOpen(true);
+									}}
+								>
+									<AddPhotoAlternateIcon
+										color="action"
+										fontSize="medium"
+									/>
+								</IconButton>
+							</Tooltip>
+						) : (
+							<MoreChapterOptions
+								chapter={chapter}
+								shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${chapter.id}`}
+								placement="left"
+								size="medium"
+							/>
+						)}
 					</Box>
 				</Box>
 			</div>
@@ -274,10 +317,14 @@ const ChapterInspectorHeader: FunctionComponent<
 				</Box>
 			)}
 			<TagsKeywordsEditor
-				handleClose={handleClose}
+				handleClose={handleCloseEditTags}
 				open={editTagsIsOpen}
 				editedChapter={editedChapter}
 				setEditedChapter={setEditedChapter}
+			/>
+			<CoverPickerDialog
+				handleClose={handleCloseCoverPicker}
+				open={coverPickerIsOpen}
 			/>
 		</>
 	);

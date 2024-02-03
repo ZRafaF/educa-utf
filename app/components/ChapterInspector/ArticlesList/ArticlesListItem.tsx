@@ -95,6 +95,7 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 						color="text.secondary"
 						variant="subtitle2"
 						component="p"
+						width={'100%'}
 					>
 						{article.description}
 					</Typography>

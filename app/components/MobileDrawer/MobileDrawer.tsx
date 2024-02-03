@@ -43,8 +43,6 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 	const pathname = usePathname();
 	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('sm'));
 
-	console.log(isOpen, isEdit);
-
 	const handleClose = () => {
 		if (isEdit) return;
 		setIsOpen(false);
@@ -81,8 +79,8 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 					sx={{
 						height: isEdit
 							? {
-									xs: `calc(100svh - 56px)`,
-									sm: `calc(100svh - 64px)`,
+									xs: `calc(100dvh - 56px)`,
+									sm: `calc(100dvh - 64px)`,
 							  }
 							: '67svh',
 						ml: onlySmallScreen ? 7 : 0,
@@ -126,7 +124,7 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 								</div>
 							)}
 
-							<Box my={-6}>{children}</Box>
+							<Box my={isEdit ? -3 : -7}>{children}</Box>
 						</Box>
 					</Grid>
 				</Box>

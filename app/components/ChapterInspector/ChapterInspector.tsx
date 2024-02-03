@@ -27,6 +27,7 @@ import ArticlesList from './ArticlesList/ArticlesList';
 import ChapterInspectorHeader from './ChapterInspectorHeader/ChapterInspectorHeader';
 import usePbAuth from '@/hooks/usePbAuth';
 import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
+import ArticleCoverProvider from '@/contexts/ArticleCoverContext';
 
 interface ChapterInspectorProps {
 	chapterId: string;
@@ -87,13 +88,16 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 
 	return (
 		<>
-			<ChapterInspectorHeader
-				chapter={chapter}
-				chapterStats={chapterStats}
-				editMode={editMode}
-				editedChapter={editedChapter}
-				setEditedChapter={setEditedChapter}
-			/>
+			<ArticleCoverProvider>
+				<ChapterInspectorHeader
+					chapter={chapter}
+					chapterStats={chapterStats}
+					editMode={editMode}
+					editedChapter={editedChapter}
+					setEditedChapter={setEditedChapter}
+				/>
+			</ArticleCoverProvider>
+
 			<Box bgcolor="grey.A700">
 				<Container maxWidth="sm" disableGutters>
 					<ArticlesList

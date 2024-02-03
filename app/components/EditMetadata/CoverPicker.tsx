@@ -12,7 +12,7 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import { useSearchParams } from 'next/navigation';
 
 interface CoverPickerProps {
-	overrideType: 'article' | 'chapter' | undefined;
+	overrideType?: 'article' | 'chapter';
 }
 
 const CoverPicker: FunctionComponent<CoverPickerProps> = ({ overrideType }) => {
