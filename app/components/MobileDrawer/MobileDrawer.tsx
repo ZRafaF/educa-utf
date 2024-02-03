@@ -71,7 +71,9 @@ const MobileDrawer: FunctionComponent<MobileDrawerProps> = ({
 					display: hidden ? 'none' : 'inherit',
 				}}
 				PaperProps={{
-					style: { borderRadius: isEdit ? '0' : '20px 20px 0px 0px' },
+					style: {
+						borderRadius: isEdit ? '0' : '20px 20px 0px 0px',
+					},
 					elevation: 0,
 				}}
 			>

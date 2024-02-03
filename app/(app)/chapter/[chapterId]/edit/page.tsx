@@ -14,35 +14,28 @@ interface PageProps {}
 
 const Page: FunctionComponent<PageProps> = () => {
 	return (
-		<>
-			<Box
-				display={'flex'}
-				width={'100%'}
-				justifyContent={'center'}
-				pt={8}
-			>
-				<div>
-					<Image
-						src={emptyStateImage}
-						alt="Empty State"
-						height={400}
-						style={{
-							opacity: 0.35,
-							filter: 'grayscale(100%)',
-							objectFit: 'cover',
-						}}
-					/>
-					<Typography
-						variant="h5"
-						fontWeight={500}
-						color={'GrayText'}
-						textAlign={'center'}
-					>
-						Você está editando um capítulo...
-					</Typography>
-				</div>
-			</Box>
-		</>
+		<Box display={'flex'} width={'100%'} justifyContent={'center'} py={8}>
+			<div>
+				<Image
+					src={emptyStateImage}
+					alt="Empty State"
+					height={400}
+					style={{
+						opacity: 0.35,
+						filter: 'grayscale(100%)',
+						objectFit: 'cover',
+					}}
+				/>
+				<Typography
+					variant="h5"
+					fontWeight={500}
+					color={'GrayText'}
+					textAlign={'center'}
+				>
+					Você está editando um capítulo...
+				</Typography>
+			</div>
+		</Box>
 	);
 };
 
