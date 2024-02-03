@@ -38,6 +38,7 @@ import TagsKeywordsEditor from './TagsKeywordsEditor';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CoverPickerDialog from './CoverPickerDialog';
 import { ArticleCoverContext } from '@/contexts/ArticleCoverContext';
+import Link from 'next/link';
 interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
 	chapterStats: ChaptersStatsResponse;
@@ -88,40 +89,58 @@ const ChapterInspectorHeader: FunctionComponent<
 					boxShadow={6}
 				>
 					<Stack spacing={1} px={2} pt={1}>
-						{editMode && (
+						<Box>
+							{editMode && (
+								<Typography
+									variant="h5"
+									fontWeight={700}
+									align="center"
+									width={'100%'}
+									suppressContentEditableWarning={true}
+									contentEditable={editMode}
+									sx={{
+										':hover': {
+											border: editMode ? 1 : 0,
+										},
+									}}
+									py={0.5}
+									onInput={(e: any) => {
+										setEditedChapter({
+											...editedChapter,
+											title: e.target.innerText,
+										});
+									}}
+								>
+									{chapter.title}
+								</Typography>
+							)}
 							<Typography
 								variant="h5"
 								fontWeight={700}
+								display={editMode ? 'none' : 'block'}
 								align="center"
 								width={'100%'}
-								suppressContentEditableWarning={true}
-								contentEditable={editMode}
-								sx={{
-									':hover': {
-										border: editMode ? 1 : 0,
-									},
-								}}
 								py={0.5}
-								onInput={(e: any) => {
-									setEditedChapter({
-										...editedChapter,
-										title: e.target.innerText,
-									});
-								}}
 							>
 								{chapter.title}
 							</Typography>
-						)}
-						<Typography
-							variant="h5"
-							fontWeight={700}
-							display={editMode ? 'none' : 'block'}
-							align="center"
-							width={'100%'}
-							py={0.5}
-						>
-							{chapter.title}
-						</Typography>
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								textAlign={'right'}
+							>
+								<Tooltip title="Autor" arrow placement="right">
+									<Link
+										href={`/profile/${chapterStats.author_username}`}
+										style={{
+											color: 'inherit',
+										}}
+									>
+										{chapterStats.author_name}
+									</Link>
+								</Tooltip>
+							</Typography>
+						</Box>
 
 						<Divider />
 						{editMode && (
@@ -195,32 +214,35 @@ const ChapterInspectorHeader: FunctionComponent<
 					<Stack
 						direction="row"
 						alignItems="end"
-						justifyContent={'space-between'}
+						justifyContent={'center'}
 						px={1}
 						spacing={1}
 					>
-						<TagsComponent
-							tag={chapter.expand?.tag}
-							keyWords={chapter.expand?.key_words}
-							expanded
-						/>
-						{editMode && (
+						{editMode ? (
 							<Box pb={1}>
 								<Tooltip
 									title="Editar tags e palavras-chave"
 									arrow
 									placement="right"
 								>
-									<IconButton
-										aria-label="edit-tag-and-keywords"
+									<Button
+										endIcon={<EditIcon fontSize="small" />}
 										onClick={() => {
 											setEditTagsIsOpen(true);
 										}}
+										variant="outlined"
+										size="small"
 									>
-										<EditIcon fontSize="small" />
-									</IconButton>
+										Editar Tag e Palavras-chave
+									</Button>
 								</Tooltip>
 							</Box>
+						) : (
+							<TagsComponent
+								tag={chapter.expand?.tag}
+								keyWords={chapter.expand?.key_words}
+								expanded
+							/>
 						)}
 					</Stack>
 					<Box
