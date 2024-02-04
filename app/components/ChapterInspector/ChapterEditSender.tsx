@@ -24,21 +24,12 @@ const ChapterEditSender: FunctionComponent<ChapterEditSenderProps> = ({
 }) => {
 	const [selectedCoverFile] = useContext(ArticleCoverContext);
 
-	const [handleSubmitUpdate] = useSendMetadata({
+	const [handleSubmit] = useSendMetadata({
 		type: 'update',
-		resourceType: 'article',
+		resourceType: 'chapter',
 		myChapter: chapter,
 		myChapterCover: selectedCoverFile,
 	});
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data: FormData = new FormData(event.currentTarget);
-		const submitTitle = data.get('title')?.toString();
-		const submitArticles = data.get('articles')?.toString();
-
-		console.log(`submitArticles: ${submitArticles}`);
-	};
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -66,7 +57,7 @@ const ChapterEditSender: FunctionComponent<ChapterEditSenderProps> = ({
 			/>
 			<input
 				name="articles"
-				value={editedChapter.expand?.articles.map(
+				value={editedChapter.expand?.articles?.map(
 					(article) => article.id
 				)}
 				style={{

@@ -84,10 +84,7 @@ const TagsKeywordsEditor: FunctionComponent<TagsKeywordsEditorProps> = ({
 				<AccordionDetails sx={{ p: 0 }}>
 					<Grid container spacing={3} m={0}>
 						<Grid xs={12}>
-							<TagPicker
-								defaultTag={editedChapter.expand?.tag}
-								required
-							/>
+							<TagPicker defaultTag={editedChapter.expand?.tag} />
 						</Grid>
 						<Grid xs={12}>
 							<KeyWordsPicker

@@ -21,7 +21,11 @@ import { toast } from 'react-toastify';
 import usePbAuth from './usePbAuth';
 import { ArticlesExpand, ChaptersExpand } from '@/types/expanded-types';
 import { createKeyWord, getKeyWord } from '@/lib/apiHelpers/keyWordsAPI';
-import { createChapter } from '@/lib/apiHelpers/chaptersAPI';
+import {
+	createChapter,
+	getChapterCoverURL,
+	updateChapter,
+} from '@/lib/apiHelpers/chaptersAPI';
 
 const useSendMetadata = ({
 	type,
@@ -149,51 +153,6 @@ const useSendMetadata = ({
 		}
 	};
 
-	const handleUpdateArticle = async (
-		toastId: string | number,
-		submitTitle: string,
-		submitDescription: string,
-		submitVisibility: ArticlesVisibilityOptions | ChaptersVisibilityOptions,
-		author: UsersResponse,
-		fetchedTag: TagsResponse,
-		keywords: string[]
-	) => {
-		if (myArticle === undefined || myArticleDocument === undefined) {
-			throw new Error('Artigo ou documento inválido!');
-		}
-
-		const baseFile = new Blob([myArticleDocument], {
-			type: 'text/markdown',
-		});
-
-		const updatedRecord = await updateArticle(
-			myArticle?.id,
-			{
-				title: submitTitle,
-				user: author.id,
-				description: submitDescription,
-				visibility: submitVisibility as ArticlesVisibilityOptions,
-				tag: fetchedTag.id,
-				document: '',
-			},
-			baseFile,
-			keywords
-		);
-
-		toast.update(toastId, {
-			render: 'Artigo atualizado com sucesso!',
-			type: 'success',
-			isLoading: false,
-			autoClose: 5000,
-			pauseOnFocusLoss: true,
-			draggable: true,
-			pauseOnHover: true,
-			closeOnClick: true,
-		});
-
-		return updatedRecord;
-	};
-
 	const handleUpdate = async (
 		toastId: string | number,
 		submitTitle: string,
@@ -201,25 +160,34 @@ const useSendMetadata = ({
 		submitVisibility: ArticlesVisibilityOptions | ChaptersVisibilityOptions,
 		author: UsersResponse,
 		fetchedTag: TagsResponse,
-		keywords: string[]
+		keywords: string[],
+		chapterArticles: string[] | undefined
 	) => {
 		if (resourceType === 'article') {
-			const baseFile = new Blob([''], { type: 'text/markdown' });
+			if (myArticle === undefined || myArticleDocument === undefined) {
+				throw new Error('Artigo ou documento inválido!');
+			}
 
-			const newRecord = await createArticle(
+			const baseFile = new Blob([myArticleDocument], {
+				type: 'text/markdown',
+			});
+
+			const updatedRecord = await updateArticle(
+				myArticle.id,
 				{
 					title: submitTitle,
 					user: author.id,
 					description: submitDescription,
 					visibility: submitVisibility as ArticlesVisibilityOptions,
-					document: '',
 					tag: fetchedTag.id,
+					document: '',
 				},
 				baseFile,
 				keywords
 			);
+
 			toast.update(toastId, {
-				render: `Artigo criado com sucesso!`,
+				render: 'Artigo atualizado com sucesso!',
 				type: 'success',
 				isLoading: false,
 				autoClose: 5000,
@@ -228,20 +196,21 @@ const useSendMetadata = ({
 				pauseOnHover: true,
 				closeOnClick: true,
 			});
-			router.push(`/edit-article/${newRecord.id}`);
+
+			return updatedRecord;
 		} else {
-			let coverFile = myChapterCover;
-			if (coverFile === undefined) {
-				const res = await fetch(
-					`/api/chapter-cover?tag=${fetchedTag.category}`
-				);
-				coverFile = await res.blob();
-				console.log(coverFile);
+			if (myChapter === undefined) {
+				throw new Error('Capítulo inválido!');
 			}
-			if (coverFile === undefined) {
-				throw new Error('capa inválida inválido!');
-			}
-			const newRecord = await createChapter(
+
+			const currentCover = await fetch(
+				getChapterCoverURL(myChapter, true)
+			);
+
+			// const newCover = await (myChapterCover ?? currentCover.blob());
+
+			const updatedRecord = await updateChapter(
+				myChapter.id,
 				{
 					title: submitTitle,
 					user: author.id,
@@ -249,11 +218,13 @@ const useSendMetadata = ({
 					visibility: submitVisibility as ChaptersVisibilityOptions,
 					tag: fetchedTag.id,
 				},
-				coverFile,
-				keywords
+				myChapterCover,
+				keywords,
+				chapterArticles ?? []
 			);
+
 			toast.update(toastId, {
-				render: `Capítulo criado com sucesso!`,
+				render: 'Capítulo atualizado com sucesso!',
 				type: 'success',
 				isLoading: false,
 				autoClose: 5000,
@@ -262,7 +233,8 @@ const useSendMetadata = ({
 				pauseOnHover: true,
 				closeOnClick: true,
 			});
-			router.push(`/chapter/${newRecord.id}/edit`);
+
+			return updatedRecord;
 		}
 	};
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -275,6 +247,9 @@ const useSendMetadata = ({
 
 		const submitKeyWords = data.get('keywords')?.toString();
 		const keywords = submitKeyWords?.split(',');
+
+		const submitChapterArticles = data.get('articles')?.toString();
+		const chapterArticles = submitChapterArticles?.split(',');
 
 		const getVis = () => {
 			const visibRaw = data.get('visibility')?.toString();
@@ -396,14 +371,15 @@ const useSendMetadata = ({
 					listOfKeyWordsId
 				);
 			} else {
-				const updatedRecord = await handleUpdateArticle(
+				const updatedRecord = await handleUpdate(
 					id,
 					submitTitle,
 					submitDescription,
 					submitVisibility,
 					user,
 					fetchedTag,
-					listOfKeyWordsId
+					listOfKeyWordsId,
+					chapterArticles
 				);
 				if (saveAndFinish) router.push(`/article/${updatedRecord.id}`);
 			}

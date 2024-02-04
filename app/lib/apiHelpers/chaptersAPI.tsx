@@ -153,3 +153,24 @@ export async function createChapter(
 export async function deleteChapter(chapterId: string) {
 	return await pb.collection('chapters').delete(chapterId);
 }
+
+export async function updateChapter(
+	chapterId: string,
+	updatedChapterRecord: ChaptersRecord,
+	cover: Blob | undefined,
+	keyWords: string[],
+	articles: string[]
+) {
+	const form = getFormData(updatedChapterRecord);
+	if (cover) form.append('cover', cover, 'cover.png');
+
+	for (const word of keyWords) {
+		form.append('key_words', word);
+	}
+	for (const article of articles) {
+		form.append('articles', article);
+	}
+	return await pb
+		.collection('chapters')
+		.update<ChaptersResponse>(chapterId, form);
+}
