@@ -21,11 +21,7 @@ import { toast } from 'react-toastify';
 import usePbAuth from './usePbAuth';
 import { ArticlesExpand, ChaptersExpand } from '@/types/expanded-types';
 import { createKeyWord, getKeyWord } from '@/lib/apiHelpers/keyWordsAPI';
-import {
-	createChapter,
-	getChapterCoverURL,
-	updateChapter,
-} from '@/lib/apiHelpers/chaptersAPI';
+import { createChapter, updateChapter } from '@/lib/apiHelpers/chaptersAPI';
 
 const useSendMetadata = ({
 	type,
@@ -123,7 +119,6 @@ const useSendMetadata = ({
 					`/api/chapter-cover?tag=${fetchedTag.category}`
 				);
 				coverFile = await res.blob();
-				console.log(coverFile);
 			}
 			if (coverFile === undefined) {
 				throw new Error('capa inválida inválido!');
@@ -202,12 +197,6 @@ const useSendMetadata = ({
 			if (myChapter === undefined) {
 				throw new Error('Capítulo inválido!');
 			}
-
-			const currentCover = await fetch(
-				getChapterCoverURL(myChapter, true)
-			);
-
-			// const newCover = await (myChapterCover ?? currentCover.blob());
 
 			const updatedRecord = await updateChapter(
 				myChapter.id,

@@ -9,7 +9,7 @@ import TagPicker from '@/components/EditMetadata/TagPicker';
 import KeyWordsPicker from '@/components/KeyWordsPicker/KeyWordsPicker';
 import { ChaptersExpand } from '@/types/expanded-types';
 import { ChaptersResponse } from '@/types/pocketbase-types';
-import { Dispatch, FunctionComponent, SetStateAction } from 'react';
+import { FunctionComponent } from 'react';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
