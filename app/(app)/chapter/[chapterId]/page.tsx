@@ -25,10 +25,11 @@ const Page: FunctionComponent<PageProps> = ({ params }) => {
 
 	useEffect(() => {
 		getChapterById(chapterId, true).then((chapter) => {
-			if (chapter?.expand?.articles.length) {
-				router.replace(
-					`/chapter/${chapterId}/${chapter.expand.articles[0].id}`
-				);
+			if (chapter?.expand?.articles) {
+				if (chapter?.expand?.articles.length > 0)
+					router.replace(
+						`/chapter/${chapterId}/${chapter.expand.articles[0].id}`
+					);
 			} else setRedirecting(false);
 		});
 	}, [chapterId, setRedirecting, router, isEdit, searchParams]);

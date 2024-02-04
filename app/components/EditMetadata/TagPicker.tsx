@@ -29,9 +29,13 @@ const GroupItems = styled('ul')({
 
 interface TagPickerProps {
 	defaultTag?: TagsResponse;
+	required?: boolean;
 }
 
-const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
+const TagPicker: FunctionComponent<TagPickerProps> = ({
+	defaultTag,
+	required,
+}) => {
 	const [tags, setTags] = useState<TagsResponse[]>([]);
 	const [tagCategory, setTagCategory] = useState<string | undefined>(
 		defaultTag?.category
@@ -94,6 +98,7 @@ const TagPicker: FunctionComponent<TagPickerProps> = ({ defaultTag }) => {
 				style={{
 					display: 'none',
 				}}
+				required={required}
 			/>
 		</>
 	);
