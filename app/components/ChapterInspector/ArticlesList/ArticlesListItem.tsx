@@ -22,12 +22,17 @@ import Tooltip from '@mui/material/Tooltip';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Link from 'next/link';
 import { ChaptersExpand } from '@/types/expanded-types';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ArticlesListItemProps {
 	article: ArticlesResponse;
 	chapter: ChaptersResponse<ChaptersExpand>;
 	active: boolean;
 	editMode: boolean;
+	removeArticle: (article: ArticlesResponse) => void;
 }
 
 const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
@@ -35,6 +40,7 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 	chapter,
 	active,
 	editMode,
+	removeArticle,
 }) => {
 	const MemorizedComponent = useMemo(() => {
 		return (
@@ -56,13 +62,23 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 				}}
 				position={'relative'}
 				color={'text.primary'}
+				display={'flex'}
+				alignItems={'center'}
 			>
+				{editMode && (
+					<DragIndicatorIcon
+						sx={{
+							ml: 0.5,
+						}}
+					/>
+				)}
 				<ListItemButton
 					LinkComponent={Link}
 					href={`/chapter/${chapter.id}/${
 						editMode ? 'edit' : article.id
 					}`}
 					sx={{
+						px: 1,
 						display: 'flex',
 						flexDirection: 'column',
 						borderLeft: active ? 5 : 0,
@@ -154,6 +170,20 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 						</Tooltip>
 					</Stack>
 				</ListItemButton>
+				{editMode && (
+					<IconButton
+						aria-label="remove article"
+						sx={{
+							mr: 0.5,
+						}}
+						color="error"
+						onClick={() => {
+							removeArticle(article);
+						}}
+					>
+						<DeleteIcon />
+					</IconButton>
+				)}
 			</Box>
 		);
 	}, [article, chapter, active, editMode]);

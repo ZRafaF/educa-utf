@@ -94,8 +94,6 @@ const DataTable: FunctionComponent<DataTableProps> = ({
 				}),
 			};
 
-			console.log(filteredQuery);
-
 			const data = await (fetchType === 'articles'
 				? getListOfArticlesStats(page + 1, rowsPerPage, filteredQuery)
 				: getListOfChaptersStats(page + 1, rowsPerPage, filteredQuery));
