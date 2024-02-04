@@ -45,7 +45,7 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 
 	const [editMode] = useIsChapterEditMode();
 
-	const [, user] = usePbAuth();
+	// const [, user] = usePbAuth();
 
 	useEffect(() => {
 		if (chapter && !editMode) {

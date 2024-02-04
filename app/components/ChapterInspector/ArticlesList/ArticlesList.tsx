@@ -4,13 +4,14 @@
 // https://opensource.org/licenses/MIT
 
 import { ArticlesResponse, ChaptersResponse } from '@/types/pocketbase-types';
-import { Dispatch, FunctionComponent, SetStateAction } from 'react';
+import { Dispatch, FunctionComponent, SetStateAction, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import ArticlesListItem from './ArticlesListItem';
 import Divider from '@mui/material/Divider';
 import { ChaptersExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box';
 import { usePathname } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 interface ArticlesListProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
@@ -31,6 +32,10 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({
 	const pathname = usePathname();
 	const paths = pathname.split('/');
 
+	if (articles === undefined) {
+		return <Box>Vazio</Box>;
+	}
+
 	const handleOnDragEnd = (result: any) => {
 		if (!result.destination || !editedChapter.expand) return;
 		const itemsArray = Array.from(articles);
@@ -44,6 +49,21 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({
 				articles: itemsArray,
 			},
 		});
+	};
+
+	const removeArticle = (article: ArticlesResponse) => {
+		if (!editedChapter.expand) return;
+		const itemsArray = editedChapter.expand?.articles ?? [];
+		const index = itemsArray.findIndex((a) => a.id === article.id);
+
+		itemsArray.splice(index, 1);
+
+		const tempCopy: ChaptersResponse<ChaptersExpand> = {
+			...editedChapter,
+		};
+
+		if (tempCopy.expand) tempCopy.expand.articles = itemsArray;
+		setEditedChapter(tempCopy);
 	};
 
 	return (
@@ -79,6 +99,9 @@ const ArticlesList: FunctionComponent<ArticlesListProps> = ({
 														] === article.id
 													}
 													editMode={editMode}
+													removeArticle={
+														removeArticle
+													}
 												/>
 											</Box>
 											<Divider />
