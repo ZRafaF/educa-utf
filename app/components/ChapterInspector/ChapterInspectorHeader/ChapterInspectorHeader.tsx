@@ -39,6 +39,7 @@ import CoverPickerDialog from './CoverPickerDialog';
 import { ArticleCoverContext } from '@/contexts/ArticleCoverContext';
 import Link from 'next/link';
 import VisibilitySelector from './VisibilitySelector';
+import ArticleAdder from './ArticleAdder';
 
 interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
@@ -301,9 +302,10 @@ const ChapterInspectorHeader: FunctionComponent<
 						spacing={1}
 						width={'100%'}
 					>
-						<Button fullWidth color="success" variant="contained">
-							Adicionar Artigo
-						</Button>
+						<ArticleAdder
+							editedChapter={editedChapter}
+							setEditedChapter={setEditedChapter}
+						/>
 						<Stack
 							direction="row"
 							justifyContent="center"

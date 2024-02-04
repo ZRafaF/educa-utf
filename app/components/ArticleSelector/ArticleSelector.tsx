@@ -7,6 +7,7 @@
 
 import { ArticlesResponse } from '@/types/pocketbase-types';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import { FunctionComponent } from 'react';
 
 interface ArticleSelectorProps {
@@ -18,8 +19,12 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 }) => {
 	return (
 		<Box>
-			asd
-			<Box>asd</Box>
+			<TextField
+				id="outlined-basic"
+				label="Outlined"
+				variant="outlined"
+				fullWidth
+			/>
 		</Box>
 	);
 };
