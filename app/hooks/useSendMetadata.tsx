@@ -86,8 +86,6 @@ const useSendMetadata = ({
 		fetchedTag: TagsResponse,
 		keywords: string[]
 	) => {
-		console.log(resourceType);
-
 		if (resourceType === 'article') {
 			const baseFile = new Blob([''], { type: 'text/markdown' });
 
@@ -196,6 +194,77 @@ const useSendMetadata = ({
 		return updatedRecord;
 	};
 
+	const handleUpdate = async (
+		toastId: string | number,
+		submitTitle: string,
+		submitDescription: string,
+		submitVisibility: ArticlesVisibilityOptions | ChaptersVisibilityOptions,
+		author: UsersResponse,
+		fetchedTag: TagsResponse,
+		keywords: string[]
+	) => {
+		if (resourceType === 'article') {
+			const baseFile = new Blob([''], { type: 'text/markdown' });
+
+			const newRecord = await createArticle(
+				{
+					title: submitTitle,
+					user: author.id,
+					description: submitDescription,
+					visibility: submitVisibility as ArticlesVisibilityOptions,
+					document: '',
+					tag: fetchedTag.id,
+				},
+				baseFile,
+				keywords
+			);
+			toast.update(toastId, {
+				render: `Artigo criado com sucesso!`,
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
+			router.push(`/edit-article/${newRecord.id}`);
+		} else {
+			let coverFile = myChapterCover;
+			if (coverFile === undefined) {
+				const res = await fetch(
+					`/api/chapter-cover?tag=${fetchedTag.category}`
+				);
+				coverFile = await res.blob();
+				console.log(coverFile);
+			}
+			if (coverFile === undefined) {
+				throw new Error('capa inválida inválido!');
+			}
+			const newRecord = await createChapter(
+				{
+					title: submitTitle,
+					user: author.id,
+					description: submitDescription,
+					visibility: submitVisibility as ChaptersVisibilityOptions,
+					tag: fetchedTag.id,
+				},
+				coverFile,
+				keywords
+			);
+			toast.update(toastId, {
+				render: `Capítulo criado com sucesso!`,
+				type: 'success',
+				isLoading: false,
+				autoClose: 5000,
+				pauseOnFocusLoss: true,
+				draggable: true,
+				pauseOnHover: true,
+				closeOnClick: true,
+			});
+			router.push(`/chapter/${newRecord.id}/edit`);
+		}
+	};
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);

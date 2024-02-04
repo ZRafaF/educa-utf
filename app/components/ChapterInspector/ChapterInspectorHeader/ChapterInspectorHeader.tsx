@@ -179,7 +179,7 @@ const ChapterInspectorHeader: FunctionComponent<
 						<Divider />
 						<Stack
 							direction="row"
-							justifyContent="space-around"
+							justifyContent="space-between"
 							alignItems="center"
 						>
 							<Tooltip
@@ -202,6 +202,12 @@ const ChapterInspectorHeader: FunctionComponent<
 									</Typography>
 								</Stack>
 							</Tooltip>
+							<VisibilitySelector
+								editedChapter={editedChapter}
+								chapter={chapter}
+								editMode={editMode}
+								setEditedChapter={setEditedChapter}
+							/>
 							<LikeButton
 								numberOfLikes={chapterStats.likes}
 								item={{
@@ -219,10 +225,7 @@ const ChapterInspectorHeader: FunctionComponent<
 						spacing={1}
 					>
 						{editMode ? (
-							<TagsKeywordsEditor
-								editedChapter={editedChapter}
-								setEditedChapter={setEditedChapter}
-							/>
+							<TagsKeywordsEditor editedChapter={editedChapter} />
 						) : (
 							<TagsComponent
 								tag={chapter.expand?.tag}
@@ -287,12 +290,6 @@ const ChapterInspectorHeader: FunctionComponent<
 							/>
 						)}
 					</Box>
-					<VisibilitySelector
-						editedChapter={editedChapter}
-						chapter={chapter}
-						editMode={editMode}
-						setEditedChapter={setEditedChapter}
-					/>
 				</Box>
 			</div>
 			{editMode && (

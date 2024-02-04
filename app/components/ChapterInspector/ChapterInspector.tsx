@@ -99,7 +99,13 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 				/>
 
 				<Box bgcolor="grey.A700">
-					<Container maxWidth="sm" disableGutters>
+					<Container
+						maxWidth="sm"
+						disableGutters
+						sx={{
+							minHeight: '50svh',
+						}}
+					>
 						<ArticlesList
 							chapter={chapter}
 							editMode={editMode}

@@ -12,6 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
 import React from 'react';
 import MobileDrawer from '@/components/MobileDrawer/MobileDrawer';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
 
 interface DrawerControllerProps {
 	children: ReactNode;
@@ -23,13 +24,13 @@ const DrawerController: FunctionComponent<DrawerControllerProps> = ({
 	const theme = useTheme();
 	const notSmallScreens = useMediaQuery(theme.breakpoints.up('md'));
 	const onlyMediumScreen = useMediaQuery(theme.breakpoints.only('md'));
-
+	const [editMode] = useIsChapterEditMode();
 	return (
 		<>
 			<Grid
 				sx={{
 					backgroundColor: 'grey.A700',
-					width: onlyMediumScreen ? 300 : 350,
+					width: editMode ? 350 : onlyMediumScreen ? 300 : 350,
 					display: notSmallScreens ? 'block' : 'none',
 				}}
 				zIndex={1}

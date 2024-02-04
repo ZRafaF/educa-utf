@@ -46,12 +46,8 @@ const VisibilitySelector: FunctionComponent<VisibilitySelectorProps> = ({
 	};
 	return (
 		<>
-			<Tooltip title="Visibilidade" arrow>
+			<Tooltip title="Visibilidade" arrow placement="top">
 				<Box
-					position={'absolute'}
-					top={0}
-					left={0}
-					m={1}
 					color={
 						editedChapter.visibility === 'public'
 							? 'success.main'
@@ -108,6 +104,7 @@ const VisibilitySelector: FunctionComponent<VisibilitySelectorProps> = ({
 				MenuListProps={{
 					'aria-labelledby': 'basic-button',
 				}}
+				data-mui-color-scheme="dark"
 			>
 				<MenuItem
 					onClick={() => {
@@ -126,6 +123,7 @@ const VisibilitySelector: FunctionComponent<VisibilitySelectorProps> = ({
 						Publico
 					</Typography>
 				</MenuItem>
+
 				<MenuItem
 					onClick={() => {
 						setEditedChapter({

@@ -35,18 +35,14 @@ const ChapterEditSender: FunctionComponent<ChapterEditSenderProps> = ({
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
 		const submitTitle = data.get('title')?.toString();
-		const submitTag = data.get('tag-picker')?.toString();
-		const submitTagCategory = data.get('tag-category')?.toString();
-		const submitDescription = data.get('description')?.toString();
+		const submitArticles = data.get('articles')?.toString();
 
-		console.log(
-			`submitTitle: ${submitTitle}, submitTag: ${submitTag}, submitTagCategory: ${submitTagCategory}, submitDescription: ${submitDescription}`
-		);
+		console.log(`submitArticles: ${submitArticles}`);
 	};
 
 	return (
 		<form onSubmit={handleSubmit}>
-			{children}{' '}
+			{children}
 			<input
 				name="title"
 				value={editedChapter.title}
@@ -64,6 +60,15 @@ const ChapterEditSender: FunctionComponent<ChapterEditSenderProps> = ({
 			<input
 				name="visibility"
 				value={editedChapter.visibility}
+				style={{
+					display: 'none',
+				}}
+			/>
+			<input
+				name="articles"
+				value={editedChapter.expand?.articles.map(
+					(article) => article.id
+				)}
 				style={{
 					display: 'none',
 				}}
