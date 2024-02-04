@@ -28,6 +28,7 @@ import ChapterInspectorHeader from './ChapterInspectorHeader/ChapterInspectorHea
 import usePbAuth from '@/hooks/usePbAuth';
 import useIsChapterEditMode from '@/hooks/useIsChapterEditMode';
 import ArticleCoverProvider from '@/contexts/ArticleCoverContext';
+import ChapterEditSender from './ChapterEditSender';
 
 interface ChapterInspectorProps {
 	chapterId: string;
@@ -87,8 +88,8 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 		);
 
 	return (
-		<>
-			<ArticleCoverProvider>
+		<ArticleCoverProvider>
+			<ChapterEditSender editedChapter={editedChapter} chapter={chapter}>
 				<ChapterInspectorHeader
 					chapter={chapter}
 					chapterStats={chapterStats}
@@ -96,19 +97,19 @@ const ChapterInspector: FunctionComponent<ChapterInspectorProps> = ({
 					editedChapter={editedChapter}
 					setEditedChapter={setEditedChapter}
 				/>
-			</ArticleCoverProvider>
 
-			<Box bgcolor="grey.A700">
-				<Container maxWidth="sm" disableGutters>
-					<ArticlesList
-						chapter={chapter}
-						editMode={editMode}
-						editedChapter={editedChapter}
-						setEditedChapter={setEditedChapter}
-					/>
-				</Container>
-			</Box>
-		</>
+				<Box bgcolor="grey.A700">
+					<Container maxWidth="sm" disableGutters>
+						<ArticlesList
+							chapter={chapter}
+							editMode={editMode}
+							editedChapter={editedChapter}
+							setEditedChapter={setEditedChapter}
+						/>
+					</Container>
+				</Box>
+			</ChapterEditSender>
+		</ArticleCoverProvider>
 	);
 };
 

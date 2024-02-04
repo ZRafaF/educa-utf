@@ -208,8 +208,22 @@ const useSendMetadata = ({
 		const keywords = submitKeyWords?.split(',');
 
 		const getVis = () => {
-			const visibRaw = data.get('visibility-radio-buttons')?.toString();
+			const visibRaw = data.get('visibility')?.toString();
 			switch (visibRaw) {
+				case 'public':
+					return resourceType === 'article'
+						? ArticlesVisibilityOptions.public
+						: ChaptersVisibilityOptions.public;
+				case 'private':
+					return resourceType === 'article'
+						? ArticlesVisibilityOptions.private
+						: ChaptersVisibilityOptions.private;
+			}
+
+			const visibRadioRaw = data
+				.get('visibility-radio-buttons')
+				?.toString();
+			switch (visibRadioRaw) {
 				case 'public':
 					return resourceType === 'article'
 						? ArticlesVisibilityOptions.public
