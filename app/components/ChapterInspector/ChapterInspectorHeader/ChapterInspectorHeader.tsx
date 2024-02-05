@@ -328,6 +328,7 @@ const ChapterInspectorHeader: FunctionComponent<
 								color="primary"
 								variant="contained"
 								type="submit"
+								name="saveAndFinish"
 							>
 								Salvar
 							</Button>
