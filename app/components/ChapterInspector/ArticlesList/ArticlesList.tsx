@@ -11,7 +11,6 @@ import Divider from '@mui/material/Divider';
 import { ChaptersExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box';
 import { usePathname } from 'next/navigation';
-import { toast } from 'react-toastify';
 
 interface ArticlesListProps {
 	chapter: ChaptersResponse<ChaptersExpand>;

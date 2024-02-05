@@ -218,13 +218,7 @@ const ChapterInspectorHeader: FunctionComponent<
 							/>
 						</Stack>
 					</Stack>
-					<Stack
-						direction="row"
-						alignItems="end"
-						justifyContent={'center'}
-						px={1}
-						spacing={1}
-					>
+					<Box px={1} pt={1}>
 						{editMode ? (
 							<TagsKeywordsEditor editedChapter={editedChapter} />
 						) : (
@@ -234,7 +228,7 @@ const ChapterInspectorHeader: FunctionComponent<
 								expanded
 							/>
 						)}
-					</Stack>
+					</Box>
 					<Box
 						position={'absolute'}
 						top={0}

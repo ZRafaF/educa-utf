@@ -11,9 +11,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Pagination from '@mui/material/Pagination';
 import { Dispatch, FunctionComponent, SetStateAction, useState } from 'react';
-import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import Box from '@mui/material/Box';
 
 interface ArticleAdderProps {
@@ -48,35 +46,43 @@ const ArticleAdder: FunctionComponent<ArticleAdderProps> = ({
 			>
 				Adicionar Artigo
 			</Button>
-			<Dialog onClose={handleClose} open={open}>
+			<Dialog onClose={handleClose} open={open} fullWidth>
 				<DialogTitle>Adicionar artigo</DialogTitle>
 				<DialogContent
-				// sx={{
-				// 	p: 1,
-				// }}
+					sx={{
+						py: 0,
+						px: 1,
+						overflowY: 'scroll',
+					}}
 				>
-					<Grid container spacing={3}>
-						<Grid xs={12}>
-							<ArticleSelector callback={selectorCallBack} />
-						</Grid>
-						<Grid xs={12}></Grid>
-					</Grid>
+					<Box
+						width={'100%'}
+						justifyContent={'center'}
+						gap={3}
+						py={2}
+						sx={{
+							overflowX: 'hidden',
+						}}
+					>
+						<ArticleSelector callback={selectorCallBack} />
+					</Box>
 				</DialogContent>
 				<DialogActions
 					sx={{
-						p: 2,
+						p: 1,
 					}}
 				>
 					<Box
 						display={'flex'}
 						width={'100%'}
-						justifyContent={'space-between'}
+						justifyContent={'flex-end'}
 						gap={3}
 					>
-						<Pagination count={10} color="primary" />
-						<Button variant="contained" onClick={handleClose}>
-							Feito
-						</Button>
+						<Box gap={1} display={'flex'}>
+							<Button variant="outlined" onClick={handleClose}>
+								Cancelar
+							</Button>
+						</Box>
 					</Box>
 				</DialogActions>
 			</Dialog>

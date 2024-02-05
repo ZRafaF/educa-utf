@@ -149,6 +149,24 @@ export async function getListOfArticlesStats(
 	}
 }
 
+export async function getListOfArticles(
+	page: number,
+	itemsPerPage: number,
+	options: RecordOptions | undefined
+) {
+	try {
+		return await pb
+			.collection('articles')
+			.getList<ArticlesResponse<ArticlesExpand>>(page, itemsPerPage, {
+				...options,
+				expand: 'tag, key_words',
+			});
+	} catch (error) {
+		console.error(error);
+		return {} as ListResult<ArticlesResponse<ArticlesExpand>>;
+	}
+}
+
 export async function deleteArticle(articleId: string) {
 	return await pb.collection('articles').delete(articleId);
 }
