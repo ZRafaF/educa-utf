@@ -25,7 +25,7 @@ const sortTypeList = [
 	},
 	{
 		label: 'Titulo',
-		value: 'title',
+		value: 'slug',
 	},
 	{
 		label: 'Visualizações totais',

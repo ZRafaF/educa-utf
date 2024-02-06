@@ -28,12 +28,20 @@ const TagsComponent = dynamic(() => import('../TagsComponent/TagsComponent'), {
 
 interface ArticleCardProps {
 	idx?: number | undefined;
-	myArticle: ArticlesStatsResponse<ArticlesExpand>;
+	myArticle:
+		| ArticlesStatsResponse<ArticlesExpand>
+		| ArticlesResponse<ArticlesExpand>;
+	expanded?: boolean;
+	hideMoreOptions?: boolean;
+	disabled?: boolean;
 }
 
 const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 	idx,
 	myArticle,
+	expanded,
+	hideMoreOptions,
+	disabled,
 }) => {
 	return (
 		<CardActionArea
@@ -44,6 +52,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 				borderRadius: 3,
 				border: '1px solid var(--mui-palette-divider)',
 			}}
+			disabled={disabled}
 		>
 			<Grid container gap={2}>
 				{idx !== undefined && (
@@ -135,25 +144,29 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 											</Typography>
 										</Stack>
 									</Tooltip>
-									<Tooltip
-										title="Likes"
-										arrow
-										placement="left"
-									>
-										<Stack
-											direction="row"
-											spacing={1}
-											alignItems="center"
+									{'likes' in myArticle && (
+										<Tooltip
+											title="Likes"
+											arrow
+											placement="left"
 										>
-											<FavoriteIcon fontSize="small" />
-											<Typography
-												variant="body2"
-												component="p"
+											<Stack
+												direction="row"
+												spacing={1}
+												alignItems="center"
 											>
-												{formatNumber(myArticle.likes)}
-											</Typography>
-										</Stack>
-									</Tooltip>
+												<FavoriteIcon fontSize="small" />
+												<Typography
+													variant="body2"
+													component="p"
+												>
+													{formatNumber(
+														myArticle.likes
+													)}
+												</Typography>
+											</Stack>
+										</Tooltip>
+									)}
 								</Stack>
 							</Stack>
 						</Box>
@@ -167,13 +180,16 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 							<TagsComponent
 								tag={myArticle.expand?.tag}
 								keyWords={myArticle.expand?.key_words}
+								expanded={expanded}
 							/>
 							<Box>
-								<MoreArticleOptions
-									article={myArticle}
-									placement="left"
-									shareUrl={`https://educautf.td.utfpr.edu.br/article/${myArticle.id}`}
-								/>
+								{hideMoreOptions ? null : (
+									<MoreArticleOptions
+										article={myArticle}
+										placement="left"
+										shareUrl={`https://educautf.td.utfpr.edu.br/article/${myArticle.id}`}
+									/>
+								)}
 							</Box>
 						</Stack>
 					</Stack>

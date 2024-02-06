@@ -370,7 +370,8 @@ const useSendMetadata = ({
 					listOfKeyWordsId,
 					chapterArticles
 				);
-				if (saveAndFinish) router.push(`/article/${updatedRecord.id}`);
+				if (saveAndFinish)
+					router.push(`/${resourceType}/${updatedRecord.id}`);
 			}
 		} catch (error) {
 			handleError(id, error);
