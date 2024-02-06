@@ -14,11 +14,13 @@ export enum Collections {
 	KeyWords = "key_words",
 	KeyWordsStats = "key_words_stats",
 	LatestViews = "latest_views",
+	Reports = "reports",
 	Tags = "tags",
 	TotalUsersArticlesStats = "total_users_articles_stats",
 	TotalUsersChaptersStats = "total_users_chapters_stats",
 	Users = "users",
 	UsersStats = "users_stats",
+	Views = "views",
 }
 
 // Alias types for improved usability
@@ -54,6 +56,7 @@ export type ArticlesRecord = {
 	description?: string
 	document: string
 	key_words?: RecordIdString[]
+	slug?: string
 	tag: RecordIdString
 	title: string
 	user: RecordIdString
@@ -93,9 +96,10 @@ export enum ChaptersVisibilityOptions {
 }
 export type ChaptersRecord = {
 	articles?: RecordIdString[]
-	cover?: string
+	cover: string
 	description?: string
 	key_words?: RecordIdString[]
+	slug?: string
 	tag?: RecordIdString
 	title?: string
 	user: RecordIdString
@@ -112,7 +116,7 @@ export type ChaptersStatsRecord = {
 	author_avatar?: string
 	author_name: string
 	author_username?: string
-	cover?: string
+	cover: string
 	description?: string
 	key_words?: RecordIdString[]
 	latest_views?: number
@@ -139,6 +143,26 @@ export type LatestViewsRecord = {
 	articles?: RecordIdString
 	chapters?: RecordIdString
 	user?: RecordIdString
+}
+
+export enum ReportsReasonOptions {
+	"Discurso de Ódio" = "Discurso de Ódio",
+	"Conteúdo Inadequado para Menores" = "Conteúdo Inadequado para Menores",
+	"Spam" = "Spam",
+	"Conteúdo Comercial Não Solicitado" = "Conteúdo Comercial Não Solicitado",
+	"Desinformação ou Notícias Falsas" = "Desinformação ou Notícias Falsas",
+	"Assédio ou Intimidação" = "Assédio ou Intimidação",
+	"Violação de Direitos Autorais" = "Violação de Direitos Autorais",
+	"Conteúdo Irrelevante ou Fora do Contexto" = "Conteúdo Irrelevante ou Fora do Contexto",
+	"Imagens ou Vídeos Explícitos" = "Imagens ou Vídeos Explícitos",
+	"Outros Motivos" = "Outros Motivos",
+}
+export type ReportsRecord = {
+	description: string
+	reason: ReportsReasonOptions
+	report_author: RecordIdString
+	reported_article?: RecordIdString
+	reported_chapter?: RecordIdString
 }
 
 export enum TagsCategoryOptions {
@@ -213,6 +237,10 @@ export type UsersStatsRecord = {
 	username?: string
 }
 
+export type ViewsRecord = {
+	total?: number
+}
+
 // Response types include system fields and match responses from the PocketBase API
 export type ArticlesResponse<Texpand = unknown> = Required<ArticlesRecord> & BaseSystemFields<Texpand>
 export type ArticlesStatsResponse<Texpand = unknown> = Required<ArticlesStatsRecord> & BaseSystemFields<Texpand>
@@ -222,11 +250,13 @@ export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRec
 export type KeyWordsResponse<Texpand = unknown> = Required<KeyWordsRecord> & BaseSystemFields<Texpand>
 export type KeyWordsStatsResponse<Texpand = unknown> = Required<KeyWordsStatsRecord> & BaseSystemFields<Texpand>
 export type LatestViewsResponse<Texpand = unknown> = Required<LatestViewsRecord> & BaseSystemFields<Texpand>
+export type ReportsResponse<Texpand = unknown> = Required<ReportsRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersArticlesStatsResponse<Texpand = unknown> = Required<TotalUsersArticlesStatsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersChaptersStatsResponse<Texpand = unknown> = Required<TotalUsersChaptersStatsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 export type UsersStatsResponse<Texpand = unknown> = Required<UsersStatsRecord> & BaseSystemFields<Texpand>
+export type ViewsResponse<Texpand = unknown> = Required<ViewsRecord> & BaseSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
@@ -239,11 +269,13 @@ export type CollectionRecords = {
 	key_words: KeyWordsRecord
 	key_words_stats: KeyWordsStatsRecord
 	latest_views: LatestViewsRecord
+	reports: ReportsRecord
 	tags: TagsRecord
 	total_users_articles_stats: TotalUsersArticlesStatsRecord
 	total_users_chapters_stats: TotalUsersChaptersStatsRecord
 	users: UsersRecord
 	users_stats: UsersStatsRecord
+	views: ViewsRecord
 }
 
 export type CollectionResponses = {
@@ -255,11 +287,13 @@ export type CollectionResponses = {
 	key_words: KeyWordsResponse
 	key_words_stats: KeyWordsStatsResponse
 	latest_views: LatestViewsResponse
+	reports: ReportsResponse
 	tags: TagsResponse
 	total_users_articles_stats: TotalUsersArticlesStatsResponse
 	total_users_chapters_stats: TotalUsersChaptersStatsResponse
 	users: UsersResponse
 	users_stats: UsersStatsResponse
+	views: ViewsResponse
 }
 
 // Type for usage with type asserted PocketBase instance
@@ -274,9 +308,11 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'key_words'): RecordService<KeyWordsResponse>
 	collection(idOrName: 'key_words_stats'): RecordService<KeyWordsStatsResponse>
 	collection(idOrName: 'latest_views'): RecordService<LatestViewsResponse>
+	collection(idOrName: 'reports'): RecordService<ReportsResponse>
 	collection(idOrName: 'tags'): RecordService<TagsResponse>
 	collection(idOrName: 'total_users_articles_stats'): RecordService<TotalUsersArticlesStatsResponse>
 	collection(idOrName: 'total_users_chapters_stats'): RecordService<TotalUsersChaptersStatsResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 	collection(idOrName: 'users_stats'): RecordService<UsersStatsResponse>
+	collection(idOrName: 'views'): RecordService<ViewsResponse>
 }

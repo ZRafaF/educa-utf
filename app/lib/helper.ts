@@ -136,3 +136,52 @@ export function compareStrings(a: string, b: string) {
 	const stringB = b.normalize('NFD').replace(regex, '').toLowerCase();
 	return stringA === stringB;
 }
+
+export function extractChapterId(input: string): string | false {
+	const urlRegex = /^https?:\/\/[^\/]+\/chapter\/([^\/?#]+)/;
+	const match = input.match(urlRegex);
+
+	if (match && match[1]) {
+		return match[1];
+	} else {
+		return false;
+	}
+}
+
+export function extractArticleId(input: string): string | false {
+	const chapterRegex = /\/chapter\/[^\/]+\/([^\/?]+)/;
+	const articleRegex = /\/article\/([^\/?]+)/;
+
+	const chapterMatch = input.match(chapterRegex);
+	const articleMatch = input.match(articleRegex);
+
+	if (chapterMatch && chapterMatch[1]) {
+		if (chapterMatch[1] === 'edit') return false;
+
+		return chapterMatch[1];
+	} else if (articleMatch && articleMatch[1]) {
+		return articleMatch[1];
+	} else {
+		return false;
+	}
+}
+
+export function isValidUrl(input: string): boolean {
+	try {
+		new URL(input);
+		return true;
+	} catch (error) {
+		return false;
+	}
+}
+
+export function slugify(str: string) {
+	return String(str)
+		.normalize('NFKD') // split accented characters into their base characters and diacritical marks
+		.replace(/[\u0300-\u036f]/g, '') // remove all the accents, which happen to be all in the \u03xx UNICODE block.
+		.trim() // trim leading or trailing whitespace
+		.toLowerCase() // convert to lowercase
+		.replace(/[^a-z0-9 -]/g, '') // remove non-alphanumeric characters
+		.replace(/\s+/g, '-') // replace spaces with hyphens
+		.replace(/-+/g, '-'); // remove consecutive hyphens
+}
