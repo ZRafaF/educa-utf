@@ -137,7 +137,7 @@ export function getChapterCoverURL(
 }
 
 export async function createChapter(
-	newChapter: ChaptersRecord,
+	newChapter: Omit<ChaptersRecord, 'cover'>,
 	cover: Blob,
 	keyWords: string[]
 ) {
@@ -156,7 +156,7 @@ export async function deleteChapter(chapterId: string) {
 
 export async function updateChapter(
 	chapterId: string,
-	updatedChapterRecord: ChaptersRecord,
+	updatedChapterRecord: Omit<ChaptersRecord, 'cover'>,
 	cover: Blob | undefined,
 	keyWords: string[],
 	articles: string[]

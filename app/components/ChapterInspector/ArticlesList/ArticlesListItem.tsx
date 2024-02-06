@@ -186,7 +186,7 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 				)}
 			</Box>
 		);
-	}, [article, chapter, active, editMode]);
+	}, [article, chapter, active, editMode, removeArticle]);
 
 	return MemorizedComponent;
 };

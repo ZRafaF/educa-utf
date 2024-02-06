@@ -30,7 +30,7 @@ import Checkbox from '@mui/material/Checkbox';
 import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 import CheckIcon from '@mui/icons-material/Check';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Tooltip } from '@mui/material';
 
 interface ArticleSelectorProps {
 	callback: (article: ArticlesResponse) => void;
@@ -44,29 +44,28 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 	const [, user] = usePbAuth();
 	const [onlyMyArticles, setOnlyMyArticles] = useState(false);
 	const [loading, setLoading] = useState(false);
-
+	const [currentPage, setCurrentPage] = useState(1);
 	const [listResult, setListResult] =
 		useState<ListResult<ArticlesResponse<ArticlesExpand>>>();
+
+	const [filter, setFilter] = useState('');
+
+	const hasPrevious = listResult?.page !== 1;
+	const hasNext = listResult?.page !== listResult?.totalPages;
+
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [filter]);
 
 	useEffect(() => {
 		const fetchArticles = async () => {
 			setLoading(true);
 
-			const extractedId = extractArticleId(debouncedInput);
-			const searchValue = extractedId
-				? extractedId
-				: slugify(debouncedInput);
-			const filter = `(slug~'%${searchValue}%' || id='${searchValue}') ${
-				onlyMyArticles ? `&& user='${user?.id}'` : ''
-			}`;
-			console.log(filter);
-			const articlesResult = await getListOfArticles(1, 5, {
+			const articlesResult = await getListOfArticles(currentPage, 5, {
 				sort: '+slug',
 				filter: filter,
 			});
 			setListResult(articlesResult);
-
-			// console.log(articlesResult);
 		};
 
 		try {
@@ -77,13 +76,29 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 		} finally {
 			setLoading(false);
 		}
-	}, [debouncedInput, onlyMyArticles]);
+	}, [filter, currentPage]);
+
+	useEffect(() => {
+		const extractedId = extractArticleId(debouncedInput);
+		const searchValue = extractedId ? extractedId : slugify(debouncedInput);
+		const newFilter = `(slug~'%${searchValue}%' || id='${searchValue}') ${
+			onlyMyArticles ? `&& user='${user?.id}'` : ''
+		}`;
+		setFilter((old) => {
+			if (newFilter !== old) {
+				setCurrentPage(1);
+				return newFilter;
+			}
+			return old;
+		});
+	}, [debouncedInput, onlyMyArticles, user]);
 
 	return (
 		<Stack spacing={1}>
 			<TextField
 				label="Titulo, ID ou URL do Artigo"
 				variant="outlined"
+				helperText="Insira um título, ID ou URL do artigo que deseja adicionar ao capítulo."
 				fullWidth
 				value={userInput}
 				onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +112,6 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 						</InputAdornment>
 					) : (
 						<InputAdornment position="end">
-							{/* <Fade in timeout={500}> */}
 							<CheckIcon
 								color="success"
 								sx={{
@@ -122,7 +136,6 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 									},
 								}}
 							/>
-							{/* </Fade> */}
 						</InputAdornment>
 					),
 				}}
@@ -169,7 +182,12 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 						<Stack direction="column" spacing={1}>
 							{listResult.items.map((article) => {
 								return (
-									<CardActionArea>
+									<CardActionArea
+										key={`article_selector_${article.id}`}
+										onClick={() => {
+											callback(article);
+										}}
+									>
 										<ArticleCard
 											myArticle={article}
 											hideMoreOptions
@@ -187,16 +205,35 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 							mt={2}
 						>
 							<Typography>
-								{listResult.page} de {listResult.totalPages}
+								Página {listResult.page} de{' '}
+								{listResult.totalPages}
 							</Typography>
 
 							<Stack direction="row" spacing={0.5}>
-								<IconButton aria-label="previous">
-									<KeyboardArrowLeftIcon fontSize="inherit" />
-								</IconButton>
-								<IconButton aria-label="previous">
-									<KeyboardArrowRightIcon fontSize="inherit" />
-								</IconButton>
+								<Tooltip title="Página anterior" arrow>
+									<IconButton
+										aria-label="previous"
+										onClick={() => {
+											if (hasPrevious)
+												setCurrentPage(currentPage - 1);
+										}}
+										disabled={!hasPrevious}
+									>
+										<KeyboardArrowLeftIcon fontSize="inherit" />
+									</IconButton>
+								</Tooltip>
+								<Tooltip title="Próxima página" arrow>
+									<IconButton
+										aria-label="previous"
+										onClick={() => {
+											if (hasNext)
+												setCurrentPage(currentPage + 1);
+										}}
+										disabled={!hasNext}
+									>
+										<KeyboardArrowRightIcon fontSize="inherit" />
+									</IconButton>
+								</Tooltip>
 							</Stack>
 						</Stack>
 					</>

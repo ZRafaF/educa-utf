@@ -13,6 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Dispatch, FunctionComponent, SetStateAction, useState } from 'react';
 import Box from '@mui/material/Box';
+import { toast } from 'react-toastify';
 
 interface ArticleAdderProps {
 	editedChapter: ChaptersResponse<ChaptersExpand>;
@@ -34,7 +35,27 @@ const ArticleAdder: FunctionComponent<ArticleAdderProps> = ({
 	const handleClose = () => {
 		setOpen(false);
 	};
-	const selectorCallBack = (article: ArticlesResponse) => {};
+	const selectorCallBack = (article: ArticlesResponse) => {
+		handleClose();
+		if (!editedChapter.expand) return;
+		const itemsArray = editedChapter.expand?.articles ?? [];
+
+		// if the article.id is already in the array, return
+		if (itemsArray.find((a) => a.id === article.id)) {
+			toast.error('Artigo já adicionado');
+			return;
+		}
+
+		itemsArray.push(article);
+
+		const tempCopy: ChaptersResponse<ChaptersExpand> = {
+			...editedChapter,
+		};
+
+		if (tempCopy.expand) tempCopy.expand.articles = itemsArray;
+		setEditedChapter(tempCopy);
+		toast.success('Artigo adicionado');
+	};
 
 	return (
 		<>
