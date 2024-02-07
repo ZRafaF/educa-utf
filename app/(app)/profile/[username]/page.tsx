@@ -16,9 +16,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { getFormattedDate } from '@/lib/helper';
 import PrivateDrawerContent from './PrivateDrawerContent';
-import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
+import UserContentProfile from '@/components/UserContentProfile/UserContentProfile';
+
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
 	{
@@ -85,7 +86,12 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 
 	return (
 		<Box display={'flex'} width={'100%'} minHeight="100dvh">
-			<Box width={'100%'} boxShadow={'0 0 4px #000'} zIndex={1}>
+			<Box
+				boxShadow={'0 0 4px #000'}
+				width={'100%'}
+				minWidth={0}
+				zIndex={1}
+			>
 				<Container
 					maxWidth="md"
 					sx={{
@@ -196,41 +202,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						px: { xs: 1, sm: 1, md: 2 },
 					}}
 				>
-					<Typography variant="h5" fontWeight={700} pb={2}>
-						Artigos públicos
-					</Typography>
-					<Paper
-						variant="outlined"
-						sx={{
-							m: { xs: -1, sm: 0, md: 0 },
-							p: 1,
-						}}
-						square
-					>
-						<DataTable
-							fetchType="articles"
-							userId={userStats.id}
-							onlyPublic
-						/>
-					</Paper>
-					<Divider sx={{ my: 4 }} variant="middle" />
-					<Typography variant="h5" fontWeight={700} pb={2}>
-						Capítulos públicos
-					</Typography>
-					<Paper
-						variant="outlined"
-						sx={{
-							m: { xs: -1, sm: 0, md: 0 },
-							p: 1,
-						}}
-						square
-					>
-						<DataTable
-							fetchType="chapters"
-							userId={userStats.id}
-							onlyPublic
-						/>
-					</Paper>
+					<UserContentProfile username={params.username} />
 				</Container>
 			</Box>
 			<NoSSRPrivateUserComponent username={params.username}>

@@ -20,7 +20,6 @@ import { useDebounce } from 'use-debounce';
 import { extractArticleId, slugify } from '@/lib/helper';
 import {
 	getArticleById,
-	getListOfArticles,
 	getListOfArticlesStats,
 } from '@/lib/apiHelpers/articlesAPI';
 import { toast } from 'react-toastify';
