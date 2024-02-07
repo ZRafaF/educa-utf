@@ -20,7 +20,7 @@ interface PrivateUserComponentProps {
 	children: ReactNode;
 }
 
-const drawerWidth = 400;
+const drawerWidth = 300;
 
 const PrivateUserComponent: FunctionComponent<PrivateUserComponentProps> = ({
 	username,

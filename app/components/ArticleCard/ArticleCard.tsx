@@ -11,7 +11,7 @@ import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
 import Stack from '@mui/material/Stack/Stack';
 import Typography from '@mui/material/Typography/Typography';
 import Link from 'next/link';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, Suspense } from 'react';
 import { ArticlesExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
@@ -20,17 +20,20 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
 
 import dynamic from 'next/dynamic';
-import { formatNumber } from '@/lib/helper';
+import { formatNumber, getFormattedVisibility } from '@/lib/helper';
 import MoreArticleOptions from '../MoreArticleOptions/MoreArticleOptions';
+
 const TagsComponent = dynamic(() => import('../TagsComponent/TagsComponent'), {
+	ssr: true,
+});
+
+const ArticleCardUsername = dynamic(() => import('./ArticleCardUsername'), {
 	ssr: false,
 });
 
 interface ArticleCardProps {
 	idx?: number | undefined;
-	myArticle:
-		| ArticlesStatsResponse<ArticlesExpand>
-		| ArticlesResponse<ArticlesExpand>;
+	myArticle: ArticlesStatsResponse<ArticlesExpand>;
 	expanded?: boolean;
 	hideMoreOptions?: boolean;
 	disabled?: boolean;
@@ -85,16 +88,17 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 							minHeight={65}
 							sx={{
 								display: 'flex',
-								alignItems: 'center',
 							}}
 						>
 							<Stack
 								direction={'row'}
 								justifyContent={'space-between'}
-								alignItems={'center'}
+								alignItems={'start'}
+								// alignItems={'center'}
 								width={'stretch'}
+								spacing={1}
 							>
-								<Stack>
+								<Stack width={'100%'} minHeight={0}>
 									<Typography
 										variant="body1"
 										fontWeight="700"
@@ -109,22 +113,47 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 									>
 										{myArticle.title}
 									</Typography>
-									<Typography
-										variant="body2"
-										color="text.secondary"
-										sx={{
-											overflow: 'hidden',
-											wordBreak: 'break',
-											textOverflow: 'ellipsis',
-											display: '-webkit-box',
-											WebkitBoxOrient: 'vertical',
-											WebkitLineClamp: 2,
-										}}
-									>
-										{myArticle.description}
-									</Typography>
+
+									<Box display={'flex'} height={'100%'}>
+										<Typography
+											variant="body2"
+											color="text.secondary"
+											sx={{
+												overflow: 'hidden',
+												wordBreak: 'break',
+												textOverflow: 'ellipsis',
+												display: '-webkit-box',
+												WebkitBoxOrient: 'vertical',
+												WebkitLineClamp: 2,
+											}}
+											// minHeight={50}
+										>
+											{myArticle.description}
+										</Typography>
+									</Box>
 								</Stack>
 								<Stack spacing={1} color="text.secondary">
+									<Tooltip
+										title="Visibilidade"
+										arrow
+										placement="top"
+									>
+										<Typography
+											variant="subtitle2"
+											component="p"
+											fontWeight={600}
+											color={
+												myArticle.visibility ===
+												'public'
+													? 'success.main'
+													: 'text.secondary'
+											}
+										>
+											{getFormattedVisibility(
+												myArticle.visibility
+											)}
+										</Typography>
+									</Tooltip>
 									<Tooltip
 										title="Visualizações"
 										arrow
@@ -144,32 +173,29 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 											</Typography>
 										</Stack>
 									</Tooltip>
-									{'likes' in myArticle && (
-										<Tooltip
-											title="Likes"
-											arrow
-											placement="left"
+									<Tooltip
+										title="Likes"
+										arrow
+										placement="left"
+									>
+										<Stack
+											direction="row"
+											spacing={1}
+											alignItems="center"
 										>
-											<Stack
-												direction="row"
-												spacing={1}
-												alignItems="center"
+											<FavoriteIcon fontSize="small" />
+											<Typography
+												variant="body2"
+												component="p"
 											>
-												<FavoriteIcon fontSize="small" />
-												<Typography
-													variant="body2"
-													component="p"
-												>
-													{formatNumber(
-														myArticle.likes
-													)}
-												</Typography>
-											</Stack>
-										</Tooltip>
-									)}
+												{formatNumber(myArticle.likes)}
+											</Typography>
+										</Stack>
+									</Tooltip>
 								</Stack>
 							</Stack>
 						</Box>
+
 						<Stack
 							direction={'row'}
 							justifyContent={'space-between'}
@@ -177,11 +203,32 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 							width={'stretch'}
 							gap={1}
 						>
-							<TagsComponent
-								tag={myArticle.expand?.tag}
-								keyWords={myArticle.expand?.key_words}
-								expanded={expanded}
-							/>
+							<Grid
+								container
+								gap={2}
+								justifyContent={'space-between'}
+								alignItems={'center'}
+								width={'100%'}
+								direction={{ xs: 'column-reverse', sm: 'row' }}
+							>
+								<Grid>
+									<Box minWidth={0} overflow={'auto'}>
+										<TagsComponent
+											tag={myArticle.expand?.tag}
+											keyWords={
+												myArticle.expand?.key_words
+											}
+											expanded={expanded}
+										/>
+									</Box>
+								</Grid>
+								<Grid>
+									<ArticleCardUsername
+										myArticle={myArticle}
+									/>
+								</Grid>
+							</Grid>
+
 							<Box>
 								{hideMoreOptions ? null : (
 									<MoreArticleOptions
