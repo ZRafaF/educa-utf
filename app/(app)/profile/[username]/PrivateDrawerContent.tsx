@@ -68,6 +68,7 @@ const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
 					title="Criar artigo ou capítulo"
 					icon={<NoteAddIcon />}
 					href="/new"
+					tooltip="Crie um novo artigo ou capítulo"
 				/>
 				<Divider />
 				<CollapsibleList icon={<FavoriteIcon />} title="Meus favoritos">

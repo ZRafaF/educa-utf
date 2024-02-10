@@ -6,11 +6,13 @@
 import Divider from '@mui/material/Divider';
 import { FunctionComponent } from 'react';
 import dynamic from 'next/dynamic';
-import Box from '@mui/material/Box';
 
-const UserContentExplorer = dynamic(() => import('./UserContentExplorer'), {
-	ssr: false,
-});
+const UserContentExplorer = dynamic(
+	() => import('./UserContentExplorer/UserContentExplorer'),
+	{
+		ssr: false,
+	}
+);
 
 interface UserContentProfileProps {
 	username: string;
@@ -21,17 +23,9 @@ const UserContentProfile: FunctionComponent<UserContentProfileProps> = ({
 }) => {
 	return (
 		<>
-			<UserContentExplorer
-				direction="row"
-				type="chapters"
-				username={username}
-			/>
+			<UserContentExplorer type="chapters" username={username} />
 			<Divider sx={{ my: 4 }} variant="middle" />
-			<UserContentExplorer
-				direction="column"
-				type="articles"
-				username={username}
-			/>
+			<UserContentExplorer type="articles" username={username} />
 		</>
 	);
 };

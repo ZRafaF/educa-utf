@@ -196,7 +196,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 					<Divider flexItem />
 				</Stack>
 				<Container
-					maxWidth="md"
+					maxWidth="lg"
 					sx={{
 						py: 2,
 						px: { xs: 1, sm: 1, md: 2 },
