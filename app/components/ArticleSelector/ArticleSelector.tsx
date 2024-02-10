@@ -5,7 +5,10 @@
 
 'use client';
 
-import { ArticlesResponse } from '@/types/pocketbase-types';
+import {
+	ArticlesResponse,
+	ArticlesStatsResponse,
+} from '@/types/pocketbase-types';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -15,7 +18,10 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Typography from '@mui/material/Typography';
 import { useDebounce } from 'use-debounce';
 import { extractArticleId, slugify } from '@/lib/helper';
-import { getListOfArticles } from '@/lib/apiHelpers/articlesAPI';
+import {
+	getArticleById,
+	getListOfArticlesStats,
+} from '@/lib/apiHelpers/articlesAPI';
 import { toast } from 'react-toastify';
 import ArticleCard from '../ArticleCard/ArticleCard';
 import { ArticlesExpand } from '@/types/expanded-types';
@@ -46,7 +52,7 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [listResult, setListResult] =
-		useState<ListResult<ArticlesResponse<ArticlesExpand>>>();
+		useState<ListResult<ArticlesStatsResponse<ArticlesExpand>>>();
 
 	const [filter, setFilter] = useState('');
 
@@ -61,10 +67,14 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 		const fetchArticles = async () => {
 			setLoading(true);
 
-			const articlesResult = await getListOfArticles(currentPage, 5, {
-				sort: '+slug',
-				filter: filter,
-			});
+			const articlesResult = await getListOfArticlesStats(
+				currentPage,
+				5,
+				{
+					sort: '+slug',
+					filter: filter,
+				}
+			);
 			setListResult(articlesResult);
 		};
 
@@ -92,6 +102,13 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 			return old;
 		});
 	}, [debouncedInput, onlyMyArticles, user]);
+
+	const fetchCallbackArticle = async (
+		articleStats: ArticlesStatsResponse
+	) => {
+		const article = await getArticleById(articleStats.id);
+		callback(article);
+	};
 
 	return (
 		<Stack spacing={1}>
@@ -179,13 +196,64 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 					</Typography>
 				) : (
 					<>
+						<Stack
+							direction="row"
+							justifyContent="end"
+							alignItems="center"
+							spacing={2}
+							mb={2}
+						>
+							<Typography>
+								Página {listResult.page} de{' '}
+								{listResult.totalPages}
+							</Typography>
+
+							<Stack direction="row" spacing={0.5}>
+								<Tooltip
+									title="Página anterior"
+									arrow
+									placement="top"
+								>
+									<IconButton
+										aria-label="previous"
+										onClick={() => {
+											if (hasPrevious) {
+												setCurrentPage(currentPage - 1);
+												setLoading(true);
+											}
+										}}
+										disabled={!hasPrevious}
+									>
+										<KeyboardArrowLeftIcon fontSize="inherit" />
+									</IconButton>
+								</Tooltip>
+								<Tooltip
+									title="Próxima página"
+									arrow
+									placement="top"
+								>
+									<IconButton
+										aria-label="previous"
+										onClick={() => {
+											if (hasNext) {
+												setCurrentPage(currentPage + 1);
+												setLoading(true);
+											}
+										}}
+										disabled={!hasNext}
+									>
+										<KeyboardArrowRightIcon fontSize="inherit" />
+									</IconButton>
+								</Tooltip>
+							</Stack>
+						</Stack>
 						<Stack direction="column" spacing={1}>
 							{listResult.items.map((article) => {
 								return (
 									<CardActionArea
 										key={`article_selector_${article.id}`}
 										onClick={() => {
-											callback(article);
+											fetchCallbackArticle(article);
 										}}
 									>
 										<ArticleCard
@@ -196,45 +264,6 @@ const ArticleSelector: FunctionComponent<ArticleSelectorProps> = ({
 									</CardActionArea>
 								);
 							})}
-						</Stack>
-						<Stack
-							direction="row"
-							justifyContent="end"
-							alignItems="center"
-							spacing={2}
-							mt={2}
-						>
-							<Typography>
-								Página {listResult.page} de{' '}
-								{listResult.totalPages}
-							</Typography>
-
-							<Stack direction="row" spacing={0.5}>
-								<Tooltip title="Página anterior" arrow>
-									<IconButton
-										aria-label="previous"
-										onClick={() => {
-											if (hasPrevious)
-												setCurrentPage(currentPage - 1);
-										}}
-										disabled={!hasPrevious}
-									>
-										<KeyboardArrowLeftIcon fontSize="inherit" />
-									</IconButton>
-								</Tooltip>
-								<Tooltip title="Próxima página" arrow>
-									<IconButton
-										aria-label="previous"
-										onClick={() => {
-											if (hasNext)
-												setCurrentPage(currentPage + 1);
-										}}
-										disabled={!hasNext}
-									>
-										<KeyboardArrowRightIcon fontSize="inherit" />
-									</IconButton>
-								</Tooltip>
-							</Stack>
 						</Stack>
 					</>
 				)}

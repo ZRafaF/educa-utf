@@ -68,6 +68,7 @@ const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
 					title="Criar artigo ou capítulo"
 					icon={<NoteAddIcon />}
 					href="/new"
+					tooltip="Crie um novo artigo ou capítulo"
 				/>
 				<Divider />
 				<CollapsibleList icon={<FavoriteIcon />} title="Meus favoritos">
@@ -77,22 +78,6 @@ const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
 						</ListItemIcon>
 						<ListItemText primary="Starred" />
 					</ListItemButton>
-				</CollapsibleList>
-				<CollapsibleList
-					icon={<AutoStoriesIcon />}
-					title="Meus artigos"
-				>
-					<Box pt={1} px={1}>
-						<DataTable fetchType="articles" userId={userId} />
-					</Box>
-				</CollapsibleList>
-				<CollapsibleList
-					icon={<LibraryBooksIcon />}
-					title="Meus capítulos"
-				>
-					<Box pt={1} px={1}>
-						<DataTable fetchType="chapters" userId={userId} />
-					</Box>
 				</CollapsibleList>
 			</List>
 		</>
