@@ -83,9 +83,9 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 						flexDirection: 'column',
 						borderLeft: active ? 5 : 0,
 						borderColor: 'primary.main',
-						// pointerEvents: editMode ? 'none' : 'auto',
+						pointerEvents: editMode ? 'none' : 'auto',
 					}}
-					disabled={editMode}
+					// disabled={editMode}
 				>
 					<Stack
 						direction="row"

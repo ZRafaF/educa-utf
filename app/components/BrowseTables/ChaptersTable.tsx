@@ -54,10 +54,9 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 					spacing={1}
 					sx={{
 						justifyContent: {
-							xs: 'center',
-							sm: 'left',
-							md: 'space-between',
-							lg: 'space-between',
+							xs: 'start',
+							sm: 'start',
+							lg: 'start',
 						},
 					}}
 				>

@@ -14,7 +14,6 @@ import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
 	MIN_TOOLBAR_HEIGHT,
-	sleep,
 } from '@/lib/helper';
 import PageMessage from '../PageMessage/PageMessage';
 
