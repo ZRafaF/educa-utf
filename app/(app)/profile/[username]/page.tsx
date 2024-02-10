@@ -93,7 +93,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 				zIndex={1}
 			>
 				<Container
-					maxWidth="md"
+					maxWidth="lg"
 					sx={{
 						px: { xs: 0.5, sm: 1, md: 2 },
 						py: 2,
@@ -136,7 +136,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 				>
 					<Divider flexItem />
 					<Container
-						maxWidth="md"
+						maxWidth="lg"
 						sx={{ py: 2, px: { xs: 1, sm: 1, md: 2 } }}
 					>
 						<Typography>
