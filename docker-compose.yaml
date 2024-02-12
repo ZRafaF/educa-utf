@@ -22,6 +22,16 @@ services:
         environment:
             UTF_AUTH_TOKEN: '${UTF_AUTH_TOKEN}'
 
+    utf_moodle_scraper:
+        depends_on:
+            - nginx_proxy
+        image: zrafaf/utf-moodle-scraper:latest
+        restart: unless-stopped
+        ports:
+            - 4109:8080
+        environment:
+            API_KEY: '${UTF_AUTH_TOKEN}'
+
     olc:
         depends_on:
             - pocketbase
