@@ -23,9 +23,27 @@ O seguinte proxy host foi configurado:
 
 Com as seguintes configurações:
 
-![Configuração proxy host](../resources/asdasdsadasda12.png)
+![Configuração proxy host](../resources/ahusdbasbdhbaj1be.png)
 
-![Alt text](../resources/nahdsj2.png)
+Para as `custom locations` a seguinte configuração está sendo usada:
+
+```
+location /umami {
+    proxy_pass http://ka.td.utfpr.edu.br:3100;
+}
+location /olc-api/ {
+    proxy_pass http://ka.td.utfpr.edu.br:3005/;
+}
+location /db/_ {
+    proxy_pass http://ka.td.utfpr.edu.br:8090/_;
+}
+location /db/api {
+    proxy_pass http://ka.td.utfpr.edu.br:8090/api;
+}
+location /umc-api/ {
+    proxy_pass http://ka.td.utfpr.edu.br:4109/;
+}
+``` 
 
 !!! Attention "Atenção"
     As configurações podem estar desatualizadas.
