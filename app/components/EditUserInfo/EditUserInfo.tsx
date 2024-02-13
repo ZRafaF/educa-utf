@@ -6,22 +6,18 @@
 'use client';
 
 import { FunctionComponent, useState } from 'react';
-import EditUserInfoContent from './EditUserInfoContent';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
+import EditUserInfoDialog from './EditUserInfoDialog/EditUserInfoDialog';
+import usePbAuth from '@/hooks/usePbAuth';
 
 interface EditUserInfoProps {}
 
 const EditUserInfo: FunctionComponent<EditUserInfoProps> = () => {
 	const [open, setOpen] = useState(false);
-
+	const [, user] = usePbAuth();
 	const handleClick = () => {
 		setOpen((old) => !old);
 	};
@@ -29,6 +25,8 @@ const EditUserInfo: FunctionComponent<EditUserInfoProps> = () => {
 	const handleClose = () => {
 		setOpen(false);
 	};
+
+	if (user === null) return <></>;
 
 	return (
 		<>
@@ -47,20 +45,11 @@ const EditUserInfo: FunctionComponent<EditUserInfoProps> = () => {
 					}}
 				/>
 			</ListItemButton>
-			<Dialog open={open} onClose={handleClose}>
-				<DialogTitle>Editar meu perfil</DialogTitle>
-				<DialogContent>
-					<EditUserInfoContent />
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleClose} variant="outlined">
-						Cancelar
-					</Button>
-					<Button onClick={handleClose} autoFocus variant="contained">
-						Salvar
-					</Button>
-				</DialogActions>
-			</Dialog>
+			<EditUserInfoDialog
+				isOpen={open}
+				handleClose={handleClose}
+				user={user}
+			/>
 		</>
 	);
 };

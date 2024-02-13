@@ -60,15 +60,6 @@ const PrivateDrawerContent: FunctionComponent<PrivateDrawerContentProps> = ({
 					tooltip="Crie um novo artigo ou capítulo"
 				/>
 				<Divider />
-
-				{/* <CollapsibleList icon={<FavoriteIcon />} title="Meus favoritos">
-					<ListItemButton>
-						<ListItemIcon>
-							<MailIcon />
-						</ListItemIcon>
-						<ListItemText primary="Starred" />
-					</ListItemButton>
-				</CollapsibleList> */}
 			</List>
 		</Box>
 	);
