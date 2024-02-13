@@ -29,7 +29,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import InnerContentExplorer from './InnerContentExplorer';
 
-const articlesPerPage = 9;
+const articlesPerPage = 8;
 const chaptersPerPage = 8;
 
 interface UserContentExplorerProps {
@@ -105,7 +105,12 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 				direction="row"
 				justifyContent="space-between"
 				alignItems="end"
-				pb={2}
+				px={{
+					xs: 0,
+					sm: 1,
+					md: 1,
+				}}
+				pb={0.5}
 			>
 				<Box>
 					<Typography variant="h5" fontWeight={700}>
@@ -184,9 +189,10 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 			<Paper
 				variant="outlined"
 				sx={{
-					mx: { xs: -1, sm: -1, md: -2, lg: 0 },
+					mx: { xs: -1, sm: -1, md: -1, lg: -1 },
 					p: 1,
 					bgcolor: 'grey.A700',
+					minHeight: type === 'chapters' ? 590 : 333,
 				}}
 				square
 			>

@@ -155,13 +155,7 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 					</Tooltip>
 					<Divider />
 					<Tooltip
-						title={
-							<span style={{ whiteSpace: 'pre-line' }}>
-								{
-									'Reportar esse capítulo \n (Você precisa estar logado)'
-								}
-							</span>
-						}
+						title={'Reportar esse capítulo'}
 						arrow
 						placement="right"
 					>
@@ -175,7 +169,6 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 									color: 'warning.main',
 									py: 1,
 								}}
-								disabled={user === null}
 								onClick={(e) => {
 									handleClose(e);
 								}}

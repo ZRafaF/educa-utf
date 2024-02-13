@@ -14,6 +14,8 @@ Ao acessar ou usar o Serviço, você concorda com estes Termos. Se você não co
 
 2.1 Ao utilizar o Serviço, você concorda com a coleta e uso de informações pessoais conforme descrito em nossa [Política de Privacidade](/privacy).
 
+2.2. Ao utilizar nossos serviços, você concorda com a transferência temporária de suas credenciais para a autenticação junto ao Moodle UTFPR. Mais informações disponíveis no item 5.1 da [Política de Privacidade](/privacy).
+
 ## 3. Remoção de Conteúdo
 
 3.1 Reservamo-nos o direito de remover, sem aviso prévio, qualquer conteúdo que viole estes Termos.
