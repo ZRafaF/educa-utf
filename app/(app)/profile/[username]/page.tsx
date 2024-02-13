@@ -199,7 +199,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 					maxWidth="lg"
 					sx={{
 						py: 2,
-						px: { xs: 1, sm: 1, md: 2 },
+						px: { xs: 1, sm: 1, md: 1, lg: 2 },
 					}}
 				>
 					<UserContentProfile username={params.username} />

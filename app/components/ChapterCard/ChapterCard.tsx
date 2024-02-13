@@ -18,16 +18,16 @@ import Stack from '@mui/material/Stack/Stack';
 import { ChaptersStatsResponse } from '@/types/pocketbase-types';
 import { ChaptersExpandTags } from '@/types/expanded-types';
 import React from 'react';
-import { format, parseISO } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import dynamic from 'next/dynamic';
-import { formatNumber } from '@/lib/helper';
+import { formatNumber, getFormattedVisibility } from '@/lib/helper';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
-
+const CardUsername = dynamic(() => import('../CardUsername/CardUsername'), {
+	ssr: false,
+});
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),
 	{
@@ -46,18 +46,10 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 	isClickable = true,
 	myChapter,
 }) => {
-	const getFormattedDate = (date: string) => {
-		const parsedDate = parseISO(date);
-
-		return format(parsedDate, 'P', {
-			locale: ptBR,
-		});
-	};
-
 	const ExpandedContent = () => (
 		<CardContent
 			sx={{
-				p: { xs: 1, sm: 1, md: 2 },
+				p: { xs: 1, sm: 1, md: 1 },
 			}}
 		>
 			<Stack
@@ -65,22 +57,44 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 				justifyContent="space-between"
 				alignItems="center"
 			>
-				<Typography
-					gutterBottom
-					variant="h5"
-					sx={{
-						overflow: 'hidden',
-						wordBreak: 'break',
+				<Box width={'100%'}>
+					<Typography
+						variant="h5"
+						sx={{
+							overflow: 'hidden',
+							wordBreak: 'break',
 
-						textOverflow: 'ellipsis',
-						display: '-webkit-box',
-						WebkitLineClamp: '2',
-						WebkitBoxOrient: 'vertical',
-					}}
-				>
-					{myChapter.title}
-				</Typography>
-
+							textOverflow: 'ellipsis',
+							display: '-webkit-box',
+							WebkitLineClamp: '1',
+							WebkitBoxOrient: 'vertical',
+						}}
+					>
+						{myChapter.title}
+					</Typography>
+					<Box
+						display={'flex'}
+						width={'100%'}
+						justifyContent={'space-between'}
+						pb={1.5}
+					>
+						<CardUsername content={myChapter} />
+						<Tooltip title="Visibilidade" arrow placement="top">
+							<Typography
+								variant="subtitle2"
+								component="p"
+								fontWeight={600}
+								color={
+									myChapter.visibility === 'public'
+										? 'success.main'
+										: 'text.secondary'
+								}
+							>
+								{getFormattedVisibility(myChapter.visibility)}
+							</Typography>
+						</Tooltip>
+					</Box>
+				</Box>
 				<Stack
 					direction="column"
 					justifyContent="center"
@@ -125,6 +139,27 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 				minHeight={80}
 				useFlexGap
 			>
+				<Box
+					display={'flex'}
+					width={'100%'}
+					justifyContent={'space-between'}
+				>
+					<Tooltip title="Visibilidade" arrow placement="top">
+						<Typography
+							variant="subtitle2"
+							component="p"
+							fontWeight={600}
+							color={
+								myChapter.visibility === 'public'
+									? 'success.main'
+									: 'text.secondary'
+							}
+						>
+							{getFormattedVisibility(myChapter.visibility)}
+						</Typography>
+					</Tooltip>
+					<CardUsername content={myChapter} />
+				</Box>
 				<Typography
 					variant="body1"
 					fontWeight="700"
@@ -137,9 +172,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 						WebkitLineClamp: '2',
 						WebkitBoxOrient: 'vertical',
 					}}
+					minHeight={'3.5rem'}
 				>
 					{myChapter.title}
 				</Typography>
+
 				<Stack
 					direction={'row'}
 					justifyContent={'space-around'}
@@ -213,7 +250,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 			</CardActionArea>
 
 			<Divider />
-			<CardActions>
+			<CardActions
+				sx={{
+					p: 0.5,
+				}}
+			>
 				<Stack
 					sx={{
 						width: '100%',
@@ -223,13 +264,16 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 						direction="row"
 						justifyContent="space-between"
 						alignItems="center"
-						spacing={1}
+						width={'100%'}
+						spacing={0.5}
 					>
-						<TagsComponent
-							tag={myChapter.expand?.tag}
-							keyWords={myChapter.expand?.key_words}
-							expanded={isExpanded}
-						/>
+						<Box overflow={'auto'}>
+							<TagsComponent
+								tag={myChapter.expand?.tag}
+								keyWords={myChapter.expand?.key_words}
+								expanded={isExpanded}
+							/>
+						</Box>
 						<MoreChapterOptions
 							chapter={myChapter}
 							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}

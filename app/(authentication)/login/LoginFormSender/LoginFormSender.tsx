@@ -11,6 +11,10 @@ import { toast } from 'react-toastify';
 import useRedirectAuth from '@/hooks/useRedirectAuth';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 interface LoginFormSenderProps {
 	children: ReactNode;
 }
@@ -24,7 +28,6 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 
 	const handleLoginError = (
 		toastId: number | string,
-		authProvider: string,
 		toastType: 'error' | 'warning',
 		error: unknown
 	) => {
@@ -34,7 +37,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			switch (error.message) {
 				case 'Failed to authenticate.':
 					toast.update(toastId, {
-						render: `Autenticação pela ${authProvider}: Falha na autenticação.`,
+						render: `Falha na autenticação.`,
 						type: toastType,
 						isLoading: false,
 						autoClose: 5000,
@@ -46,7 +49,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 					break;
 				case "UTFPR's API is not working properly.":
 					toast.update(toastId, {
-						render: `Autenticação pela ${authProvider}: Falha no servidor da UTFPR, tente novamente mais tarde.`,
+						render: `Falha no servidor da UTFPR, tente novamente mais tarde.`,
 						type: toastType,
 						isLoading: false,
 						autoClose: 5000,
@@ -58,7 +61,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 					break;
 				case 'Invalid user or password.':
 					toast.update(toastId, {
-						render: `Autenticação pela ${authProvider}: Usuário ou senha inválido.`,
+						render: `Usuário ou senha inválido.`,
 						type: toastType,
 						isLoading: false,
 						autoClose: 5000,
@@ -70,7 +73,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 					break;
 				default:
 					toast.update(toastId, {
-						render: `Autenticação pela ${authProvider}: ${error.message}.`,
+						render: `${error.message}.`,
 						type: toastType,
 						isLoading: false,
 						autoClose: 5000,
@@ -83,7 +86,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			}
 		} else {
 			toast.update(toastId, {
-				render: `Não foi possível fazer login com o ${authProvider}.`,
+				render: `Não foi possível fazer login.`,
 				type: 'error',
 				isLoading: false,
 				autoClose: 5000,
@@ -95,12 +98,9 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		}
 	};
 
-	const handleLoginSuccess = (
-		toastId: number | string,
-		authProvider: string
-	) => {
+	const handleLoginSuccess = (toastId: number | string) => {
 		toast.update(toastId, {
-			render: `Login com ${authProvider} com sucesso. Bem vindo!`,
+			render: `Login com sucesso. Bem vindo!`,
 			type: 'success',
 			isLoading: false,
 			autoClose: 5000,
@@ -109,7 +109,6 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			pauseOnHover: true,
 			closeOnClick: true,
 		});
-		// manualTrigger();
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -125,23 +124,25 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 		if (submitRemember) {
 			//setPersistence(auth, browserSessionPersistence);
 		}
-		const id = toast.loading('Fazendo login com o EducaUTF...');
+		const id = toast.loading('Fazendo login...');
 
-		try {
-			await loginWithPassword(submitLogin, submitPassword);
-			return handleLoginSuccess(id, 'EducaUTF');
-		} catch (error) {
-			handleLoginError(id, 'EducaUTF', 'warning', error);
+		const parallelLogin = () => {
+			const educaUTFLogin = loginWithPassword(
+				submitLogin,
+				submitPassword
+			);
+			const UTFPRLogin = loginUTFPR(submitLogin, submitPassword);
+
+			return Promise.allSettled([educaUTFLogin, UTFPRLogin]);
+		};
+
+		const res = await parallelLogin();
+
+		if (res[0].status === 'fulfilled' || res[1].status === 'fulfilled') {
+			return handleLoginSuccess(id);
 		}
-
-		const id2 = toast.loading('Fazendo login com a UTFPR...');
-
-		try {
-			await loginUTFPR(submitLogin, submitPassword);
-			return handleLoginSuccess(id2, 'UTFPR');
-		} catch (error) {
-			handleLoginError(id2, 'UTFPR', 'error', error);
-		}
+		handleLoginError(id, 'error', res[0].reason);
+		handleLoginError(id, 'error', res[1].reason);
 	};
 
 	return (
@@ -156,7 +157,8 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			sx={{ mt: 1 }}
 		>
 			{children}
-			<Stack direction="row" spacing={4} sx={{ my: 2 }}>
+
+			<Stack direction="column" spacing={0.5} sx={{ my: 2 }}>
 				<LoadingButton
 					type="submit"
 					fullWidth
@@ -165,6 +167,28 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 				>
 					Login
 				</LoadingButton>
+				<Typography variant="body2" fontSize={13}>
+					Ao continuar você declara que leu e concordou com os{' '}
+					<Link
+						href="/terms"
+						component={NextLink}
+						underline="hover"
+						alignItems="center"
+						target="_blank"
+					>
+						Termos de Serviço
+					</Link>
+					{' e '}
+					<Link
+						href="/privacy"
+						component={NextLink}
+						underline="hover"
+						alignItems="center"
+						target="_blank"
+					>
+						Política de Privacidade
+					</Link>
+				</Typography>
 			</Stack>
 		</Box>
 	);

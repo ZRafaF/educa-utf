@@ -23,9 +23,9 @@ const UserContentProfile: FunctionComponent<UserContentProfileProps> = ({
 }) => {
 	return (
 		<>
-			<UserContentExplorer type="chapters" username={username} />
-			<Divider sx={{ my: 4 }} variant="middle" />
 			<UserContentExplorer type="articles" username={username} />
+			<Divider sx={{ my: 4 }} variant="middle" />
+			<UserContentExplorer type="chapters" username={username} />
 		</>
 	);
 };

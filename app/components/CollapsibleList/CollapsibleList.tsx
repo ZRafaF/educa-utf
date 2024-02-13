@@ -18,14 +18,16 @@ interface CollapsibleListProps {
 	icon: ReactNode;
 	title: string;
 	children: ReactNode;
+	defaultOpen?: boolean;
 }
 
 const CollapsibleList: FunctionComponent<CollapsibleListProps> = ({
 	icon,
 	title,
 	children,
+	defaultOpen = false,
 }) => {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(defaultOpen);
 
 	const handleClick = () => {
 		setOpen(!open);
