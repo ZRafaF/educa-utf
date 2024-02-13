@@ -78,168 +78,170 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 					</Grid>
 				)}
 				<Grid xs>
-					<Stack
-						direction="column"
-						justifyContent="center"
-						gap={1}
-						width={'100%'}
-					>
+					<Box>
 						<Box
-							minHeight={65}
-							sx={{
-								display: 'flex',
-							}}
+							display={'flex'}
+							width={'100%'}
+							justifyContent={'space-between'}
 						>
+							<Typography
+								variant="body1"
+								fontWeight="700"
+								sx={{
+									overflow: 'hidden',
+									wordBreak: 'break',
+									textOverflow: 'ellipsis',
+									display: '-webkit-box',
+									WebkitLineClamp: '1',
+									WebkitBoxOrient: 'vertical',
+								}}
+							>
+								{myArticle.title}
+							</Typography>
+						</Box>
+						<Stack
+							direction="column"
+							justifyContent="center"
+							gap={1}
+							width={'100%'}
+						>
+							<Box
+								minHeight={65}
+								sx={{
+									display: 'flex',
+								}}
+							>
+								<Stack
+									direction={'row'}
+									justifyContent={'space-between'}
+									alignItems={'start'}
+									// alignItems={'center'}
+									width={'stretch'}
+									spacing={1}
+								>
+									<Stack width={'100%'} minHeight={0}>
+										<Box
+											display={'flex'}
+											justifyContent={'space-between'}
+											alignItems={'center'}
+											width={'100%'}
+											pb={1}
+										>
+											<ArticleCardUsername
+												myArticle={myArticle}
+											/>
+											<Tooltip
+												title="Visualizações"
+												arrow
+												placement="top"
+											>
+												<Stack
+													direction="row"
+													spacing={1}
+													alignItems="center"
+												>
+													<VisibilityIcon fontSize="small" />
+													<Typography
+														variant="body2"
+														component="p"
+													>
+														{formatNumber(
+															myArticle.views
+														)}
+													</Typography>
+												</Stack>
+											</Tooltip>
+											<Tooltip
+												title="Likes"
+												arrow
+												placement="top"
+											>
+												<Stack
+													direction="row"
+													spacing={1}
+													alignItems="center"
+												>
+													<FavoriteIcon fontSize="small" />
+													<Typography
+														variant="body2"
+														component="p"
+													>
+														{formatNumber(
+															myArticle.likes
+														)}
+													</Typography>
+												</Stack>
+											</Tooltip>
+											<Tooltip
+												title="Visibilidade"
+												arrow
+												placement="top"
+											>
+												<Typography
+													variant="subtitle2"
+													component="p"
+													fontWeight={600}
+													color={
+														myArticle.visibility ===
+														'public'
+															? 'success.main'
+															: 'text.secondary'
+													}
+												>
+													{getFormattedVisibility(
+														myArticle.visibility
+													)}
+												</Typography>
+											</Tooltip>
+										</Box>
+										<Box display={'flex'} height={'100%'}>
+											<Typography
+												variant="body2"
+												color="text.secondary"
+												sx={{
+													overflow: 'hidden',
+													wordBreak: 'break',
+													textOverflow: 'ellipsis',
+													display: '-webkit-box',
+													WebkitBoxOrient: 'vertical',
+													WebkitLineClamp: 2,
+												}}
+												// minHeight={50}
+											>
+												{myArticle.description}
+											</Typography>
+										</Box>
+									</Stack>
+								</Stack>
+							</Box>
+
 							<Stack
 								direction={'row'}
 								justifyContent={'space-between'}
-								alignItems={'start'}
-								// alignItems={'center'}
-								width={'stretch'}
-								spacing={1}
-							>
-								<Stack width={'100%'} minHeight={0}>
-									<Typography
-										variant="body1"
-										fontWeight="700"
-										sx={{
-											overflow: 'hidden',
-											wordBreak: 'break',
-											textOverflow: 'ellipsis',
-											display: '-webkit-box',
-											WebkitLineClamp: '2',
-											WebkitBoxOrient: 'vertical',
-										}}
-									>
-										{myArticle.title}
-									</Typography>
-
-									<Box display={'flex'} height={'100%'}>
-										<Typography
-											variant="body2"
-											color="text.secondary"
-											sx={{
-												overflow: 'hidden',
-												wordBreak: 'break',
-												textOverflow: 'ellipsis',
-												display: '-webkit-box',
-												WebkitBoxOrient: 'vertical',
-												WebkitLineClamp: 2,
-											}}
-											// minHeight={50}
-										>
-											{myArticle.description}
-										</Typography>
-									</Box>
-								</Stack>
-								<Stack spacing={1} color="text.secondary">
-									<Tooltip
-										title="Visibilidade"
-										arrow
-										placement="top"
-									>
-										<Typography
-											variant="subtitle2"
-											component="p"
-											fontWeight={600}
-											color={
-												myArticle.visibility ===
-												'public'
-													? 'success.main'
-													: 'text.secondary'
-											}
-										>
-											{getFormattedVisibility(
-												myArticle.visibility
-											)}
-										</Typography>
-									</Tooltip>
-									<Tooltip
-										title="Visualizações"
-										arrow
-										placement="left"
-									>
-										<Stack
-											direction="row"
-											spacing={1}
-											alignItems="center"
-										>
-											<VisibilityIcon fontSize="small" />
-											<Typography
-												variant="body2"
-												component="p"
-											>
-												{formatNumber(myArticle.views)}
-											</Typography>
-										</Stack>
-									</Tooltip>
-									<Tooltip
-										title="Likes"
-										arrow
-										placement="left"
-									>
-										<Stack
-											direction="row"
-											spacing={1}
-											alignItems="center"
-										>
-											<FavoriteIcon fontSize="small" />
-											<Typography
-												variant="body2"
-												component="p"
-											>
-												{formatNumber(myArticle.likes)}
-											</Typography>
-										</Stack>
-									</Tooltip>
-								</Stack>
-							</Stack>
-						</Box>
-
-						<Stack
-							direction={'row'}
-							justifyContent={'space-between'}
-							alignItems={'center'}
-							width={'stretch'}
-							gap={1}
-						>
-							<Grid
-								container
-								gap={2}
-								justifyContent={'space-between'}
 								alignItems={'center'}
 								width={'100%'}
-								direction={{ xs: 'column-reverse', sm: 'row' }}
+								gap={0.5}
 							>
-								<Grid>
-									<Box minWidth={0} overflow={'auto'}>
-										<TagsComponent
-											tag={myArticle.expand?.tag}
-											keyWords={
-												myArticle.expand?.key_words
-											}
-											expanded={expanded}
-										/>
-									</Box>
-								</Grid>
-								<Grid>
-									<ArticleCardUsername
-										myArticle={myArticle}
+								<Box overflow={'auto'} width={'100%'}>
+									<TagsComponent
+										tag={myArticle.expand?.tag}
+										keyWords={myArticle.expand?.key_words}
+										expanded={expanded}
 									/>
-								</Grid>
-							</Grid>
+								</Box>
 
-							<Box>
-								{hideMoreOptions ? null : (
-									<MoreArticleOptions
-										article={myArticle}
-										placement="left"
-										shareUrl={`https://educautf.td.utfpr.edu.br/article/${myArticle.id}`}
-									/>
-								)}
-							</Box>
+								<Box>
+									{hideMoreOptions ? null : (
+										<MoreArticleOptions
+											article={myArticle}
+											placement="left"
+											shareUrl={`https://educautf.td.utfpr.edu.br/article/${myArticle.id}`}
+										/>
+									)}
+								</Box>
+							</Stack>
 						</Stack>
-					</Stack>
+					</Box>
 				</Grid>
 			</Grid>
 		</CardActionArea>

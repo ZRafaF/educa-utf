@@ -40,6 +40,8 @@ import { ArticleCoverContext } from '@/contexts/ArticleCoverContext';
 import Link from 'next/link';
 import VisibilitySelector from './VisibilitySelector';
 import ArticleAdder from './ArticleAdder';
+import { TextField } from '@mui/material';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface ChapterInspectorHeaderProps {
 	chapter: ChaptersResponse<ChaptersExpand>;
@@ -67,6 +69,28 @@ const ChapterInspectorHeader: FunctionComponent<
 		return URL.createObjectURL(selectedCoverFile);
 	}, [chapter, selectedCoverFile, editMode]);
 
+	const debouncedTitle = useDebouncedCallback(
+		(value) => {
+			setEditedChapter({
+				...editedChapter,
+				title: value,
+			});
+		},
+		// delay in ms
+		200
+	);
+	const debouncedDescription = useDebouncedCallback(
+		(value) => {
+			setEditedChapter({
+				...editedChapter,
+				description: value,
+			});
+			console.log(1);
+		},
+		// delay in ms
+		200
+	);
+
 	const handleCloseCoverPicker = () => {
 		setCoverPickerIsOpen(false);
 	};
@@ -89,29 +113,27 @@ const ChapterInspectorHeader: FunctionComponent<
 					<Stack spacing={1} px={2} pt={1}>
 						<Box>
 							{editMode && (
-								<Typography
-									variant="h5"
-									fontWeight={700}
-									align="center"
-									width={'100%'}
-									suppressContentEditableWarning={true}
-									contentEditable={editMode}
-									sx={{
-										borderBottom: 1,
-										':hover': {
-											border: 1,
+								<TextField
+									defaultValue={chapter.title}
+									fullWidth
+									variant="standard"
+									inputProps={{
+										style: {
+											fontSize: '1.5rem',
+											fontWeight: 700,
+											textAlign: 'center',
+											lineHeight: '1.5rem',
 										},
+										maxLength: 64,
 									}}
-									p={0.5}
-									onInput={(e: any) => {
-										setEditedChapter({
-											...editedChapter,
-											title: e.target.innerText,
-										});
+									helperText="Título de até 64 caracteres"
+									onChange={(e) => {
+										debouncedTitle(e.target.value);
 									}}
-								>
-									{chapter.title}
-								</Typography>
+									multiline
+									label="Título"
+									required
+								/>
 							)}
 							<Typography
 								variant="h5"
@@ -143,28 +165,23 @@ const ChapterInspectorHeader: FunctionComponent<
 
 						<Divider />
 						{editMode && (
-							<Typography
-								color="text.secondary"
-								suppressContentEditableWarning={true}
-								contentEditable={editMode}
-								p={0.5}
-								sx={{
-									borderBottom: 1,
-
-									':hover': {
-										border: 1,
+							<TextField
+								defaultValue={chapter.description}
+								fullWidth
+								variant="standard"
+								inputProps={{
+									style: {
+										color: 'var(--mui-palette-text-secondary)',
 									},
+									maxLength: 256,
 								}}
-								onInput={(e: any) => {
-									// setEditedDescription(e.target.innerText);
-									setEditedChapter({
-										...editedChapter,
-										description: e.target.innerText,
-									});
+								label="Descrição"
+								helperText="Descrição de até 256 caracteres"
+								onChange={(e) => {
+									debouncedDescription(e.target.value);
 								}}
-							>
-								{chapter.description}
-							</Typography>
+								multiline
+							/>
 						)}
 
 						<Typography

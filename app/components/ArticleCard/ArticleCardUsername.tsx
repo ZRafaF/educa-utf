@@ -17,11 +17,11 @@ const ArticleCardUsername: FunctionComponent<ArticleCardUsernameProps> = ({
 	myArticle,
 }) => {
 	return (
-		<Tooltip title="Autor" arrow placement="right">
+		<Tooltip title="Autor" arrow placement="top">
 			<Typography
 				color="text.secondary"
 				variant="subtitle2"
-				textAlign={'right'}
+				textAlign={'left'}
 				fontStyle={'italic'}
 			>
 				<Link

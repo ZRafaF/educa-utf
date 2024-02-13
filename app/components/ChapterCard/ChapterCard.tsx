@@ -213,7 +213,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 			</CardActionArea>
 
 			<Divider />
-			<CardActions>
+			<CardActions
+				sx={{
+					p: 0.5,
+				}}
+			>
 				<Stack
 					sx={{
 						width: '100%',
@@ -223,13 +227,16 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 						direction="row"
 						justifyContent="space-between"
 						alignItems="center"
-						spacing={1}
+						width={'100%'}
+						spacing={0.5}
 					>
-						<TagsComponent
-							tag={myChapter.expand?.tag}
-							keyWords={myChapter.expand?.key_words}
-							expanded={isExpanded}
-						/>
+						<Box overflow={'auto'}>
+							<TagsComponent
+								tag={myChapter.expand?.tag}
+								keyWords={myChapter.expand?.key_words}
+								expanded={isExpanded}
+							/>
+						</Box>
 						<MoreChapterOptions
 							chapter={myChapter}
 							shareUrl={`https://educautf.td.utfpr.edu.br/chapter/${myChapter.id}`}
