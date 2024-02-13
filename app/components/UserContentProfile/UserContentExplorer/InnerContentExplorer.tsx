@@ -58,8 +58,8 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 								xs={12}
 								sm={6}
 								md={6}
-								lg={6}
-								xl={3}
+								lg={4}
+								xl={4}
 							>
 								<DummyCard type="article" />
 							</Grid>
@@ -67,8 +67,8 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 							<Grid
 								key={`dummy_chapter_${idx}`}
 								xs={6}
-								sm={6}
-								md={6}
+								sm={4}
+								md={4}
 								lg={3}
 								xl={3}
 							>
@@ -113,8 +113,8 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 							xs={12}
 							sm={6}
 							md={6}
-							lg={6}
-							xl={3}
+							lg={4}
+							xl={4}
 						>
 							<ArticleCard
 								key={item.id}
@@ -127,8 +127,8 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 						<Grid
 							key={`chapter_${item.id}`}
 							xs={6}
-							sm={6}
-							md={6}
+							sm={4}
+							md={4}
 							lg={3}
 							xl={3}
 						>

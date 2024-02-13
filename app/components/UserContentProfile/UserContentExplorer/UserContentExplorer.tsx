@@ -5,7 +5,7 @@
 
 'use client';
 
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
@@ -28,9 +28,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import InnerContentExplorer from './InnerContentExplorer';
-
-const articlesPerPage = 8;
-const chaptersPerPage = 8;
+import useCurrentBreakpoint from '@/hooks/useCurrentBreakpoint';
 
 interface UserContentExplorerProps {
 	username: string;
@@ -54,6 +52,42 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 	const hasPrevious = currentPage !== 1;
 	const hasNext = currentPage !== listResult?.totalPages;
 	const [loading, setLoading] = useState(false);
+
+	const [breakpoint] = useCurrentBreakpoint();
+
+	const articlesPerPage = useMemo(() => {
+		switch (breakpoint) {
+			case 'xs':
+				return 4;
+			case 'sm':
+				return 6;
+			case 'md':
+				return 6;
+			case 'lg':
+				return 9;
+			case 'xl':
+				return 9;
+			default:
+				return 8;
+		}
+	}, [breakpoint]);
+
+	const chaptersPerPage = useMemo(() => {
+		switch (breakpoint) {
+			case 'xs':
+				return 4;
+			case 'sm':
+				return 6;
+			case 'md':
+				return 6;
+			case 'lg':
+				return 8;
+			case 'xl':
+				return 8;
+			default:
+				return 9;
+		}
+	}, [breakpoint]);
 	const parsedType = type === 'articles' ? 'Artigos' : 'Capítulos';
 
 	useEffect(() => {
@@ -96,7 +130,14 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 			console.error('Error fetching articles:', error);
 			setLoading(false);
 		}
-	}, [showPrivate, currentPage, username, type]);
+	}, [
+		showPrivate,
+		currentPage,
+		username,
+		type,
+		articlesPerPage,
+		chaptersPerPage,
+	]);
 
 	return (
 		<>
