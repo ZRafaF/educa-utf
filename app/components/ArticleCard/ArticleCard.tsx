@@ -27,7 +27,7 @@ const TagsComponent = dynamic(() => import('../TagsComponent/TagsComponent'), {
 	ssr: true,
 });
 
-const ArticleCardUsername = dynamic(() => import('./ArticleCardUsername'), {
+const CardUsername = dynamic(() => import('../CardUsername/CardUsername'), {
 	ssr: false,
 });
 
@@ -127,9 +127,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 											width={'100%'}
 											pb={1}
 										>
-											<ArticleCardUsername
-												myArticle={myArticle}
-											/>
+											<CardUsername content={myArticle} />
 											<Tooltip
 												title="Visualizações"
 												arrow
