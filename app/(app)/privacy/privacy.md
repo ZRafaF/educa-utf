@@ -26,23 +26,27 @@ Esta Política de Privacidade descreve como o EducaUTF coleta, usa, armazena e p
 
 4.1. Medidas de Segurança: Implementamos medidas de segurança para proteger suas informações contra acesso não autorizado e uso indevido.
 
-## 5. Cookies e Tecnologias Semelhantes
+## 5. Autenticação de Usuários da UTFPR:
 
-5.1. Cookies: Utilizamos cookies e tecnologias semelhantes para melhorar a experiência do usuário e analisar o uso do site.
+5.1. Ao fazer login em nosso website, as credenciais dos usuários são encaminhadas para autenticação no serviço do Moodle da Universidade Tecnológica Federal do Paraná (UTFPR), disponível em https://moodle.utfpr.edu.br/. Este processo de autenticação tem como único objetivo verificar a identidade dos usuários como membros da comunidade acadêmica da UTFPR.
 
-## 6. Direitos do Usuário
+## 6. Cookies e Tecnologias Semelhantes
 
-6.1. Acesso e Atualização: Você tem o direito de acessar e corrigir suas informações pessoais a qualquer momento.
+6.1. Cookies: Utilizamos cookies e tecnologias semelhantes para melhorar a experiência do usuário e analisar o uso do site.
 
-6.2. Exclusão de Conta: Você pode solicitar a exclusão de sua conta e informações associadas.
+## 7. Direitos do Usuário
 
-## 7. Alterações nesta Política
+7.1. Acesso e Atualização: Você tem o direito de acessar e corrigir suas informações pessoais a qualquer momento.
 
-7.1. Atualizações: Esta Política de Privacidade pode ser atualizada periodicamente. Notificaremos sobre mudanças significativas.
+7.2. Exclusão de Conta: Você pode solicitar a exclusão de sua conta e informações associadas.
 
-## 8. Contato
+## 8. Alterações nesta Política
 
-8.1. Dúvidas: Se tiver dúvidas sobre esta política, entre em contato conosco em <rafaelmeneses@alunos.utfpr.edu.br>.
+8.1. Atualizações: Esta Política de Privacidade pode ser atualizada periodicamente. Notificaremos sobre mudanças significativas.
+
+## 9. Contato
+
+9.1. Dúvidas: Se tiver dúvidas sobre esta política, entre em contato conosco em <rafaelmeneses@alunos.utfpr.edu.br>.
 
 ___
 
