@@ -192,7 +192,7 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 					mx: { xs: -1, sm: -1, md: -1, lg: -1 },
 					p: 1,
 					bgcolor: 'grey.A700',
-					minHeight: type === 'chapters' ? 590 : 333,
+					// minHeight: type === 'chapters' ? 590 : 333,
 				}}
 				square
 			>
@@ -200,6 +200,9 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 					listResult={listResult}
 					loading={loading}
 					type={type}
+					nOfDummyElements={
+						type === 'chapters' ? chaptersPerPage : articlesPerPage
+					}
 				/>
 			</Paper>
 		</>
