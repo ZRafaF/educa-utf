@@ -3,7 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { UsersResponse, UsersStatsResponse } from '@/types/pocketbase-types';
+import {
+	UsersRecord,
+	UsersResponse,
+	UsersStatsResponse,
+} from '@/types/pocketbase-types';
 import pb from '../PocketBase/pocketbase';
 
 export async function getListOfUsersStats() {
@@ -33,6 +37,10 @@ export async function updateUserAvatar(id: string, newAvatar: File | null) {
 	});
 }
 
+export async function updateUser(id: string, user: UsersRecord) {
+	return await pb.collection('users').update<UsersResponse>(id, user);
+}
+
 export function getUserAvatarUrl(user: UsersResponse | UsersStatsResponse) {
 	const record = {
 		id: user.id,
@@ -58,4 +66,8 @@ export async function updateLikedArticles(
 	return pb.collection('users').update<UsersStatsResponse>(userId, {
 		[updateFunc]: articleId,
 	});
+}
+
+export async function deleteUser(id: string) {
+	return await pb.collection('users').delete(id);
 }

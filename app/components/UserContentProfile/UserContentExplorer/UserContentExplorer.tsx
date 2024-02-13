@@ -83,7 +83,7 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 			case 'lg':
 				return 8;
 			case 'xl':
-				return 8;
+				return 10;
 			default:
 				return 9;
 		}

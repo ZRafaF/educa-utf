@@ -70,7 +70,7 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 								sm={4}
 								md={4}
 								lg={3}
-								xl={3}
+								xl={2.4}
 							>
 								<DummyCard type="chapter" />
 							</Grid>
@@ -130,7 +130,7 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 							sm={4}
 							md={4}
 							lg={3}
-							xl={3}
+							xl={2.4}
 						>
 							<ChapterCard
 								key={item.id}

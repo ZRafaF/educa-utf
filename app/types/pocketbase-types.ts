@@ -54,6 +54,7 @@ export enum ArticlesVisibilityOptions {
 export type ArticlesRecord = {
 	attachments?: RecordIdString
 	description?: string
+	description_slug?: string
 	document: string
 	key_words?: RecordIdString[]
 	slug?: string
@@ -73,10 +74,12 @@ export type ArticlesStatsRecord = {
 	author_name: string
 	author_username?: string
 	description?: string
+	description_slug?: string
 	document: string
 	key_words?: RecordIdString[]
 	latest_views?: number
 	likes?: number
+	slug?: string
 	tag: RecordIdString
 	title: string
 	user: RecordIdString
@@ -98,10 +101,11 @@ export type ChaptersRecord = {
 	articles?: RecordIdString[]
 	cover: string
 	description?: string
+	description_slug?: string
 	key_words?: RecordIdString[]
 	slug?: string
 	tag?: RecordIdString
-	title?: string
+	title: string
 	user: RecordIdString
 	views?: number
 	visibility: ChaptersVisibilityOptions
@@ -118,11 +122,13 @@ export type ChaptersStatsRecord = {
 	author_username?: string
 	cover: string
 	description?: string
+	description_slug?: string
 	key_words?: RecordIdString[]
 	latest_views?: number
 	likes?: number
+	slug?: string
 	tag?: RecordIdString
-	title?: string
+	title: string
 	user: RecordIdString
 	views?: number
 	visibility: ChaptersStatsVisibilityOptions
