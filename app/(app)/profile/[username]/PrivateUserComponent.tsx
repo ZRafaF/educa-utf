@@ -12,7 +12,6 @@ import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import MobileDrawer from '@/components/MobileDrawer/MobileDrawer';
 import PortraitIcon from '@mui/icons-material/Portrait';
-import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 
 interface PrivateUserComponentProps {
@@ -20,7 +19,7 @@ interface PrivateUserComponentProps {
 	children: ReactNode;
 }
 
-const drawerWidth = 300;
+const drawerWidth = 260;
 
 const PrivateUserComponent: FunctionComponent<PrivateUserComponentProps> = ({
 	username,

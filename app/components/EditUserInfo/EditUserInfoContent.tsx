@@ -7,7 +7,6 @@ import { FunctionComponent } from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 
 interface EditUserInfoContentProps {}
 
@@ -22,16 +21,21 @@ const EditUserInfoContent: FunctionComponent<EditUserInfoContentProps> = () => {
 			>
 				<TextField
 					id="outlined-basic"
-					label="Nome"
+					label="Nome de exibição"
 					variant="outlined"
 					fullWidth
+					helperText="Máximo de 64 carácteres"
+					inputProps={{
+						maxLength: 64,
+					}}
+					multiline
 				/>
 				<TextField
 					name="user-description"
 					label="Descrição"
-					helperText="Máximo de 180 carácteres"
+					helperText="Máximo de 256 carácteres"
 					inputProps={{
-						maxLength: 180,
+						maxLength: 256,
 					}}
 					fullWidth
 					multiline
@@ -39,15 +43,6 @@ const EditUserInfoContent: FunctionComponent<EditUserInfoContentProps> = () => {
 					autoComplete="user-description"
 					//defaultValue={defaultValues.description}
 				/>
-				<Stack
-					direction="row"
-					justifyContent="center"
-					alignItems="center"
-					spacing={2}
-				>
-					<Button variant="outlined">Descartar</Button>
-					<Button variant="contained">Atualizar</Button>
-				</Stack>
 			</Stack>
 		</Box>
 	);

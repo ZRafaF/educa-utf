@@ -188,13 +188,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					</Tooltip>
 					<Divider />
 					<Tooltip
-						title={
-							<span style={{ whiteSpace: 'pre-line' }}>
-								{
-									'Reportar esse artigo \n (Você precisa estar logado)'
-								}
-							</span>
-						}
+						title={'Reportar esse capítulo'}
 						arrow
 						placement={placement}
 					>
@@ -208,7 +202,6 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 									color: 'warning.main',
 									py: 1,
 								}}
-								disabled={user === null}
 								onClick={(e) => {
 									handleClose(e);
 								}}
