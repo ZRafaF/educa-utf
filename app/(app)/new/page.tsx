@@ -8,6 +8,11 @@ import Typography from '@mui/material/Typography/Typography';
 import { Metadata } from 'next/types';
 import EditMetadata from '@/components/EditMetadata/EditMetadata';
 import TypeSelector from './TypeSelector';
+import dynamic from 'next/dynamic';
+const NoSSRRedirect = dynamic(() => import('./RedirectIfLoggedOff'), {
+	ssr: true,
+});
+
 export const metadata: Metadata = {
 	title: 'Criar novo - EducaUTF',
 	description: 'Crie um novo artigo ou capítulo e publique no EducaUTF!',
@@ -29,6 +34,7 @@ export default function Page() {
 			</Typography>
 
 			<EditMetadata />
+			<NoSSRRedirect />
 		</Container>
 	);
 }

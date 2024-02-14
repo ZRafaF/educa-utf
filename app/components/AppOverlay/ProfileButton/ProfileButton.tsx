@@ -27,7 +27,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import dynamic from 'next/dynamic';
 const NoSSRProfileAvatar = dynamic(() => import('./ProfileAvatar'), {
-	ssr: false,
+	ssr: true,
 });
 
 interface ProfileButtonProps {}

@@ -39,11 +39,11 @@
 }
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
-	background: var(--mui-palette-Chip-defaultBorder);
+	background: var(--mui-palette-text-disabled);
 }
 ::-webkit-scrollbar-thumb:hover {
-	background: rgba(0, 0, 0, 0.4);
+	background: var(--mui-palette-text-secondary);
 }
 ::-webkit-scrollbar-thumb:active {
-	background: rgba(0, 0, 0, 0.9);
+	background: var(--mui-palette-text-primary);
 }

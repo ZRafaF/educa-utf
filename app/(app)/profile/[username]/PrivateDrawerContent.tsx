@@ -15,10 +15,6 @@ import LinkItem from '@/components/LinkItem/LinkItem';
 import dynamic from 'next/dynamic';
 import EditUserInfo from '@/components/EditUserInfo/EditUserInfo';
 
-const DataTable = dynamic(() => import('@/components/DataTable/DataTable'), {
-	ssr: false,
-});
-
 interface PrivateDrawerContentProps {
 	userId: string;
 }

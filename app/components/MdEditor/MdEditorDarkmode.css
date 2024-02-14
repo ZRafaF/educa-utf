@@ -17,7 +17,20 @@
 }
 
 .cm-s-easymde .CodeMirror-cursor {
-	border-color: var(--mui-palette-Chip-defaultBorder) !important;
+	border-color: var(--mui-palette-text-primary) !important;
+	border: 1px solid;
+	border-color: var(--mui-palette-text-primary);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.CodeMirror-cursor {
+	font-weight: bold !important;
+}
+
+.CodeMirror-selectedtext {
+	/* background-color: var(--mui-palette-primary-dark) !important; */
+	color: var(--mui-palette-background-default) !important;
 }
 
 .editor-toolbar {
@@ -32,7 +45,7 @@
 	position: sticky !important;
 	top: 0px !important;
 
-	z-index: 1 !important;
+	z-index: 3 !important;
 }
 /*
 
@@ -72,4 +85,21 @@
 	border-radius: 8px !important;
 	border-color: var(--mui-palette-Chip-defaultBorder) !important;
 	background-color: var(--mui-palette-background-default) !important;
+}
+
+/* span[data-img-src] {
+	display: block !important;
+} */
+span[data-img-src]::after {
+	position: relative;
+	padding-top: 0 !important;
+	height: 180px !important;
+}
+.CodeMirror-line {
+	word-break: break-all !important;
+}
+
+.CodeMirror-sizer {
+	min-height: 70svh !important;
+	height: 70svh;
 }

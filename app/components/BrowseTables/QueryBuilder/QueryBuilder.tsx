@@ -51,7 +51,7 @@ const QueryBuilder: FunctionComponent<QueryBuilderProps> = () => {
 				top={{ sm: 0, md: 64 }}
 				zIndex={1}
 				p={3}
-				bgcolor={'Background'}
+				bgcolor={'background.default'}
 				boxShadow={{ sm: 0, md: isAtTop ? 0 : 2 }}
 			>
 				{isLoading ? (

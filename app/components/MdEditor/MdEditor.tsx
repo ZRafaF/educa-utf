@@ -25,22 +25,20 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import VerticalSplitIcon from '@mui/icons-material/VerticalSplit';
 import PreviewIcon from '@mui/icons-material/Preview';
 import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
-import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/material/styles/useTheme';
 import PluginDialog from './PluginDialog/PluginDialog';
 import { ArticlesResponse } from '@/types/pocketbase-types';
 import { ArticlesExpand } from '@/types/expanded-types';
+import { useDebounce } from 'use-debounce';
 
 enum ViewMode {
 	Editor = 0,
-	Split = 1,
-	Preview = 2,
+	Preview = 1,
 }
 
 interface MdEditorProps {
@@ -57,7 +55,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	saveButtonRef,
 }) => {
 	const theme = useTheme();
-	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Split);
+	const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Editor);
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 	const [currentPluginKey, setCurrentPluginKey] = useState<
 		string | undefined
@@ -65,6 +63,8 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	const [currentGetMdeInstance, setCurrentGetMdeInstance] = useState<
 		SimpleMDE | undefined
 	>(undefined);
+	const [debouncedArticleDocument] = useDebounce(myArticleDocument, 200);
+
 	const onChange = useCallback(
 		(value: string) => {
 			if (setMyArticleDocument) setMyArticleDocument(value);
@@ -152,7 +152,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				saveCurrent: 'Cmd-S',
 				equationPlugin: 'Ctrl-M',
 			},
-			previewImagesInEditor: false,
+			previewImagesInEditor: true,
 			status: false,
 			promptURLs: true,
 		} as SimpleMDE.Options;
@@ -175,9 +175,6 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 					<Tooltip title="Editar" arrow placement="bottom">
 						<Tab icon={<EditNoteIcon />} />
 					</Tooltip>
-					<Tooltip title="Dividir" arrow placement="bottom">
-						<Tab icon={<VerticalSplitIcon />} />
-					</Tooltip>
 
 					<Tooltip title="Visualizar" arrow placement="bottom">
 						<Tab icon={<PreviewIcon />} />
@@ -185,85 +182,65 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				</Tabs>
 			</Box>
 
-			<ScrollSync>
+			<Grid container columns={8} spacing={{ sm: 0, md: 1 }}>
 				<Grid
-					container
-					columns={viewMode === ViewMode.Split ? 16 : 8}
-					spacing={{ sm: 0, md: 1 }}
+					xs={8}
+					display={viewMode === ViewMode.Editor ? 'block' : 'none'}
 				>
-					<Grid
-						xs={8}
-						display={
-							viewMode === ViewMode.Editor ||
-							viewMode === ViewMode.Split
-								? 'block'
-								: 'none'
-						}
+					<Paper
+						variant="outlined"
+						sx={{
+							overflow: 'auto',
+						}}
+						className="mui-tab-previewer"
 					>
-						<Paper
-							variant="outlined"
+						<Box
 							sx={{
-								overflow: 'auto',
+								overflowY: 'auto',
 							}}
-							className="mui-tab-previewer"
 						>
-							<ScrollSyncPane>
-								<Box
-									sx={{
-										height: 'calc(75vh)',
-										overflowY: 'auto',
-									}}
-								>
-									<SimpleMdeReact
-										options={autofocusNoSpellcheckerOptions}
-										value={myArticleDocument}
-										onChange={onChange}
-										getMdeInstance={(instance) => {
-											setCurrentGetMdeInstance(instance);
-										}}
-									/>
-								</Box>
-							</ScrollSyncPane>
-						</Paper>
-					</Grid>
-					<Grid
-						xs={8}
-						display={
-							viewMode === ViewMode.Preview ||
-							viewMode === ViewMode.Split
-								? 'block'
-								: 'none'
-						}
-					>
-						<Paper
-							variant="outlined"
-							sx={{
-								overflow: 'auto',
-							}}
-							className="mui-tab-previewer"
-						>
-							<ScrollSyncPane>
-								<Box
-									sx={{
-										p: {
-											xs: 1,
-											sm: 1.5,
-											md: 1.5,
-											lg: 2,
-										},
-										height: 'calc(75vh)',
-										overflowY: 'auto',
-									}}
-								>
-									<ArticleContent
-										article={myArticleDocument}
-									/>
-								</Box>
-							</ScrollSyncPane>
-						</Paper>
-					</Grid>
+							<SimpleMdeReact
+								options={autofocusNoSpellcheckerOptions}
+								value={myArticleDocument}
+								onChange={onChange}
+								getMdeInstance={(instance) => {
+									setCurrentGetMdeInstance(instance);
+								}}
+								autoFocus
+							/>
+						</Box>
+					</Paper>
 				</Grid>
-			</ScrollSync>
+				<Grid
+					xs={8}
+					display={viewMode === ViewMode.Preview ? 'block' : 'none'}
+				>
+					<Paper
+						variant="outlined"
+						sx={{
+							overflow: 'auto',
+						}}
+						className="mui-tab-previewer"
+					>
+						<Box
+							sx={{
+								p: {
+									xs: 1,
+									sm: 1.5,
+									md: 1.5,
+									lg: 2,
+								},
+								height: 'calc(90svh - 84px)',
+								overflowY: 'auto',
+							}}
+						>
+							<ArticleContent
+								article={debouncedArticleDocument}
+							/>
+						</Box>
+					</Paper>
+				</Grid>
+			</Grid>
 
 			<PluginDialog
 				currentPluginKey={currentPluginKey}

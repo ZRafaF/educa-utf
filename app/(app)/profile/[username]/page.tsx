@@ -34,10 +34,6 @@ const NoSSRPrivateUserComponent = dynamic(
 	}
 );
 
-const DataTable = dynamic(() => import('@/components/DataTable/DataTable'), {
-	ssr: false,
-});
-
 interface PageProps {
 	params: {
 		username: string;
