@@ -25,7 +25,7 @@ const Page: FunctionComponent<PageProps> = () => {
 	const router = useRouter();
 	useEffect(() => {
 		if (user !== null) router.replace(redirect);
-	}, [user, router]);
+	}, [user, router, redirect]);
 
 	if (user === null)
 		return (
