@@ -123,7 +123,7 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 						justifyContent="space-between"
 						alignItems="center"
 					>
-						<Tooltip title="Visualizações" arrow placement="top">
+						{/* <Tooltip title="Visualizações" arrow placement="top">
 							<Stack
 								direction="row"
 								spacing={0.5}
@@ -138,7 +138,7 @@ const ArticlesListItem: FunctionComponent<ArticlesListItemProps> = ({
 									{article.views}
 								</Typography>
 							</Stack>
-						</Tooltip>
+						</Tooltip> */}
 
 						<Tooltip title="Visibilidade" arrow placement="top">
 							<Typography

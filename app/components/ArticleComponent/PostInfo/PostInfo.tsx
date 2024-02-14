@@ -138,7 +138,7 @@ const PostInfo: FunctionComponent<PostInfoProps> = ({
 							>
 								<VisibilityIcon color="action" />
 								<Typography variant="subtitle2" component="p">
-									{myArticle.views}
+									{articleStats.views}
 								</Typography>
 							</Stack>
 						</Tooltip>

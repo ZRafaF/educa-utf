@@ -61,7 +61,7 @@ export type ArticlesRecord = {
 	tag: RecordIdString
 	title: string
 	user: RecordIdString
-	views?: number
+	views?: RecordIdString
 	visibility: ArticlesVisibilityOptions
 }
 
@@ -107,7 +107,7 @@ export type ChaptersRecord = {
 	tag?: RecordIdString
 	title: string
 	user: RecordIdString
-	views?: number
+	views?: RecordIdString
 	visibility: ChaptersVisibilityOptions
 }
 
@@ -244,6 +244,8 @@ export type UsersStatsRecord = {
 }
 
 export type ViewsRecord = {
+	article?: RecordIdString
+	chapter?: RecordIdString
 	total?: number
 }
 
