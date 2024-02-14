@@ -41,59 +41,54 @@ const AttachmentCard: FunctionComponent<AttachmentCardProps> = ({
 	};
 
 	return (
-		<Tooltip title={imageUrl} arrow>
-			<Card>
-				<Paper variant="outlined">
-					<CardMedia
-						component="img"
-						height="100"
-						image={`${imageUrl}?thumb=300x300`}
-						alt="Paella dish"
-						style={{ objectFit: 'contain' }}
-					/>
-				</Paper>
+		<Card>
+			<Paper variant="outlined">
+				<CardMedia
+					component="img"
+					height="100"
+					image={`${imageUrl}?thumb=300x300`}
+					alt="Paella dish"
+					style={{ objectFit: 'contain' }}
+				/>
+			</Paper>
 
-				<Divider />
+			<Divider />
 
-				<Stack
-					direction="row"
-					justifyContent="space-between"
-					p={1}
-					alignItems="center"
-				>
-					<Tooltip
-						title="Numero de referências"
-						placement="top"
-						arrow
+			<Stack
+				direction="row"
+				justifyContent="space-between"
+				p={1}
+				alignItems="center"
+			>
+				<Tooltip title="Copiar link da imagem" placement="top" arrow>
+					<IconButton
+						aria-label="add to favorites"
+						onClick={() => {
+							navigator.clipboard.writeText(`![](${imageUrl})`);
+						}}
 					>
-						<Stack
-							direction="row"
-							spacing={2}
-							p={1}
-							justifyContent="space-between"
-							alignItems="center"
-						>
-							<LinkIcon />
-							<Typography color="text.secondary">
-								{numberOfOccurrences}
-							</Typography>
-						</Stack>
-					</Tooltip>
+						<LinkIcon />
+					</IconButton>
+				</Tooltip>
+				<Tooltip title="Numero de referências" placement="top" arrow>
+					<Typography color="text.secondary">
+						{numberOfOccurrences}
+					</Typography>
+				</Tooltip>
 
-					<Tooltip title="Remover anexo" placement="top" arrow>
-						<IconButton
-							aria-label="add to favorites"
-							color="error"
-							onClick={() => {
-								handleDeleteAttachment();
-							}}
-						>
-							<DeleteForeverIcon />
-						</IconButton>
-					</Tooltip>
-				</Stack>
-			</Card>
-		</Tooltip>
+				<Tooltip title="Remover anexo" placement="top" arrow>
+					<IconButton
+						aria-label="add to favorites"
+						color="error"
+						onClick={() => {
+							handleDeleteAttachment();
+						}}
+					>
+						<DeleteForeverIcon />
+					</IconButton>
+				</Tooltip>
+			</Stack>
+		</Card>
 	);
 };
 

@@ -31,6 +31,10 @@ const nextConfig = {
 				port: '',
 				pathname: '/db/api/files/**',
 			},
+			{
+				protocol: 'https',
+				hostname: '**',
+			},
 		],
 	},
 };

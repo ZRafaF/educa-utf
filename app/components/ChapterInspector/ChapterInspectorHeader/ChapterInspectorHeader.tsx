@@ -261,7 +261,7 @@ const ChapterInspectorHeader: FunctionComponent<
 							backgroundRepeat: 'no-repeat',
 							boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.75)',
 						}}
-						bgcolor={'Background'}
+						bgcolor={'background.default'}
 					/>
 					<Box
 						position={'absolute'}

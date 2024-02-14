@@ -21,7 +21,6 @@ import dynamic from 'next/dynamic';
 import LikeButton from '@/components/LikeButton/LikeButton';
 import Tooltip from '@mui/material/Tooltip';
 import MoreArticleOptions from '@/components/MoreArticleOptions/MoreArticleOptions';
-import { getArticleDocument } from '@/lib/apiHelpers/articlesAPI';
 
 const TagsComponent = dynamic(
 	() => import('@/components/TagsComponent/TagsComponent'),

@@ -18,7 +18,7 @@ import MainLogo from './MainLogo/MainLogo';
 import ContentArea from './ContentArea/ContentArea';
 import dynamic from 'next/dynamic';
 const NoSSRThemeToggler = dynamic(() => import('./ThemeToggler/ThemeToggler'), {
-	ssr: false,
+	ssr: true,
 });
 
 interface AppOverlayProps {

@@ -235,7 +235,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 								fontWeight: 'bold',
 							}}
 							borderRadius={'0 0 0 10px'}
-							bgcolor={'Background'}
+							bgcolor={'background.default'}
 							display={'flex'}
 							alignItems={'center'}
 							justifyContent={'center'}

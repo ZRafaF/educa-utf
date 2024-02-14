@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 const PrevNextArticle = dynamic(
 	() => import('@/components/PrevNextArticle/PrevNextArticle'),
 	{
-		ssr: false,
+		ssr: true,
 	}
 );
 

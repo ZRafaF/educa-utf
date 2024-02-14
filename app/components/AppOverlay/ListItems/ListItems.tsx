@@ -12,11 +12,10 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import React from 'react';
 import LinkItem from '@/components/LinkItem/LinkItem';
 import dynamic from 'next/dynamic';
-const CreateNewButton = dynamic(() => import('./CreateNewButton'), {
-	ssr: false,
-});
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+
 const InstallPwaButton = dynamic(() => import('./InstallPwaButton'), {
-	ssr: false,
+	ssr: true,
 });
 interface ListItemsProps {}
 
@@ -43,7 +42,14 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					href="/browse/chapters"
 				/>
 				<Divider />
-				<CreateNewButton />
+				<LinkItem
+					title="Criar novo"
+					tooltip={
+						'Criar novo artigo ou capítulo \n (Você precisa estar logado)'
+					}
+					icon={<NoteAddIcon />}
+					href="/new"
+				/>
 
 				<Divider />
 				<InstallPwaButton />
