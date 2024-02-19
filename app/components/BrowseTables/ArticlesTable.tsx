@@ -16,6 +16,7 @@ import {
 	MIN_TOOLBAR_HEIGHT,
 } from '@/lib/helper';
 import PageMessage from '../PageMessage/PageMessage';
+import SearchInputComponent from './SearchInputComponent';
 
 interface ArticlesTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
@@ -44,7 +45,15 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 			<Box
 				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
 			>
-				<Box display={'flex'} flexDirection={'row-reverse'} mb={2}>
+				<Box
+					display={'flex'}
+					flexDirection={'row'}
+					justifyContent={'space-between'}
+					mb={2}
+					alignItems={'center'}
+				>
+					<SearchInputComponent />
+
 					<Typography variant="caption" gutterBottom>
 						Total de itens encontrados: {articleList.totalItems}
 					</Typography>

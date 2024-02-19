@@ -56,6 +56,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 				direction="row"
 				justifyContent="space-between"
 				alignItems="center"
+				spacing={1}
 			>
 				<Box width={'100%'}>
 					<Typography

@@ -9,7 +9,7 @@ import { useServerInsertedHTML } from 'next/navigation';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { cssTheme } from './components/Themes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 
 // This implementation is from emotion-js
