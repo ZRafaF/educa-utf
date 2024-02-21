@@ -1,4 +1,5 @@
 import QueryBuilder from '@/components/BrowseTables/QueryBuilder/QueryBuilder';
+import LoadingQueryProvider from '@/contexts/LoadingQueryContext';
 import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
@@ -15,7 +16,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<>
+		<LoadingQueryProvider>
 			<Box
 				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
 			>
@@ -38,6 +39,6 @@ export default function RootLayout({
 					</Suspense>
 				</Container>
 			</Box>
-		</>
+		</LoadingQueryProvider>
 	);
 }

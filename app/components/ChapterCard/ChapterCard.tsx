@@ -20,11 +20,13 @@ import { ChaptersExpandTags } from '@/types/expanded-types';
 import React from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import dynamic from 'next/dynamic';
-import { formatNumber, getFormattedVisibility } from '@/lib/helper';
+import { formatNumber, getFormattedVisibility, slugify } from '@/lib/helper';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import Highlighter from 'react-highlight-words';
+
 const CardUsername = dynamic(() => import('../CardUsername/CardUsername'), {
 	ssr: false,
 });
@@ -39,12 +41,14 @@ interface ChapterCardProps {
 	isExpanded?: boolean;
 	isClickable?: boolean;
 	myChapter: ChaptersStatsResponse<ChaptersExpandTags>;
+	highlightedWords?: string[];
 }
 
 const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 	isExpanded = true,
 	isClickable = true,
 	myChapter,
+	highlightedWords,
 }) => {
 	const ExpandedContent = () => (
 		<CardContent
@@ -56,22 +60,31 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 				direction="row"
 				justifyContent="space-between"
 				alignItems="center"
+				spacing={1}
 			>
 				<Box width={'100%'}>
-					<Typography
-						variant="h5"
-						sx={{
-							overflow: 'hidden',
-							wordBreak: 'break',
+					<Tooltip title={myChapter.title} arrow>
+						<Typography
+							variant="h5"
+							sx={{
+								overflow: 'hidden',
+								wordBreak: 'break',
 
-							textOverflow: 'ellipsis',
-							display: '-webkit-box',
-							WebkitLineClamp: '1',
-							WebkitBoxOrient: 'vertical',
-						}}
-					>
-						{myChapter.title}
-					</Typography>
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitLineClamp: '1',
+								WebkitBoxOrient: 'vertical',
+							}}
+						>
+							<Highlighter
+								highlightClassName="YourHighlightClass"
+								searchWords={highlightedWords ?? []}
+								autoEscape={true}
+								textToHighlight={myChapter.title}
+								sanitize={slugify}
+							/>
+						</Typography>
+					</Tooltip>
 					<Box
 						display={'flex'}
 						width={'100%'}
@@ -120,9 +133,16 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					</Stack>
 				</Stack>
 			</Stack>
-			<Typography variant="body2" color="text.secondary">
-				{myChapter.description}
-			</Typography>
+			<Tooltip title="Visibilidade" arrow placement="top">
+				<Typography variant="body2" color="text.secondary">
+					<Highlighter
+						searchWords={highlightedWords ?? []}
+						autoEscape={true}
+						textToHighlight={myChapter.description}
+						sanitize={slugify}
+					/>
+				</Typography>
+			</Tooltip>
 		</CardContent>
 	);
 
@@ -160,22 +180,55 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					</Tooltip>
 					<CardUsername content={myChapter} />
 				</Box>
-				<Typography
-					variant="body1"
-					fontWeight="700"
-					sx={{
-						overflow: 'hidden',
-						wordBreak: 'break',
+				<Tooltip title={myChapter.title} arrow>
+					<Typography
+						variant="body1"
+						fontWeight="700"
+						sx={{
+							overflow: 'hidden',
+							wordBreak: 'break',
 
-						textOverflow: 'ellipsis',
-						display: '-webkit-box',
-						WebkitLineClamp: '2',
-						WebkitBoxOrient: 'vertical',
-					}}
-					minHeight={'3.5rem'}
-				>
-					{myChapter.title}
-				</Typography>
+							textOverflow: 'ellipsis',
+							display: '-webkit-box',
+							WebkitLineClamp: '2',
+							WebkitBoxOrient: 'vertical',
+							width: '100%',
+							borderBottom: '1px solid',
+							borderColor: 'var(--mui-palette-divider)',
+						}}
+						minHeight={'3.4rem'}
+					>
+						<Highlighter
+							searchWords={highlightedWords ?? []}
+							autoEscape={true}
+							textToHighlight={myChapter.title}
+							sanitize={slugify}
+						/>
+					</Typography>
+				</Tooltip>
+				<Tooltip title={myChapter.description} arrow>
+					<Typography
+						variant="body2"
+						color="text.secondary"
+						sx={{
+							overflow: 'hidden',
+							wordBreak: 'break',
+							textOverflow: 'ellipsis',
+							display: '-webkit-box',
+							WebkitBoxOrient: 'vertical',
+							WebkitLineClamp: 2,
+						}}
+						mt={0.5}
+						minHeight={'2.5rem'}
+					>
+						<Highlighter
+							searchWords={highlightedWords ?? []}
+							autoEscape={true}
+							textToHighlight={myChapter.description}
+							sanitize={slugify}
+						/>
+					</Typography>
+				</Tooltip>
 
 				<Stack
 					direction={'row'}
