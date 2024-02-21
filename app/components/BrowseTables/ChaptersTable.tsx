@@ -16,7 +16,8 @@ import {
 	MIN_TOOLBAR_HEIGHT,
 } from '@/lib/helper';
 import PageMessage from '../PageMessage/PageMessage';
-import SearchInputComponent from './SearchInputComponent';
+import SearchResultHeader from './SearchResultHeader/SearchResultHeader';
+import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
 
 interface ChaptersTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
@@ -28,62 +29,50 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 	const sort = searchParams?.sort ?? '-created';
 	const page = Number(searchParams?.page ?? 1);
 	const items = Number(searchParams?.items ?? 50);
-	const filter = searchParams?.filter ?? '';
+	const filter = constructFilterString(searchParams);
 
 	const chaptersList = await getListOfChaptersStats(page, items, {
 		sort: sort,
 		filter: filter,
 	});
 
-	if (chaptersList.totalItems === 0)
-		return (
-			<PageMessage message="Ops. Parece que não ha correspondências a sua pesquisa. Tente alterar seus filtros!" />
-		);
-
 	return (
 		<>
 			<Box
 				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
 			>
-				<Box
-					display={'flex'}
-					flexDirection={'row'}
-					justifyContent={'space-between'}
-					mb={2}
-					alignItems={'center'}
-				>
-					<SearchInputComponent />
-					<Typography variant="caption" gutterBottom>
-						Total de itens encontrados: {chaptersList.totalItems}
-					</Typography>
-				</Box>
-				<Grid
-					container
-					spacing={1}
-					sx={{
-						justifyContent: {
-							xs: 'start',
-							sm: 'start',
-							lg: 'start',
-						},
-					}}
-				>
-					{chaptersList.items.map((chapter, idx) => (
-						<Grid
-							key={`chapter_${idx}`}
-							xs={6}
-							sm={4}
-							md={3}
-							lg={2.4}
-							xl={2.4}
-						>
-							<ChapterCard
-								myChapter={chapter}
-								isExpanded={false}
-							/>
-						</Grid>
-					))}
-				</Grid>
+				<SearchResultHeader searchRecords={chaptersList} />
+				{chaptersList.totalItems === 0 ? (
+					<PageMessage message="Ops. Parece que não ha correspondências a sua pesquisa. Tente alterar seus filtros!" />
+				) : (
+					<Grid
+						container
+						spacing={1}
+						sx={{
+							justifyContent: {
+								xs: 'start',
+								sm: 'start',
+								lg: 'start',
+							},
+						}}
+					>
+						{chaptersList.items.map((chapter, idx) => (
+							<Grid
+								key={`chapter_${idx}`}
+								xs={6}
+								sm={4}
+								md={3}
+								lg={2.4}
+								xl={2.4}
+							>
+								<ChapterCard
+									myChapter={chapter}
+									isExpanded={false}
+								/>
+							</Grid>
+						))}
+					</Grid>
+				)}
 			</Box>
 			<PaginationComponent totalPages={chaptersList.totalPages} />
 		</>

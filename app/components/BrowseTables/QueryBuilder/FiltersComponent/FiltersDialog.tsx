@@ -10,9 +10,7 @@ import { FunctionComponent, useCallback, useMemo, useState } from 'react';
 import FilterTagPicker from './FilterTagPicker';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import useLoadingQuery from '@/hooks/useLoadingQuery';
+import { useSearchParams } from 'next/navigation';
 import { TagsResponse } from '@/types/pocketbase-types';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import FormControl from '@mui/material/FormControl';
@@ -26,6 +24,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/pt-br';
 import TextField from '@mui/material/TextField';
 import AuthorPicker from './AuthorPicker';
+import useQueryFilter from '@/hooks/useQueryFilter';
 
 interface FiltersDialogProps {
 	handleClose: () => void;
@@ -36,11 +35,10 @@ const FiltersDialog: FunctionComponent<FiltersDialogProps> = ({
 	handleClose,
 	isOpen,
 }) => {
-	const pathname = usePathname();
+	const [updateFilter] = useQueryFilter();
 	const searchParams = useSearchParams()!;
-	const router = useRouter();
-	const filter = searchParams.get('filter') ?? '';
-	const [updateLoadingState] = useLoadingQuery();
+
+	const filter = searchParams.get('tags') ?? '';
 	const selectedTagsIds = useMemo(() => {
 		// Split the filters by || then get the string in between '
 		return filter.split('||').map((tag) => {
@@ -50,34 +48,11 @@ const FiltersDialog: FunctionComponent<FiltersDialogProps> = ({
 
 	const [selectedTags, setSelectedTags] = useState<TagsResponse[]>([]);
 
-	const createQueryString = useCallback(
-		(name: string, value: string) => {
-			const params = new URLSearchParams(searchParams);
-
-			params.set(name, `${value}`);
-
-			return decodeURIComponent(params.toString());
-		},
-		[searchParams]
-	);
-
 	const handleChangeFilters = () => {
-		const tagFilterString: string = selectedTags
-			.map((tag) => {
-				return `tag='${tag.id}'`;
-			})
-			.join('||');
+		const tagFilterString = selectedTags.map((tag) => tag.id);
 
-		const newSearchParams = createQueryString(
-			'filter',
-			`${tagFilterString}`
-		);
-
-		updateLoadingState(searchParams.toString(), newSearchParams);
-		router.push(pathname + '?' + newSearchParams);
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth',
+		updateFilter({
+			tags: tagFilterString,
 		});
 	};
 

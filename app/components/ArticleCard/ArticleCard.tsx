@@ -11,14 +11,13 @@ import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
 import Stack from '@mui/material/Stack/Stack';
 import Typography from '@mui/material/Typography/Typography';
 import Link from 'next/link';
-import { FunctionComponent, Suspense } from 'react';
+import { FunctionComponent } from 'react';
 import { ArticlesExpand } from '@/types/expanded-types';
 import Box from '@mui/material/Box/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
-
 import dynamic from 'next/dynamic';
 import { formatNumber, getFormattedVisibility } from '@/lib/helper';
 import MoreArticleOptions from '../MoreArticleOptions/MoreArticleOptions';

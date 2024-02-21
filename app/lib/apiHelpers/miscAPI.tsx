@@ -46,3 +46,39 @@ export async function updateLikedRecords(
 
 	return res;
 }
+
+export function constructFilterString(
+	searchParams:
+		| {
+				[key: string]: string | string[] | undefined;
+		  }
+		| undefined
+) {
+	if (searchParams === undefined) {
+		return '';
+	}
+
+	const tagsString = (() => {
+		const tagsRaw = searchParams?.tags ?? '';
+
+		if (tagsRaw === '') return undefined;
+
+		const tags = tagsRaw instanceof Array ? tagsRaw : tagsRaw.split(',');
+		return tags.map((tag) => `tag='${tag}'`).join('||');
+	})();
+
+	const searchString = (() => {
+		const search = searchParams?.search ?? '';
+
+		if (search === '') return undefined;
+
+		return search ? `slug~'%${search}%'` : '';
+	})();
+
+	const filters: string[] = [];
+
+	if (tagsString) filters.push(tagsString);
+	if (searchString) filters.push(searchString);
+
+	return filters.join('&&');
+}

@@ -5,7 +5,7 @@
 
 import { FunctionComponent } from 'react';
 import InputBase from '@mui/material/InputBase';
-import { styled, alpha, useTheme } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Search = styled('div')(({ theme }) => ({
