@@ -4,10 +4,30 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { Dispatch, SetStateAction, createContext } from 'react';
+import { useSearchParams } from 'next/navigation';
+import {
+	Dispatch,
+	SetStateAction,
+	createContext,
+	useEffect,
+	useState,
+} from 'react';
 
-const LoadingQueryContext = createContext<
+export const LoadingQueryContext = createContext<
 	[boolean, Dispatch<SetStateAction<boolean>>]
 >([false, () => {}]);
 
-export default LoadingQueryContext;
+const LoadingQueryProvider = ({ children }: { children: React.ReactNode }) => {
+	const [isLoading, setIsLoading] = useState(false);
+	const searchParams = useSearchParams()!;
+	useEffect(() => {
+		setIsLoading(false);
+	}, [searchParams]);
+	return (
+		<LoadingQueryContext.Provider value={[isLoading, setIsLoading]}>
+			{children}
+		</LoadingQueryContext.Provider>
+	);
+};
+
+export default LoadingQueryProvider;

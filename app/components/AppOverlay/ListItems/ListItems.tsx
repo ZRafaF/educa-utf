@@ -13,6 +13,7 @@ import React from 'react';
 import LinkItem from '@/components/LinkItem/LinkItem';
 import dynamic from 'next/dynamic';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
 const InstallPwaButton = dynamic(() => import('./InstallPwaButton'), {
 	ssr: true,
@@ -29,19 +30,15 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					icon={<WhatshotIcon />}
 					href="/"
 				/>
+				<Divider />
+
 				<LinkItem
-					title="Buscar artigos"
-					tooltip="Buscar todos os artigos"
-					icon={<AutoStoriesIcon />}
+					title="Buscar conteúdos"
+					tooltip="Buscar todos os artigos e capítulos"
+					icon={<TravelExploreIcon />}
 					href="/browse/articles"
 				/>
-				<LinkItem
-					title="Buscar capítulos"
-					tooltip="Buscar todos os capítulos"
-					icon={<LibraryBooksIcon />}
-					href="/browse/chapters"
-				/>
-				<Divider />
+
 				<LinkItem
 					title="Criar novo"
 					tooltip={

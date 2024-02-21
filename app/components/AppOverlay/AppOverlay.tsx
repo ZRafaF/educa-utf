@@ -33,7 +33,6 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 					<AppBarController>
 						<Toolbar>
 							<ToggleDrawerButton />
-
 							<Link href={'/'}>
 								<MainLogo />
 							</Link>

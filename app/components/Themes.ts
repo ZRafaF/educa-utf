@@ -21,7 +21,7 @@ export const cssTheme = extendTheme({
 				text: {
 					primary: '#F7F7F7',
 				},
-				grey: { A700: '#090909', A400: '#090909' },
+				grey: { A700: '#090909', A400: '#090909', A200: '#474747' },
 			},
 		},
 		light: {
@@ -32,7 +32,7 @@ export const cssTheme = extendTheme({
 				},
 				secondary: { main: '#F0CF65' },
 
-				grey: { A700: '#f2f2f2', A400: '#090909' },
+				grey: { A700: '#f2f2f2', A400: '#090909', A200: '#EBEBEB' },
 			},
 		},
 	},
