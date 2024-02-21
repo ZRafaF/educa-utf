@@ -31,6 +31,8 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 	const items = Number(searchParams?.items ?? 50);
 	const filter = constructFilterString(searchParams);
 
+	const search = searchParams?.search ?? '';
+
 	const articleList = await getListOfArticlesStats(page, items, {
 		sort: sort,
 		filter: filter,
@@ -68,6 +70,11 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 								<ArticleCard
 									myArticle={article}
 									// idx={(page - 1) * items + idx}
+									highlightedWords={
+										search instanceof Array
+											? search
+											: [search]
+									}
 								/>
 							</Grid>
 						))}

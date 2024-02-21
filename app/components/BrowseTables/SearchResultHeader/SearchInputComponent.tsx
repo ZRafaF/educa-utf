@@ -27,7 +27,7 @@ const SearchInputComponent: FunctionComponent<
 			tags: undefined,
 			search: debouncedSearchInput,
 		});
-	}, [debouncedSearchInput]);
+	}, [debouncedSearchInput, updateFilter]);
 
 	return (
 		<Stack
@@ -50,7 +50,7 @@ const SearchInputComponent: FunctionComponent<
 				<Box
 					component={'input'}
 					type="search"
-					placeholder="Pesquisar..."
+					placeholder="Pesquisar título..."
 					sx={{
 						backgroundColor: 'transparent',
 						border: 'none ',

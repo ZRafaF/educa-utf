@@ -31,6 +31,8 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 	const items = Number(searchParams?.items ?? 50);
 	const filter = constructFilterString(searchParams);
 
+	const search = searchParams?.search ?? '';
+
 	const chaptersList = await getListOfChaptersStats(page, items, {
 		sort: sort,
 		filter: filter,
@@ -68,6 +70,11 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 								<ChapterCard
 									myChapter={chapter}
 									isExpanded={false}
+									highlightedWords={
+										search instanceof Array
+											? search
+											: [search]
+									}
 								/>
 							</Grid>
 						))}

@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use-client';
 
-import LoadingQueryContext from '@/contexts/LoadingQueryContext';
+import { LoadingQueryContext } from '@/contexts/LoadingQueryContext';
 import { useContext } from 'react';
 
 const useLoadingQuery = () => {

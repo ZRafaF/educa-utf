@@ -3,10 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import {
-	ArticlesResponse,
-	ArticlesStatsResponse,
-} from '@/types/pocketbase-types';
+import { ArticlesStatsResponse } from '@/types/pocketbase-types';
 import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
 import Stack from '@mui/material/Stack/Stack';
 import Typography from '@mui/material/Typography/Typography';
@@ -19,8 +16,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
 import dynamic from 'next/dynamic';
-import { formatNumber, getFormattedVisibility } from '@/lib/helper';
+import { formatNumber, getFormattedVisibility, slugify } from '@/lib/helper';
 import MoreArticleOptions from '../MoreArticleOptions/MoreArticleOptions';
+import Highlighter from 'react-highlight-words';
 
 const TagsComponent = dynamic(() => import('../TagsComponent/TagsComponent'), {
 	ssr: true,
@@ -36,6 +34,7 @@ interface ArticleCardProps {
 	expanded?: boolean;
 	hideMoreOptions?: boolean;
 	disabled?: boolean;
+	highlightedWords?: string[];
 }
 
 const ArticleCard: FunctionComponent<ArticleCardProps> = ({
@@ -44,6 +43,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 	expanded,
 	hideMoreOptions,
 	disabled,
+	highlightedWords,
 }) => {
 	return (
 		<CardActionArea
@@ -83,20 +83,28 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 							width={'100%'}
 							justifyContent={'space-between'}
 						>
-							<Typography
-								variant="body1"
-								fontWeight="700"
-								sx={{
-									overflow: 'hidden',
-									wordBreak: 'break',
-									textOverflow: 'ellipsis',
-									display: '-webkit-box',
-									WebkitLineClamp: '1',
-									WebkitBoxOrient: 'vertical',
-								}}
-							>
-								{myArticle.title}
-							</Typography>
+							<Tooltip title={myArticle.title} arrow>
+								<Typography
+									variant="body1"
+									fontWeight="700"
+									sx={{
+										overflow: 'hidden',
+										wordBreak: 'break',
+										textOverflow: 'ellipsis',
+										display: '-webkit-box',
+										WebkitLineClamp: '1',
+										WebkitBoxOrient: 'vertical',
+									}}
+								>
+									<Highlighter
+										highlightClassName="YourHighlightClass"
+										searchWords={highlightedWords ?? []}
+										autoEscape={true}
+										textToHighlight={myArticle.title}
+										sanitize={slugify}
+									/>
+								</Typography>
+							</Tooltip>
 						</Box>
 						<Stack
 							direction="column"
@@ -192,21 +200,39 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 											</Tooltip>
 										</Box>
 										<Box display={'flex'} height={'100%'}>
-											<Typography
-												variant="body2"
-												color="text.secondary"
-												sx={{
-													overflow: 'hidden',
-													wordBreak: 'break',
-													textOverflow: 'ellipsis',
-													display: '-webkit-box',
-													WebkitBoxOrient: 'vertical',
-													WebkitLineClamp: 2,
-												}}
-												// minHeight={50}
+											<Tooltip
+												title={myArticle.description}
+												arrow
 											>
-												{myArticle.description}
-											</Typography>
+												<Typography
+													variant="body2"
+													color="text.secondary"
+													sx={{
+														overflow: 'hidden',
+														wordBreak: 'break',
+														textOverflow:
+															'ellipsis',
+														display: '-webkit-box',
+														WebkitBoxOrient:
+															'vertical',
+														WebkitLineClamp: 2,
+													}}
+													// minHeight={50}
+												>
+													<Highlighter
+														highlightClassName="YourHighlightClass"
+														searchWords={
+															highlightedWords ??
+															[]
+														}
+														autoEscape={true}
+														textToHighlight={
+															myArticle.description
+														}
+														sanitize={slugify}
+													/>
+												</Typography>
+											</Tooltip>
 										</Box>
 									</Stack>
 								</Stack>
