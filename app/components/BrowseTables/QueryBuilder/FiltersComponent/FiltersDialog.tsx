@@ -6,7 +6,7 @@
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { FunctionComponent, useCallback, useMemo, useState } from 'react';
+import { FunctionComponent, useMemo, useState } from 'react';
 import FilterTagPicker from './FilterTagPicker';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
@@ -53,6 +53,7 @@ const FiltersDialog: FunctionComponent<FiltersDialogProps> = ({
 
 		updateFilter({
 			tags: tagFilterString,
+			search: undefined,
 		});
 	};
 
@@ -76,14 +77,6 @@ const FiltersDialog: FunctionComponent<FiltersDialogProps> = ({
 							defaultTagsIds={selectedTagsIds}
 							defaultTags={selectedTags}
 							setDefaultTags={setSelectedTags}
-						/>
-					</Grid>
-					<Grid xs={12}>
-						<TextField
-							id="outlined-basic"
-							label="Inclui texto no título ou descrição"
-							variant="outlined"
-							fullWidth
 						/>
 					</Grid>
 

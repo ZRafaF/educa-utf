@@ -9,8 +9,8 @@ import { useCallback } from 'react';
 import useLoadingQuery from './useLoadingQuery';
 
 interface QueryFilters {
-	tags?: string[];
-	search?: string;
+	tags: string[] | undefined;
+	search: string | undefined;
 }
 
 const useQueryFilter = () => {
@@ -18,15 +18,17 @@ const useQueryFilter = () => {
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
 	const [updateLoadingState] = useLoadingQuery();
-	const tags = searchParams.get('tag');
+	const tags = searchParams.get('tags') ?? '';
 
 	const search = searchParams.get('search') ?? '';
 
 	const createQueryString = useCallback(
-		(name: string, value: string) => {
+		(values: { name: string; value: string }[]) => {
 			const params = new URLSearchParams(searchParams);
 
-			params.set(name, `${value}`);
+			values.forEach((value) => {
+				params.set(value.name, value.value);
+			});
 
 			return decodeURIComponent(params.toString());
 		},
@@ -41,7 +43,15 @@ const useQueryFilter = () => {
 	 * Example: {tags: ['tag1', 'tag2']}
 	 */
 	const updateFilter = (filters: QueryFilters) => {
-		const newSearchParams = createQueryString('tags', `${filters.tags}`);
+		const newTags =
+			filters.tags === undefined ? tags : filters.tags.join(',');
+		const newSearch =
+			filters.search === undefined ? search : filters.search;
+
+		const newSearchParams = createQueryString([
+			{ name: 'tags', value: newTags },
+			{ name: 'search', value: newSearch },
+		]);
 
 		updateLoadingState(searchParams.toString(), newSearchParams);
 		router.push(pathname + '?' + newSearchParams);
