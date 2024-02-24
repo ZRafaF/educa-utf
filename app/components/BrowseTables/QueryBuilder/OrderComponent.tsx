@@ -65,7 +65,9 @@ const OrderComponent: FunctionComponent<OrderComponentProps> = () => {
 			'sort',
 			`${orderValue}${currentSort}`
 		);
-		updateLoadingState(searchParams.toString(), newSearchParams);
+		// FIXME by updating the loading state, the state of loading gets stuck on true
+		// updateLoadingState(searchParams.toString(), newSearchParams);
+
 		router.push(pathname + '?' + newSearchParams);
 
 		window.scrollTo({

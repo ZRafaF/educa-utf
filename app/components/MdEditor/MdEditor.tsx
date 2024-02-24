@@ -86,10 +86,13 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 		}
 	};
 
-	const autofocusNoSpellcheckerOptions = useMemo(() => {
+	const autofocusOptions = useMemo(() => {
 		return {
 			autofocus: true,
-			spellChecker: false,
+			inputStyle: 'contenteditable',
+			spellChecker: true,
+			
+			nativeSpellcheck: true,
 			placeholder: '# Escreva aqui Seu artigo\n\nUsando **markdown**...',
 			// maxHeight: '70vh',
 			uploadImage: true,
@@ -102,6 +105,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 						onError(error);
 					});
 			},
+			
 
 			horizontalRule: false,
 			toolbar: [
@@ -200,7 +204,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 							}}
 						>
 							<SimpleMdeReact
-								options={autofocusNoSpellcheckerOptions}
+								options={autofocusOptions}
 								value={myArticleDocument}
 								onChange={onChange}
 								getMdeInstance={(instance) => {
