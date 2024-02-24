@@ -14,11 +14,6 @@ const useLoadingQuery = () => {
 		oldSearchParams: string,
 		newSearchParams: string
 	) => {
-		console.log(
-			decodeURIComponent(oldSearchParams) !==
-				decodeURIComponent(newSearchParams)
-		);
-
 		if (
 			decodeURIComponent(oldSearchParams) !==
 			decodeURIComponent(newSearchParams)

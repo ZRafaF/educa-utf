@@ -50,7 +50,7 @@ const SearchInputComponent: FunctionComponent<
 				<Box
 					component={'input'}
 					type="search"
-					placeholder="Pesquisar título..."
+					placeholder="Pesquisar..."
 					sx={{
 						backgroundColor: 'transparent',
 						border: 'none ',
