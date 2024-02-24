@@ -79,7 +79,9 @@ const SortComponent: FunctionComponent<SortComponentProps> = () => {
 
 	const handleChangeItems = (sortLabel: string) => {
 		const newSearchParams = createQueryString('sort', sortLabel);
-		updateLoadingState(searchParams.toString(), newSearchParams);
+
+		// FIXME by updating the loading state, the state of loading gets stuck on true
+		// updateLoadingState(searchParams.toString(), newSearchParams);
 		router.push(pathname + '?' + newSearchParams);
 
 		window.scrollTo({

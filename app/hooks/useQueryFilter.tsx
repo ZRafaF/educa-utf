@@ -54,7 +54,7 @@ const useQueryFilter = () => {
 		]);
 
 		updateLoadingState(searchParams.toString(), newSearchParams);
-		router.push(pathname + '?' + newSearchParams);
+		router.replace(pathname + '?' + newSearchParams);
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth',
