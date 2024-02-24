@@ -90,8 +90,8 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 		return {
 			autofocus: true,
 			inputStyle: 'contenteditable',
-			spellChecker: true,
-			
+			spellChecker: false,
+
 			nativeSpellcheck: true,
 			placeholder: '# Escreva aqui Seu artigo\n\nUsando **markdown**...',
 			// maxHeight: '70vh',
@@ -105,7 +105,6 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 						onError(error);
 					});
 			},
-			
 
 			horizontalRule: false,
 			toolbar: [
