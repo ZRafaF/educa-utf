@@ -45,9 +45,9 @@ export default function Home() {
 						spacing={1}
 						sx={{
 							justifyContent: {
-								xs: 'center',
-								sm: 'center',
-								lg: 'left',
+								xs: 'start',
+								sm: 'start',
+								lg: 'start',
 							},
 						}}
 					>
@@ -84,10 +84,9 @@ export default function Home() {
 						spacing={1}
 						sx={{
 							justifyContent: {
-								xs: 'center',
-								sm: 'left',
-								md: 'space-between',
-								lg: 'space-between',
+								xs: 'start',
+								sm: 'start',
+								lg: 'start',
 							},
 						}}
 					>
