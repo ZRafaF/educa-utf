@@ -6,7 +6,6 @@
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import useLoadingQuery from './useLoadingQuery';
 
 interface QueryFilters {
 	tags: string[] | undefined;
@@ -17,10 +16,9 @@ const useQueryFilter = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
-	const [updateLoadingState] = useLoadingQuery();
 	const tags = searchParams.get('tags') ?? '';
-
 	const search = searchParams.get('search') ?? '';
+	const page = Number(searchParams.get('page') ?? 1);
 
 	const createQueryString = useCallback(
 		(values: { name: string; value: string }[]) => {
@@ -42,18 +40,23 @@ const useQueryFilter = () => {
 	 *
 	 * Example: {tags: ['tag1', 'tag2']}
 	 */
-	const updateFilter = (filters: QueryFilters) => {
+	const updateFilter = (filters: QueryFilters, goToPage1?: boolean) => {
 		const newTags =
 			filters.tags === undefined ? tags : filters.tags.join(',');
 		const newSearch =
 			filters.search === undefined ? search : filters.search;
 
-		const newSearchParams = createQueryString([
+		let stringQuery = [
 			{ name: 'tags', value: newTags },
 			{ name: 'search', value: newSearch },
-		]);
+		];
 
-		updateLoadingState(searchParams.toString(), newSearchParams);
+		if (goToPage1) {
+			stringQuery.push({ name: 'page', value: '1' });
+		}
+
+		const newSearchParams = createQueryString(stringQuery);
+
 		router.replace(pathname + '?' + newSearchParams);
 		window.scrollTo({
 			top: 0,

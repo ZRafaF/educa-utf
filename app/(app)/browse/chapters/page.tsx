@@ -4,8 +4,11 @@
 // https://opensource.org/licenses/MIT
 
 import ChaptersTable from '@/components/BrowseTables/ChaptersTable';
+import PageMessage from '@/components/PageMessage/PageMessage';
+import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
+import { Suspense } from 'react';
 
-export const revalidate = 30;
+export const revalidate = 0;
 
 export default function Page({
 	params,
@@ -14,5 +17,25 @@ export default function Page({
 	params: { slug: string };
 	searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-	return <ChaptersTable searchParams={searchParams} />;
+	const sort = String(searchParams?.sort ?? '-created');
+	const page = Number(searchParams?.page ?? 1);
+	const items = Number(searchParams?.items ?? 50);
+	const filter = constructFilterString(searchParams);
+
+	return (
+		<Suspense
+			key={`${sort}${page}${items}${filter}`}
+			fallback={
+				<PageMessage message="Buscando capítulos, aguarde..." loading />
+			}
+		>
+			<ChaptersTable
+				searchParams={searchParams}
+				sort={sort}
+				page={page}
+				items={items}
+				filter={filter}
+			/>
+		</Suspense>
+	);
 }

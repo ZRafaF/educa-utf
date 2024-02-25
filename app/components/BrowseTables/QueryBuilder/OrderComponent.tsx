@@ -11,7 +11,6 @@ import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import useLoadingQuery from '@/hooks/useLoadingQuery';
 
 const orderTypeList = [
 	{
@@ -30,7 +29,6 @@ const OrderComponent: FunctionComponent<OrderComponentProps> = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
-	const [updateLoadingState] = useLoadingQuery();
 
 	const sort = searchParams.get('sort') ?? '-created';
 
@@ -65,8 +63,6 @@ const OrderComponent: FunctionComponent<OrderComponentProps> = () => {
 			'sort',
 			`${orderValue}${currentSort}`
 		);
-		// FIXME by updating the loading state, the state of loading gets stuck on true
-		// updateLoadingState(searchParams.toString(), newSearchParams);
 
 		router.push(pathname + '?' + newSearchParams);
 

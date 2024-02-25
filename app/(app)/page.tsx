@@ -5,8 +5,11 @@ import BannerSomethingNew from '@/components/BannerSomethingNew/BannerSomethingN
 import BestArticles from './BestArticles';
 import Divider from '@mui/material/Divider/Divider';
 import { Metadata } from 'next/types';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
+import DummyCard from '@/components/DummyCard/DummyCard';
 
-export const revalidate = 30;
+export const revalidate = 0;
 
 export const metadata: Metadata = {
 	title: 'EducaUTF',
@@ -22,6 +25,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+	const dummyArrayChapters: number[] = Array(10).fill(1);
+	const dummyArrayArticles: number[] = Array(12).fill(1);
+
 	return (
 		<Box>
 			<Suspense fallback={<Box>Carregando...</Box>}>
@@ -30,18 +36,79 @@ export default function Home() {
 			<Divider variant="middle" sx={{ mx: 0 }} />
 
 			<Box mx={{ xs: 2, sm: 2, md: 4, lg: 10, xl: 20 }} my={3} gap={4}>
-				<Suspense fallback={<Box>Carregando...</Box>}>
-					<BestChapters />
-				</Suspense>
+				<Box>
+					<Typography variant="h5" fontWeight={700} pb={3}>
+						Os melhores artigos do mês
+					</Typography>
+					<Grid
+						container
+						spacing={1}
+						sx={{
+							justifyContent: {
+								xs: 'center',
+								sm: 'center',
+								lg: 'left',
+							},
+						}}
+					>
+						<Suspense
+							fallback={dummyArrayChapters.map((_, idx) => (
+								<Grid
+									key={`dummy_chapter_${idx}`}
+									xs={6}
+									sm={4}
+									md={4}
+									lg={3}
+									xl={2.4}
+								>
+									<DummyCard type="chapter" />
+								</Grid>
+							))}
+						>
+							<BestChapters />
+						</Suspense>
+					</Grid>
+				</Box>
 				<Divider
 					sx={{
 						my: 2,
 					}}
 					variant="middle"
 				/>
-				<Suspense fallback={<Box>Carregando...</Box>}>
-					<BestArticles />
-				</Suspense>
+				<Box>
+					<Typography variant="h5" fontWeight={700} pb={3}>
+						Os melhores artigos do mês
+					</Typography>
+					<Grid
+						container
+						spacing={1}
+						sx={{
+							justifyContent: {
+								xs: 'center',
+								sm: 'left',
+								md: 'space-between',
+								lg: 'space-between',
+							},
+						}}
+					>
+						<Suspense
+							fallback={dummyArrayArticles.map((_, idx) => (
+								<Grid
+									key={`dummy_articles_${idx}`}
+									xs={15}
+									sm={6}
+									md={6}
+									lg={4}
+									xl={4}
+								>
+									<DummyCard type="article" />
+								</Grid>
+							))}
+						>
+							<BestArticles />
+						</Suspense>
+					</Grid>
+				</Box>
 			</Box>
 		</Box>
 	);

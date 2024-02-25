@@ -31,7 +31,7 @@ interface PageProps {
 	params: { slug: string[] };
 }
 
-export const revalidate = 30;
+export const revalidate = 0;
 
 export async function generateStaticParams() {
 	const articles = await getFullListOfArticles();

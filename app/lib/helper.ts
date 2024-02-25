@@ -106,11 +106,11 @@ export function countSubstrings(mainString: string, substring: string) {
 	return count;
 }
 
-export function sleep(duration: number): Promise<void> {
+export function sleep(durationMs: number): Promise<void> {
 	return new Promise<void>((resolve) => {
 		setTimeout(() => {
 			resolve();
-		}, duration);
+		}, durationMs);
 	});
 }
 
@@ -184,4 +184,11 @@ export function slugify(str: string) {
 		.replace(/[^a-z0-9 -]/g, '') // remove non-alphanumeric characters
 		.replace(/\s+/g, '-') // replace spaces with hyphens
 		.replace(/-+/g, '-'); // remove consecutive hyphens
+}
+
+export function basicSlugify(str: string) {
+	return String(str);
+	str.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.toLowerCase();
 }

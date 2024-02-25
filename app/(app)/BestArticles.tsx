@@ -9,42 +9,33 @@ import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import { getBestArticlesOf } from '@/lib/apiHelpers/articlesAPI';
 import ArticleCard from '@/components/ArticleCard/ArticleCard';
+import FadeInAnimation from '@/components/FadeInAnimation/FadeInAnimation';
 
-export const revalidate = 30;
+export const revalidate = 0;
 
 async function BestArticles() {
 	const articles = await getBestArticlesOf('month');
 
 	return (
-		<Box>
-			<Typography variant="h5" fontWeight={700} pb={3}>
-				Os melhores artigos do mês
-			</Typography>
-			<Grid
-				container
-				spacing={1}
-				sx={{
-					justifyContent: {
-						xs: 'center',
-						sm: 'center',
-						lg: 'left',
-					},
-				}}
-			>
-				{articles.map((article, idx) => (
-					<Grid
-						key={`article_${idx}`}
-						xs={15}
-						sm={6}
-						md={6}
-						lg={4}
-						xl={4}
+		<>
+			{articles.map((article, idx) => (
+				<Grid
+					key={`article_${idx}`}
+					xs={15}
+					sm={6}
+					md={6}
+					lg={4}
+					xl={4}
+				>
+					<FadeInAnimation
+						// Random number between 300 - 600
+						durationMs={Math.floor(Math.random() * 300) + 300}
 					>
 						<ArticleCard myArticle={article} idx={idx} />
-					</Grid>
-				))}
-			</Grid>
-		</Box>
+					</FadeInAnimation>
+				</Grid>
+			))}
+		</>
 	);
 }
 

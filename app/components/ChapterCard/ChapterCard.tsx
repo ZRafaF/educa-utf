@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 import Card from '@mui/material/Card/Card';
 import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
@@ -20,7 +20,11 @@ import { ChaptersExpandTags } from '@/types/expanded-types';
 import React from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import dynamic from 'next/dynamic';
-import { formatNumber, getFormattedVisibility, slugify } from '@/lib/helper';
+import {
+	formatNumber,
+	getFormattedVisibility,
+	basicSlugify,
+} from '@/lib/helper';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
 import Box from '@mui/material/Box';
@@ -50,6 +54,43 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 	myChapter,
 	highlightedWords,
 }) => {
+	const Description = ({ numOfLines }: { numOfLines: number }) => (
+		<Tooltip
+			title={
+				myChapter.description.length
+					? myChapter.description
+					: 'Sem descrição...'
+			}
+			arrow
+			placement="top"
+		>
+			<Typography
+				variant="body2"
+				color="text.secondary"
+				sx={{
+					overflow: 'hidden',
+					wordBreak: 'break',
+					textOverflow: 'ellipsis',
+					display: '-webkit-box',
+					WebkitBoxOrient: 'vertical',
+					WebkitLineClamp: numOfLines,
+				}}
+				minHeight={`${1.25 * numOfLines}rem`}
+			>
+				{myChapter.description.length ? (
+					<Highlighter
+						searchWords={highlightedWords ?? []}
+						autoEscape={true}
+						textToHighlight={myChapter.description}
+						sanitize={basicSlugify}
+					/>
+				) : (
+					'Sem descrição...'
+				)}
+			</Typography>
+		</Tooltip>
+	);
+
 	const ExpandedContent = () => (
 		<CardContent
 			sx={{
@@ -81,7 +122,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 								searchWords={highlightedWords ?? []}
 								autoEscape={true}
 								textToHighlight={myChapter.title}
-								sanitize={slugify}
+								sanitize={basicSlugify}
 							/>
 						</Typography>
 					</Tooltip>
@@ -133,16 +174,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					</Stack>
 				</Stack>
 			</Stack>
-			<Tooltip title="Visibilidade" arrow placement="top">
-				<Typography variant="body2" color="text.secondary">
-					<Highlighter
-						searchWords={highlightedWords ?? []}
-						autoEscape={true}
-						textToHighlight={myChapter.description}
-						sanitize={slugify}
-					/>
-				</Typography>
-			</Tooltip>
+			<Description numOfLines={4} />
 		</CardContent>
 	);
 
@@ -202,33 +234,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 							searchWords={highlightedWords ?? []}
 							autoEscape={true}
 							textToHighlight={myChapter.title}
-							sanitize={slugify}
+							sanitize={basicSlugify}
 						/>
 					</Typography>
 				</Tooltip>
-				<Tooltip title={myChapter.description} arrow>
-					<Typography
-						variant="body2"
-						color="text.secondary"
-						sx={{
-							overflow: 'hidden',
-							wordBreak: 'break',
-							textOverflow: 'ellipsis',
-							display: '-webkit-box',
-							WebkitBoxOrient: 'vertical',
-							WebkitLineClamp: 2,
-						}}
-						mt={0.5}
-						minHeight={'2.5rem'}
-					>
-						<Highlighter
-							searchWords={highlightedWords ?? []}
-							autoEscape={true}
-							textToHighlight={myChapter.description}
-							sanitize={slugify}
-						/>
-					</Typography>
-				</Tooltip>
+				<Description numOfLines={2} />
 
 				<Stack
 					direction={'row'}

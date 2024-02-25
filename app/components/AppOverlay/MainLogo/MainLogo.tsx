@@ -3,22 +3,27 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+'use client';
+
 import { FunctionComponent } from 'react';
 import educaUtfLogoImage from '@/resources/logo-utf-sm.png';
 import Box from '@mui/material/Box/Box';
 import Image from 'next/image';
 
-interface MainLogoProps {}
+interface MainLogoProps {
+	visible: boolean;
+}
 
-const MainLogo: FunctionComponent<MainLogoProps> = async () => {
+const MainLogo: FunctionComponent<MainLogoProps> = ({ visible }) => {
 	return (
 		<Box
 			sx={{
 				height: 20,
 				maxHeight: { xs: 20, sm: 20 },
 				objectFit: 'contain',
-
+				display: visible ? 'inherit' : 'none',
 				aspectRatio: '540/107',
+				mr: 1,
 			}}
 		>
 			<div style={{ position: 'relative', height: '100%' }}>

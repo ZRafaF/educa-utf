@@ -16,6 +16,9 @@ import ChapterCard from '@/components/ChapterCard/ChapterCard';
 import ArticleCard from '@/components/ArticleCard/ArticleCard';
 import CircularProgress from '@mui/material/CircularProgress';
 import DummyCard from '@/components/DummyCard/DummyCard';
+import { TransitionGroup } from 'react-transition-group';
+import Grow from '@mui/material/Grow';
+import FadeInAnimation from '@/components/FadeInAnimation/FadeInAnimation';
 
 interface InnerContentExplorerProps {
 	listResult:
@@ -116,12 +119,19 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 							lg={4}
 							xl={4}
 						>
-							<ArticleCard
-								key={item.id}
-								myArticle={
-									item as ArticlesStatsResponse<ArticlesExpand>
+							<FadeInAnimation
+								// Random number between 300 - 600
+								durationMs={
+									Math.floor(Math.random() * 300) + 300
 								}
-							/>
+							>
+								<ArticleCard
+									key={item.id}
+									myArticle={
+										item as ArticlesStatsResponse<ArticlesExpand>
+									}
+								/>
+							</FadeInAnimation>
 						</Grid>
 					) : (
 						<Grid
@@ -132,13 +142,19 @@ const InnerContentExplorer: FunctionComponent<InnerContentExplorerProps> = ({
 							lg={3}
 							xl={2.4}
 						>
-							<ChapterCard
-								key={item.id}
-								myChapter={
-									item as ChaptersStatsResponse<ChaptersExpandTags>
+							<FadeInAnimation
+								durationMs={
+									Math.floor(Math.random() * 300) + 300
 								}
-								isExpanded={false}
-							/>
+							>
+								<ChapterCard
+									key={item.id}
+									myChapter={
+										item as ChaptersStatsResponse<ChaptersExpandTags>
+									}
+									isExpanded={false}
+								/>
+							</FadeInAnimation>
 						</Grid>
 					)}
 				</>
