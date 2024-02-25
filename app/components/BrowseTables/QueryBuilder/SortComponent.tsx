@@ -12,7 +12,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import useLoadingQuery from '@/hooks/useLoadingQuery';
 
 const sortTypeList = [
 	{
@@ -47,7 +46,6 @@ const SortComponent: FunctionComponent<SortComponentProps> = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
-	const [updateLoadingState] = useLoadingQuery();
 
 	const sort = searchParams.get('sort') ?? '-created';
 
@@ -80,8 +78,6 @@ const SortComponent: FunctionComponent<SortComponentProps> = () => {
 	const handleChangeItems = (sortLabel: string) => {
 		const newSearchParams = createQueryString('sort', sortLabel);
 
-		// FIXME by updating the loading state, the state of loading gets stuck on true
-		// updateLoadingState(searchParams.toString(), newSearchParams);
 		router.push(pathname + '?' + newSearchParams);
 
 		window.scrollTo({

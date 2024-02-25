@@ -24,13 +24,24 @@ const SearchInputComponent: FunctionComponent<
 		searchParams.get('search') ?? ''
 	);
 	const [updateFilter] = useQueryFilter();
+	const [initialized, setInitialized] = useState(false);
 
 	const [debouncedSearchInput] = useDebounce(searchInput, 300);
+
 	useEffect(() => {
-		updateFilter({
-			tags: undefined,
-			search: debouncedSearchInput,
-		});
+		setInitialized(false);
+	}, [searchParams, setInitialized]);
+
+	useEffect(() => {
+		if (initialized) {
+			updateFilter(
+				{
+					tags: undefined,
+					search: debouncedSearchInput,
+				},
+				true
+			);
+		}
 	}, [debouncedSearchInput, updateFilter]);
 
 	return (
@@ -72,6 +83,11 @@ const SearchInputComponent: FunctionComponent<
 					name="search-input"
 					value={searchInput}
 					onChange={(e) => {
+						if (!initialized) {
+							setInitialized(true);
+						}
+						console.log(initialized);
+
 						setSearchInput(e.target.value);
 					}}
 				/>

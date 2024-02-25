@@ -1,6 +1,5 @@
 import QueryBuilder from '@/components/BrowseTables/QueryBuilder/QueryBuilder';
 import SearchResultHeader from '@/components/BrowseTables/SearchResultHeader/SearchResultHeader';
-import LoadingQueryProvider from '@/contexts/LoadingQueryContext';
 import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
@@ -17,30 +16,26 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<LoadingQueryProvider>
-			<Box
-				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
+		<Box
+			minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
+		>
+			<QueryBuilder />
+			<Divider
+				sx={{
+					mb: 2,
+				}}
+				variant="middle"
+			/>
+			<Container
+				sx={{
+					my: 2,
+					position: 'relative',
+				}}
+				maxWidth={false}
 			>
-				<QueryBuilder />
-				<Divider
-					sx={{
-						mb: 2,
-					}}
-					variant="middle"
-				/>
-				<Container
-					sx={{
-						my: 2,
-						position: 'relative',
-					}}
-					maxWidth={false}
-				>
-					<SearchResultHeader />
-					<Suspense fallback={<div>Loading...</div>}>
-						{children}
-					</Suspense>
-				</Container>
-			</Box>
-		</LoadingQueryProvider>
+				<SearchResultHeader />
+				<Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+			</Container>
+		</Box>
 	);
 }

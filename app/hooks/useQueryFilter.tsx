@@ -6,7 +6,6 @@
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import useLoadingQuery from './useLoadingQuery';
 
 interface QueryFilters {
 	tags: string[] | undefined;
@@ -17,10 +16,9 @@ const useQueryFilter = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
-	const [updateLoadingState] = useLoadingQuery();
 	const tags = searchParams.get('tags') ?? '';
-
 	const search = searchParams.get('search') ?? '';
+	const page = Number(searchParams.get('page') ?? 1);
 
 	const createQueryString = useCallback(
 		(values: { name: string; value: string }[]) => {
@@ -59,7 +57,6 @@ const useQueryFilter = () => {
 
 		const newSearchParams = createQueryString(stringQuery);
 
-		updateLoadingState(searchParams.toString(), newSearchParams);
 		router.replace(pathname + '?' + newSearchParams);
 		window.scrollTo({
 			top: 0,

@@ -5,7 +5,6 @@
 
 import ArticlesTable from '@/components/BrowseTables/ArticlesTable';
 import PageMessage from '@/components/PageMessage/PageMessage';
-import { getListOfArticlesStats } from '@/lib/apiHelpers/articlesAPI';
 import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
 import { Suspense } from 'react';
 
