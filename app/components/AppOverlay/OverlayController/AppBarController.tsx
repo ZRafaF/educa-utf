@@ -4,12 +4,34 @@
 // https://opensource.org/licenses/MIT
 'use client';
 
-import { FunctionComponent, ReactNode, useContext, useEffect } from 'react';
+import {
+	FunctionComponent,
+	Suspense,
+	useContext,
+	useEffect,
+	useState,
+} from 'react';
 import drawerWidth from '../../../lib/drawerWidth';
 import styled from '@mui/material/styles/styled';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { OverlayControllerContext } from '@/contexts/OverlayControllerProvider';
+import ToggleDrawerButton from './TogglerDrawerButton';
+import Toolbar from '@mui/material/Toolbar';
+import Link from 'next/link';
+import ProfileButton from '../ProfileButton/ProfileButton';
+import SearchBar from '../SearchBar/SearchBar';
+import MainLogo from '../MainLogo/MainLogo';
+import dynamic from 'next/dynamic';
+import SearchBarIsExtendedContext from '@/contexts/SearchBarIsExtendedContext';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
+const NoSSRThemeToggler = dynamic(
+	() => import('../ThemeToggler/ThemeToggler'),
+	{
+		ssr: true,
+	}
+);
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
 }
@@ -31,22 +53,56 @@ const AppBar = styled(MuiAppBar, {
 	}),
 }));
 
-interface ControllerProps {
-	children: ReactNode;
-}
+interface ControllerProps {}
 
-const AppBarController: FunctionComponent<ControllerProps> = ({ children }) => {
+const AppBarController: FunctionComponent<ControllerProps> = () => {
 	const [open] = useContext(OverlayControllerContext);
+	const [searchIsExtended, setSearchIsExtended] = useState(false);
+	const theme = useTheme();
+	const onlySmallScreen = useMediaQuery(theme.breakpoints.only('xs'));
+
+	useEffect(() => {
+		setSearchIsExtended(!onlySmallScreen);
+	}, [onlySmallScreen]);
+
 	return (
-		<AppBar
-			position="absolute"
-			open={open}
-			sx={{
-				position: 'fixed',
-			}}
+		<SearchBarIsExtendedContext.Provider
+			value={[searchIsExtended, setSearchIsExtended]}
 		>
-			{children}
-		</AppBar>
+			<AppBar
+				position="absolute"
+				open={open}
+				sx={{
+					position: 'fixed',
+				}}
+			>
+				<Toolbar>
+					<ToggleDrawerButton
+						visible={!(onlySmallScreen && searchIsExtended)}
+					/>
+
+					<Link href={'/'}>
+						<MainLogo
+							visible={!(onlySmallScreen && searchIsExtended)}
+						/>
+					</Link>
+
+					<SearchBar
+						isExtended={searchIsExtended}
+						setIsExtended={setSearchIsExtended}
+						onlySmallScreen={onlySmallScreen}
+					/>
+					<Suspense fallback={<div>Carregando</div>}>
+						{!(onlySmallScreen && searchIsExtended) && (
+							<>
+								<NoSSRThemeToggler />
+								<ProfileButton />
+							</>
+						)}
+					</Suspense>
+				</Toolbar>
+			</AppBar>
+		</SearchBarIsExtendedContext.Provider>
 	);
 };
 

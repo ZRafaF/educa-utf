@@ -17,7 +17,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import Typography from '@mui/material/Typography';
-import { LoadingQueryContext } from '@/contexts/LoadingQueryContext';
 
 interface QueryBuilderProps {}
 
@@ -25,9 +24,6 @@ const QueryBuilder: FunctionComponent<QueryBuilderProps> = () => {
 	const [isAtTop, setIsAtTop] = useState(true);
 	const theme = useTheme();
 	const isExtraSmallScreen = useMediaQuery(theme.breakpoints.only('xs'));
-	const [isLoading] = useContext(LoadingQueryContext);
-
-	console.log('isLoading', isLoading);
 
 	useEffect(() => {
 		window.onscroll = () => {
@@ -57,23 +53,8 @@ const QueryBuilder: FunctionComponent<QueryBuilderProps> = () => {
 				direction={{ sm: 'column', md: 'row' }}
 				// display={isLoading ? 'none' : 'flex'}
 			>
-				<Grid>
-					{isLoading ? (
-						<Box display={isLoading ? 'flex' : 'none'}>
-							<Typography
-								fontWeight={'bold'}
-								variant="h4"
-								pr={2}
-								py={1}
-							>
-								Atualizando...
-							</Typography>
-							<CircularProgress />
-						</Box>
-					) : (
-						<BrowseTitle />
-					)}
-				</Grid>
+				<BrowseTitle />
+
 				<Grid
 					container
 					spacing={2}

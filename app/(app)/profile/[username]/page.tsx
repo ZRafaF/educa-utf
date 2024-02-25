@@ -40,7 +40,7 @@ interface PageProps {
 	};
 }
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 export async function generateStaticParams() {
 	const result = await getListOfUsersStats();
