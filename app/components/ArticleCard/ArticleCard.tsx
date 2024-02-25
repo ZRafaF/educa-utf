@@ -205,7 +205,11 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 										</Box>
 										<Box display={'flex'} height={'100%'}>
 											<Tooltip
-												title={myArticle.description}
+												title={
+													myArticle.description.length
+														? myArticle.description
+														: 'Sem descrição...'
+												}
 												arrow
 											>
 												<Typography
@@ -223,18 +227,25 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 													}}
 													// minHeight={50}
 												>
-													<Highlighter
-														highlightClassName="YourHighlightClass"
-														searchWords={
-															highlightedWords ??
-															[]
-														}
-														autoEscape={true}
-														textToHighlight={
-															myArticle.description
-														}
-														sanitize={basicSlugify}
-													/>
+													{myArticle.description
+														.length ? (
+														<Highlighter
+															highlightClassName="YourHighlightClass"
+															searchWords={
+																highlightedWords ??
+																[]
+															}
+															autoEscape={true}
+															textToHighlight={
+																myArticle.description
+															}
+															sanitize={
+																basicSlugify
+															}
+														/>
+													) : (
+														'Sem descrição...'
+													)}
 												</Typography>
 											</Tooltip>
 										</Box>

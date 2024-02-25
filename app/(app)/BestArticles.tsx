@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography/Typography';
 import { getBestArticlesOf } from '@/lib/apiHelpers/articlesAPI';
 import ArticleCard from '@/components/ArticleCard/ArticleCard';
 
-export const revalidate = 30;
+export const revalidate = 0;
 
 async function BestArticles() {
 	const articles = await getBestArticlesOf('month');

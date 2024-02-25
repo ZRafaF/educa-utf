@@ -20,16 +20,18 @@ const allowedItemsPerPage = [10, 20, 30, 50];
 
 interface PaginationComponentProps {
 	totalPages: number;
+	totalItems: number;
 }
 
 const PaginationComponent: FunctionComponent<PaginationComponentProps> = ({
 	totalPages = 1,
+	totalItems,
 }) => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
 
-	const sort = searchParams.get('items') ?? '50';
+	const sort = searchParams.get('items') ?? '20';
 	const page = searchParams.get('page') ?? '1';
 
 	const createQueryString = useCallback(
@@ -144,6 +146,16 @@ const PaginationComponent: FunctionComponent<PaginationComponentProps> = ({
 							))}
 						</Select>
 					</Stack>
+				</Grid>
+				<Grid>
+					<Typography
+						variant="caption"
+						gutterBottom
+						width={'100%'}
+						textAlign={'right'}
+					>
+						Total de itens encontrados: {totalItems}
+					</Typography>
 				</Grid>
 			</Grid>
 		</>

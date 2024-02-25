@@ -10,7 +10,7 @@ import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import { getBestChaptersOf } from '@/lib/apiHelpers/chaptersAPI';
 
-export const revalidate = 30;
+export const revalidate = 0;
 
 async function BestChapters() {
 	const chapters = await getBestChaptersOf('month');

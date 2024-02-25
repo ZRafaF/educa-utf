@@ -106,11 +106,11 @@ export function countSubstrings(mainString: string, substring: string) {
 	return count;
 }
 
-export function sleep(duration: number): Promise<void> {
+export function sleep(durationMs: number): Promise<void> {
 	return new Promise<void>((resolve) => {
 		setTimeout(() => {
 			resolve();
-		}, duration);
+		}, durationMs);
 	});
 }
 

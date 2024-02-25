@@ -6,7 +6,7 @@ import BestArticles from './BestArticles';
 import Divider from '@mui/material/Divider/Divider';
 import { Metadata } from 'next/types';
 
-export const revalidate = 30;
+export const revalidate = 0;
 
 export const metadata: Metadata = {
 	title: 'EducaUTF',

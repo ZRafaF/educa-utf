@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 import Card from '@mui/material/Card/Card';
 import CardActionArea from '@mui/material/CardActionArea/CardActionArea';
@@ -54,7 +54,32 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 	myChapter,
 	highlightedWords,
 }) => {
-	const ExpandedContent = () => (
+	const Description = ({ numOfLines }: { numOfLines: number }) => (
+		<Tooltip title={myChapter.description} arrow placement="top">
+			<Typography
+				variant="body2"
+				color="text.secondary"
+				sx={{
+					overflow: 'hidden',
+					wordBreak: 'break',
+					textOverflow: 'ellipsis',
+					display: '-webkit-box',
+					WebkitBoxOrient: 'vertical',
+					WebkitLineClamp: numOfLines,
+				}}
+				minHeight={'2.5rem'}
+			>
+				<Highlighter
+					searchWords={highlightedWords ?? []}
+					autoEscape={true}
+					textToHighlight={myChapter.description}
+					sanitize={basicSlugify}
+				/>
+			</Typography>
+		</Tooltip>
+	);
+
+	const ExpandedContent = ({ children }: { children: ReactNode }) => (
 		<CardContent
 			sx={{
 				p: { xs: 1, sm: 1, md: 1 },
@@ -137,20 +162,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					</Stack>
 				</Stack>
 			</Stack>
-			<Tooltip title="Visibilidade" arrow placement="top">
-				<Typography variant="body2" color="text.secondary">
-					<Highlighter
-						searchWords={highlightedWords ?? []}
-						autoEscape={true}
-						textToHighlight={myChapter.description}
-						sanitize={basicSlugify}
-					/>
-				</Typography>
-			</Tooltip>
+			{children}
 		</CardContent>
 	);
 
-	const CollapsedContent = () => (
+	const CollapsedContent = ({ children }: { children: ReactNode }) => (
 		<CardContent
 			sx={{
 				p: 1,
@@ -210,29 +226,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 						/>
 					</Typography>
 				</Tooltip>
-				<Tooltip title={myChapter.description} arrow>
-					<Typography
-						variant="body2"
-						color="text.secondary"
-						sx={{
-							overflow: 'hidden',
-							wordBreak: 'break',
-							textOverflow: 'ellipsis',
-							display: '-webkit-box',
-							WebkitBoxOrient: 'vertical',
-							WebkitLineClamp: 2,
-						}}
-						mt={0.5}
-						minHeight={'2.5rem'}
-					>
-						<Highlighter
-							searchWords={highlightedWords ?? []}
-							autoEscape={true}
-							textToHighlight={myChapter.description}
-							sanitize={basicSlugify}
-						/>
-					</Typography>
-				</Tooltip>
+				{children}
 
 				<Stack
 					direction={'row'}
@@ -303,7 +297,15 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					</Tooltip>
 				</Box>
 
-				{isExpanded ? <ExpandedContent /> : <CollapsedContent />}
+				{isExpanded ? (
+					<ExpandedContent>
+						<Description numOfLines={4} />
+					</ExpandedContent>
+				) : (
+					<CollapsedContent>
+						<Description numOfLines={2} />
+					</CollapsedContent>
+				)}
 			</CardActionArea>
 
 			<Divider />

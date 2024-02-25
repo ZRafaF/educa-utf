@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 
 import { FunctionComponent } from 'react';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import { getListOfChaptersStats } from '@/lib/apiHelpers/chaptersAPI';
 import ChapterCard from '../ChapterCard/ChapterCard';
@@ -14,24 +13,27 @@ import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
 	MIN_TOOLBAR_HEIGHT,
+	sleep,
 } from '@/lib/helper';
 import PageMessage from '../PageMessage/PageMessage';
-import SearchResultHeader from './SearchResultHeader/SearchResultHeader';
 import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
 import FadeInAnimation from '../FadeInAnimation/FadeInAnimation';
 
 interface ChaptersTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
+	sort: string;
+	page: number;
+	items: number;
+	filter: string;
 }
 
 const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 	searchParams,
+	sort,
+	page,
+	items,
+	filter,
 }) => {
-	const sort = searchParams?.sort ?? '-created';
-	const page = Number(searchParams?.page ?? 1);
-	const items = Number(searchParams?.items ?? 50);
-	const filter = constructFilterString(searchParams);
-
 	const search = searchParams?.search ?? '';
 
 	const chaptersList = await getListOfChaptersStats(page, items, {
@@ -44,7 +46,6 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 			<Box
 				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
 			>
-				<SearchResultHeader searchRecords={chaptersList} />
 				{chaptersList.totalItems === 0 ? (
 					<PageMessage message="Ops. Parece que não ha correspondências a sua pesquisa. Tente alterar seus filtros!" />
 				) : (
@@ -66,7 +67,7 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 								sm={4}
 								md={3}
 								lg={2.4}
-								xl={2.4}
+								xl={2}
 							>
 								<FadeInAnimation
 									durationMs={
@@ -88,7 +89,10 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 					</Grid>
 				)}
 			</Box>
-			<PaginationComponent totalPages={chaptersList.totalPages} />
+			<PaginationComponent
+				totalPages={chaptersList.totalPages}
+				totalItems={chaptersList.totalItems}
+			/>
 		</>
 	);
 };

@@ -6,7 +6,6 @@
 import { getListOfArticlesStats } from '@/lib/apiHelpers/articlesAPI';
 import { FunctionComponent } from 'react';
 import ArticleCard from '../ArticleCard/ArticleCard';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import PaginationComponent from './PaginationComponent';
 import Box from '@mui/material/Box';
@@ -14,24 +13,27 @@ import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
 	MIN_TOOLBAR_HEIGHT,
+	sleep,
 } from '@/lib/helper';
 import PageMessage from '../PageMessage/PageMessage';
 import SearchResultHeader from './SearchResultHeader/SearchResultHeader';
-import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
 import FadeInAnimation from '../FadeInAnimation/FadeInAnimation';
 
 interface ArticlesTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
+	sort: string;
+	page: number;
+	items: number;
+	filter: string;
 }
 
 const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 	searchParams,
+	sort,
+	page,
+	items,
+	filter,
 }) => {
-	const sort = searchParams?.sort ?? '-created';
-	const page = Number(searchParams?.page ?? 1);
-	const items = Number(searchParams?.items ?? 50);
-	const filter = constructFilterString(searchParams);
-
 	const search = searchParams?.search ?? '';
 
 	const articleList = await getListOfArticlesStats(page, items, {
@@ -44,7 +46,6 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 			<Box
 				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
 			>
-				<SearchResultHeader searchRecords={articleList} />
 				{articleList.totalItems === 0 ? (
 					<PageMessage message="Ops. Parece que não ha correspondências a sua pesquisa. Tente alterar seus filtros!" />
 				) : (
@@ -89,7 +90,10 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 				)}
 			</Box>
 
-			<PaginationComponent totalPages={articleList.totalPages} />
+			<PaginationComponent
+				totalPages={articleList.totalPages}
+				totalItems={articleList.totalItems}
+			/>
 		</>
 	);
 };

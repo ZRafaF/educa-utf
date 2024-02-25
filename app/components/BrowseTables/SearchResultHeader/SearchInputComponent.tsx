@@ -11,13 +11,18 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { useDebounce } from 'use-debounce';
 import useQueryFilter from '@/hooks/useQueryFilter';
+import { useSearchParams } from 'next/navigation';
 
 interface SearchInputComponentProps {}
 
 const SearchInputComponent: FunctionComponent<
 	SearchInputComponentProps
 > = () => {
-	const [searchInput, setSearchInput] = useState('');
+	const searchParams = useSearchParams()!;
+
+	const [searchInput, setSearchInput] = useState(
+		searchParams.get('search') ?? ''
+	);
 	const [updateFilter] = useQueryFilter();
 
 	const [debouncedSearchInput] = useDebounce(searchInput, 300);
