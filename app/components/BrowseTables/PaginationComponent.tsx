@@ -16,7 +16,7 @@ import { MIN_PAGINATION_HEIGHT } from '@/lib/helper';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Divider from '@mui/material/Divider';
 
-const allowedItemsPerPage = [10, 25, 50, 100];
+const allowedItemsPerPage = [10, 20, 30, 50];
 
 interface PaginationComponentProps {
 	totalPages: number;

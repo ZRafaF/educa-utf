@@ -185,3 +185,9 @@ export function slugify(str: string) {
 		.replace(/\s+/g, '-') // replace spaces with hyphens
 		.replace(/-+/g, '-'); // remove consecutive hyphens
 }
+
+export function basicSlugify(str: string) {
+	return String(str)
+		.normalize('NFKD') // split accented characters into their base characters and diacritical marks
+		.toLowerCase(); // convert to lowercase
+}

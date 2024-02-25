@@ -18,6 +18,7 @@ import {
 import PageMessage from '../PageMessage/PageMessage';
 import SearchResultHeader from './SearchResultHeader/SearchResultHeader';
 import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
+import FadeInAnimation from '../FadeInAnimation/FadeInAnimation';
 
 interface ArticlesTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
@@ -67,15 +68,21 @@ const ArticlesTable: FunctionComponent<ArticlesTableProps> = async ({
 								lg={4}
 								xl={3}
 							>
-								<ArticleCard
-									myArticle={article}
-									// idx={(page - 1) * items + idx}
-									highlightedWords={
-										search instanceof Array
-											? search
-											: [search]
+								<FadeInAnimation
+									durationMs={
+										Math.floor(Math.random() * 300) + 300
 									}
-								/>
+								>
+									<ArticleCard
+										myArticle={article}
+										// idx={(page - 1) * items + idx}
+										highlightedWords={
+											search instanceof Array
+												? search
+												: [search]
+										}
+									/>
+								</FadeInAnimation>
 							</Grid>
 						))}
 					</Grid>

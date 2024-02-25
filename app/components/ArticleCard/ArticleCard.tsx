@@ -16,7 +16,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Tooltip from '@mui/material/Tooltip';
 import dynamic from 'next/dynamic';
-import { formatNumber, getFormattedVisibility, slugify } from '@/lib/helper';
+import {
+	formatNumber,
+	getFormattedVisibility,
+	basicSlugify,
+} from '@/lib/helper';
 import MoreArticleOptions from '../MoreArticleOptions/MoreArticleOptions';
 import Highlighter from 'react-highlight-words';
 
@@ -101,7 +105,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 										searchWords={highlightedWords ?? []}
 										autoEscape={true}
 										textToHighlight={myArticle.title}
-										sanitize={slugify}
+										sanitize={basicSlugify}
 									/>
 								</Typography>
 							</Tooltip>
@@ -229,7 +233,7 @@ const ArticleCard: FunctionComponent<ArticleCardProps> = ({
 														textToHighlight={
 															myArticle.description
 														}
-														sanitize={slugify}
+														sanitize={basicSlugify}
 													/>
 												</Typography>
 											</Tooltip>

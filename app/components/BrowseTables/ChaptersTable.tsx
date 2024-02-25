@@ -18,6 +18,7 @@ import {
 import PageMessage from '../PageMessage/PageMessage';
 import SearchResultHeader from './SearchResultHeader/SearchResultHeader';
 import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
+import FadeInAnimation from '../FadeInAnimation/FadeInAnimation';
 
 interface ChaptersTableProps {
 	searchParams?: { [key: string]: string | string[] | undefined };
@@ -67,15 +68,21 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 								lg={2.4}
 								xl={2.4}
 							>
-								<ChapterCard
-									myChapter={chapter}
-									isExpanded={false}
-									highlightedWords={
-										search instanceof Array
-											? search
-											: [search]
+								<FadeInAnimation
+									durationMs={
+										Math.floor(Math.random() * 300) + 300
 									}
-								/>
+								>
+									<ChapterCard
+										myChapter={chapter}
+										isExpanded={false}
+										highlightedWords={
+											search instanceof Array
+												? search
+												: [search]
+										}
+									/>
+								</FadeInAnimation>
 							</Grid>
 						))}
 					</Grid>

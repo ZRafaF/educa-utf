@@ -42,16 +42,22 @@ const useQueryFilter = () => {
 	 *
 	 * Example: {tags: ['tag1', 'tag2']}
 	 */
-	const updateFilter = (filters: QueryFilters) => {
+	const updateFilter = (filters: QueryFilters, goToPage1?: boolean) => {
 		const newTags =
 			filters.tags === undefined ? tags : filters.tags.join(',');
 		const newSearch =
 			filters.search === undefined ? search : filters.search;
 
-		const newSearchParams = createQueryString([
+		let stringQuery = [
 			{ name: 'tags', value: newTags },
 			{ name: 'search', value: newSearch },
-		]);
+		];
+
+		if (goToPage1) {
+			stringQuery.push({ name: 'page', value: '1' });
+		}
+
+		const newSearchParams = createQueryString(stringQuery);
 
 		updateLoadingState(searchParams.toString(), newSearchParams);
 		router.replace(pathname + '?' + newSearchParams);

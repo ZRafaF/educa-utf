@@ -20,7 +20,11 @@ import { ChaptersExpandTags } from '@/types/expanded-types';
 import React from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import dynamic from 'next/dynamic';
-import { formatNumber, getFormattedVisibility, slugify } from '@/lib/helper';
+import {
+	formatNumber,
+	getFormattedVisibility,
+	basicSlugify,
+} from '@/lib/helper';
 import { getChapterCoverURL } from '@/lib/apiHelpers/chaptersAPI';
 import MoreChapterOptions from '../MoreChapterOptions/MoreChapterOptions';
 import Box from '@mui/material/Box';
@@ -81,7 +85,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 								searchWords={highlightedWords ?? []}
 								autoEscape={true}
 								textToHighlight={myChapter.title}
-								sanitize={slugify}
+								sanitize={basicSlugify}
 							/>
 						</Typography>
 					</Tooltip>
@@ -139,7 +143,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 						searchWords={highlightedWords ?? []}
 						autoEscape={true}
 						textToHighlight={myChapter.description}
-						sanitize={slugify}
+						sanitize={basicSlugify}
 					/>
 				</Typography>
 			</Tooltip>
@@ -202,7 +206,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 							searchWords={highlightedWords ?? []}
 							autoEscape={true}
 							textToHighlight={myChapter.title}
-							sanitize={slugify}
+							sanitize={basicSlugify}
 						/>
 					</Typography>
 				</Tooltip>
@@ -225,7 +229,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 							searchWords={highlightedWords ?? []}
 							autoEscape={true}
 							textToHighlight={myChapter.description}
-							sanitize={slugify}
+							sanitize={basicSlugify}
 						/>
 					</Typography>
 				</Tooltip>

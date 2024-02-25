@@ -21,7 +21,6 @@ const SearchInputComponent: FunctionComponent<
 	const [updateFilter] = useQueryFilter();
 
 	const [debouncedSearchInput] = useDebounce(searchInput, 300);
-
 	useEffect(() => {
 		updateFilter({
 			tags: undefined,
