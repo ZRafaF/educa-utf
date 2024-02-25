@@ -55,7 +55,15 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 	highlightedWords,
 }) => {
 	const Description = ({ numOfLines }: { numOfLines: number }) => (
-		<Tooltip title={myChapter.description} arrow placement="top">
+		<Tooltip
+			title={
+				myChapter.description.length
+					? myChapter.description
+					: 'Sem descrição...'
+			}
+			arrow
+			placement="top"
+		>
 			<Typography
 				variant="body2"
 				color="text.secondary"
@@ -67,19 +75,23 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					WebkitBoxOrient: 'vertical',
 					WebkitLineClamp: numOfLines,
 				}}
-				minHeight={'2.5rem'}
+				minHeight={`${1.25 * numOfLines}rem`}
 			>
-				<Highlighter
-					searchWords={highlightedWords ?? []}
-					autoEscape={true}
-					textToHighlight={myChapter.description}
-					sanitize={basicSlugify}
-				/>
+				{myChapter.description.length ? (
+					<Highlighter
+						searchWords={highlightedWords ?? []}
+						autoEscape={true}
+						textToHighlight={myChapter.description}
+						sanitize={basicSlugify}
+					/>
+				) : (
+					'Sem descrição...'
+				)}
 			</Typography>
 		</Tooltip>
 	);
 
-	const ExpandedContent = ({ children }: { children: ReactNode }) => (
+	const ExpandedContent = () => (
 		<CardContent
 			sx={{
 				p: { xs: 1, sm: 1, md: 1 },
@@ -162,11 +174,11 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					</Stack>
 				</Stack>
 			</Stack>
-			{children}
+			<Description numOfLines={4} />
 		</CardContent>
 	);
 
-	const CollapsedContent = ({ children }: { children: ReactNode }) => (
+	const CollapsedContent = () => (
 		<CardContent
 			sx={{
 				p: 1,
@@ -226,7 +238,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 						/>
 					</Typography>
 				</Tooltip>
-				{children}
+				<Description numOfLines={2} />
 
 				<Stack
 					direction={'row'}
@@ -297,15 +309,7 @@ const ChapterCard: FunctionComponent<ChapterCardProps> = ({
 					</Tooltip>
 				</Box>
 
-				{isExpanded ? (
-					<ExpandedContent>
-						<Description numOfLines={4} />
-					</ExpandedContent>
-				) : (
-					<CollapsedContent>
-						<Description numOfLines={2} />
-					</CollapsedContent>
-				)}
+				{isExpanded ? <ExpandedContent /> : <CollapsedContent />}
 			</CardActionArea>
 
 			<Divider />

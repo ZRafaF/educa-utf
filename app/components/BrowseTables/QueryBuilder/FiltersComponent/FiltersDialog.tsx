@@ -51,10 +51,13 @@ const FiltersDialog: FunctionComponent<FiltersDialogProps> = ({
 	const handleChangeFilters = () => {
 		const tagFilterString = selectedTags.map((tag) => tag.id);
 
-		updateFilter({
-			tags: tagFilterString,
-			search: undefined,
-		});
+		updateFilter(
+			{
+				tags: tagFilterString,
+				search: undefined,
+			},
+			true
+		);
 	};
 
 	return (
