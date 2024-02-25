@@ -187,7 +187,8 @@ export function slugify(str: string) {
 }
 
 export function basicSlugify(str: string) {
-	return String(str)
-		.normalize('NFKD') // split accented characters into their base characters and diacritical marks
-		.toLowerCase(); // convert to lowercase
+	return String(str);
+	str.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.toLowerCase();
 }
