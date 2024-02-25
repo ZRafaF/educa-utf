@@ -5,33 +5,78 @@
 
 'use client';
 
-import { FunctionComponent, useEffect, useState } from 'react';
+import {
+	Dispatch,
+	FunctionComponent,
+	SetStateAction,
+	useEffect,
+	useState,
+} from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { usePathname, useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 
-interface SearchFieldProps {}
+interface SearchFieldProps {
+	isExtended: boolean;
+	setIsExtended: Dispatch<SetStateAction<boolean>>;
+}
 
-const SearchField: FunctionComponent<SearchFieldProps> = () => {
+const SearchField: FunctionComponent<SearchFieldProps> = ({
+	isExtended,
+	setIsExtended,
+}) => {
 	const [searchInput, setSearchInput] = useState('');
 	const pathname = usePathname();
 	const paths = pathname.split('/');
-
 	const router = useRouter();
 	const [searchType, setSearchType] = useState<'Artigos' | 'Capítulos'>(
 		'Artigos'
 	);
 
 	const disabled = paths.length > 1 && paths[1] === 'browse';
-	// See if
-	console.log(disabled);
 
 	useEffect(() => {
 		setSearchInput('');
 	}, [pathname]);
+
+	if (!isExtended)
+		return (
+			<Tooltip
+				title={
+					disabled
+						? 'A barra de busca está desabilitada nessa página.'
+						: undefined
+				}
+				arrow
+			>
+				<Box
+					sx={{ flexGrow: 1 }}
+					display="flex"
+					justifyContent={'end'}
+					px={1}
+				>
+					<Stack direction="row" justifyContent="flex-end">
+						<Tooltip title="Abrir barra de busca" arrow>
+							<IconButton
+								size="large"
+								aria-label="search"
+								aria-haspopup="true"
+								color="inherit"
+								disabled={disabled}
+								onClick={() => setIsExtended(true)}
+							>
+								<SearchIcon />
+							</IconButton>
+						</Tooltip>
+					</Stack>
+				</Box>
+			</Tooltip>
+		);
 
 	return (
 		<Stack
@@ -75,6 +120,7 @@ const SearchField: FunctionComponent<SearchFieldProps> = () => {
 							outline: 'none',
 						},
 					}}
+					autoFocus
 					width={'100%'}
 					name="search"
 					value={
@@ -86,66 +132,70 @@ const SearchField: FunctionComponent<SearchFieldProps> = () => {
 						setSearchInput(e.target.value);
 					}}
 				/>
-				<Box color={'white'}>
-					<Button
+				<Box>
+					<Tooltip title="Trocar item de busca" arrow>
+						<Button
+							sx={{
+								textTransform: 'inherit',
+								mx: 1,
+								px: { xs: 0.8, sm: 1.25, md: 1.5 },
+								// fontSize: 26,
+								height: '2rem',
+							}}
+							variant="outlined"
+							onClick={() => {
+								setSearchType(
+									searchType === 'Artigos'
+										? 'Capítulos'
+										: 'Artigos'
+								);
+							}}
+						>
+							{searchType} <SwapVertIcon fontSize="inherit" />
+						</Button>
+					</Tooltip>
+				</Box>
+				<Tooltip title="Buscar" arrow>
+					<Box
+						height={'100%'}
+						display={'flex'}
+						alignItems={'center'}
+						px={1}
+						component={'button'}
+						border="none"
 						sx={{
-							textTransform: 'inherit',
-							mx: 1,
-							px: 1.5,
-							// fontSize: 26,
-							height: '2rem',
+							':enabled': {
+								':hover': {
+									backgroundColor: 'rgba(0, 0, 0, 0.3)',
+								},
+								':active': {
+									backgroundColor: 'rgba(0, 0, 0, 0.4)',
+								},
+							},
 						}}
-						color="inherit"
-						variant="outlined"
 						onClick={() => {
-							setSearchType(
-								searchType === 'Artigos'
-									? 'Capítulos'
-									: 'Artigos'
+							router.push(
+								`/browse/${
+									searchType === 'Artigos'
+										? 'articles'
+										: 'chapters'
+								}?search=${searchInput}`
 							);
-						}}
-					>
-						{searchType} <SwapVertIcon fontSize="inherit" />
-					</Button>
-				</Box>
-				<Box
-					height={'100%'}
-					display={'flex'}
-					alignItems={'center'}
-					px={1}
-					component={'button'}
-					border="none"
-					sx={{
-						':enabled': {
-							':hover': {
-								backgroundColor: 'rgba(0, 0, 0, 0.3)',
-							},
-							':active': {
-								backgroundColor: 'rgba(0, 0, 0, 0.4)',
-							},
-						},
-					}}
-					onClick={() => {
-						router.push(
-							`/browse/${
-								searchType === 'Artigos'
-									? 'articles'
-									: 'chapters'
-							}?search=${searchInput}`
-						);
+							setIsExtended(false);
 
-						// window.location.assign(
-						// 	`/browse/${
-						// 		searchType === 'Artigos'
-						// 			? 'articles'
-						// 			: 'chapters'
-						// 	}?search=${searchInput}`
-						// );
-					}}
-					type="submit"
-				>
-					<SearchIcon />
-				</Box>
+							// window.location.assign(
+							// 	`/browse/${
+							// 		searchType === 'Artigos'
+							// 			? 'articles'
+							// 			: 'chapters'
+							// 	}?search=${searchInput}`
+							// );
+						}}
+						type="submit"
+					>
+						<SearchIcon />
+					</Box>
+				</Tooltip>
 			</Stack>
 		</Stack>
 	);

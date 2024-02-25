@@ -10,9 +10,13 @@ import { FunctionComponent, useContext } from 'react';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 
-interface ToggleButtonProps {}
+interface ToggleButtonProps {
+	visible: boolean;
+}
 
-const ToggleDrawerButton: FunctionComponent<ToggleButtonProps> = () => {
+const ToggleDrawerButton: FunctionComponent<ToggleButtonProps> = ({
+	visible,
+}) => {
 	const [open, setOpen] = useContext(OverlayControllerContext);
 
 	const toggleDrawer = () => {
@@ -27,6 +31,7 @@ const ToggleDrawerButton: FunctionComponent<ToggleButtonProps> = () => {
 			onClick={toggleDrawer}
 			sx={{
 				marginRight: '20px',
+				display: visible ? 'inherit' : 'none',
 			}}
 		>
 			{open ? <ChevronLeft /> : <MenuIcon />}
