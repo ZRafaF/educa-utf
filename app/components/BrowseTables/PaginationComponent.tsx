@@ -16,7 +16,7 @@ import { MIN_PAGINATION_HEIGHT } from '@/lib/helper';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Divider from '@mui/material/Divider';
 
-const allowedItemsPerPage = [10, 20, 30, 50];
+const allowedItemsPerPage = [12, 24, 48, 96];
 
 interface PaginationComponentProps {
 	totalPages: number;
@@ -31,7 +31,7 @@ const PaginationComponent: FunctionComponent<PaginationComponentProps> = ({
 	const searchParams = useSearchParams()!;
 	const router = useRouter();
 
-	const sort = searchParams.get('items') ?? '20';
+	const sort = searchParams.get('items') ?? '24';
 	const page = searchParams.get('page') ?? '1';
 
 	const createQueryString = useCallback(
@@ -154,7 +154,7 @@ const PaginationComponent: FunctionComponent<PaginationComponentProps> = ({
 						width={'100%'}
 						textAlign={'right'}
 					>
-						Total de itens encontrados: {totalItems}
+						Total de itens: {totalItems}
 					</Typography>
 				</Grid>
 			</Grid>

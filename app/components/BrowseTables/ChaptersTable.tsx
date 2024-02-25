@@ -13,10 +13,8 @@ import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
 	MIN_TOOLBAR_HEIGHT,
-	sleep,
 } from '@/lib/helper';
 import PageMessage from '../PageMessage/PageMessage';
-import { constructFilterString } from '@/lib/apiHelpers/miscAPI';
 import FadeInAnimation from '../FadeInAnimation/FadeInAnimation';
 
 interface ChaptersTableProps {
@@ -44,7 +42,7 @@ const ChaptersTable: FunctionComponent<ChaptersTableProps> = async ({
 	return (
 		<>
 			<Box
-				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
+			// minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT} - ${MIN_PAGINATION_HEIGHT})`}
 			>
 				{chaptersList.totalItems === 0 ? (
 					<PageMessage message="Ops. Parece que não ha correspondências a sua pesquisa. Tente alterar seus filtros!" />
