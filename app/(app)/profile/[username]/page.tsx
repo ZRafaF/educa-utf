@@ -19,6 +19,9 @@ import PrivateDrawerContent from './PrivateDrawerContent';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import UserContentProfile from '@/components/UserContentProfile/UserContentProfile';
+import IconButton from '@mui/material/IconButton';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import Button from '@mui/material/Button';
 
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
@@ -103,23 +106,40 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						alignItems={'center'}
 					>
 						<EditablePfp userStats={userStats} />
-						<Box>
-							<Typography
-								variant="h3"
-								fontSize={{ xs: 'xx-large', sm: 'xxx-large' }}
-								component="h1"
-								color="primary"
-								fontWeight={700}
-							>
-								{userStats.name}
-							</Typography>
-							<Typography
-								color="text.secondary"
-								variant="subtitle2"
-								component="p"
-							>
-								{userStats.description}
-							</Typography>
+						<Box display={'flex'} gap={2} alignItems={'center'}>
+							<Box>
+								<Typography
+									variant="h3"
+									fontSize={{
+										xs: 'xx-large',
+										sm: 'xxx-large',
+									}}
+									component="h1"
+									color="primary"
+									fontWeight={700}
+								>
+									{userStats.name}
+								</Typography>
+								<Typography
+									color="text.secondary"
+									variant="subtitle2"
+									component="p"
+								>
+									{userStats.description}
+								</Typography>
+							</Box>
+							<Box>
+								<Button
+									color="secondary"
+									variant="outlined"
+									startIcon={<WarningAmberIcon />}
+								>
+									Reportar
+								</Button>
+								<IconButton color="secondary">
+									<WarningAmberIcon />
+								</IconButton>
+							</Box>
 						</Box>
 					</Box>
 				</Container>

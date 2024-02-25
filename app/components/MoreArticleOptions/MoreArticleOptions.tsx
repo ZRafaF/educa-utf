@@ -19,6 +19,7 @@ import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import {
 	ArticlesResponse,
 	ArticlesStatsResponse,
+	ReportsTypeOptions,
 } from '@/types/pocketbase-types';
 import ShareIcon from '@mui/icons-material/Share';
 import ReportIcon from '@mui/icons-material/Report';
@@ -109,8 +110,8 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						<MenuItem
 							onClick={(e) => {
 								navigator.share({
-									title: `Olhe esse artigo que encontrei no EducaUTF!`,
-									text: `Ele se chama ${article.title}`,
+									title: `${article.title}`,
+									text: `Olhe esse artigo que encontrei no EducaUTF!`,
 									url: shareUrl
 										? shareUrl
 										: window.location.protocol,
@@ -204,6 +205,9 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 								}}
 								onClick={(e) => {
 									handleClose(e);
+									router.push(
+										`/report?type=${ReportsTypeOptions.Artigo}&id=${article.id}`
+									);
 								}}
 							>
 								<ListItemIcon>

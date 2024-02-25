@@ -18,6 +18,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {
 	ChaptersResponse,
 	ChaptersStatsResponse,
+	ReportsTypeOptions,
 } from '@/types/pocketbase-types';
 import ShareIcon from '@mui/icons-material/Share';
 import ReportIcon from '@mui/icons-material/Report';
@@ -104,8 +105,8 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 						<MenuItem
 							onClick={(e) => {
 								navigator.share({
-									title: `Olhe esse capitulo que encontrei no EducaUTF!`,
-									text: `Ele se chama ${chapter.title}`,
+									title: `${chapter.title}`,
+									text: `Olhe esse capitulo que encontrei no EducaUTF!`,
 									url: shareUrl,
 								});
 								handleClose(e);
@@ -171,6 +172,9 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 								}}
 								onClick={(e) => {
 									handleClose(e);
+									router.push(
+										`/report?type=${ReportsTypeOptions.Capítulo}&id=${chapter.id}`
+									);
 								}}
 							>
 								<ListItemIcon>

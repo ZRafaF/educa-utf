@@ -91,7 +91,7 @@ const MoreDataOptions: FunctionComponent<MoreDataOptionsProps> = ({ data }) => {
 
 						navigator.share({
 							title: `${data.title} - EducaUTF`,
-							text: `Aqui: ${data.description}`,
+							text: `${data.description}`,
 							url: shareUrl,
 						});
 
