@@ -5,14 +5,13 @@
 'use client';
 
 import { Dispatch, FunctionComponent, SetStateAction } from 'react';
-import { useTheme } from '@mui/material/styles';
 
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip/Tooltip';
 import Box from '@mui/material/Box/Box';
 import SearchField from '@/components/SearchField/SearchField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { usePathname } from 'next/navigation';
+
 interface SearchBarProps {
 	isExtended: boolean;
 	onlySmallScreen: boolean;
@@ -24,10 +23,6 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
 	onlySmallScreen,
 	setIsExtended,
 }) => {
-	const pathname = usePathname();
-	const paths = pathname.split('/');
-	const disabled = paths.length > 1 && paths[1] === 'browse';
-
 	return (
 		<Box
 			sx={{ flexGrow: 1 }}
@@ -52,6 +47,7 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
 			<SearchField
 				isExtended={isExtended}
 				setIsExtended={setIsExtended}
+				onlySmallScreen={onlySmallScreen}
 			/>
 		</Box>
 	);

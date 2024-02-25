@@ -10,6 +10,7 @@ import {
 	FunctionComponent,
 	SetStateAction,
 	useEffect,
+	useRef,
 	useState,
 } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -24,11 +25,13 @@ import IconButton from '@mui/material/IconButton';
 interface SearchFieldProps {
 	isExtended: boolean;
 	setIsExtended: Dispatch<SetStateAction<boolean>>;
+	onlySmallScreen: boolean;
 }
 
 const SearchField: FunctionComponent<SearchFieldProps> = ({
 	isExtended,
 	setIsExtended,
+	onlySmallScreen,
 }) => {
 	const [searchInput, setSearchInput] = useState('');
 	const pathname = usePathname();
@@ -37,7 +40,7 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 	const [searchType, setSearchType] = useState<'Artigos' | 'Capítulos'>(
 		'Artigos'
 	);
-
+	const searchInputRef = useRef<HTMLInputElement>(null);
 	const disabled = paths.length > 1 && paths[1] === 'browse';
 
 	useEffect(() => {
@@ -95,6 +98,13 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 			component={'form'}
 			onSubmit={(e) => {
 				e.preventDefault();
+				router.push(
+					`/browse/${
+						searchType === 'Artigos' ? 'articles' : 'chapters'
+					}?search=${searchInput}`
+				);
+				if (onlySmallScreen) setIsExtended(false);
+				searchInputRef.current?.blur();
 			}}
 		>
 			<Stack
@@ -131,6 +141,7 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 					onChange={(e) => {
 						setSearchInput(e.target.value);
 					}}
+					ref={searchInputRef}
 				/>
 				<Box>
 					<Tooltip title="Trocar item de busca" arrow>
@@ -172,24 +183,6 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 									backgroundColor: 'rgba(0, 0, 0, 0.4)',
 								},
 							},
-						}}
-						onClick={() => {
-							router.push(
-								`/browse/${
-									searchType === 'Artigos'
-										? 'articles'
-										: 'chapters'
-								}?search=${searchInput}`
-							);
-							setIsExtended(false);
-
-							// window.location.assign(
-							// 	`/browse/${
-							// 		searchType === 'Artigos'
-							// 			? 'articles'
-							// 			: 'chapters'
-							// 	}?search=${searchInput}`
-							// );
 						}}
 						type="submit"
 					>

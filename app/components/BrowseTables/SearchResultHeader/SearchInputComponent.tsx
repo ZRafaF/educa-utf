@@ -24,15 +24,8 @@ const SearchInputComponent: FunctionComponent<
 		searchParams.get('search') ?? ''
 	);
 	const [updateFilter] = useQueryFilter();
-	// const [initialized, setInitialized] = useState(false);
-
-	// console.log(initialized);
 
 	const [debouncedSearchInput] = useDebounce(searchInput, 300);
-
-	// useEffect(() => {
-	// 	setInitialized(false);
-	// }, [searchParams, setInitialized]);
 
 	useEffect(() => {
 		if (debouncedSearchInput !== searchParams.get('search')) {
@@ -44,7 +37,7 @@ const SearchInputComponent: FunctionComponent<
 				true
 			);
 		}
-	}, [debouncedSearchInput, updateFilter]);
+	}, [debouncedSearchInput, updateFilter, searchParams]);
 
 	return (
 		<Stack
