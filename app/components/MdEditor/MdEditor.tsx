@@ -89,7 +89,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	const autofocusOptions = useMemo(() => {
 		return {
 			autofocus: true,
-			inputStyle: 'contenteditable',
+			inputStyle: 'textarea',
 			spellChecker: false,
 
 			nativeSpellcheck: true,

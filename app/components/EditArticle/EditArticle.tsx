@@ -61,21 +61,26 @@ const EditArticle: FunctionComponent<EditArticleProps> = ({ articleId }) => {
 		const fetchArticleInfo = async () => {
 			const article = await getArticleById(articleId);
 
-			if (article.user === user?.id) {
+			if (article.user) {
 				const articleDocument = await getArticleDocument(article);
 
 				setMyArticleDocument(articleDocument);
 				setMyArticle(article);
 			}
 		};
+
 		fetchArticleInfo().finally(() => {
 			setLoading(false);
 		});
-	}, [articleId, user]);
+	}, [articleId]);
 
 	if (loading) {
 		return <PageMessage message="Carregando artigo, aguarde..." loading />;
-	} else if (myArticle && myArticleDocument !== undefined) {
+	} else if (
+		myArticle &&
+		myArticleDocument !== undefined &&
+		user?.id === myArticle.user
+	) {
 		return (
 			<Container maxWidth={'xl'} disableGutters>
 				<Box component="form" onSubmit={handleSubmit}>
