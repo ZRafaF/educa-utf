@@ -51,6 +51,9 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 
 	const [selectedId, setSelectedId] = useState<string>(defaultId);
 
+	const isInvalidContent =
+		content === undefined && selectedType !== ReportsTypeOptions.Outro;
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const data: FormData = new FormData(e.currentTarget);
@@ -170,13 +173,16 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 								<TextField
 									name="id"
 									label={`ID`}
-									helperText="Id do item que deseja reportar."
+									helperText={
+										isInvalidContent ? 'ID inválido' : ''
+									}
 									fullWidth
 									autoComplete="id"
 									defaultValue={defaultId}
 									onChange={(e) => {
 										setSelectedId(e.target.value);
 									}}
+									error={isInvalidContent}
 								/>
 							</Stack>
 						</Grid>
