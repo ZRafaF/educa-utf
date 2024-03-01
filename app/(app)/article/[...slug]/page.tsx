@@ -50,6 +50,10 @@ export async function generateMetadata({
 		const article = await getArticleById(articleId);
 		const articleStats = await getArticleStatsById(articleId);
 		let tag = article.expand?.tag?.name ?? '';
+
+		const keywords = article.expand?.key_words ?? [];
+		const keywodsString = keywords.map((kw) => kw.word);
+
 		return {
 			title: `${article.title} - EducaUTF`,
 			description: article.description,
@@ -62,7 +66,14 @@ export async function generateMetadata({
 				locale: 'pt_BR',
 				type: 'website',
 			},
-			keywords: ['EducaUTF', 'Educa UTF', 'artigo', article.title, tag],
+			keywords: [
+				'EducaUTF',
+				'Educa UTF',
+				'artigo',
+				article.title,
+				tag,
+				...keywodsString,
+			],
 		};
 	} catch (error) {
 		return {

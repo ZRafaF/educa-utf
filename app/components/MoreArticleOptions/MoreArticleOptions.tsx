@@ -19,6 +19,7 @@ import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import {
 	ArticlesResponse,
 	ArticlesStatsResponse,
+	ReportsTypeOptions,
 } from '@/types/pocketbase-types';
 import ShareIcon from '@mui/icons-material/Share';
 import ReportIcon from '@mui/icons-material/Report';
@@ -32,6 +33,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 
 interface MoreArticleOptionsProps {
 	article: ArticlesResponse | ArticlesStatsResponse;
@@ -101,6 +104,16 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						minWidth: '250px',
 					}}
 				>
+					<ListItem>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+						>
+							ID: <b>{article.id}</b>
+						</Typography>
+					</ListItem>
+					<Divider />
 					<Tooltip
 						title="Compartilhar artigo"
 						arrow
@@ -109,8 +122,8 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						<MenuItem
 							onClick={(e) => {
 								navigator.share({
-									title: `Olhe esse artigo que encontrei no EducaUTF!`,
-									text: `Ele se chama ${article.title}`,
+									title: `${article.title}`,
+									text: `Olhe esse artigo que encontrei no EducaUTF!`,
 									url: shareUrl
 										? shareUrl
 										: window.location.protocol,
@@ -204,6 +217,9 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 								}}
 								onClick={(e) => {
 									handleClose(e);
+									router.push(
+										`/report?type=${ReportsTypeOptions.Artigo}&id=${article.id}`
+									);
 								}}
 							>
 								<ListItemIcon>

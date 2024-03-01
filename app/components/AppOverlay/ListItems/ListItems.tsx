@@ -6,8 +6,6 @@
 import { FunctionComponent } from 'react';
 import Divider from '@mui/material/Divider/Divider';
 import List from '@mui/material/List/List';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import React from 'react';
 import LinkItem from '@/components/LinkItem/LinkItem';
@@ -47,8 +45,8 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					icon={<NoteAddIcon />}
 					href="/new"
 				/>
-
 				<Divider />
+
 				<InstallPwaButton />
 			</List>
 		</React.Fragment>

@@ -31,6 +31,10 @@ export async function getUsersStatsByUsername(username: string) {
 		});
 }
 
+export async function getUsersStatsById(userId: string) {
+	return pb.collection('users_stats').getOne<UsersStatsResponse>(userId);
+}
+
 export async function updateUserAvatar(id: string, newAvatar: File | null) {
 	return await pb.collection('users').update<UsersResponse>(id, {
 		avatar: newAvatar,

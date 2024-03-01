@@ -18,6 +18,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {
 	ChaptersResponse,
 	ChaptersStatsResponse,
+	ReportsTypeOptions,
 } from '@/types/pocketbase-types';
 import ShareIcon from '@mui/icons-material/Share';
 import ReportIcon from '@mui/icons-material/Report';
@@ -28,6 +29,8 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { deleteChapter } from '@/lib/apiHelpers/chaptersAPI';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 
 interface MoreChapterOptionsProps {
 	chapter: ChaptersResponse | ChaptersStatsResponse;
@@ -96,6 +99,16 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 						minWidth: '250px',
 					}}
 				>
+					<ListItem>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+						>
+							ID: <b>{chapter.id}</b>
+						</Typography>
+					</ListItem>
+					<Divider />
 					<Tooltip
 						title="Compartilhar capítulo"
 						arrow
@@ -104,8 +117,8 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 						<MenuItem
 							onClick={(e) => {
 								navigator.share({
-									title: `Olhe esse capitulo que encontrei no EducaUTF!`,
-									text: `Ele se chama ${chapter.title}`,
+									title: `${chapter.title}`,
+									text: `Olhe esse capitulo que encontrei no EducaUTF!`,
 									url: shareUrl,
 								});
 								handleClose(e);
@@ -171,6 +184,9 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 								}}
 								onClick={(e) => {
 									handleClose(e);
+									router.push(
+										`/report?type=${ReportsTypeOptions.Capítulo}&id=${chapter.id}`
+									);
 								}}
 							>
 								<ListItemIcon>
