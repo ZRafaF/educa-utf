@@ -201,7 +201,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					</Tooltip>
 					<Divider />
 					<Tooltip
-						title={'Reportar esse capítulo'}
+						title={'Reportar esse artigo'}
 						arrow
 						placement={placement}
 					>
