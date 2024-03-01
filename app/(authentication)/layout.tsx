@@ -13,6 +13,10 @@ import MainLogoInverted from '@/components/AppOverlay/MainLogo/MainLogoInverted'
 import Box from '@mui/material/Box/Box';
 import Link from 'next/link';
 import Toolbar from '@mui/material/Toolbar/Toolbar';
+import dynamic from 'next/dynamic';
+const IsLoggedInMessage = dynamic(() => import('./IsLoggedInMessage'), {
+	ssr: false,
+});
 
 export default function LoginLayout({
 	children,
@@ -81,7 +85,7 @@ export default function LoginLayout({
 							</Paper>
 						</Link>
 					</Box>
-					{children}
+					<IsLoggedInMessage>{children}</IsLoggedInMessage>
 				</Grid>
 			</Grid>
 		</Box>
