@@ -128,7 +128,11 @@ const NoSSRTags: FunctionComponent<NoSSRTagsProps> = ({
 							disableTouchListener
 							disableHoverListener
 							title={
-								<span style={{ whiteSpace: 'pre-line' }}>
+								<span
+									style={{
+										whiteSpace: 'pre-line',
+									}}
+								>
 									{keyWords.map((keyWord, idx) => (
 										<Typography
 											key={`tag_exp${keyWord.word}_${idx}`}

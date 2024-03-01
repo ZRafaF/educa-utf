@@ -10,7 +10,7 @@ import {
 } from '@/types/pocketbase-types';
 import pb from '../PocketBase/pocketbase';
 import { ArticlesExpand } from '@/types/expanded-types';
-import { getFormData, sleep } from '../helper';
+import { getFormData } from '../helper';
 import { ListResult, RecordOptions } from 'pocketbase';
 
 export async function getFullListOfArticles() {

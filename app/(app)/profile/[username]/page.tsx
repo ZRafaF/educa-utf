@@ -19,6 +19,11 @@ import PrivateDrawerContent from './PrivateDrawerContent';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import UserContentProfile from '@/components/UserContentProfile/UserContentProfile';
+import IconButton from '@mui/material/IconButton';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import Button from '@mui/material/Button';
+import Link from 'next/link';
+import { ReportsTypeOptions } from '@/types/pocketbase-types';
 
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
@@ -103,23 +108,46 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						alignItems={'center'}
 					>
 						<EditablePfp userStats={userStats} />
-						<Box>
-							<Typography
-								variant="h3"
-								fontSize={{ xs: 'xx-large', sm: 'xxx-large' }}
-								component="h1"
-								color="primary"
-								fontWeight={700}
-							>
-								{userStats.name}
-							</Typography>
-							<Typography
-								color="text.secondary"
-								variant="subtitle2"
-								component="p"
-							>
-								{userStats.description}
-							</Typography>
+						<Box display={'flex'} gap={2} alignItems={'center'}>
+							<Box>
+								<Typography
+									variant="h3"
+									fontSize={{
+										xs: 'xx-large',
+										sm: 'xxx-large',
+									}}
+									component="h1"
+									color="primary"
+									fontWeight={700}
+								>
+									{userStats.name}
+									<Box component={'span'} ml={1}>
+										<IconButton
+											color="secondary"
+											// sx={{
+											// 	display: {
+											// 		xs: 'block',
+											// 		sm: 'none',
+											// 		md: 'block',
+											// 		lg: 'none',
+											// 	},
+											// }}
+											LinkComponent={Link}
+											href={`/report?type=${ReportsTypeOptions.Usuário}&id=${userStats.id}`}
+										>
+											<WarningAmberIcon />
+										</IconButton>
+									</Box>
+								</Typography>
+
+								<Typography
+									color="text.secondary"
+									variant="subtitle2"
+									component="p"
+								>
+									{userStats.description}
+								</Typography>
+							</Box>
 						</Box>
 					</Box>
 				</Container>
@@ -139,6 +167,14 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 							<b>INFORMAÇÕES:</b>
 						</Typography>
 						<Box display={'flex'} pt={1} gap={1} flexWrap={'wrap'}>
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
+								ID: <b>{userStats.id}</b>
+							</Typography>
+							{' | '}
 							<Typography
 								color="text.secondary"
 								variant="subtitle2"

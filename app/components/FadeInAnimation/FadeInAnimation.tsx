@@ -13,7 +13,9 @@ const FadeInAnimation: FunctionComponent<FadeInAnimationProps> = ({
 	return (
 		<Box
 			sx={{
-				animation: 'fadeinout cubic-bezier(.35,.9,.3,1.13) forwards',
+				animation: 'fadeinout',
+				animationTimingFunction: 'cubic-bezier(.35,.9,.3,1.13)',
+
 				animationDuration: `${durationMs}ms`,
 				'@keyframes fadeinout': {
 					'0%': {
@@ -25,46 +27,7 @@ const FadeInAnimation: FunctionComponent<FadeInAnimationProps> = ({
 						transform: 'scale(1)',
 					},
 				},
-				'@keyframes fadein': {
-					'0%': {
-						transform: 'scale(1)',
-					},
-
-					'12%': {
-						transform: 'scale(0.89)',
-					},
-					'24%': {
-						transform: 'scale(0.56)',
-					},
-
-					'36%': {
-						transform: 'scale(0.02)',
-					},
-
-					'54%': {
-						transform: 'scale(0.25)',
-					},
-
-					'74%': {
-						transform: 'scale(0.02)',
-					},
-
-					'82%': {
-						transform: 'scale(0.06)',
-					},
-
-					'92%': {
-						transform: 'scale(0.01)',
-					},
-
-					'96%': {
-						transform: 'scale(0.02)',
-					},
-
-					'100%': {
-						transform: 'scale(0)',
-					},
-				},
+				overflow: 'visible',
 			}}
 		>
 			{children}

@@ -85,6 +85,7 @@ export type ArticlesStatsRecord = {
 	user: RecordIdString
 	views?: number
 	visibility: ArticlesStatsVisibilityOptions
+	word: string
 }
 
 export type AttachmentsRecord = {
@@ -135,7 +136,7 @@ export type ChaptersStatsRecord = {
 }
 
 export type KeyWordsRecord = {
-	user: RecordIdString
+	user?: RecordIdString
 	word: string
 }
 
@@ -161,14 +162,23 @@ export enum ReportsReasonOptions {
 	"Violação de Direitos Autorais" = "Violação de Direitos Autorais",
 	"Conteúdo Irrelevante ou Fora do Contexto" = "Conteúdo Irrelevante ou Fora do Contexto",
 	"Imagens ou Vídeos Explícitos" = "Imagens ou Vídeos Explícitos",
-	"Outros Motivos" = "Outros Motivos",
+	"Outro Motivo" = "Outro Motivo",
+}
+
+export enum ReportsTypeOptions {
+	"Artigo" = "Artigo",
+	"Capítulo" = "Capítulo",
+	"Usuário" = "Usuário",
+	"Outro" = "Outro",
 }
 export type ReportsRecord = {
+	author?: RecordIdString
 	description: string
 	reason: ReportsReasonOptions
-	report_author: RecordIdString
 	reported_article?: RecordIdString
 	reported_chapter?: RecordIdString
+	reported_user?: RecordIdString
+	type: ReportsTypeOptions
 }
 
 export enum TagsCategoryOptions {
