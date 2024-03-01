@@ -172,6 +172,14 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 								variant="subtitle2"
 								component="p"
 							>
+								ID: <b>{userStats.id}</b>
+							</Typography>
+							{' | '}
+							<Typography
+								color="text.secondary"
+								variant="subtitle2"
+								component="p"
+							>
 								Juntou-se em:{' '}
 								<b>{getFormattedDate(userStats.created)}</b>
 							</Typography>

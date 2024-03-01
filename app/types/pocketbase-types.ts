@@ -162,7 +162,7 @@ export enum ReportsReasonOptions {
 	"Violação de Direitos Autorais" = "Violação de Direitos Autorais",
 	"Conteúdo Irrelevante ou Fora do Contexto" = "Conteúdo Irrelevante ou Fora do Contexto",
 	"Imagens ou Vídeos Explícitos" = "Imagens ou Vídeos Explícitos",
-	"Outros Motivos" = "Outros Motivos",
+	"Outro Motivo" = "Outro Motivo",
 }
 
 export enum ReportsTypeOptions {
@@ -172,7 +172,7 @@ export enum ReportsTypeOptions {
 	"Outro" = "Outro",
 }
 export type ReportsRecord = {
-	author: RecordIdString
+	author?: RecordIdString
 	description: string
 	reason: ReportsReasonOptions
 	reported_article?: RecordIdString

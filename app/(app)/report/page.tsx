@@ -3,7 +3,10 @@ import { FunctionComponent } from 'react';
 import type { Metadata } from 'next/types';
 import Typography from '@mui/material/Typography';
 
-import { ReportsTypeOptions } from '@/types/pocketbase-types';
+import {
+	ReportsReasonOptions,
+	ReportsTypeOptions,
+} from '@/types/pocketbase-types';
 import ReportForm from './ReportForm';
 
 export const metadata: Metadata = {
@@ -28,7 +31,9 @@ const Page: FunctionComponent<PageProps> = ({ searchParams }) => {
 	)
 		? (searchParamType as ReportsTypeOptions)
 		: ReportsTypeOptions.Outro;
-
+	const availableReasons = Object.keys(ReportsReasonOptions).map(
+		(key) => ReportsReasonOptions[key as keyof typeof ReportsReasonOptions]
+	);
 	return (
 		<Container maxWidth={'lg'} sx={{ py: 4, flexGrow: 1 }}>
 			<Typography component="h1" variant="h4" align="center" pb={2}>
@@ -38,6 +43,7 @@ const Page: FunctionComponent<PageProps> = ({ searchParams }) => {
 				availableTypes={availableTypes}
 				defaultId={defaultId}
 				defaultType={defaultType}
+				availableReasons={availableReasons}
 			/>
 		</Container>
 	);

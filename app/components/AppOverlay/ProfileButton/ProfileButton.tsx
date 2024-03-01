@@ -110,7 +110,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 			disableScrollLock
 		>
 			<ListItem>
-				<Typography variant="caption" maxWidth={500}>
+				<Typography variant="caption" maxWidth={200}>
 					Olá:
 					<Link
 						href={user ? `/profile/${user.username}` : '/'}

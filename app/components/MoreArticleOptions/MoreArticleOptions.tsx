@@ -33,6 +33,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 
 interface MoreArticleOptionsProps {
 	article: ArticlesResponse | ArticlesStatsResponse;
@@ -102,6 +104,16 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 						minWidth: '250px',
 					}}
 				>
+					<ListItem>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+						>
+							ID: <b>{article.id}</b>
+						</Typography>
+					</ListItem>
+					<Divider />
 					<Tooltip
 						title="Compartilhar artigo"
 						arrow

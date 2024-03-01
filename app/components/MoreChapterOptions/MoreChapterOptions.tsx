@@ -29,6 +29,8 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { deleteChapter } from '@/lib/apiHelpers/chaptersAPI';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 
 interface MoreChapterOptionsProps {
 	chapter: ChaptersResponse | ChaptersStatsResponse;
@@ -97,6 +99,16 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 						minWidth: '250px',
 					}}
 				>
+					<ListItem>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+						>
+							ID: <b>{chapter.id}</b>
+						</Typography>
+					</ListItem>
+					<Divider />
 					<Tooltip
 						title="Compartilhar capítulo"
 						arrow

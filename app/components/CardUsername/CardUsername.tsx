@@ -23,6 +23,15 @@ const CardUsername: FunctionComponent<CardUsernameProps> = ({ content }) => {
 				color="text.secondary"
 				variant="subtitle2"
 				fontStyle={'italic'}
+				sx={{
+					overflow: 'hidden',
+					wordBreak: 'break',
+					textOverflow: 'ellipsis',
+					display: '-webkit-box',
+					WebkitBoxOrient: 'vertical',
+					WebkitLineClamp: 1,
+				}}
+				maxWidth={'50%'}
 			>
 				<Link
 					href={`/profile/${content.author_username}`}

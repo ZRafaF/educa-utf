@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import {
 	ArticlesStatsResponse,
 	ChaptersStatsResponse,
+	ReportsReasonOptions,
 	ReportsTypeOptions,
 	UsersStatsResponse,
 } from '@/types/pocketbase-types';
@@ -26,17 +27,26 @@ import {
 	getChapterCoverURL,
 	getChaptersStatsById,
 } from '@/lib/apiHelpers/chaptersAPI';
+import { toast } from 'react-toastify';
+import Box from '@mui/material/Box';
+import AvatarComponent from '@/components/AvatarComponent/AvatarComponent';
+import Tooltip from '@mui/material/Tooltip';
+import { createReport } from '@/lib/apiHelpers/reportAPI';
+import usePbAuth from '@/hooks/usePbAuth';
+import { useRouter } from 'next/navigation';
 
 interface ReportFormProps {
 	defaultType: ReportsTypeOptions;
 	defaultId: string;
 	availableTypes: ReportsTypeOptions[];
+	availableReasons: ReportsReasonOptions[];
 }
 
 const ReportForm: FunctionComponent<ReportFormProps> = ({
 	defaultType,
 	defaultId,
 	availableTypes,
+	availableReasons,
 }) => {
 	const [content, setContent] = useState<
 		| UsersStatsResponse
@@ -50,16 +60,45 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 		useState<ReportsTypeOptions>(defaultType);
 
 	const [selectedId, setSelectedId] = useState<string>(defaultId);
+	const [, user] = usePbAuth();
+	const router = useRouter();
 
 	const isInvalidContent =
 		content === undefined && selectedType !== ReportsTypeOptions.Outro;
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const data: FormData = new FormData(e.currentTarget);
-		const submitedDescription = data.get('description');
-		const submitedType = data.get('type');
-		console.log(submitedType);
+		if (isInvalidContent) {
+			toast.error('Esse conteúdo não existe! Verifique o ID e o tipo.');
+			return;
+		}
+
+		createReport({
+			type: selectedType,
+			reason: e.currentTarget.reason.value,
+			description: e.currentTarget.description.value,
+			author: user?.id,
+			reported_article:
+				selectedType === ReportsTypeOptions.Artigo
+					? selectedId
+					: undefined,
+			reported_chapter:
+				selectedType === ReportsTypeOptions.Capítulo
+					? selectedId
+					: undefined,
+			reported_user:
+				selectedType === ReportsTypeOptions.Usuário
+					? selectedId
+					: undefined,
+		})
+			.then(() => {
+				toast.success('Report enviado com sucesso!');
+				router.push('/');
+			})
+			.catch((e) => {
+				toast.error('Erro ao enviar report!');
+				console.error(e);
+			});
 	};
 
 	useEffect(() => {
@@ -105,20 +144,238 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 		// switches on content type
 		switch (selectedType) {
 			case ReportsTypeOptions.Usuário:
-				if (!content) return <>Esse usuário não existe!</>;
+				if (!content)
+					return (
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+						>
+							Esse usuário não existe!
+						</Typography>
+					);
 				const user = content as UsersStatsResponse;
-				return <Typography>{user.name}</Typography>;
+				return (
+					<>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+							sx={{
+								overflow: 'hidden',
+								wordBreak: 'break',
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitBoxOrient: 'vertical',
+								WebkitLineClamp: 1,
+							}}
+						>
+							Usuário:{' '}
+							<Tooltip title={user.username} arrow>
+								<Typography
+									component="span"
+									fontWeight="bold"
+									variant="inherit"
+									color="primary"
+								>
+									{user.username}
+								</Typography>
+							</Tooltip>
+						</Typography>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+							sx={{
+								overflow: 'hidden',
+								wordBreak: 'break',
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitBoxOrient: 'vertical',
+								WebkitLineClamp: 1,
+							}}
+						>
+							Nome:{' '}
+							<Tooltip title={user.name} arrow>
+								<Typography
+									component="span"
+									fontWeight="bold"
+									variant="inherit"
+									color="primary"
+								>
+									{user.name}
+								</Typography>
+							</Tooltip>
+						</Typography>
+						{contentAvatar !== undefined && (
+							<Box display={'flex'} gap={1} alignItems={'center'}>
+								<Typography
+									color="text.secondary"
+									variant="subtitle2"
+									component="p"
+								>
+									Avatar:
+								</Typography>
+								<AvatarComponent
+									name={user.name}
+									src={contentAvatar}
+									size="small"
+								/>
+							</Box>
+						)}
+					</>
+				);
 			case ReportsTypeOptions.Artigo:
-				if (!content) return <>Esse artigo não existe!</>;
+				if (!content)
+					return (
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+						>
+							Esse artigo não existe!
+						</Typography>
+					);
 
 				const article = content as ArticlesStatsResponse;
-				return <Typography>{article.title}</Typography>;
+				return (
+					<>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+							sx={{
+								overflow: 'hidden',
+								wordBreak: 'break',
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitBoxOrient: 'vertical',
+								WebkitLineClamp: 1,
+							}}
+						>
+							Titulo:{' '}
+							<Tooltip title={article.title} arrow>
+								<Typography
+									component="span"
+									fontWeight="bold"
+									variant="inherit"
+									color="primary"
+								>
+									{article.title}
+								</Typography>
+							</Tooltip>
+						</Typography>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+							sx={{
+								overflow: 'hidden',
+								wordBreak: 'break',
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitBoxOrient: 'vertical',
+								WebkitLineClamp: 1,
+							}}
+						>
+							Autor:{' '}
+							<Tooltip title={article.author_name} arrow>
+								<Typography
+									component="span"
+									fontWeight="bold"
+									variant="inherit"
+									color="primary"
+								>
+									{article.author_name}
+								</Typography>
+							</Tooltip>
+						</Typography>
+					</>
+				);
 
 			case ReportsTypeOptions.Capítulo:
-				if (!content) return <>Esse capítulo não existe!</>;
+				if (!content)
+					return (
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+						>
+							Esse capítulo não existe!
+						</Typography>
+					);
 
 				const chapter = content as ChaptersStatsResponse;
-				return <Typography>{chapter.title}</Typography>;
+				return (
+					<>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+							sx={{
+								overflow: 'hidden',
+								wordBreak: 'break',
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitBoxOrient: 'vertical',
+								WebkitLineClamp: 1,
+							}}
+						>
+							Titulo:{' '}
+							<Tooltip title={chapter.title} arrow>
+								<Typography
+									component="span"
+									fontWeight="bold"
+									variant="inherit"
+									color="primary"
+								>
+									{chapter.title}
+								</Typography>
+							</Tooltip>
+						</Typography>
+						<Typography
+							color="text.secondary"
+							variant="subtitle2"
+							component="p"
+							sx={{
+								overflow: 'hidden',
+								wordBreak: 'break',
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitBoxOrient: 'vertical',
+								WebkitLineClamp: 1,
+							}}
+						>
+							Autor:{' '}
+							<Tooltip title={chapter.author_name} arrow>
+								<Typography
+									component="span"
+									fontWeight="bold"
+									variant="inherit"
+									color="primary"
+								>
+									{chapter.author_name}
+								</Typography>
+							</Tooltip>
+						</Typography>
+						{contentAvatar !== undefined && (
+							<Box display={'flex'} gap={1} alignItems={'center'}>
+								<Typography
+									color="text.secondary"
+									variant="subtitle2"
+									component="p"
+								>
+									Capa:
+								</Typography>
+								<AvatarComponent
+									name={chapter.title}
+									src={contentAvatar}
+									size="small"
+								/>
+							</Box>
+						)}
+					</>
+				);
 			default:
 				return <></>;
 		}
@@ -133,78 +390,127 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 			>
 				<Stack spacing={1}>
 					<Typography variant="h6" gutterBottom>
-						Informações básicas
+						Novo Reporte
 					</Typography>
 					<Grid container spacing={2}>
 						<Grid xs={12} sm>
-							<Stack spacing={2}>
-								<FormControl fullWidth>
-									<InputLabel id="demo-simple-select-label">
-										Tipo
-									</InputLabel>
-									<Select
-										labelId="demo-simple-select-label"
-										id="demo-simple-select"
-										label="Tipo"
-										name="type"
-										required
-										defaultValue={defaultType}
-										onChange={(e) => {
-											setSelectedType(
-												e.target
-													.value as ReportsTypeOptions
-											);
-										}}
-									>
-										{availableTypes.map((type) => {
-											console.log(type === defaultType);
+							<Stack>
+								<Grid container spacing={2}>
+									<Grid xs={12} sm>
+										<FormControl fullWidth>
+											<InputLabel id="demo-simple-select-label">
+												Tipo de conteúdo *
+											</InputLabel>
+											<Select
+												labelId="demo-simple-select-label"
+												id="demo-simple-select"
+												label="Tipo de conteúdo"
+												name="type"
+												required
+												defaultValue={defaultType}
+												onChange={(e) => {
+													setSelectedType(
+														e.target
+															.value as ReportsTypeOptions
+													);
+												}}
+											>
+												{availableTypes.map((type) => {
+													return (
+														<MenuItem
+															key={type}
+															value={type}
+														>
+															{type}
+														</MenuItem>
+													);
+												})}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid xs={12} sm>
+										<FormControl fullWidth>
+											<InputLabel id="reason-select-label">
+												Motivo do report *
+											</InputLabel>
+											<Select
+												labelId="reason-select-label"
+												id="reason-select"
+												label="Motivo do report"
+												name="reason"
+												required
+												defaultValue={
+													ReportsReasonOptions.Spam
+												}
+											>
+												{availableReasons.map(
+													(type) => {
+														return (
+															<MenuItem
+																key={type}
+																value={type}
+															>
+																{type}
+															</MenuItem>
+														);
+													}
+												)}
+											</Select>
+										</FormControl>
+									</Grid>
+								</Grid>
 
-											return (
-												<MenuItem
-													key={type}
-													value={type}
-												>
-													{type}
-												</MenuItem>
-											);
-										})}
-									</Select>
-								</FormControl>
-								<TextField
-									name="id"
-									label={`ID`}
-									helperText={
-										isInvalidContent ? 'ID inválido' : ''
-									}
-									fullWidth
-									autoComplete="id"
-									defaultValue={defaultId}
-									onChange={(e) => {
-										setSelectedId(e.target.value);
-									}}
-									error={isInvalidContent}
-								/>
+								{selectedType !== ReportsTypeOptions.Outro && (
+									<TextField
+										name="id"
+										label={`ID`}
+										helperText={
+											isInvalidContent
+												? 'ID inválido'
+												: ''
+										}
+										fullWidth
+										autoComplete="id"
+										defaultValue={defaultId}
+										onChange={(e) => {
+											setSelectedId(e.target.value);
+										}}
+										sx={{
+											mt: 2,
+										}}
+										error={isInvalidContent}
+									/>
+								)}
 							</Stack>
 						</Grid>
-						<Grid xs={12} sm={5} md={4}>
-							<Paper
-								sx={{
-									p: 2,
-								}}
-								variant="outlined"
-							>
-								<Stack>{reportedContent()}</Stack>
-							</Paper>
-						</Grid>
+						{selectedType !== ReportsTypeOptions.Outro && (
+							<Grid xs={12} sm={5} md={4}>
+								<Paper
+									sx={{
+										p: 2,
+										bgcolor: 'grey.A700',
+									}}
+									variant="outlined"
+								>
+									<Stack spacing={1}>
+										{reportedContent()}
+									</Stack>
+								</Paper>
+							</Grid>
+						)}
 
 						<Grid xs={12}>
 							<TextField
 								name="description"
 								label={`Descrição...`}
-								helperText="Descreva o que há de errado com o conteúdo."
+								helperText="Descreva o que há de errado com o conteúdo em até 1024 caracteres."
 								fullWidth
+								required
 								multiline
 								rows={5}
+								inputProps={{
+									maxLength: 1024,
+								}}
 								autoComplete="description"
 							/>
 						</Grid>
