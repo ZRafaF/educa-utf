@@ -48,97 +48,121 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 					minHeight: MIN_FOOTER_HEIGHT,
 				}}
 			>
-				<Container maxWidth="md">
+				<Container maxWidth="lg">
 					<Grid
 						container
-						justifyContent={{
-							xs: 'center',
-							sm: 'space-between',
-						}}
+						justifyContent={'center'}
 						alignItems="center"
 						gap={1}
+						width={'100%'}
 					>
-						<Grid container gap={2}>
-							<Grid>
-								<Tooltip title="Repositório no GitHub" arrow>
-									<IconButton
-										aria-label="github"
-										href="https://github.com/ZRafaF/educa-utf"
-										target="_blank"
+						<Grid xs={12} sm={12} md>
+							<Grid container gap={2} justifyContent={'center'}>
+								<Grid>
+									<Tooltip
+										title="Repositório no GitHub"
+										arrow
 									>
-										<GitHubIcon />
-									</IconButton>
-								</Tooltip>
-							</Grid>
-							<Grid>
-								<Tooltip title="Documentação" arrow>
-									<IconButton
-										aria-label="documentation"
-										href="https://zrafaf.github.io/educa-utf/"
-										target="_blank"
+										<IconButton
+											aria-label="github"
+											href="https://github.com/ZRafaF/educa-utf"
+											target="_blank"
+										>
+											<GitHubIcon />
+										</IconButton>
+									</Tooltip>
+								</Grid>
+								<Grid>
+									<Tooltip title="Documentação" arrow>
+										<IconButton
+											aria-label="documentation"
+											href="https://zrafaf.github.io/educa-utf/"
+											target="_blank"
+										>
+											<MenuBookIcon />
+										</IconButton>
+									</Tooltip>
+								</Grid>
+								<Grid>
+									<Tooltip
+										title="Repositório no DockerHub"
+										arrow
 									>
-										<MenuBookIcon />
-									</IconButton>
-								</Tooltip>
-							</Grid>
-							<Grid>
-								<Tooltip title="Repositório no DockerHub" arrow>
-									<IconButton
-										aria-label="DockerHub-link"
-										href="https://hub.docker.com/r/zrafaf/educa_utf_nextjs"
-										target="_blank"
-									>
-										<DockerIcon />
-									</IconButton>
-								</Tooltip>
+										<IconButton
+											aria-label="DockerHub-link"
+											href="https://hub.docker.com/r/zrafaf/educa_utf_nextjs"
+											target="_blank"
+										>
+											<DockerIcon />
+										</IconButton>
+									</Tooltip>
+								</Grid>
 							</Grid>
 						</Grid>
-						<Stack
-							direction="column"
-							justifyContent="center"
-							alignItems="center"
-							spacing={2}
-						>
-							<Copyright />
-							<Grid container gap={2}>
-								<Grid>
-									<Link
-										href="/terms"
-										component={NextLink}
-										underline="hover"
-										color={'white'}
-									>
-										<Typography variant="body2">
-											Termos de Serviço
-										</Typography>
-									</Link>
+						<Grid xs={12} sm={12} md>
+							<Stack
+								direction="column"
+								justifyContent="center"
+								alignItems="center"
+								spacing={1}
+							>
+								<Copyright />
+								<Grid
+									container
+									gap={2}
+									justifyContent={'center'}
+								>
+									<Grid>
+										<Link
+											href="/terms"
+											component={NextLink}
+											underline="hover"
+											color={'white'}
+										>
+											<Typography variant="body2">
+												Termos de Serviço
+											</Typography>
+										</Link>
+									</Grid>
+									<Grid>
+										<Link
+											href="/privacy"
+											component={NextLink}
+											underline="hover"
+											color={'white'}
+										>
+											<Typography variant="body2">
+												Política de Privacidade
+											</Typography>
+										</Link>
+									</Grid>
+									<Grid>
+										<Link
+											href="/attributions"
+											component={NextLink}
+											underline="hover"
+											color={'white'}
+										>
+											<Typography variant="body2">
+												Atribuições
+											</Typography>
+										</Link>
+									</Grid>
+									<Grid>
+										<Link
+											href="/report"
+											component={NextLink}
+											underline="hover"
+											color={'white'}
+										>
+											<Typography variant="body2">
+												Reportar
+											</Typography>
+										</Link>
+									</Grid>
 								</Grid>
-								<Grid>
-									<Link
-										href="/privacy"
-										component={NextLink}
-										underline="hover"
-										color={'white'}
-									>
-										<Typography variant="body2">
-											Política de Privacidade
-										</Typography>
-									</Link>
-								</Grid>
-								<Grid>
-									<Link
-										href="/attributions"
-										component={NextLink}
-										underline="hover"
-										color={'white'}
-									>
-										<Typography variant="body2">
-											Atribuições
-										</Typography>
-									</Link>
-								</Grid>
-							</Grid>
-						</Stack>
+							</Stack>
+						</Grid>
 					</Grid>
 				</Container>
 			</Paper>

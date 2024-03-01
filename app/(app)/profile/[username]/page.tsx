@@ -22,6 +22,8 @@ import UserContentProfile from '@/components/UserContentProfile/UserContentProfi
 import IconButton from '@mui/material/IconButton';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Button from '@mui/material/Button';
+import Link from 'next/link';
+import { ReportsTypeOptions } from '@/types/pocketbase-types';
 
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
@@ -119,7 +121,25 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 									fontWeight={700}
 								>
 									{userStats.name}
+									<Box component={'span'} ml={1}>
+										<IconButton
+											color="secondary"
+											// sx={{
+											// 	display: {
+											// 		xs: 'block',
+											// 		sm: 'none',
+											// 		md: 'block',
+											// 		lg: 'none',
+											// 	},
+											// }}
+											LinkComponent={Link}
+											href={`/report?type=${ReportsTypeOptions.Usuário}&id=${userStats.id}`}
+										>
+											<WarningAmberIcon />
+										</IconButton>
+									</Box>
 								</Typography>
+
 								<Typography
 									color="text.secondary"
 									variant="subtitle2"
@@ -127,18 +147,6 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 								>
 									{userStats.description}
 								</Typography>
-							</Box>
-							<Box>
-								<Button
-									color="secondary"
-									variant="outlined"
-									startIcon={<WarningAmberIcon />}
-								>
-									Reportar
-								</Button>
-								<IconButton color="secondary">
-									<WarningAmberIcon />
-								</IconButton>
 							</Box>
 						</Box>
 					</Box>
