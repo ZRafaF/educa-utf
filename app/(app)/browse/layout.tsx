@@ -1,5 +1,4 @@
 import QueryBuilder from '@/components/BrowseTables/QueryBuilder/QueryBuilder';
-import SearchResultHeader from '@/components/BrowseTables/SearchResultHeader/SearchResultHeader';
 import {
 	MIN_FOOTER_HEIGHT,
 	MIN_PAGINATION_HEIGHT,
@@ -33,7 +32,6 @@ export default function RootLayout({
 				}}
 				maxWidth={false}
 			>
-				<SearchResultHeader />
 				<Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
 			</Container>
 		</Box>
