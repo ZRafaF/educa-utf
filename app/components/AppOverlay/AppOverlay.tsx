@@ -5,7 +5,7 @@
 
 import Box from '@mui/material/Box/Box';
 import Toolbar from '@mui/material/Toolbar/Toolbar';
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode, Suspense } from 'react';
 import ListItems from './ListItems/ListItems';
 import OverlayControllerProvider from '@/contexts/OverlayControllerProvider';
 import DrawerController from './OverlayController/DrawerControllers';
@@ -21,7 +21,9 @@ const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 		<OverlayControllerProvider>
 			<Box bgcolor={'background.default'} color={'text.primary'}>
 				<div data-mui-color-scheme="dark">
-					<AppBarController />
+					<Suspense fallback={<div>Carregando...</div>}>
+						<AppBarController />
+					</Suspense>
 
 					<DrawerController>
 						<Toolbar />

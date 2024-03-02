@@ -6,7 +6,7 @@
 'use-client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDebounce } from 'use-debounce';
 import useQueryFilter from './useQueryFilter';
 
@@ -17,7 +17,7 @@ const useUpdateSearchQuery = (newValue: string) => {
 	const paths = pathname.split('/');
 
 	const [updateFilter] = useQueryFilter();
-	const isBrowse = paths[1] === 'browse';
+	const isBrowse = useMemo(() => paths[1] === 'browse', [paths]);
 
 	useEffect(() => {
 		if (debouncedSearchInput !== searchParams.get('search') && isBrowse) {
@@ -29,7 +29,7 @@ const useUpdateSearchQuery = (newValue: string) => {
 				true
 			);
 		}
-	}, [debouncedSearchInput, updateFilter, searchParams]);
+	}, [debouncedSearchInput, updateFilter, searchParams, isBrowse]);
 
 	return [] as const;
 };
