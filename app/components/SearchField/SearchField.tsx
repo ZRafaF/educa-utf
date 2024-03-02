@@ -34,7 +34,11 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 	setIsExtended,
 	onlySmallScreen,
 }) => {
-	const [searchInput, setSearchInput] = useState('');
+	const searchParams = useSearchParams();
+
+	const [searchInput, setSearchInput] = useState(
+		searchParams.get('search') ?? ''
+	);
 	const pathname = usePathname();
 	const paths = pathname.split('/');
 	const router = useRouter();
@@ -110,7 +114,7 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 							outline: 'none',
 						},
 					}}
-					autoFocus
+					autoFocus={onlySmallScreen}
 					width={'100%'}
 					name="search"
 					value={searchInput}
@@ -118,8 +122,9 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 						const searchTypeEnglish =
 							searchType === 'Artigos' ? 'articles' : 'chapters';
 						if (
-							paths.length > 2 &&
-							paths[2] !== searchTypeEnglish
+							(paths.length > 2 &&
+								paths[2] !== searchTypeEnglish) ||
+							(paths.length > 1 && paths[1] !== 'browse')
 						) {
 							router.push(
 								`/browse/${
