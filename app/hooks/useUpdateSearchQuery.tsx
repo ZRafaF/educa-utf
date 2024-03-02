@@ -10,10 +10,7 @@ import { useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import useQueryFilter from './useQueryFilter';
 
-const useUpdateSearchQuery = (
-	newValue: string,
-	callback?: (debouncedVal: string) => void
-) => {
+const useUpdateSearchQuery = (newValue: string) => {
 	const [debouncedSearchInput] = useDebounce(newValue, 300);
 	const searchParams = useSearchParams()!;
 	const pathname = usePathname();
@@ -31,7 +28,6 @@ const useUpdateSearchQuery = (
 				},
 				true
 			);
-			if (callback) callback(debouncedSearchInput);
 		}
 	}, [debouncedSearchInput, updateFilter, searchParams]);
 
