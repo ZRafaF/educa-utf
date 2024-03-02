@@ -9,14 +9,8 @@ import ArticleCard from '../ArticleCard/ArticleCard';
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import PaginationComponent from './PaginationComponent';
 import Box from '@mui/material/Box';
-import {
-	MIN_FOOTER_HEIGHT,
-	MIN_PAGINATION_HEIGHT,
-	MIN_TOOLBAR_HEIGHT,
-	sleep,
-} from '@/lib/helper';
+
 import PageMessage from '../PageMessage/PageMessage';
-import SearchResultHeader from './SearchResultHeader/SearchResultHeader';
 import FadeInAnimation from '../FadeInAnimation/FadeInAnimation';
 
 interface ArticlesTableProps {

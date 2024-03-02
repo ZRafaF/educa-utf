@@ -9,11 +9,7 @@ import { getListOfChaptersStats } from '@/lib/apiHelpers/chaptersAPI';
 import ChapterCard from '../ChapterCard/ChapterCard';
 import PaginationComponent from './PaginationComponent';
 import Box from '@mui/material/Box';
-import {
-	MIN_FOOTER_HEIGHT,
-	MIN_PAGINATION_HEIGHT,
-	MIN_TOOLBAR_HEIGHT,
-} from '@/lib/helper';
+
 import PageMessage from '../PageMessage/PageMessage';
 import FadeInAnimation from '../FadeInAnimation/FadeInAnimation';
 
