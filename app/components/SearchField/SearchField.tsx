@@ -10,6 +10,7 @@ import {
 	FunctionComponent,
 	SetStateAction,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -46,12 +47,12 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 		'Artigos'
 	);
 	const searchInputRef = useRef<HTMLInputElement>(null);
-	const isBrowse = paths[1] === 'browse';
+	const isBrowse = useMemo(() => paths[1] === 'browse', [paths]);
 	useUpdateSearchQuery(searchInput);
 
 	useEffect(() => {
 		if (!isBrowse) setSearchInput('');
-	}, [pathname]);
+	}, [pathname, isBrowse]);
 
 	if (!isExtended)
 		return (
