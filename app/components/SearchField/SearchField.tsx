@@ -16,11 +16,12 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Button from '@mui/material/Button';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import useUpdateSearchQuery from '@/hooks/useUpdateSearchQuery';
 
 interface SearchFieldProps {
 	isExtended: boolean;
@@ -33,7 +34,11 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 	setIsExtended,
 	onlySmallScreen,
 }) => {
-	const [searchInput, setSearchInput] = useState('');
+	const searchParams = useSearchParams();
+
+	const [searchInput, setSearchInput] = useState(
+		searchParams.get('search') ?? ''
+	);
 	const pathname = usePathname();
 	const paths = pathname.split('/');
 	const router = useRouter();
@@ -41,55 +46,38 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 		'Artigos'
 	);
 	const searchInputRef = useRef<HTMLInputElement>(null);
-	const disabled = paths.length > 1 && paths[1] === 'browse';
+	const isBrowse = paths[1] === 'browse';
+	useUpdateSearchQuery(searchInput);
 
 	useEffect(() => {
-		setSearchInput('');
+		if (!isBrowse) setSearchInput('');
 	}, [pathname]);
 
 	if (!isExtended)
 		return (
-			<Tooltip
-				title={
-					disabled
-						? 'A barra de busca está desabilitada nessa página.'
-						: undefined
-				}
-				arrow
-			>
-				<Box
-					sx={{ flexGrow: 1 }}
-					display="flex"
-					justifyContent={'end'}
-					px={1}
-				>
-					<Stack direction="row" justifyContent="flex-end">
-						<Tooltip title="Abrir barra de busca" arrow>
-							<IconButton
-								size="large"
-								aria-label="search"
-								aria-haspopup="true"
-								color="inherit"
-								disabled={disabled}
-								onClick={() => setIsExtended(true)}
-							>
-								<SearchIcon />
-							</IconButton>
-						</Tooltip>
-					</Stack>
-				</Box>
-			</Tooltip>
+			<Box sx={{ flexGrow: 1 }} display="flex" justifyContent={'end'}>
+				<Stack direction="row" justifyContent="flex-end">
+					<Tooltip title="Abrir barra de busca" arrow>
+						<IconButton
+							size="large"
+							aria-label="search"
+							aria-haspopup="true"
+							color="inherit"
+							onClick={() => setIsExtended(true)}
+						>
+							<SearchIcon />
+						</IconButton>
+					</Tooltip>
+				</Stack>
+			</Box>
 		);
 
 	return (
 		<Stack
 			sx={{
-				// backgroundColor: 'grey.A200',
 				border: 'none',
 				borderRadius: 1,
 				overflow: 'hidden',
-				opacity: disabled ? 0.3 : 1,
-				pointerEvents: disabled ? 'none' : 'inherit',
 			}}
 			width={'100%'}
 			maxWidth={600}
@@ -98,13 +86,10 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 			component={'form'}
 			onSubmit={(e) => {
 				e.preventDefault();
-				router.push(
-					`/browse/${
-						searchType === 'Artigos' ? 'articles' : 'chapters'
-					}?search=${searchInput}`
-				);
-				if (onlySmallScreen) setIsExtended(false);
 				searchInputRef.current?.blur();
+			}}
+			onBlur={() => {
+				if (onlySmallScreen) setIsExtended(false);
 			}}
 		>
 			<Stack
@@ -123,22 +108,33 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 						borderWidth: '1px',
 						padding: '0 1rem',
 						fontSize: '1rem',
-						// Border radius only on left side
 						borderTopLeftRadius: 5,
 						borderBottomLeftRadius: 5,
 						':focus': {
 							outline: 'none',
 						},
 					}}
-					autoFocus
+					autoFocus={onlySmallScreen}
 					width={'100%'}
 					name="search"
-					value={
-						disabled
-							? '[Desabilitado] Utilize a busca local'
-							: searchInput
-					}
+					value={searchInput}
 					onChange={(e) => {
+						const searchTypeEnglish =
+							searchType === 'Artigos' ? 'articles' : 'chapters';
+						if (
+							(paths.length > 2 &&
+								paths[2] !== searchTypeEnglish) ||
+							(paths.length > 1 && paths[1] !== 'browse')
+						) {
+							router.push(
+								`/browse/${
+									searchType === 'Artigos'
+										? 'articles'
+										: 'chapters'
+								}?search=${searchInput}`
+							);
+						}
+
 						setSearchInput(e.target.value);
 					}}
 					ref={searchInputRef}
@@ -150,7 +146,6 @@ const SearchField: FunctionComponent<SearchFieldProps> = ({
 								textTransform: 'inherit',
 								mx: 1,
 								px: { xs: 0.8, sm: 1.25, md: 1.5 },
-								// fontSize: 26,
 								height: '2rem',
 							}}
 							variant="outlined"

@@ -8,13 +8,11 @@ import { FunctionComponent, ReactNode, useState } from 'react';
 import Box from '@mui/material/Box/Box';
 import { loginUTFPR, loginWithPassword } from '@/lib/apiHelpers/authAPI';
 import { toast } from 'react-toastify';
-import useRedirectAuth from '@/hooks/useRedirectAuth';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import NextLink from 'next/link';
-
 interface LoginFormSenderProps {
 	children: ReactNode;
 }
@@ -22,8 +20,6 @@ interface LoginFormSenderProps {
 const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	children,
 }) => {
-	useRedirectAuth();
-
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleLoginError = (
