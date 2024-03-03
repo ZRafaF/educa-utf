@@ -1,8 +1,3 @@
-// Copyright (c) 2023 Rafael Farias
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-
 'use-client';
 
 import ImgBlock from '@/plugins/ImgBlock/ImgBlock';
@@ -21,6 +16,10 @@ const RadialSelector = dynamic(
 	}
 );
 
+const UpperMaker = dynamic(() => import('@/plugins/UpperMaker/UpperMaker'), {
+	ssr: true,
+});
+
 const useOverridePlugins = () => {
 	const overrides = useMemo<MarkdownToJSX.Overrides>(() => {
 		return {
@@ -28,6 +27,7 @@ const useOverridePlugins = () => {
 			Equation: Equation,
 			img: ImgBlock,
 			RadialSelector: RadialSelector,
+			UpperMaker: UpperMaker,
 		};
 	}, []);
 

@@ -121,22 +121,34 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'link',
 				'|',
 				'upload-image',
-				{
-					name: 'equationPlugin',
-					action: function customFunction() {
-						setCurrentPluginKey('equationPlugin');
-					},
-					className: 'fa fa-superscript',
-					title: 'Adicionar equação',
-				},
+				...PluginsArray.map<SimpleMDE.ToolbarIcon | null>((plugin) => {
+					if (
+						plugin.hidden ||
+						plugin.placement != 'toolbar' ||
+						!plugin.className
+					)
+						return null;
+					return {
+						name: plugin.key,
+						action: function customFunction() {
+							setCurrentPluginKey(plugin.key);
+						},
+						title: plugin.tooltip,
+						attributes: {
+							label: plugin.title,
+						},
+						className: plugin.className,
+					};
+				}).filter((plugin) => plugin !== null),
+
 				{
 					name: 'expandPlugins',
-
 					className: 'fa fa-puzzle-piece',
 					title: 'Expandir plugins',
 					children: PluginsArray.map<SimpleMDE.ToolbarIcon | null>(
 						(plugin) => {
-							if (plugin.hidden) return null;
+							if (plugin.hidden || plugin.placement != 'menu')
+								return null;
 							return {
 								name: plugin.key,
 								action: function customFunction() {

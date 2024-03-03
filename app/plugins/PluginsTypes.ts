@@ -37,7 +37,16 @@ export type PluginType = {
 	 */
 	render: FunctionComponent<any>;
 
-	/** If the plugin should be hidden from the plugins menu */
+	/** Placement of the plugin on the editor */
+	placement: 'toolbar' | 'menu';
+
+	/** Class name for the plugin on the MdEditor usually used for icons.
+	 *
+	 * Should only be used for toolbar plugins
+	 */
+	className?: string;
+
+	/** If the plugin should be hidden, useful for disabled plugins */
 	hidden?: boolean;
 
 	/** Category of the plugin on the plugins menu

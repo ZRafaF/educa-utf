@@ -10,6 +10,8 @@ import { PluginType } from './PluginsTypes';
 import Equation from './Equation/Equation';
 import RadialSelectorEditor from './RadialSelector/RadialSelectorEditor';
 import RadialSelector from './RadialSelector/RadialSelector';
+import UpperMakerEditor from './UpperMaker/UpperMakerEditor';
+import UpperMaker from './UpperMaker/UpperMaker';
 
 const PluginsArray: PluginType[] = [
 	{
@@ -18,8 +20,9 @@ const PluginsArray: PluginType[] = [
 		tooltip: 'Equação matemática',
 		editor: EquationEditor,
 		render: Equation,
-		hidden: true,
+		placement: 'toolbar',
 		category: '',
+		className: 'fa fa-superscript',
 	},
 	{
 		key: 'radialSelectorPlugin',
@@ -27,8 +30,18 @@ const PluginsArray: PluginType[] = [
 		tooltip: 'Novo exercício de Seleção radial',
 		editor: RadialSelectorEditor,
 		render: RadialSelector,
-		hidden: false,
+		placement: 'menu',
 		category: 'Exercícios',
+	},
+	{
+		key: 'upperMakerPlugin',
+		title: 'Utilizar maiúsculas',
+		tooltip: 'Converte o texto para maiúsculas',
+		editor: UpperMakerEditor,
+		render: UpperMaker,
+		placement: 'menu',
+		hidden: true,
+		category: 'Texto',
 	},
 ];
 
