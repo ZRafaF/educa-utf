@@ -138,6 +138,7 @@ nav:
           - Desenvolvimento: desenvolvimento/index.md
           - Setup: desenvolvimento/setup.md
           - Posts: desenvolvimento/posts.md
+          - Plugins: desenvolvimento/plugins.md
           - Docker: desenvolvimento/docker.md
           - Front-end: desenvolvimento/front-end.md
           - Backend: desenvolvimento/backend.md
