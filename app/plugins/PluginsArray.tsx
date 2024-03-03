@@ -5,10 +5,11 @@
 
 'use client';
 
-import dynamic from 'next/dynamic';
 import EquationEditor from './Equation/EquationEditor';
 import { PluginType } from './PluginsTypes';
 import Equation from './Equation/Equation';
+import RadialSelectorEditor from './RadialSelector/RadialSelectorEditor';
+import RadialSelector from './RadialSelector/RadialSelector';
 
 const PluginsArray: PluginType[] = [
 	{
@@ -19,6 +20,15 @@ const PluginsArray: PluginType[] = [
 		render: Equation,
 		hidden: true,
 		category: '',
+	},
+	{
+		key: 'radialSelectorPlugin',
+		title: 'Exercício de seleção radial',
+		tooltip: 'Novo exercício de Seleção radial',
+		editor: RadialSelectorEditor,
+		render: RadialSelector,
+		hidden: false,
+		category: 'Exercícios',
 	},
 ];
 

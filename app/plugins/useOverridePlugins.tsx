@@ -12,8 +12,14 @@ import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 
 const Equation = dynamic(() => import('@/plugins/Equation/Equation'), {
-	ssr: false,
+	ssr: true,
 });
+const RadialSelector = dynamic(
+	() => import('@/plugins/RadialSelector/RadialSelector'),
+	{
+		ssr: true,
+	}
+);
 
 const useOverridePlugins = () => {
 	const overrides = useMemo<MarkdownToJSX.Overrides>(() => {
@@ -21,6 +27,7 @@ const useOverridePlugins = () => {
 			pre: PreBlock,
 			Equation: Equation,
 			img: ImgBlock,
+			RadialSelector: RadialSelector,
 		};
 	}, []);
 

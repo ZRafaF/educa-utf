@@ -19,6 +19,7 @@ export enum Collections {
 	TotalUsersArticlesStats = "total_users_articles_stats",
 	TotalUsersChaptersStats = "total_users_chapters_stats",
 	Users = "users",
+	UsersPluginData = "users_plugin_data",
 	UsersStats = "users_stats",
 	Views = "views",
 }
@@ -240,6 +241,13 @@ export type UsersRecord = {
 	name: string
 }
 
+export type UsersPluginDataRecord<Tdata = unknown> = {
+	article: RecordIdString
+	data?: null | Tdata
+	plugin: string
+	user: RecordIdString
+}
+
 export type UsersStatsRecord = {
 	avatar?: string
 	description?: string
@@ -273,6 +281,7 @@ export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemF
 export type TotalUsersArticlesStatsResponse<Texpand = unknown> = Required<TotalUsersArticlesStatsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersChaptersStatsResponse<Texpand = unknown> = Required<TotalUsersChaptersStatsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
+export type UsersPluginDataResponse<Tdata = unknown, Texpand = unknown> = Required<UsersPluginDataRecord<Tdata>> & BaseSystemFields<Texpand>
 export type UsersStatsResponse<Texpand = unknown> = Required<UsersStatsRecord> & BaseSystemFields<Texpand>
 export type ViewsResponse<Texpand = unknown> = Required<ViewsRecord> & BaseSystemFields<Texpand>
 
@@ -292,6 +301,7 @@ export type CollectionRecords = {
 	total_users_articles_stats: TotalUsersArticlesStatsRecord
 	total_users_chapters_stats: TotalUsersChaptersStatsRecord
 	users: UsersRecord
+	users_plugin_data: UsersPluginDataRecord
 	users_stats: UsersStatsRecord
 	views: ViewsRecord
 }
@@ -310,6 +320,7 @@ export type CollectionResponses = {
 	total_users_articles_stats: TotalUsersArticlesStatsResponse
 	total_users_chapters_stats: TotalUsersChaptersStatsResponse
 	users: UsersResponse
+	users_plugin_data: UsersPluginDataResponse
 	users_stats: UsersStatsResponse
 	views: ViewsResponse
 }
@@ -331,6 +342,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'total_users_articles_stats'): RecordService<TotalUsersArticlesStatsResponse>
 	collection(idOrName: 'total_users_chapters_stats'): RecordService<TotalUsersChaptersStatsResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
+	collection(idOrName: 'users_plugin_data'): RecordService<UsersPluginDataResponse>
 	collection(idOrName: 'users_stats'): RecordService<UsersStatsResponse>
 	collection(idOrName: 'views'): RecordService<ViewsResponse>
 }
