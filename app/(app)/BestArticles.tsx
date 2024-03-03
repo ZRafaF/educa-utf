@@ -5,8 +5,6 @@
 
 import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
 import React from 'react';
-import Box from '@mui/material/Box/Box';
-import Typography from '@mui/material/Typography/Typography';
 import { getBestArticlesOf } from '@/lib/apiHelpers/articlesAPI';
 import ArticleCard from '@/components/ArticleCard/ArticleCard';
 import FadeInAnimation from '@/components/FadeInAnimation/FadeInAnimation';

@@ -201,7 +201,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 					</Tooltip>
 					<Divider />
 					<Tooltip
-						title={'Reportar esse artigo'}
+						title={'Denunciar esse artigo'}
 						arrow
 						placement={placement}
 					>
@@ -225,7 +225,7 @@ const MoreArticleOptions: FunctionComponent<MoreArticleOptionsProps> = ({
 								<ListItemIcon>
 									<ReportIcon color="warning" />
 								</ListItemIcon>
-								<ListItemText>Reportar</ListItemText>
+								<ListItemText>Denunciar</ListItemText>
 							</MenuItem>
 						</Box>
 					</Tooltip>

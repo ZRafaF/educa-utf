@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container/Container';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, Suspense } from 'react';
 import type { Metadata } from 'next/types';
 import Typography from '@mui/material/Typography';
 
@@ -8,11 +8,12 @@ import {
 	ReportsTypeOptions,
 } from '@/types/pocketbase-types';
 import ReportForm from './ReportForm';
+import PageMessage from '@/components/PageMessage/PageMessage';
 
 export const metadata: Metadata = {
-	title: 'Reportar - EducaUTF',
-	description: 'Reportar conteúdo do EducaUTF.',
-	keywords: ['EducaUTF', 'Educa UTF', 'report', 'reportar'],
+	title: 'Nova Denúncia - EducaUTF',
+	description: 'Denuncie um conteúdo do EducaUTF.',
+	keywords: ['EducaUTF', 'Educa UTF', 'report', 'denúncia', 'denunciar'],
 };
 
 interface PageProps {
@@ -37,14 +38,16 @@ const Page: FunctionComponent<PageProps> = ({ searchParams }) => {
 	return (
 		<Container maxWidth={'lg'} sx={{ py: 4, flexGrow: 1 }}>
 			<Typography component="h1" variant="h4" align="center" pb={2}>
-				Reportar
+				Denunciar
 			</Typography>
-			<ReportForm
-				availableTypes={availableTypes}
-				defaultId={defaultId}
-				defaultType={defaultType}
-				availableReasons={availableReasons}
-			/>
+			<Suspense fallback={<PageMessage loading message="Carregando" />}>
+				<ReportForm
+					availableTypes={availableTypes}
+					defaultId={defaultId}
+					defaultType={defaultType}
+					availableReasons={availableReasons}
+				/>
+			</Suspense>
 		</Container>
 	);
 };

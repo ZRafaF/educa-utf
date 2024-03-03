@@ -15,7 +15,6 @@ import Divider from '@mui/material/Divider/Divider';
 import Typography from '@mui/material/Typography/Typography';
 import Menu from '@mui/material/Menu/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-
 import { FunctionComponent, useState } from 'react';
 import React from 'react';
 import Link from 'next/link';
@@ -26,6 +25,7 @@ import { logOut } from '@/lib/apiHelpers/authAPI';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 const NoSSRProfileAvatar = dynamic(() => import('./ProfileAvatar'), {
 	ssr: true,
 });
@@ -44,14 +44,18 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 		event.stopPropagation();
 	};
 	const [, user] = usePbAuth();
+	const router = useRouter();
 
 	const LoggedInMenu = () => (
 		<React.Fragment>
 			<Link
 				href={`/profile/${user?.username}`}
 				style={{ textDecoration: 'none', color: 'inherit' }}
+				onClick={(e) => {
+					handleMenuClose(e);
+				}}
 			>
-				<MenuItem onClick={handleMenuClose}>
+				<MenuItem>
 					<ListItemIcon>
 						<AccountCircle fontSize="small" />
 					</ListItemIcon>
@@ -128,7 +132,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 	);
 
 	return (
-		<React.Fragment>
+		<>
 			<Tooltip title="Perfil" arrow>
 				<IconButton
 					edge="end"
@@ -142,7 +146,7 @@ const ProfileButton: FunctionComponent<ProfileButtonProps> = () => {
 				</IconButton>
 			</Tooltip>
 			{renderMenu}
-		</React.Fragment>
+		</>
 	);
 };
 

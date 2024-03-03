@@ -20,7 +20,9 @@ Ao acessar ou usar o Serviço, você concorda com estes Termos. Se você não co
 
 3.1 Reservamo-nos o direito de remover, sem aviso prévio, qualquer conteúdo que viole estes Termos.
 
-3.2 Você pode contestar a remoção de conteúdo através do nosso processo de revisão **[Instruções de contestação EM BREVE]**.
+3.2 Você pode contestar a remoção de conteúdo através do nosso processo de revisão.
+
+3.3 Para denunciar um conteúdo pressione `⋮` em seu card e em seguida clique `Denunciar ⚠︎`. Ou acesse a pagina [Denunciar](/report).
 
 ## 4. Alterações nos Termos de Serviço
 

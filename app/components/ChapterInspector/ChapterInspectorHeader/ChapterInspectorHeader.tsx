@@ -150,7 +150,11 @@ const ChapterInspectorHeader: FunctionComponent<
 								variant="subtitle2"
 								textAlign={'right'}
 							>
-								<Tooltip title="Autor" arrow placement="right">
+								<Tooltip
+									title={chapterStats.author_name}
+									arrow
+									placement="right"
+								>
 									<Link
 										href={`/profile/${chapterStats.author_username}`}
 										style={{

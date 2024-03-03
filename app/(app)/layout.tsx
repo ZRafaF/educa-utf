@@ -15,8 +15,6 @@ export default function RootLayout({
 				minHeight={`calc(100vh - ${MIN_FOOTER_HEIGHT} - ${MIN_TOOLBAR_HEIGHT})`}
 				display={'flex'}
 				flexDirection={'column'}
-
-				// mt={{ xs: 7, sm: 8 }}
 			>
 				{children}
 			</Box>

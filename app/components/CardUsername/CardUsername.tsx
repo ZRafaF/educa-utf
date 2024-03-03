@@ -18,7 +18,7 @@ interface CardUsernameProps {
 
 const CardUsername: FunctionComponent<CardUsernameProps> = ({ content }) => {
 	return (
-		<Tooltip title="Autor" arrow placement="top">
+		<Tooltip title={content.author_name} arrow placement="top">
 			<Typography
 				color="text.secondary"
 				variant="subtitle2"
