@@ -24,6 +24,22 @@
 	overflow: hidden;
 }
 
+.easymde-dropdown {
+	border: 1px solid transparent !important;
+	background: none !important;
+	border-radius: 2px !important;
+}
+
+.easymde-dropdown-content {
+	border: 1px solid var(--mui-palette-Chip-defaultBorder) !important;
+	border-radius: 2px !important;
+	background-color: var(--mui-palette-background-default) !important;
+}
+
+.easymde-dropdown-button:hover {
+	background-color: var(--mui-palette-grey-A700) !important;
+}
+
 .CodeMirror-cursor {
 	font-weight: bold !important;
 }

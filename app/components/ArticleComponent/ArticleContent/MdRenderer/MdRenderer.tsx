@@ -7,7 +7,7 @@
 
 import { FunctionComponent } from 'react';
 import Markdown from 'markdown-to-jsx';
-import useOverridePlugins from '@/hooks/useOverridePlugins';
+import useOverridePlugins from '@/plugins/useOverridePlugins';
 
 interface MdRendererProps {
 	article: string;

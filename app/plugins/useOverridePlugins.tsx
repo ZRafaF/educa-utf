@@ -1,8 +1,3 @@
-// Copyright (c) 2023 Rafael Farias
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-
 'use-client';
 
 import ImgBlock from '@/plugins/ImgBlock/ImgBlock';
@@ -12,7 +7,17 @@ import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 
 const Equation = dynamic(() => import('@/plugins/Equation/Equation'), {
-	ssr: false,
+	ssr: true,
+});
+const RadialSelector = dynamic(
+	() => import('@/plugins/RadialSelector/RadialSelector'),
+	{
+		ssr: true,
+	}
+);
+
+const UpperMaker = dynamic(() => import('@/plugins/UpperMaker/UpperMaker'), {
+	ssr: true,
 });
 
 const useOverridePlugins = () => {
@@ -21,6 +26,8 @@ const useOverridePlugins = () => {
 			pre: PreBlock,
 			Equation: Equation,
 			img: ImgBlock,
+			RadialSelector: RadialSelector,
+			UpperMaker: UpperMaker,
 		};
 	}, []);
 
