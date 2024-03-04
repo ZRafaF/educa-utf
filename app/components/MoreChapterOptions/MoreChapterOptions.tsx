@@ -192,7 +192,7 @@ const MoreChapterOptions: FunctionComponent<MoreChapterOptionsProps> = ({
 								<ListItemIcon>
 									<ReportIcon color="warning" />
 								</ListItemIcon>
-								<ListItemText>Reportar</ListItemText>
+								<ListItemText>Denunciar</ListItemText>
 							</MenuItem>
 						</Box>
 					</Tooltip>

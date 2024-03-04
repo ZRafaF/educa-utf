@@ -12,6 +12,8 @@ import 'swiper/css/pagination';
 import Providers from './contexts/Providers';
 import Script from 'next/script';
 import ThemeRegistry from './ThemeRegistry';
+import { Suspense } from 'react';
+import PageMessage from './components/PageMessage/PageMessage';
 
 export const metadata: Metadata = {
 	title: 'EducaUTF',
@@ -55,11 +57,15 @@ export default function RootLayout({
 					padding: 0,
 				}}
 			>
-				<Providers>
-					<ThemeRegistry options={{ key: 'mui' }}>
-						<AppOverlay>{children}</AppOverlay>
-					</ThemeRegistry>
-				</Providers>
+				<Suspense
+					fallback={<PageMessage loading message="Carregando" />}
+				>
+					<Providers>
+						<ThemeRegistry options={{ key: 'mui' }}>
+							<AppOverlay>{children}</AppOverlay>
+						</ThemeRegistry>
+					</Providers>
+				</Suspense>
 			</body>
 		</html>
 	);

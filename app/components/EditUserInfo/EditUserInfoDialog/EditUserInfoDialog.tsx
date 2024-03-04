@@ -18,6 +18,7 @@ import { UsersRecord, UsersResponse } from '@/types/pocketbase-types';
 import { updateUser } from '@/lib/apiHelpers/usersAPI';
 import { toast } from 'react-toastify';
 import ConfirmUserDelete from './ConfirmUserDelete';
+import { useRouter } from 'next/navigation';
 
 interface EditUserInfoDialogProps {
 	isOpen: boolean;
@@ -30,6 +31,8 @@ const EditUserInfoDialog: FunctionComponent<EditUserInfoDialogProps> = ({
 	handleClose,
 	user,
 }) => {
+	const router = useRouter();
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
@@ -49,6 +52,7 @@ const EditUserInfoDialog: FunctionComponent<EditUserInfoDialogProps> = ({
 		updateUser(user.id, usersRecord)
 			.then(() => {
 				toast.success('Perfil atualizado com sucesso.');
+				router.refresh();
 				handleClose();
 			})
 			.catch((e) => {

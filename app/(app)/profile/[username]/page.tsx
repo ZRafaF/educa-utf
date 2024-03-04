@@ -24,6 +24,7 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
 import { ReportsTypeOptions } from '@/types/pocketbase-types';
+import Tooltip from '@mui/material/Tooltip';
 
 const EditablePfp = dynamic(
 	() => import('@/components/EditablePfp/EditablePfp'),
@@ -107,7 +108,9 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						gap={2}
 						alignItems={'center'}
 					>
-						<EditablePfp userStats={userStats} />
+						<Suspense fallback={<div>Carregando...</div>}>
+							<EditablePfp userStats={userStats} />
+						</Suspense>
 						<Box display={'flex'} gap={2} alignItems={'center'}>
 							<Box>
 								<Typography
@@ -122,21 +125,23 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 								>
 									{userStats.name}
 									<Box component={'span'} ml={1}>
-										<IconButton
-											color="secondary"
-											// sx={{
-											// 	display: {
-											// 		xs: 'block',
-											// 		sm: 'none',
-											// 		md: 'block',
-											// 		lg: 'none',
-											// 	},
-											// }}
-											LinkComponent={Link}
-											href={`/report?type=${ReportsTypeOptions.Usuário}&id=${userStats.id}`}
-										>
-											<WarningAmberIcon />
-										</IconButton>
+										<Tooltip title="Reportar usuário" arrow>
+											<IconButton
+												color="secondary"
+												// sx={{
+												// 	display: {
+												// 		xs: 'block',
+												// 		sm: 'none',
+												// 		md: 'block',
+												// 		lg: 'none',
+												// 	},
+												// }}
+												LinkComponent={Link}
+												href={`/report?type=${ReportsTypeOptions.Usuário}&id=${userStats.id}`}
+											>
+												<WarningAmberIcon />
+											</IconButton>
+										</Tooltip>
 									</Box>
 								</Typography>
 
@@ -234,12 +239,16 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						px: { xs: 1, sm: 1, md: 1, lg: 2 },
 					}}
 				>
-					<UserContentProfile username={params.username} />
+					<Suspense fallback={<div>Carregando...</div>}>
+						<UserContentProfile username={params.username} />
+					</Suspense>
 				</Container>
 			</Box>
-			<NoSSRPrivateUserComponent username={params.username}>
-				<PrivateDrawerContent userId={userStats.id} />
-			</NoSSRPrivateUserComponent>
+			<Suspense fallback={<div>Carregando...</div>}>
+				<NoSSRPrivateUserComponent username={params.username}>
+					<PrivateDrawerContent userId={userStats.id} />
+				</NoSSRPrivateUserComponent>
+			</Suspense>
 		</Box>
 	);
 };

@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from 'react';
+import { FunctionComponent, Suspense } from 'react';
 import Divider from '@mui/material/Divider/Divider';
 import List from '@mui/material/List/List';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
@@ -12,7 +12,7 @@ import LinkItem from '@/components/LinkItem/LinkItem';
 import dynamic from 'next/dynamic';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-
+import HomeIcon from '@mui/icons-material/Home';
 const InstallPwaButton = dynamic(() => import('./InstallPwaButton'), {
 	ssr: true,
 });
@@ -23,9 +23,9 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 		<React.Fragment>
 			<List>
 				<LinkItem
-					title="Em alta"
-					tooltip="Artigos em alta"
-					icon={<WhatshotIcon />}
+					title="Início"
+					tooltip="Página inicial"
+					icon={<HomeIcon />}
 					href="/"
 				/>
 				<Divider />
@@ -46,8 +46,9 @@ const ListItems: FunctionComponent<ListItemsProps> = () => {
 					href="/new"
 				/>
 				<Divider />
-
-				<InstallPwaButton />
+				<Suspense fallback={<>...</>}>
+					<InstallPwaButton />
+				</Suspense>
 			</List>
 		</React.Fragment>
 	);

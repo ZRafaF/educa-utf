@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
 interface LoginFormSenderProps {
 	children: ReactNode;
 }
@@ -21,6 +22,8 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	children,
 }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const router = useRouter();
 
 	const handleLoginError = (
 		toastId: number | string,
@@ -105,6 +108,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 			pauseOnHover: true,
 			closeOnClick: true,
 		});
+		router.push('/');
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

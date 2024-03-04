@@ -92,11 +92,11 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 					: undefined,
 		})
 			.then(() => {
-				toast.success('Report enviado com sucesso!');
+				toast.success('Denuncia enviada com sucesso!');
 				router.push('/');
 			})
 			.catch((e) => {
-				toast.error('Erro ao enviar report!');
+				toast.error('Erro ao enviar a denuncia!');
 				console.error(e);
 			});
 	};
@@ -390,7 +390,7 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 			>
 				<Stack spacing={1}>
 					<Typography variant="h6" gutterBottom>
-						Novo Reporte
+						Nova denuncia
 					</Typography>
 					<Grid container spacing={2}>
 						<Grid xs={12} sm>
@@ -431,12 +431,12 @@ const ReportForm: FunctionComponent<ReportFormProps> = ({
 									<Grid xs={12} sm>
 										<FormControl fullWidth>
 											<InputLabel id="reason-select-label">
-												Motivo do report *
+												Motivo *
 											</InputLabel>
 											<Select
 												labelId="reason-select-label"
 												id="reason-select"
-												label="Motivo do report"
+												label="Motivo"
 												name="reason"
 												required
 												defaultValue={

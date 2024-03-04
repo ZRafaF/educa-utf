@@ -60,21 +60,21 @@ function ArticleComponent({
 				pb={0}
 			>
 				<Grid xs={20} sm={20} md={20} lg mb={3} pr={2}>
-					<Stack direction="row" spacing={1} alignItems="center">
-						<Typography
-							variant="h3"
-							component="h1"
-							color="primary"
-							fontWeight={700}
-						>
-							{myArticle.title}
-						</Typography>
+					<Typography
+						variant="h3"
+						component="h1"
+						color="primary"
+						fontWeight={700}
+					>
+						{myArticle.title}
 
-						<EditPostIcon
-							articleId={myArticle.id}
-							articleAuthorId={myArticle.user}
-						/>
-					</Stack>
+						<Box component={'span'} ml={1}>
+							<EditPostIcon
+								articleId={myArticle.id}
+								articleAuthorId={myArticle.user}
+							/>
+						</Box>
+					</Typography>
 
 					<Stack
 						direction="row"

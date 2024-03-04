@@ -11,6 +11,7 @@ import {
 	Dispatch,
 	FunctionComponent,
 	MutableRefObject,
+	ReactNode,
 	SetStateAction,
 	useCallback,
 	useEffect,
@@ -35,6 +36,8 @@ import PluginDialog from './PluginDialog/PluginDialog';
 import { ArticlesResponse } from '@/types/pocketbase-types';
 import { ArticlesExpand } from '@/types/expanded-types';
 import { useDebounce } from 'use-debounce';
+import PluginsArray from '@/plugins/PluginsArray';
+import reactElementToJSXString from 'react-element-to-jsx-string';
 
 enum ViewMode {
 	Editor = 0,
@@ -78,7 +81,15 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 		}
 	}, [isSmallScreen]);
 
-	const handlePluginReturn = (rawString: string | undefined) => {
+	const handlePluginReturn = (component: ReactNode) => {
+		let rawString = reactElementToJSXString(component, {
+			maxInlineAttributesLineLength: 100,
+			useFragmentShortSyntax: true,
+			useBooleanShorthandSyntax: true,
+		});
+
+		// rawString = rawString.replace(/&quot;/g, '"');
+
 		if (currentGetMdeInstance && rawString) {
 			const pos = currentGetMdeInstance.codemirror.getCursor();
 			currentGetMdeInstance.codemirror.setSelection(pos, pos);
@@ -120,22 +131,50 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'link',
 				'|',
 				'upload-image',
-				{
-					name: 'equationPlugin',
-					action: function customFunction() {
-						setCurrentPluginKey('equationPlugin');
-					},
-					className: 'fa fa-superscript',
-					title: 'Adicionar equação',
-				},
+				...PluginsArray.map<SimpleMDE.ToolbarIcon | null>((plugin) => {
+					if (
+						plugin.hidden ||
+						plugin.placement != 'toolbar' ||
+						!plugin.className
+					)
+						return null;
+					return {
+						name: plugin.key,
+						action: function customFunction() {
+							setCurrentPluginKey(plugin.key);
+						},
+						title: plugin.tooltip,
+						attributes: {
+							label: plugin.title,
+						},
+						className: plugin.className,
+					};
+				}).filter((plugin) => plugin !== null),
+
 				{
 					name: 'expandPlugins',
-					action: function customFunction() {
-						alert('Expand plugins');
-					},
 					className: 'fa fa-puzzle-piece',
 					title: 'Expandir plugins',
+					children: PluginsArray.map<SimpleMDE.ToolbarIcon | null>(
+						(plugin) => {
+							if (plugin.hidden || plugin.placement != 'menu')
+								return null;
+							return {
+								name: plugin.key,
+								action: function customFunction() {
+									setCurrentPluginKey(plugin.key);
+								},
+								icon: plugin.title,
+								title: plugin.tooltip,
+								attributes: {
+									label: plugin.title,
+								},
+								className: 'easymde-dropdown-button',
+							};
+						}
+					).filter((plugin) => plugin !== null),
 				},
+
 				'|',
 				'undo',
 				'redo',

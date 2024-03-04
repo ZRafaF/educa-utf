@@ -156,7 +156,7 @@ const AppFooter: FunctionComponent<AppFooterProps> = () => {
 											color={'white'}
 										>
 											<Typography variant="body2">
-												Reportar
+												Denunciar
 											</Typography>
 										</Link>
 									</Grid>

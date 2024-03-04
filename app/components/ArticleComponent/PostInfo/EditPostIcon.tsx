@@ -24,14 +24,14 @@ const EditPostIcon: FunctionComponent<EditPostIconProps> = ({
 
 	if (user?.id === articleAuthorId)
 		return (
-			<Tooltip title="Editar esse artigo">
+			<Tooltip title="Editar esse artigo" arrow>
 				<IconButton
 					aria-label="editar artigo"
 					LinkComponent={Link}
 					href={`/edit-article/${articleId}`}
 					size="small"
 				>
-					<EditIcon color="disabled" fontSize="small" />
+					<EditIcon color="disabled" />
 				</IconButton>
 			</Tooltip>
 		);

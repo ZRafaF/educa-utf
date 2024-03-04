@@ -14,6 +14,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import FormLabel from '@mui/material/FormLabel';
+import Equation from './Equation';
 
 const EquationEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
@@ -22,7 +23,7 @@ const EquationEditor: FunctionComponent<PluginEditorProps> = ({
 	const [latex, setLatex] = useState('\\frac{x}{2}=4');
 
 	const handleFinish = () => {
-		returnFunction(`<Equation latex="${latex}" />`);
+		returnFunction(<Equation latex={latex} />);
 	};
 
 	return (
