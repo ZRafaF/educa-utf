@@ -3,10 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 export interface PluginEditorProps {
-	returnFunction: (componentRawString: string | undefined) => void;
+	returnFunction: (component: ReactNode) => void;
 }
 
 export type PluginType = {

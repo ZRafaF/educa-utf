@@ -6,14 +6,13 @@
 import {
 	Dispatch,
 	FunctionComponent,
+	ReactNode,
 	SetStateAction,
 	useMemo,
-	useState,
 } from 'react';
 import PluginsArray from '@/plugins/PluginsArray';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import Box from '@mui/material/Box';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -21,7 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 interface PluginDialogProps {
 	currentPluginKey: string | undefined;
 	setCurrentPluginKey: Dispatch<SetStateAction<string | undefined>>;
-	returnFunction: (componentRawString: string | undefined) => void;
+	returnFunction: (component: ReactNode) => void;
 }
 
 const PluginDialog: FunctionComponent<PluginDialogProps> = ({
@@ -42,8 +41,8 @@ const PluginDialog: FunctionComponent<PluginDialogProps> = ({
 		setCurrentPluginKey(undefined);
 	};
 
-	const handleReturnFunction = (componentRawString: string | undefined) => {
-		returnFunction(componentRawString);
+	const handleReturnFunction = (component: ReactNode) => {
+		returnFunction(component);
 		handleClose();
 	};
 

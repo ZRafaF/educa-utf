@@ -43,11 +43,45 @@ Esse componente recebe uma string chamada `text` como `prop`, checa se ela é um
 
 Agora vamos para o editor, todos os editores serão renderizados dentro de um modal. Você não precisa se preocupar com isso.
 
-![UpperMakerEditor component](image-3.png)
+
+```tsx
+'use client';
+
+import { FunctionComponent, useState } from 'react';
+import { PluginEditorProps } from '../PluginsTypes';
+import UpperMaker from './UpperMaker';
+
+const UpperMakerEditor: FunctionComponent<PluginEditorProps> = ({
+	returnFunction,
+}) => {
+	const [userInput, setUserInput] = useState<string>('');
+
+	return (
+		<>
+			<input
+				type="text"
+				placeholder="Digite o texto aqui"
+				onChange={(e) => {
+					setUserInput(e.target.value);
+				}}
+			/>
+			<button
+				onClick={() => {
+					returnFunction(<UpperMaker text={userInput} />);
+				}}
+			>
+				Enviar
+			</button>
+		</>
+	);
+};
+
+export default UpperMakerEditor;
+```
 
 Os editores recebem algumas `props` por padrão, por tanto vamos começar utilizando o tipo `PluginEditorProps` para nos fornecer intellisense.
 
-Todos os plugins devem utilizar a função `returnFunction` essa função recebe uma o componente que deve ser renderizado como uma `string`.
+Todos os plugins devem utilizar a função `returnFunction` essa função recebe uma o componente que deve ser renderizado.
 
 ### Adicionando à barra de ferramentas
 
@@ -69,7 +103,7 @@ O primeiro passo é importá-lo dinamicamente:
 
 E por fim adicioná-lo aos *overrides*
 
-```react
+```tsx
 'use-client';
 
 import ImgBlock from '@/plugins/ImgBlock/ImgBlock';

@@ -11,6 +11,7 @@ import {
 	Dispatch,
 	FunctionComponent,
 	MutableRefObject,
+	ReactNode,
 	SetStateAction,
 	useCallback,
 	useEffect,
@@ -36,6 +37,7 @@ import { ArticlesResponse } from '@/types/pocketbase-types';
 import { ArticlesExpand } from '@/types/expanded-types';
 import { useDebounce } from 'use-debounce';
 import PluginsArray from '@/plugins/PluginsArray';
+import reactElementToJSXString from 'react-element-to-jsx-string';
 
 enum ViewMode {
 	Editor = 0,
@@ -79,7 +81,15 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 		}
 	}, [isSmallScreen]);
 
-	const handlePluginReturn = (rawString: string | undefined) => {
+	const handlePluginReturn = (component: ReactNode) => {
+		let rawString = reactElementToJSXString(component, {
+			maxInlineAttributesLineLength: 100,
+			useFragmentShortSyntax: true,
+			useBooleanShorthandSyntax: true,
+		});
+
+		// rawString = rawString.replace(/&quot;/g, '"');
+
 		if (currentGetMdeInstance && rawString) {
 			const pos = currentGetMdeInstance.codemirror.getCursor();
 			currentGetMdeInstance.codemirror.setSelection(pos, pos);
