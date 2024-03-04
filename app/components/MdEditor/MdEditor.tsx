@@ -82,7 +82,13 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	}, [isSmallScreen]);
 
 	const handlePluginReturn = (component: ReactNode) => {
-		const rawString = reactElementToJSXString(component);
+		let rawString = reactElementToJSXString(component, {
+			maxInlineAttributesLineLength: 100,
+			useFragmentShortSyntax: true,
+			useBooleanShorthandSyntax: true,
+		});
+
+		// rawString = rawString.replace(/&quot;/g, '"');
 
 		if (currentGetMdeInstance && rawString) {
 			const pos = currentGetMdeInstance.codemirror.getCursor();

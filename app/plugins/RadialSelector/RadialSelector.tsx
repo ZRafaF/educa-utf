@@ -8,31 +8,22 @@ import { FunctionComponent, useMemo } from 'react';
 interface RadialSelectorProps {
 	multiple?: boolean;
 	options: string;
-	answer: string;
+	answerIdx: number;
 }
 
 const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 	multiple,
 	options,
-	answer,
+	answerIdx,
 }) => {
-	const optionsArray = useMemo(() => options.split(','), [options]);
-
-	const optionsObj = useMemo(() => {
-		console.log(options);
-
-		try {
-			return JSON.parse(options);
-		} catch (error) {
-			return {};
-		}
+	const optionsArray = useMemo(() => {
+		return options.split('~,~');
 	}, [options]);
 
-	console.log(optionsObj);
+	console.log(answerIdx);
 
 	return (
 		<Box>
-			options: {options}
 			<FormControl>
 				<RadioGroup
 					aria-labelledby="demo-radio-buttons-group-label"

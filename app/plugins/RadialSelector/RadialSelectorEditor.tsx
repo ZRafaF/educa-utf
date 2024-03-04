@@ -8,18 +8,15 @@ import RadialSelector from './RadialSelector';
 const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
 }) => {
-	const optionsString = useMemo(() => {
-		return JSON.stringify({
-			text: 'asd',
-			answer: 'asd',
-		});
-	}, []);
+	const options = ['asd', 'asda', 'ABC123'];
+
+	const optionsString = options.join('~,~');
 
 	return (
 		<Button
 			onClick={() => {
 				returnFunction(
-					<RadialSelector options={optionsString} answer="2" />
+					<RadialSelector options={optionsString} answerIdx={2} />
 				);
 			}}
 		>
