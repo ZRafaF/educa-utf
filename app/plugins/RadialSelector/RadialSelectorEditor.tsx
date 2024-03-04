@@ -3,6 +3,7 @@
 import { FunctionComponent, useMemo } from 'react';
 import { PluginEditorProps } from '../PluginsTypes';
 import Button from '@mui/material/Button';
+import RadialSelector from './RadialSelector';
 
 const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
@@ -18,7 +19,7 @@ const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 		<Button
 			onClick={() => {
 				returnFunction(
-					`<RadialSelector options='${optionsString}'/>\n`
+					<RadialSelector options={optionsString} answer="2" />
 				);
 			}}
 		>

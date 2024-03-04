@@ -2,6 +2,7 @@
 
 import { FunctionComponent, useState } from 'react';
 import { PluginEditorProps } from '../PluginsTypes';
+import UpperMaker from './UpperMaker';
 
 const UpperMakerEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
@@ -19,7 +20,7 @@ const UpperMakerEditor: FunctionComponent<PluginEditorProps> = ({
 			/>
 			<button
 				onClick={() => {
-					returnFunction(`<UpperMaker text="${userInput}"/>`);
+					returnFunction(<UpperMaker text={userInput} />);
 				}}
 			>
 				Enviar

@@ -8,13 +8,13 @@ import { FunctionComponent, useMemo } from 'react';
 interface RadialSelectorProps {
 	multiple?: boolean;
 	options: string;
-	answare: string;
+	answer: string;
 }
 
 const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 	multiple,
 	options,
-	answare,
+	answer,
 }) => {
 	const optionsArray = useMemo(() => options.split(','), [options]);
 
