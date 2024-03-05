@@ -8,7 +8,6 @@ const UpperMakerEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
 }) => {
 	const [userInput, setUserInput] = useState<string>('');
-
 	return (
 		<>
 			<input

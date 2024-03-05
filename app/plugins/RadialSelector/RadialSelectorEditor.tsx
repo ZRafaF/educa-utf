@@ -1,6 +1,6 @@
 'use client';
 
-import { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent } from 'react';
 import { PluginEditorProps } from '../PluginsTypes';
 import Button from '@mui/material/Button';
 import RadialSelector from './RadialSelector';
@@ -11,7 +11,6 @@ const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 	const options = ['asd', 'asda', 'ABC123'];
 
 	const optionsString = options.join('~,~');
-
 	return (
 		<Button
 			onClick={() => {

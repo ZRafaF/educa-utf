@@ -44,4 +44,6 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 	);
 };
 
+RadialSelector.displayName = 'RadialSelector';
+
 export default RadialSelector;

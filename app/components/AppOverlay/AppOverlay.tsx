@@ -18,20 +18,20 @@ interface AppOverlayProps {
 
 const AppOverlay: FunctionComponent<AppOverlayProps> = ({ children }) => {
 	return (
-		<Suspense fallback={<div>Carregando...</div>}>
-			<OverlayControllerProvider>
-				<Box bgcolor={'background.default'} color={'text.primary'}>
-					<div data-mui-color-scheme="dark">
+		<Box bgcolor={'background.default'} color={'text.primary'}>
+			<Suspense fallback={<div>Carregando...</div>}>
+				<div data-mui-color-scheme="dark">
+					<OverlayControllerProvider>
 						<AppBarController />
 						<DrawerController>
 							<Toolbar />
 							<ListItems />
 						</DrawerController>
-					</div>
-					<ContentArea>{children}</ContentArea>
-				</Box>
-			</OverlayControllerProvider>
-		</Suspense>
+					</OverlayControllerProvider>
+				</div>
+			</Suspense>
+			<ContentArea>{children}</ContentArea>
+		</Box>
 	);
 };
 
