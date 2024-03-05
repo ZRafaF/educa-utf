@@ -23,4 +23,6 @@ const UpperMaker: FunctionComponent<UpperMakerProps> = ({ text }) => {
 	);
 };
 
+UpperMaker.displayName = 'UpperMaker';
+
 export default UpperMaker;

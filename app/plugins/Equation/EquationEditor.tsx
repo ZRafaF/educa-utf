@@ -14,13 +14,14 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import FormLabel from '@mui/material/FormLabel';
+import Typography from '@mui/material/Typography';
 import Equation from './Equation';
 
 const EquationEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
 }) => {
 	addStyles();
-	const [latex, setLatex] = useState('\\frac{x}{2}=4');
+	const [latex, setLatex] = useState('');
 
 	const handleFinish = () => {
 		returnFunction(<Equation latex={latex} />);
@@ -50,6 +51,9 @@ const EquationEditor: FunctionComponent<PluginEditorProps> = ({
 						minHeight: '40px',
 					}}
 				/>
+				<Typography variant="caption" color={'text.secondary'} pl={2}>
+					Insira uma equação
+				</Typography>
 			</Stack>
 			<TextField
 				id="outlined-basic"
