@@ -82,11 +82,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 	}, [isSmallScreen]);
 
 	const handlePluginReturn = (component: ReactNode) => {
-		let rawString = reactElementToJSXString(component, {
-			maxInlineAttributesLineLength: 100,
-			useFragmentShortSyntax: true,
-			useBooleanShorthandSyntax: true,
-		});
+		let rawString = reactElementToJSXString(component, {});
 
 		// rawString = rawString.replace(/&quot;/g, '"');
 

@@ -16,4 +16,6 @@ const Equation: FunctionComponent<EquationProps> = ({ latex }) => {
 	return <StaticMathField>{latex}</StaticMathField>;
 };
 
+Equation.displayName = 'Equation';
+
 export default Equation;
