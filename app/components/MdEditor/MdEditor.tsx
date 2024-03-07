@@ -124,8 +124,8 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				'table',
 				'horizontal-rule',
 				'link',
-				'|',
 				'upload-image',
+				'|',
 				...PluginsArray.map<SimpleMDE.ToolbarIcon | null>((plugin) => {
 					if (
 						plugin.hidden ||

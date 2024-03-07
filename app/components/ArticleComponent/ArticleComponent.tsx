@@ -150,6 +150,12 @@ function ArticleComponent({
 					lg: fullWidth ? 20 : 5,
 					xl: fullWidth ? 30 : 5,
 				}}
+				pt={{
+					xs: 1,
+					sm: 1.5,
+					md: 2,
+					lg: 0,
+				}}
 				pb={5}
 			>
 				{articleDocument ? (
