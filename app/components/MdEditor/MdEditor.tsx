@@ -101,7 +101,6 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 
 			nativeSpellcheck: true,
 			placeholder: '# Escreva aqui Seu artigo usando **markdown**',
-			// maxHeight: '70vh',
 			uploadImage: true,
 			imageUploadFunction(file, onSuccess, onError) {
 				uploadFile(file, myArticle.id)
