@@ -3,10 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import { ArticlesResponse } from '@/types/pocketbase-types';
 import { FunctionComponent, ReactNode } from 'react';
 
 export interface PluginEditorProps {
 	returnFunction: (component: ReactNode) => void;
+	article: ArticlesResponse;
 }
 
 export type PluginType = {

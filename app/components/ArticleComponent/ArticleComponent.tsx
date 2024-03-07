@@ -153,7 +153,10 @@ function ArticleComponent({
 				pb={5}
 			>
 				{articleDocument ? (
-					<ArticleContent article={articleDocument} />
+					<ArticleContent
+						articleDocument={articleDocument}
+						article={myArticle}
+					/>
 				) : (
 					<PageMessage message="Artigo não encontrado" />
 				)}

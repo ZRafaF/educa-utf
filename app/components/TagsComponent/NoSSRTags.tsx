@@ -80,7 +80,7 @@ const NoSSRTags: FunctionComponent<NoSSRTagsProps> = ({
 					clickable
 					color="primary"
 					component={Link}
-					href={`/browse/articles?filter=tag='${tag.id}'`}
+					href={`/browse/articles?tags=${tag.id}`}
 				/>
 				{keyWords?.map((keyWord, idx) => (
 					<Chip
