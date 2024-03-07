@@ -1,29 +1,60 @@
-import Box from '@mui/material/Box';
+'use client';
+
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useContext, useMemo } from 'react';
+import AuthorInfo from './AuthorInfo';
+import ArticleIdContext from '@/contexts/ArticleIdContext';
+import usePbAuth from '@/hooks/usePbAuth';
 
 interface RadialSelectorProps {
 	multiple?: boolean;
 	options: string;
-	answerIdx: number;
+	uniqueId: string;
 }
 
 const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 	multiple,
 	options,
-	answerIdx,
+	uniqueId,
 }) => {
+	const articleId = useContext(ArticleIdContext);
+	const [, user] = usePbAuth();
 	const optionsArray = useMemo(() => {
 		return options.split('~,~');
 	}, [options]);
 
-	console.log(answerIdx);
+	if (articleId === undefined) {
+		return (
+			<Paper
+				variant="outlined"
+				sx={{
+					width: '100%',
+					p: 1,
+					position: 'relative',
+					bgcolor: 'grey.A700',
+				}}
+			>
+				Erro ao carregar o exercício radial de id: {uniqueId}
+			</Paper>
+		);
+	}
 
 	return (
-		<Box>
+		<Paper
+			variant="outlined"
+			sx={{
+				width: '100%',
+				py: 1,
+				px: 2,
+				position: 'relative',
+				bgcolor: 'grey.A700',
+			}}
+		>
+			<AuthorInfo uniqueId={uniqueId} article={articleId} user={user} />
 			<FormControl>
 				<RadioGroup
 					aria-labelledby="demo-radio-buttons-group-label"
@@ -40,7 +71,7 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 					))}
 				</RadioGroup>
 			</FormControl>
-		</Box>
+		</Paper>
 	);
 };
 

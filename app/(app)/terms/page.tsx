@@ -24,7 +24,7 @@ interface PageProps {}
 const Page: FunctionComponent<PageProps> = () => {
 	return (
 		<Container sx={{ pb: 2 }}>
-			<ArticleContent article={terms} />
+			<ArticleContent articleDocument={terms} article={undefined} />
 		</Container>
 	);
 };

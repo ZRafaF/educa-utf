@@ -188,7 +188,20 @@ export function slugify(str: string) {
 
 export function basicSlugify(str: string) {
 	return String(str);
-	str.normalize('NFD')
-		.replace(/[\u0300-\u036f]/g, '')
-		.toLowerCase();
+	// str.normalize('NFD')
+	// 	.replace(/[\u0300-\u036f]/g, '')
+	// 	.toLowerCase();
+}
+
+export function generateRandomString(length: number) {
+	const characters =
+		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let result = '';
+	const charactersLength = characters.length;
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(
+			Math.floor(Math.random() * charactersLength)
+		);
+	}
+	return result;
 }
