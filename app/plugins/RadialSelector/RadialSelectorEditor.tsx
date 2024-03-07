@@ -82,9 +82,9 @@ const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 										display={'flex'}
 										width={'100%'}
 										justifyContent={'space-between'}
+										key={index}
 									>
 										<FormControlLabel
-											key={index}
 											value={option}
 											control={<Radio />}
 											label={option}
