@@ -100,7 +100,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 			spellChecker: false,
 
 			nativeSpellcheck: true,
-			placeholder: '# Escreva aqui Seu artigo\n\nUsando **markdown**...',
+			placeholder: '# Escreva aqui Seu artigo usando **markdown**',
 			// maxHeight: '70vh',
 			uploadImage: true,
 			imageUploadFunction(file, onSuccess, onError) {
@@ -273,7 +273,8 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 							}}
 						>
 							<ArticleContent
-								article={debouncedArticleDocument}
+								articleDocument={debouncedArticleDocument}
+								article={myArticle}
 							/>
 						</Box>
 					</Paper>
@@ -284,6 +285,7 @@ const MdEditor: FunctionComponent<MdEditorProps> = ({
 				currentPluginKey={currentPluginKey}
 				setCurrentPluginKey={setCurrentPluginKey}
 				returnFunction={handlePluginReturn}
+				article={myArticle}
 			/>
 		</Box>
 	);

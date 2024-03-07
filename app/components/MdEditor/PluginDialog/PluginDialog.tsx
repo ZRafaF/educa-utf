@@ -16,17 +16,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { ArticlesResponse } from '@/types/pocketbase-types';
 
 interface PluginDialogProps {
 	currentPluginKey: string | undefined;
 	setCurrentPluginKey: Dispatch<SetStateAction<string | undefined>>;
 	returnFunction: (component: ReactNode) => void;
+	article: ArticlesResponse;
 }
 
 const PluginDialog: FunctionComponent<PluginDialogProps> = ({
 	currentPluginKey,
 	setCurrentPluginKey,
 	returnFunction,
+	article,
 }) => {
 	const open = useMemo(
 		() => currentPluginKey !== undefined,
@@ -65,7 +68,12 @@ const PluginDialog: FunctionComponent<PluginDialogProps> = ({
 			</IconButton>
 
 			<DialogContent dividers>
-				{<currentPlugin.editor returnFunction={handleReturnFunction} />}
+				{
+					<currentPlugin.editor
+						returnFunction={handleReturnFunction}
+						article={article}
+					/>
+				}
 			</DialogContent>
 		</Dialog>
 	);

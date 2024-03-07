@@ -20,7 +20,10 @@ interface PageProps {}
 const Page: FunctionComponent<PageProps> = () => {
 	return (
 		<Container sx={{ pb: 2 }}>
-			<ArticleContent article={attributions} />
+			<ArticleContent
+				articleDocument={attributions}
+				article={undefined}
+			/>
 		</Container>
 	);
 };
