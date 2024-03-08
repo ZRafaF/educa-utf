@@ -5,27 +5,65 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { FunctionComponent, useContext, useMemo } from 'react';
+import {
+	FunctionComponent,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import AuthorInfo from './AuthorInfo';
 import ArticleIdContext from '@/contexts/ArticleIdContext';
 import usePbAuth from '@/hooks/usePbAuth';
+import { PluginDataResponse } from '@/types/pocketbase-types';
+import { getPluginData } from '@/lib/apiHelpers/pluginDataAPI';
 
 interface RadialSelectorProps {
 	options: string;
 	uniqueId: string;
+	answer: string;
 }
 
 const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 	options,
 	uniqueId,
+	answer,
 }) => {
-	const articleId = useContext(ArticleIdContext);
+	const article = useContext(ArticleIdContext);
 	const [, user] = usePbAuth();
 	const optionsArray = useMemo(() => {
 		return options.split('~,~');
 	}, [options]);
 
-	if (articleId === undefined) {
+	const [pluginData, setPluginData] = useState<
+		PluginDataResponse | undefined
+	>(undefined);
+
+	const [correctAnswer, setCorrectAnswer] = useState<string | undefined>(
+		answer
+	);
+
+	console.log('correctAnswer', correctAnswer);
+
+	useEffect(() => {
+		const fetchPluginData = async () => {
+			if (article === undefined) {
+				return;
+			}
+			const dataResponse = await getPluginData(uniqueId, article.id);
+			setPluginData(dataResponse);
+			if (dataResponse.data === undefined) {
+				return;
+			}
+			setCorrectAnswer(
+				(dataResponse.data as any).correctAnswer as string
+			);
+		};
+
+		if (correctAnswer === undefined) fetchPluginData();
+	}, [article, uniqueId, setPluginData]);
+
+	if (article === undefined) {
 		return (
 			<Paper
 				variant="outlined"
@@ -52,7 +90,7 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 				bgcolor: 'grey.A700',
 			}}
 		>
-			<AuthorInfo uniqueId={uniqueId} article={articleId} user={user} />
+			<AuthorInfo uniqueId={uniqueId} article={article} user={user} />
 			<FormControl>
 				<RadioGroup
 					aria-labelledby="demo-radio-buttons-group-label"

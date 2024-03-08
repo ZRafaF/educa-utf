@@ -23,6 +23,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {
+	PluginDataRecord,
+	PluginDataVisibilityOptions,
+} from '@/types/pocketbase-types';
+import usePbAuth from '@/hooks/usePbAuth';
+import { createPluginData } from '@/lib/apiHelpers/pluginDataAPI';
 
 interface OptionType {
 	label: string;
@@ -31,23 +37,54 @@ interface OptionType {
 
 const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 	returnFunction,
+	article,
 }) => {
 	const [optionsArray, setOptionsArray] = useState<OptionType[]>([]);
 	const [correctAnswer, setCorrectAnswer] = useState<string | undefined>(
 		undefined
 	);
+	const [showAnswerToUser, setShowAnswerToUser] = useState(true);
 
+	const [, user] = usePbAuth();
 	const [isOpen, setIsOpen] = useState(false);
 	const handleClose = () => {
 		setIsOpen(false);
 	};
 
-	const handleCreate = () => {
+	const handleCreate = async () => {
+		if (user === null) {
+			toast.error('Usuário não encontrado');
+			return;
+		}
+
 		const id = generateRandomString(10);
 		const optionsString = optionsArray.map((o) => o.label).join('~,~');
 
+		const newPluginData: PluginDataRecord = {
+			uniqueId: id,
+			user: user.id,
+			article: article.id,
+			data: {
+				correctAnswer: correctAnswer,
+			},
+			visibility: showAnswerToUser
+				? PluginDataVisibilityOptions.public
+				: PluginDataVisibilityOptions.private,
+		};
+		try {
+			const resp = await createPluginData(newPluginData);
+		} catch (error) {
+			toast.error('Erro ao criar exercício radial');
+			console.error(error);
+			return;
+		}
+
 		returnFunction(
-			<RadialSelector options={optionsString} uniqueId={id} />
+			<RadialSelector
+				options={optionsString}
+				uniqueId={id}
+				answer={showAnswerToUser ? correctAnswer ?? '' : ''}
+			/>
 		);
 
 		toast.success('Exercício radial criado com sucesso!');
@@ -250,7 +287,15 @@ const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 			</Paper>
 			<FormGroup>
 				<FormControlLabel
-					control={<Checkbox defaultChecked />}
+					control={
+						<Checkbox
+							defaultChecked
+							value={showAnswerToUser}
+							onChange={(e) => {
+								setShowAnswerToUser(e.target.checked);
+							}}
+						/>
+					}
 					label="Mostrar resposta ao usuário"
 				/>
 			</FormGroup>
