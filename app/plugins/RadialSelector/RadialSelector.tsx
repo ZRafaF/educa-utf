@@ -11,13 +11,11 @@ import ArticleIdContext from '@/contexts/ArticleIdContext';
 import usePbAuth from '@/hooks/usePbAuth';
 
 interface RadialSelectorProps {
-	multiple?: boolean;
 	options: string;
 	uniqueId: string;
 }
 
 const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
-	multiple,
 	options,
 	uniqueId,
 }) => {
