@@ -107,7 +107,7 @@ export type ChaptersRecord = {
 	description_slug?: string
 	key_words?: RecordIdString[]
 	slug?: string
-	tag?: RecordIdString
+	tag: RecordIdString
 	title: string
 	user: RecordIdString
 	views?: RecordIdString
@@ -196,17 +196,8 @@ export type ReportsRecord = {
 }
 
 export enum TagsCategoryOptions {
-	"Ciências Exatas" = "Ciências Exatas",
-	"Ciências da Computação" = "Ciências da Computação",
-	"Ciências Biológicas" = "Ciências Biológicas",
-	"Ciências da Saúde" = "Ciências da Saúde",
-	"Ciências Sociais" = "Ciências Sociais",
-	"Humanidades" = "Humanidades",
-	"Engenharia" = "Engenharia",
-	"Economia e Negócios" = "Economia e Negócios",
-	"Linguagens e Comunicação" = "Linguagens e Comunicação",
-	"Educação" = "Educação",
-	"Outro" = "Outro",
+	"Areas do Conhecimento" = "Areas do Conhecimento",
+	"Outros" = "Outros",
 }
 export type TagsRecord = {
 	category: TagsCategoryOptions
