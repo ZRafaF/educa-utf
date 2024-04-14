@@ -5,29 +5,65 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { FunctionComponent, useContext, useMemo } from 'react';
+import {
+	FunctionComponent,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import AuthorInfo from './AuthorInfo';
 import ArticleIdContext from '@/contexts/ArticleIdContext';
 import usePbAuth from '@/hooks/usePbAuth';
+import { PluginsResponse } from '@/types/pocketbase-types';
+import {
+	createUsersPluginData,
+	getPluginData,
+} from '@/lib/apiHelpers/pluginsAPI';
+import { PluginDataType } from './PluginDataType';
+import { toast } from 'react-toastify';
 
 interface RadialSelectorProps {
-	multiple?: boolean;
 	options: string;
 	uniqueId: string;
+	answer: string;
 }
 
 const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
-	multiple,
 	options,
 	uniqueId,
+	answer,
 }) => {
-	const articleId = useContext(ArticleIdContext);
+	const article = useContext(ArticleIdContext);
 	const [, user] = usePbAuth();
 	const optionsArray = useMemo(() => {
 		return options.split('~,~');
 	}, [options]);
+	const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
 
-	if (articleId === undefined) {
+	const [pluginData, setPluginData] = useState<
+		PluginsResponse<PluginDataType> | undefined
+	>(undefined);
+
+	useEffect(() => {
+		if (isCorrect == true) {
+			toast.success('Você acertou!');
+		}
+	}, [isCorrect]);
+
+	useEffect(() => {
+		const fetchPluginData = async () => {
+			const dataResponse = await getPluginData<PluginDataType>(uniqueId);
+
+			setPluginData(dataResponse);
+		};
+
+		fetchPluginData().catch((error) => {
+			console.error('Error fetching plugin data', error);
+		});
+	}, [article, uniqueId]);
+
+	if (article === undefined || pluginData === undefined) {
 		return (
 			<Paper
 				variant="outlined"
@@ -52,20 +88,65 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 				px: 2,
 				position: 'relative',
 				bgcolor: 'grey.A700',
+				borderColor:
+					isCorrect === undefined
+						? 'inherit'
+						: isCorrect
+						? 'success.main'
+						: 'error.main',
+				// bgcolor:
+				// 	isCorrect === undefined
+				// 		? 'grey.A700'
+				// 		: isCorrect
+				// 		? 'success.main'
+				// 		: 'error.main',
 			}}
 		>
-			<AuthorInfo uniqueId={uniqueId} article={articleId} user={user} />
+			<AuthorInfo
+				uniqueId={uniqueId}
+				article={article}
+				user={user}
+				pluginData={pluginData}
+			/>
 			<FormControl>
 				<RadioGroup
 					aria-labelledby="demo-radio-buttons-group-label"
 					defaultValue="female"
 					name="radio-buttons-group"
+					onChange={(event) => {
+						const value = event.target.value;
+
+						if (user) {
+							createUsersPluginData(uniqueId, user.id, {
+								answer: value,
+							}).catch((error) => {
+								console.error(
+									'Error creating user plugin data',
+									error
+								);
+							});
+						}
+
+						if (answer === '') return;
+
+						setIsCorrect(value === answer);
+					}}
 				>
 					{optionsArray.map((option, index) => (
 						<FormControlLabel
 							key={index}
 							value={option}
-							control={<Radio />}
+							control={
+								<Radio
+									color={
+										answer === ''
+											? 'primary'
+											: isCorrect == false
+											? 'error'
+											: 'success'
+									}
+								/>
+							}
 							label={option}
 						/>
 					))}

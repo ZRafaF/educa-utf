@@ -39,6 +39,25 @@ export async function loginWithPassword(
 		.authWithPassword<UsersResponse>(usernameOrEmail, password);
 }
 
+export async function registerUser(
+	username: string,
+	email: string,
+	password: string,
+	passwordConfirm: string,
+	name: string
+) {
+	const data = {
+		username: username,
+		email: email,
+		emailVisibility: true,
+		password: password,
+		passwordConfirm: passwordConfirm,
+		name: name,
+	};
+
+	return pb.collection('users').create(data);
+}
+
 export async function loginUTFPR(
 	username: string,
 	password: string

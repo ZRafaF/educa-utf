@@ -19,7 +19,7 @@ export default async function Page({
 }) {
 	const sort = String(searchParams?.sort ?? '-created');
 	const page = Number(searchParams?.page ?? 1);
-	const items = Number(searchParams?.items ?? 50);
+	const items = Number(searchParams?.items ?? 24);
 	const filter = constructFilterString(searchParams);
 
 	return (

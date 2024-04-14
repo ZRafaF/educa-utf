@@ -29,6 +29,9 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import InnerContentExplorer from './InnerContentExplorer';
 import useCurrentBreakpoint from '@/hooks/useCurrentBreakpoint';
+import MiniSearchComponent from '@/components/MiniSearchComponent/MiniSearchComponent';
+import Grid from '@mui/material/Unstable_Grid2/Grid2'; // Grid version 2
+import { slugify } from '@/lib/helper';
 
 interface UserContentExplorerProps {
 	username: string;
@@ -52,7 +55,7 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 	const hasPrevious = currentPage !== 1;
 	const hasNext = currentPage !== listResult?.totalPages;
 	const [loading, setLoading] = useState(false);
-
+	const [currentSearch, setCurrentSearch] = useState('');
 	const [breakpoint] = useCurrentBreakpoint();
 
 	const articlesPerPage = useMemo(() => {
@@ -64,11 +67,11 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 			case 'md':
 				return 6;
 			case 'lg':
-				return 9;
+				return 12;
 			case 'xl':
-				return 9;
+				return 12;
 			default:
-				return 8;
+				return 12;
 		}
 	}, [breakpoint]);
 
@@ -92,13 +95,20 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 
 	useEffect(() => {
 		setCurrentPage(1);
-	}, [showPrivate]);
+	}, [showPrivate, currentSearch]);
 
 	useEffect(() => {
 		const fetchArticles = async () => {
-			const filter = `author_username='${username}' ${
-				showPrivate ? '' : `&& visibility='public'`
-			}`;
+			const sluggedSearch = slugify(currentSearch);
+
+			const filter = `author_username='${username}' 
+			${showPrivate ? '' : `&& visibility='public'`} 
+			${
+				sluggedSearch &&
+				`&& (slug~'%${sluggedSearch}%' || description_slug~'%${sluggedSearch}%')`
+			}
+			`;
+
 			if (type === 'articles') {
 				const result = await getListOfArticlesStats(
 					currentPage,
@@ -137,6 +147,7 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 		type,
 		articlesPerPage,
 		chaptersPerPage,
+		currentSearch,
 	]);
 
 	return (
@@ -150,97 +161,113 @@ const UserContentExplorer: FunctionComponent<UserContentExplorerProps> = ({
 						ordenados por data de atualização
 					</Typography>
 				</Stack>
-				<Stack
+				<Grid
+					container
 					spacing={1}
-					direction="row"
-					justifyContent="space-between"
-					alignItems="end"
+					sx={{
+						justifyContent: 'space-between',
+					}}
+					alignItems={'center'}
 					px={{
 						xs: 0,
 						sm: 1,
 						md: 1,
 					}}
-					pb={0.5}
+					py={0.5}
 				>
-					<Box>
-						{user?.username === username && (
-							<FormGroup>
-								<FormControlLabel
-									control={
-										<Checkbox
-											checked={showPrivate}
-											onChange={(e) => {
-												setShowPrivate(
-													e.target.checked
-												);
-											}}
-										/>
-									}
-									label="Mostrar privados"
-								/>
-							</FormGroup>
-						)}
-					</Box>
-
-					<>
-						{listResult !== undefined &&
-							listResult.totalPages > 0 && (
-								<Stack
-									direction="row"
-									justifyContent="end"
-									alignItems="center"
-									spacing={1}
-									mb={2}
-								>
-									<Typography variant="body2">
-										Página {currentPage} de{' '}
-										{listResult.totalPages}
-									</Typography>
-
-									<Stack direction="row" spacing={0.5}>
-										<Tooltip
-											title="Página anterior"
-											arrow
-											placement="top"
-										>
-											<IconButton
-												aria-label="previous"
-												onClick={() => {
-													if (hasPrevious) {
-														setCurrentPage(
-															currentPage - 1
-														);
-													}
+					<Grid xs={12} sm={8} md={6}>
+						<MiniSearchComponent
+							currentSearch={currentSearch}
+							setCurrentSearch={setCurrentSearch}
+							debounceTime={250}
+						/>
+					</Grid>
+					<Grid
+						xs={12}
+						sm={12}
+						md={6}
+						container
+						spacing={1}
+						justifyContent={'space-between'}
+					>
+						<Grid xs={7} md={6}>
+							{user?.username === username && (
+								<FormGroup>
+									<FormControlLabel
+										control={
+											<Checkbox
+												checked={showPrivate}
+												onChange={(e) => {
+													setShowPrivate(
+														e.target.checked
+													);
 												}}
-												disabled={!hasPrevious}
-											>
-												<KeyboardArrowLeftIcon fontSize="inherit" />
-											</IconButton>
-										</Tooltip>
-										<Tooltip
-											title="Próxima página"
-											arrow
-											placement="top"
-										>
-											<IconButton
-												aria-label="previous"
-												onClick={() => {
-													if (hasNext) {
-														setCurrentPage(
-															currentPage + 1
-														);
-													}
-												}}
-												disabled={!hasNext}
-											>
-												<KeyboardArrowRightIcon fontSize="inherit" />
-											</IconButton>
-										</Tooltip>
-									</Stack>
-								</Stack>
+											/>
+										}
+										label="Mostrar privados"
+									/>
+								</FormGroup>
 							)}
-					</>
-				</Stack>
+						</Grid>
+						<Grid xs={5} md={6}>
+							{listResult !== undefined &&
+								listResult.totalPages > 0 && (
+									<Stack
+										direction="row"
+										justifyContent="end"
+										alignItems="center"
+										spacing={1}
+									>
+										<Typography variant="body2">
+											Página {currentPage} de{' '}
+											{listResult.totalPages}
+										</Typography>
+
+										<Stack direction="row" spacing={0.5}>
+											<Tooltip
+												title="Página anterior"
+												arrow
+												placement="top"
+											>
+												<IconButton
+													aria-label="previous"
+													onClick={() => {
+														if (hasPrevious) {
+															setCurrentPage(
+																currentPage - 1
+															);
+														}
+													}}
+													disabled={!hasPrevious}
+												>
+													<KeyboardArrowLeftIcon fontSize="inherit" />
+												</IconButton>
+											</Tooltip>
+											<Tooltip
+												title="Próxima página"
+												arrow
+												placement="top"
+											>
+												<IconButton
+													aria-label="previous"
+													onClick={() => {
+														if (hasNext) {
+															setCurrentPage(
+																currentPage + 1
+															);
+														}
+													}}
+													disabled={!hasNext}
+												>
+													<KeyboardArrowRightIcon fontSize="inherit" />
+												</IconButton>
+											</Tooltip>
+										</Stack>
+									</Stack>
+								)}
+						</Grid>
+					</Grid>
+				</Grid>
 			</Box>
 			<Paper
 				variant="outlined"

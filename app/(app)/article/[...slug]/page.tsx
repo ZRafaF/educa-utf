@@ -10,7 +10,7 @@ import {
 	getArticleStatsById,
 	getArticleDocument,
 } from '@/lib/apiHelpers/articlesAPI';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, Suspense } from 'react';
 import { getUserAvatarUrlByUserId } from '@/lib/apiHelpers/usersAPI';
 import type { Metadata } from 'next';
 import PageMessage from '@/components/PageMessage/PageMessage';
@@ -95,7 +95,9 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 
 		if (articleDocument)
 			return (
-				<>
+				<Suspense
+					fallback={<PageMessage message="Carregando..." loading />}
+				>
 					<ArticleComponent
 						myArticle={article}
 						articleStats={articleStats}
@@ -107,7 +109,7 @@ const Page: FunctionComponent<PageProps> = async ({ params }) => {
 						collectionName="articles"
 						recordId={articleId}
 					/>
-				</>
+				</Suspense>
 			);
 		else {
 			return <PageMessage message="Artigo não encontrado" />;

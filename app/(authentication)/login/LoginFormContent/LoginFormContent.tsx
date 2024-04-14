@@ -8,6 +8,7 @@ import { FunctionComponent } from 'react';
 import TextField from '@mui/material/TextField/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox/Checkbox';
+import PasswordInput from '@/components/PasswordInput/PasswordInput';
 
 interface LoginFormContentProps {}
 
@@ -26,19 +27,12 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				helperText='Para alunos da UTFPR, utilize "a + RA". ex.: a12345678.'
 				autoFocus
 			/>
-			<TextField
-				margin="normal"
-				required
-				fullWidth
+			<PasswordInput
+				label="Senha"
+				name="password"
 				inputProps={{
 					minLength: 6,
-					maxLength: 72,
 				}}
-				name="password"
-				label="Senha"
-				type="password"
-				id="password"
-				autoComplete="current-password"
 			/>
 			<FormControlLabel
 				control={
