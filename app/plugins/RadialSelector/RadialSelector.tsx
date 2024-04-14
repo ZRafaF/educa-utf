@@ -58,12 +58,10 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 			setPluginData(dataResponse);
 		};
 
-		if (pluginData === undefined) {
-			fetchPluginData().catch((error) => {
-				console.error('Error fetching plugin data', error);
-			});
-		}
-	}, [article, uniqueId, setPluginData]);
+		fetchPluginData().catch((error) => {
+			console.error('Error fetching plugin data', error);
+		});
+	}, [article, uniqueId]);
 
 	if (article === undefined || pluginData === undefined) {
 		return (
