@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography/Typography';
 
 import Link from 'next/link';
 import { Metadata } from 'next/types';
+import RegisterFormSender from './RegisterFormSender/RegisterFormSender';
+import RegisterFormContent from './RegisterFormContent/RegisterFormContent';
 
 export const metadata: Metadata = {
 	title: 'Registro - EducaUTF',
@@ -23,8 +25,13 @@ const page: FunctionComponent<pageProps> = () => {
 	return (
 		<Box
 			sx={{
-				my: 8,
-				mx: 4,
+				mb: 4,
+				mx: {
+					xs: 1,
+					sm: 2,
+					md: 3,
+					lg: 4,
+				},
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
@@ -33,11 +40,15 @@ const page: FunctionComponent<pageProps> = () => {
 			<Typography component="h1" variant="h5" width={'100%'}>
 				Fazer Registro
 			</Typography>
-
+			<RegisterFormSender>
+				<RegisterFormContent />
+			</RegisterFormSender>
 			<Grid container>
 				<Grid item>
 					<Link href="/login" style={{ color: 'inherit' }}>
-						{'Já tem uma conta? Login aqui!'}
+						<Typography sx={{ fontSize: 14 }}>
+							Já tem uma conta? Ou é aluno da UTFPR? Login aqui!
+						</Typography>
 					</Link>
 				</Grid>
 			</Grid>

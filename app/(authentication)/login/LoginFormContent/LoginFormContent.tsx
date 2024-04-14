@@ -27,7 +27,13 @@ const LoginFormContent: FunctionComponent<LoginFormContentProps> = () => {
 				helperText='Para alunos da UTFPR, utilize "a + RA". ex.: a12345678.'
 				autoFocus
 			/>
-			<PasswordInput />
+			<PasswordInput
+				label="Senha"
+				name="password"
+				inputProps={{
+					minLength: 6,
+				}}
+			/>
 			<FormControlLabel
 				control={
 					<Checkbox
