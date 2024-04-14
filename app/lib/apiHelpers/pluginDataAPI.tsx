@@ -7,10 +7,13 @@ export async function createPluginData(pluginData: PluginDataRecord) {
 		.create<PluginDataResponse>(pluginData);
 }
 
-export async function getPluginData(uniqueId: string, article: string) {
+export async function getPluginData<Tdata = unknown>(
+	uniqueId: string,
+	article: string
+) {
 	return await pb
 		.collection('plugin_data')
-		.getFirstListItem<PluginDataResponse>(
+		.getFirstListItem<PluginDataResponse<Tdata>>(
 			`article='${article}'&&uniqueId='${uniqueId}'`
 		);
 }

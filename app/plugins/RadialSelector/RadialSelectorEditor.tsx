@@ -29,6 +29,7 @@ import {
 } from '@/types/pocketbase-types';
 import usePbAuth from '@/hooks/usePbAuth';
 import { createPluginData } from '@/lib/apiHelpers/pluginDataAPI';
+import { PluginDataType } from './PluginDataType';
 
 interface OptionType {
 	label: string;
@@ -60,13 +61,15 @@ const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 		const id = generateRandomString(10);
 		const optionsString = optionsArray.map((o) => o.label).join('~,~');
 
-		const newPluginData: PluginDataRecord = {
+		const data: PluginDataType = {
+			correctAnswer: correctAnswer ?? '',
+		};
+
+		const newPluginData: PluginDataRecord<PluginDataType> = {
 			uniqueId: id,
 			user: user.id,
 			article: article.id,
-			data: {
-				correctAnswer: correctAnswer,
-			},
+			data: data,
 			visibility: showAnswerToUser
 				? PluginDataVisibilityOptions.public
 				: PluginDataVisibilityOptions.private,

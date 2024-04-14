@@ -1,24 +1,32 @@
 'use client';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useMemo, useState } from 'react';
 
 import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import { ArticlesResponse, UsersResponse } from '@/types/pocketbase-types';
+import {
+	ArticlesResponse,
+	PluginDataResponse,
+	UsersResponse,
+} from '@/types/pocketbase-types';
+import { PluginDataType } from './PluginDataType';
 
 interface AuthorInfoProps {
 	uniqueId: string;
 	article: ArticlesResponse;
 	user: UsersResponse | null;
+	pluginData: PluginDataResponse<PluginDataType>;
 }
 
 const AuthorInfo: FunctionComponent<AuthorInfoProps> = ({
 	uniqueId,
 	article,
 	user,
+	pluginData,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
+
 	const handleClose = () => {
 		setIsOpen(false);
 	};
@@ -44,7 +52,11 @@ const AuthorInfo: FunctionComponent<AuthorInfoProps> = ({
 			</IconButton>
 			<Dialog onClose={handleClose} open={isOpen}>
 				<DialogTitle>
-					Artigo: {article.id} ID: {uniqueId}
+					Artigo: {article.id}
+					<br />
+					ID: {uniqueId}
+					<br />
+					Resposta certa: {pluginData.data?.correctAnswer}
 				</DialogTitle>
 			</Dialog>
 		</>

@@ -17,6 +17,8 @@ import ArticleIdContext from '@/contexts/ArticleIdContext';
 import usePbAuth from '@/hooks/usePbAuth';
 import { PluginDataResponse } from '@/types/pocketbase-types';
 import { getPluginData } from '@/lib/apiHelpers/pluginDataAPI';
+import { PluginDataType } from './PluginDataType';
+import { toast } from 'react-toastify';
 
 interface RadialSelectorProps {
 	options: string;
@@ -34,36 +36,39 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 	const optionsArray = useMemo(() => {
 		return options.split('~,~');
 	}, [options]);
+	const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
 
 	const [pluginData, setPluginData] = useState<
-		PluginDataResponse | undefined
+		PluginDataResponse<PluginDataType> | undefined
 	>(undefined);
 
-	const [correctAnswer, setCorrectAnswer] = useState<string | undefined>(
-		answer
-	);
-
-	console.log('correctAnswer', correctAnswer);
+	useEffect(() => {
+		if (isCorrect == true) {
+			toast.success('Você acertou!');
+		}
+	}, [isCorrect]);
 
 	useEffect(() => {
 		const fetchPluginData = async () => {
 			if (article === undefined) {
 				return;
 			}
-			const dataResponse = await getPluginData(uniqueId, article.id);
-			setPluginData(dataResponse);
-			if (dataResponse.data === undefined) {
-				return;
-			}
-			setCorrectAnswer(
-				(dataResponse.data as any).correctAnswer as string
+			const dataResponse = await getPluginData<PluginDataType>(
+				uniqueId,
+				article.id
 			);
+
+			setPluginData(dataResponse);
 		};
 
-		if (correctAnswer === undefined) fetchPluginData();
+		if (pluginData === undefined) {
+			fetchPluginData().catch((error) => {
+				console.error('Error fetching plugin data', error);
+			});
+		}
 	}, [article, uniqueId, setPluginData]);
 
-	if (article === undefined) {
+	if (article === undefined || pluginData === undefined) {
 		return (
 			<Paper
 				variant="outlined"
@@ -88,20 +93,53 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 				px: 2,
 				position: 'relative',
 				bgcolor: 'grey.A700',
+				borderColor:
+					isCorrect === undefined
+						? 'inherit'
+						: isCorrect
+						? 'success.main'
+						: 'error.main',
+				// bgcolor:
+				// 	isCorrect === undefined
+				// 		? 'grey.A700'
+				// 		: isCorrect
+				// 		? 'success.main'
+				// 		: 'error.main',
 			}}
 		>
-			<AuthorInfo uniqueId={uniqueId} article={article} user={user} />
+			<AuthorInfo
+				uniqueId={uniqueId}
+				article={article}
+				user={user}
+				pluginData={pluginData}
+			/>
 			<FormControl>
 				<RadioGroup
 					aria-labelledby="demo-radio-buttons-group-label"
 					defaultValue="female"
 					name="radio-buttons-group"
+					onChange={(event) => {
+						if (answer === '') return;
+						const value = event.target.value;
+
+						setIsCorrect(value === answer);
+					}}
 				>
 					{optionsArray.map((option, index) => (
 						<FormControlLabel
 							key={index}
 							value={option}
-							control={<Radio />}
+							control={
+								<Radio
+									color={
+										answer === ''
+											? 'primary'
+											: isCorrect == false
+											? 'error'
+											: 'success'
+									}
+								/>
+							}
 							label={option}
 						/>
 					))}
