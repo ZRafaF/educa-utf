@@ -34,7 +34,7 @@ const PasswordInput: FunctionComponent<PasswordInputProps> = ({
 		event.preventDefault();
 	};
 	return (
-		<FormControl variant="outlined" fullWidth margin="dense">
+		<FormControl variant="outlined" fullWidth margin="dense" required>
 			<InputLabel htmlFor="outlined-adornment-password">
 				{label}
 			</InputLabel>

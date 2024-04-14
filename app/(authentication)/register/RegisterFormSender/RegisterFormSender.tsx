@@ -6,7 +6,7 @@
 
 import { FunctionComponent, ReactNode, useState } from 'react';
 import Box from '@mui/material/Box/Box';
-import { loginUTFPR, loginWithPassword } from '@/lib/apiHelpers/authAPI';
+import { loginWithPassword, registerUser } from '@/lib/apiHelpers/authAPI';
 import { toast } from 'react-toastify';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
+import { checkValidUsername } from '@/lib/usernameHelper';
 interface RegisterFormSenderProps {
 	children: ReactNode;
 }
@@ -25,81 +26,67 @@ const RegisterFormSender: FunctionComponent<RegisterFormSenderProps> = ({
 
 	const router = useRouter();
 
-	const handleLoginError = (
-		toastId: number | string,
-		toastType: 'error' | 'warning',
-		error: unknown
-	) => {
-		if (error instanceof Error) {
-			console.error(error);
-
-			switch (error.message) {
-				case 'Failed to authenticate.':
-					toast.update(toastId, {
-						render: `Falha na autenticação.`,
-						type: toastType,
-						isLoading: false,
-						autoClose: 5000,
-						pauseOnFocusLoss: true,
-						draggable: true,
-						pauseOnHover: true,
-						closeOnClick: true,
-					});
-					break;
-				case "UTFPR's API is not working properly.":
-					toast.update(toastId, {
-						render: `Falha no servidor da UTFPR, tente novamente mais tarde.`,
-						type: toastType,
-						isLoading: false,
-						autoClose: 5000,
-						pauseOnFocusLoss: true,
-						draggable: true,
-						pauseOnHover: true,
-						closeOnClick: true,
-					});
-					break;
-				case 'Invalid user or password.':
-					toast.update(toastId, {
-						render: `Usuário ou senha inválido.`,
-						type: toastType,
-						isLoading: false,
-						autoClose: 5000,
-						pauseOnFocusLoss: true,
-						draggable: true,
-						pauseOnHover: true,
-						closeOnClick: true,
-					});
-					break;
-				default:
-					toast.update(toastId, {
-						render: `${error.message}.`,
-						type: toastType,
-						isLoading: false,
-						autoClose: 5000,
-						pauseOnFocusLoss: true,
-						draggable: true,
-						pauseOnHover: true,
-						closeOnClick: true,
-					});
-					break;
+	const handleRegisterError = (toastId: number | string, error: any) => {
+		console.error(error.message);
+		console.error(error.response);
+		if (error.response.data) {
+			console.error(error.response.data);
+			console.log(JSON.stringify(error.response.data));
+			if (
+				error.response.data.username !== undefined &&
+				error.response.data.username.code ===
+					'validation_invalid_username'
+			) {
+				toast.update(toastId, {
+					render: `Nome de usuário inválido. Tente outro.`,
+					type: 'error',
+					isLoading: false,
+					autoClose: 5000,
+					pauseOnFocusLoss: true,
+					draggable: true,
+					pauseOnHover: true,
+					closeOnClick: true,
+				});
+				return;
 			}
-		} else {
-			toast.update(toastId, {
-				render: `Não foi possível fazer login.`,
-				type: 'error',
-				isLoading: false,
-				autoClose: 5000,
-				pauseOnFocusLoss: true,
-				draggable: true,
-				pauseOnHover: true,
-				closeOnClick: true,
-			});
+
+			if (
+				error.response.data.email !== undefined &&
+				error.response.data.email.code === 'validation_invalid_email'
+			) {
+				toast.update(toastId, {
+					render: `Email inválido. Tente outro.`,
+					type: 'error',
+					isLoading: false,
+					autoClose: 5000,
+					pauseOnFocusLoss: true,
+					draggable: true,
+					pauseOnHover: true,
+					closeOnClick: true,
+				});
+				return;
+			}
 		}
+
+		toast.update(toastId, {
+			render: `Não foi possível fazer seu registro, algo deu errado.`,
+			type: 'error',
+			isLoading: false,
+			autoClose: 5000,
+			pauseOnFocusLoss: true,
+			draggable: true,
+			pauseOnHover: true,
+			closeOnClick: true,
+		});
 	};
 
-	const handleLoginSuccess = (toastId: number | string) => {
+	const handleRegisterSuccess = async (
+		toastId: number | string,
+		username: string,
+		password: string
+	) => {
 		toast.update(toastId, {
-			render: `Login com sucesso. Bem vindo!`,
+			render: `Registrado com sucesso. Fazendo login...`,
 			type: 'success',
 			isLoading: false,
 			autoClose: 5000,
@@ -108,41 +95,99 @@ const RegisterFormSender: FunctionComponent<RegisterFormSenderProps> = ({
 			pauseOnHover: true,
 			closeOnClick: true,
 		});
-		router.push('/');
+
+		const loginToastId = toast.loading('Fazendo login...');
+
+		loginWithPassword(username, password)
+			.then(() => {
+				toast.update(loginToastId, {
+					render: `Logado com sucesso.`,
+					type: 'success',
+					isLoading: false,
+					autoClose: 5000,
+					pauseOnFocusLoss: true,
+					draggable: true,
+					pauseOnHover: true,
+					closeOnClick: true,
+				});
+				router.push('/');
+			})
+			.catch((error) => {
+				console.error(error);
+				toast.update(loginToastId, {
+					render: `Falha ao fazer login.`,
+					type: 'error',
+					isLoading: false,
+					autoClose: 5000,
+					pauseOnFocusLoss: true,
+					draggable: true,
+					pauseOnHover: true,
+					closeOnClick: true,
+				});
+			});
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
-		const submitLogin = data.get('login')?.toString();
+		const submitUsername = data.get('username')?.toString();
+		const submitName = data.get('name')?.toString();
+		const submitEmail = data.get('email')?.toString();
 		const submitPassword = data.get('password')?.toString();
-		const submitRemember = data.get('remember')?.toString();
-		if (submitLogin === undefined) return;
+		const submitPasswordConfirm = data.get('password-confirm')?.toString();
 
-		if (submitPassword === undefined) return;
-
-		if (submitRemember) {
-			//setPersistence(auth, browserSessionPersistence);
+		if (
+			submitUsername === undefined ||
+			submitEmail === undefined ||
+			submitPassword === undefined ||
+			submitPasswordConfirm === undefined ||
+			submitName === undefined
+		) {
+			toast.error('Preencha todos os campos.');
+			return;
 		}
-		const id = toast.loading('Fazendo login...');
 
-		const parallelLogin = () => {
-			const educaUTFLogin = loginWithPassword(
-				submitLogin,
-				submitPassword
+		const isValidUsername = checkValidUsername(submitUsername);
+
+		if (!isValidUsername.valid) {
+			toast.error(isValidUsername.reason);
+			return;
+		}
+
+		// Check for email format
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(submitEmail)) {
+			toast.error('Email inválido.');
+			return;
+		}
+
+		// Check for password length
+		if (submitPassword.length < 6) {
+			toast.error('A senha deve ter no mínimo 6 caracteres.');
+			return;
+		}
+
+		// Check if passwords match
+		if (submitPassword !== submitPasswordConfirm) {
+			toast.error('As senhas não coincidem.');
+			return;
+		}
+
+		const id = toast.loading('Fazendo cadastro...');
+
+		try {
+			const res = await registerUser(
+				submitUsername,
+				submitEmail,
+				submitPassword,
+				submitPasswordConfirm,
+				submitName
 			);
-			const UTFPRLogin = loginUTFPR(submitLogin, submitPassword);
+			console.log(res);
 
-			return Promise.allSettled([educaUTFLogin, UTFPRLogin]);
-		};
-
-		const res = await parallelLogin();
-
-		if (res[0].status === 'fulfilled' || res[1].status === 'fulfilled') {
-			return handleLoginSuccess(id);
+			handleRegisterSuccess(id, submitUsername, submitPassword);
+		} catch (error) {
+			handleRegisterError(id, error);
 		}
-		handleLoginError(id, 'error', res[0].reason);
-		handleLoginError(id, 'error', res[1].reason);
 	};
 
 	return (

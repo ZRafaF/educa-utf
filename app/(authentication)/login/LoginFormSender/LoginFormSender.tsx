@@ -114,7 +114,7 @@ const LoginFormSender: FunctionComponent<LoginFormSenderProps> = ({
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data: FormData = new FormData(event.currentTarget);
-		const submitLogin = data.get('login')?.toString();
+		const submitLogin = data.get('login')?.toString().replace(/\s/g, '');
 		const submitPassword = data.get('password')?.toString();
 		const submitRemember = data.get('remember')?.toString();
 		if (submitLogin === undefined) return;
