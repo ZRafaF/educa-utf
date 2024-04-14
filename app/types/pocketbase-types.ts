@@ -14,6 +14,7 @@ export enum Collections {
 	KeyWords = "key_words",
 	KeyWordsStats = "key_words_stats",
 	LatestViews = "latest_views",
+	Plugins = "plugins",
 	Reports = "reports",
 	Tags = "tags",
 	TotalUsersArticlesStats = "total_users_articles_stats",
@@ -106,7 +107,7 @@ export type ChaptersRecord = {
 	description_slug?: string
 	key_words?: RecordIdString[]
 	slug?: string
-	tag?: RecordIdString
+	tag: RecordIdString
 	title: string
 	user: RecordIdString
 	views?: RecordIdString
@@ -153,6 +154,17 @@ export type LatestViewsRecord = {
 	user?: RecordIdString
 }
 
+export enum PluginsVisibilityOptions {
+	"public" = "public",
+	"private" = "private",
+}
+export type PluginsRecord<Tdata = unknown> = {
+	article: RecordIdString
+	data?: null | Tdata
+	user: RecordIdString
+	visibility: PluginsVisibilityOptions
+}
+
 export enum ReportsReasonOptions {
 	"Discurso de Ódio" = "Discurso de Ódio",
 	"Conteúdo Inadequado para Menores" = "Conteúdo Inadequado para Menores",
@@ -183,17 +195,8 @@ export type ReportsRecord = {
 }
 
 export enum TagsCategoryOptions {
-	"Ciências Exatas" = "Ciências Exatas",
-	"Ciências da Computação" = "Ciências da Computação",
-	"Ciências Biológicas" = "Ciências Biológicas",
-	"Ciências da Saúde" = "Ciências da Saúde",
-	"Ciências Sociais" = "Ciências Sociais",
-	"Humanidades" = "Humanidades",
-	"Engenharia" = "Engenharia",
-	"Economia e Negócios" = "Economia e Negócios",
-	"Linguagens e Comunicação" = "Linguagens e Comunicação",
-	"Educação" = "Educação",
-	"Outro" = "Outro",
+	"Areas do Conhecimento" = "Areas do Conhecimento",
+	"Outros" = "Outros",
 }
 export type TagsRecord = {
 	category: TagsCategoryOptions
@@ -242,9 +245,8 @@ export type UsersRecord = {
 }
 
 export type UsersPluginDataRecord<Tdata = unknown> = {
-	article: RecordIdString
 	data?: null | Tdata
-	plugin: string
+	plugin: RecordIdString
 	user: RecordIdString
 }
 
@@ -276,6 +278,7 @@ export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRec
 export type KeyWordsResponse<Texpand = unknown> = Required<KeyWordsRecord> & BaseSystemFields<Texpand>
 export type KeyWordsStatsResponse<Texpand = unknown> = Required<KeyWordsStatsRecord> & BaseSystemFields<Texpand>
 export type LatestViewsResponse<Texpand = unknown> = Required<LatestViewsRecord> & BaseSystemFields<Texpand>
+export type PluginsResponse<Tdata = unknown, Texpand = unknown> = Required<PluginsRecord<Tdata>> & BaseSystemFields<Texpand>
 export type ReportsResponse<Texpand = unknown> = Required<ReportsRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersArticlesStatsResponse<Texpand = unknown> = Required<TotalUsersArticlesStatsRecord> & BaseSystemFields<Texpand>
@@ -296,6 +299,7 @@ export type CollectionRecords = {
 	key_words: KeyWordsRecord
 	key_words_stats: KeyWordsStatsRecord
 	latest_views: LatestViewsRecord
+	plugins: PluginsRecord
 	reports: ReportsRecord
 	tags: TagsRecord
 	total_users_articles_stats: TotalUsersArticlesStatsRecord
@@ -315,6 +319,7 @@ export type CollectionResponses = {
 	key_words: KeyWordsResponse
 	key_words_stats: KeyWordsStatsResponse
 	latest_views: LatestViewsResponse
+	plugins: PluginsResponse
 	reports: ReportsResponse
 	tags: TagsResponse
 	total_users_articles_stats: TotalUsersArticlesStatsResponse
@@ -337,6 +342,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'key_words'): RecordService<KeyWordsResponse>
 	collection(idOrName: 'key_words_stats'): RecordService<KeyWordsStatsResponse>
 	collection(idOrName: 'latest_views'): RecordService<LatestViewsResponse>
+	collection(idOrName: 'plugins'): RecordService<PluginsResponse>
 	collection(idOrName: 'reports'): RecordService<ReportsResponse>
 	collection(idOrName: 'tags'): RecordService<TagsResponse>
 	collection(idOrName: 'total_users_articles_stats'): RecordService<TotalUsersArticlesStatsResponse>

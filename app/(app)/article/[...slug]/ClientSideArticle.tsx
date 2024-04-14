@@ -20,7 +20,7 @@ import {
 	ArticlesStatsResponse,
 } from '@/types/pocketbase-types';
 import Typography from '@mui/material/Typography/Typography';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, Suspense, useEffect, useState } from 'react';
 
 interface ClientSideArticleProps {
 	fullWidth?: boolean;
@@ -68,13 +68,17 @@ const ClientSideArticle: FunctionComponent<ClientSideArticleProps> = ({
 
 	if (article && articleStats) {
 		return (
-			<ArticleComponent
-				myArticle={article}
-				articleStats={articleStats}
-				fullWidth={fullWidth}
-				articleDocument={articleDocument}
-				authorAvatarUrl={authorAvatarUrl}
-			/>
+			<Suspense
+				fallback={<PageMessage message="Carregando..." loading />}
+			>
+				<ArticleComponent
+					myArticle={article}
+					articleStats={articleStats}
+					fullWidth={fullWidth}
+					articleDocument={articleDocument}
+					authorAvatarUrl={authorAvatarUrl}
+				/>
+			</Suspense>
 		);
 	}
 	return (
