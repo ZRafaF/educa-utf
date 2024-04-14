@@ -27,35 +27,39 @@ const LoginPage: FunctionComponent<LoginPageProps> = () => {
 		<Box
 			sx={{
 				mb: 4,
+				mx: {
+					xs: 1,
+					sm: 2,
+					md: 3,
+					lg: 4,
+				},
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
 			}}
 		>
-			<Container maxWidth="sm">
-				<Typography component="h1" variant="h5" width={'100%'}>
-					Fazer Login
-				</Typography>
-				<LoginFormSender>
-					<LoginFormContent />
-				</LoginFormSender>
-				<Grid container>
-					<Grid item xs>
-						<Link href="#" style={{ color: 'inherit' }}>
-							<Typography sx={{ fontSize: 14 }}>
-								Esqueci minha senha
-							</Typography>
-						</Link>
-					</Grid>
-					<Grid item>
-						<Link href="/register" style={{ color: 'inherit' }}>
-							<Typography sx={{ fontSize: 14 }}>
-								Registre-se aqui!
-							</Typography>
-						</Link>
-					</Grid>
+			<Typography component="h1" variant="h5" width={'100%'}>
+				Fazer Login
+			</Typography>
+			<LoginFormSender>
+				<LoginFormContent />
+			</LoginFormSender>
+			<Grid container>
+				<Grid item xs>
+					<Link href="#" style={{ color: 'inherit' }}>
+						<Typography sx={{ fontSize: 14 }}>
+							Esqueci minha senha
+						</Typography>
+					</Link>
 				</Grid>
-			</Container>
+				<Grid item>
+					<Link href="/register" style={{ color: 'inherit' }}>
+						<Typography sx={{ fontSize: 14 }}>
+							Registre-se aqui!
+						</Typography>
+					</Link>
+				</Grid>
+			</Grid>
 		</Box>
 	);
 };

@@ -8,10 +8,22 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
+import { InputBaseComponentProps } from '@mui/material/InputBase/InputBase';
+import FormHelperText from '@mui/material/FormHelperText';
 
-interface PasswordInputProps {}
+interface PasswordInputProps {
+	label: string;
+	name: string;
+	inputProps?: InputBaseComponentProps;
+	helperText?: string;
+}
 
-const PasswordInput: FunctionComponent<PasswordInputProps> = () => {
+const PasswordInput: FunctionComponent<PasswordInputProps> = ({
+	label,
+	name,
+	inputProps,
+	helperText,
+}) => {
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -22,8 +34,10 @@ const PasswordInput: FunctionComponent<PasswordInputProps> = () => {
 		event.preventDefault();
 	};
 	return (
-		<FormControl variant="outlined" fullWidth>
-			<InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+		<FormControl variant="outlined" fullWidth margin="dense" required>
+			<InputLabel htmlFor="outlined-adornment-password">
+				{label}
+			</InputLabel>
 			<OutlinedInput
 				id="outlined-adornment-password"
 				type={showPassword ? 'text' : 'password'}
@@ -39,13 +53,15 @@ const PasswordInput: FunctionComponent<PasswordInputProps> = () => {
 						</IconButton>
 					</InputAdornment>
 				}
-				inputProps={{
-					minLength: 6,
-					maxLength: 72,
-				}}
-				name="password"
-				label="Senha"
+				inputProps={inputProps}
+				name={name}
+				label={label}
 			/>
+			{helperText != undefined && (
+				<FormHelperText id="outlined-weight-helper-text">
+					{helperText}
+				</FormHelperText>
+			)}
 		</FormControl>
 	);
 };

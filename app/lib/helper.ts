@@ -95,10 +95,10 @@ export function getFormattedVisibility(
 }
 
 export function isUTFPRUser(username: string): boolean {
-	// Checks if follows the Pattern: 'a' followed by numbers
+	// Checks if follows the Pattern: 'a' followed by only numbers
 	const regex = /^a\d+$/;
 
-	return true;
+	return regex.test(username);
 }
 
 export function countSubstrings(mainString: string, substring: string) {
