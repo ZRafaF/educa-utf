@@ -16,7 +16,10 @@ import AuthorInfo from './AuthorInfo';
 import ArticleIdContext from '@/contexts/ArticleIdContext';
 import usePbAuth from '@/hooks/usePbAuth';
 import { PluginsResponse } from '@/types/pocketbase-types';
-import { getPluginData } from '@/lib/apiHelpers/pluginDataAPI';
+import {
+	createUsersPluginData,
+	getPluginData,
+} from '@/lib/apiHelpers/pluginsAPI';
 import { PluginDataType } from './PluginDataType';
 import { toast } from 'react-toastify';
 
@@ -50,13 +53,7 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 
 	useEffect(() => {
 		const fetchPluginData = async () => {
-			if (article === undefined) {
-				return;
-			}
-			const dataResponse = await getPluginData<PluginDataType>(
-				uniqueId,
-				article.id
-			);
+			const dataResponse = await getPluginData<PluginDataType>(uniqueId);
 
 			setPluginData(dataResponse);
 		};
@@ -119,8 +116,20 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 					defaultValue="female"
 					name="radio-buttons-group"
 					onChange={(event) => {
-						if (answer === '') return;
 						const value = event.target.value;
+
+						if (user) {
+							createUsersPluginData(uniqueId, user.id, {
+								answer: value,
+							}).catch((error) => {
+								console.error(
+									'Error creating user plugin data',
+									error
+								);
+							});
+						}
+
+						if (answer === '') return;
 
 						setIsCorrect(value === answer);
 					}}

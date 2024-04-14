@@ -28,7 +28,7 @@ import {
 	PluginsVisibilityOptions,
 } from '@/types/pocketbase-types';
 import usePbAuth from '@/hooks/usePbAuth';
-import { createPluginData } from '@/lib/apiHelpers/pluginDataAPI';
+import { createPlugin } from '@/lib/apiHelpers/pluginsAPI';
 import { PluginDataType } from './PluginDataType';
 
 interface OptionType {
@@ -73,7 +73,7 @@ const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 				: PluginsVisibilityOptions.private,
 		};
 		try {
-			const response = await createPluginData(newPluginData);
+			const response = await createPlugin(newPluginData);
 			returnFunction(
 				<RadialSelector
 					options={optionsString}
