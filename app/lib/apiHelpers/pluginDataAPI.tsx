@@ -1,10 +1,10 @@
-import { PluginDataRecord, PluginDataResponse } from '@/types/pocketbase-types';
+import { PluginsRecord, PluginsResponse } from '@/types/pocketbase-types';
 import pb from '../PocketBase/pocketbase';
 
-export async function createPluginData(pluginData: PluginDataRecord) {
+export async function createPluginData(pluginData: PluginsRecord) {
 	return await pb
 		.collection('plugin_data')
-		.create<PluginDataResponse>(pluginData);
+		.create<PluginsResponse>(pluginData);
 }
 
 export async function getPluginData<Tdata = unknown>(
@@ -13,7 +13,7 @@ export async function getPluginData<Tdata = unknown>(
 ) {
 	return await pb
 		.collection('plugin_data')
-		.getFirstListItem<PluginDataResponse<Tdata>>(
+		.getFirstListItem<PluginsResponse<Tdata>>(
 			`article='${article}'&&uniqueId='${uniqueId}'`
 		);
 }

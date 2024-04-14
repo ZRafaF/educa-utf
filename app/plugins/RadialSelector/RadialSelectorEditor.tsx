@@ -24,8 +24,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
-	PluginDataRecord,
-	PluginDataVisibilityOptions,
+	PluginsRecord,
+	PluginsVisibilityOptions,
 } from '@/types/pocketbase-types';
 import usePbAuth from '@/hooks/usePbAuth';
 import { createPluginData } from '@/lib/apiHelpers/pluginDataAPI';
@@ -58,39 +58,34 @@ const RadialSelectorEditor: FunctionComponent<PluginEditorProps> = ({
 			return;
 		}
 
-		const id = generateRandomString(10);
 		const optionsString = optionsArray.map((o) => o.label).join('~,~');
 
 		const data: PluginDataType = {
 			correctAnswer: correctAnswer ?? '',
 		};
 
-		const newPluginData: PluginDataRecord<PluginDataType> = {
-			uniqueId: id,
+		const newPluginData: PluginsRecord<PluginDataType> = {
 			user: user.id,
 			article: article.id,
 			data: data,
 			visibility: showAnswerToUser
-				? PluginDataVisibilityOptions.public
-				: PluginDataVisibilityOptions.private,
+				? PluginsVisibilityOptions.public
+				: PluginsVisibilityOptions.private,
 		};
 		try {
-			const resp = await createPluginData(newPluginData);
+			const response = await createPluginData(newPluginData);
+			returnFunction(
+				<RadialSelector
+					options={optionsString}
+					uniqueId={response.id}
+					answer={showAnswerToUser ? correctAnswer ?? '' : ''}
+				/>
+			);
+
+			toast.success('Exercício radial criado com sucesso!');
 		} catch (error) {
-			toast.error('Erro ao criar exercício radial');
-			console.error(error);
-			return;
+			console.error('Error creating plugin data', error);
 		}
-
-		returnFunction(
-			<RadialSelector
-				options={optionsString}
-				uniqueId={id}
-				answer={showAnswerToUser ? correctAnswer ?? '' : ''}
-			/>
-		);
-
-		toast.success('Exercício radial criado com sucesso!');
 	};
 
 	return (

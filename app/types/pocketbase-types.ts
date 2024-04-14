@@ -14,7 +14,7 @@ export enum Collections {
 	KeyWords = "key_words",
 	KeyWordsStats = "key_words_stats",
 	LatestViews = "latest_views",
-	PluginData = "plugin_data",
+	Plugins = "plugins",
 	Reports = "reports",
 	Tags = "tags",
 	TotalUsersArticlesStats = "total_users_articles_stats",
@@ -154,16 +154,15 @@ export type LatestViewsRecord = {
 	user?: RecordIdString
 }
 
-export enum PluginDataVisibilityOptions {
+export enum PluginsVisibilityOptions {
 	"public" = "public",
 	"private" = "private",
 }
-export type PluginDataRecord<Tdata = unknown> = {
+export type PluginsRecord<Tdata = unknown> = {
 	article: RecordIdString
 	data?: null | Tdata
-	uniqueId: string
 	user: RecordIdString
-	visibility: PluginDataVisibilityOptions
+	visibility: PluginsVisibilityOptions
 }
 
 export enum ReportsReasonOptions {
@@ -246,9 +245,8 @@ export type UsersRecord = {
 }
 
 export type UsersPluginDataRecord<Tdata = unknown> = {
-	article: RecordIdString
 	data?: null | Tdata
-	plugin: string
+	plugin: RecordIdString
 	user: RecordIdString
 }
 
@@ -280,7 +278,7 @@ export type ChaptersStatsResponse<Texpand = unknown> = Required<ChaptersStatsRec
 export type KeyWordsResponse<Texpand = unknown> = Required<KeyWordsRecord> & BaseSystemFields<Texpand>
 export type KeyWordsStatsResponse<Texpand = unknown> = Required<KeyWordsStatsRecord> & BaseSystemFields<Texpand>
 export type LatestViewsResponse<Texpand = unknown> = Required<LatestViewsRecord> & BaseSystemFields<Texpand>
-export type PluginDataResponse<Tdata = unknown, Texpand = unknown> = Required<PluginDataRecord<Tdata>> & BaseSystemFields<Texpand>
+export type PluginsResponse<Tdata = unknown, Texpand = unknown> = Required<PluginsRecord<Tdata>> & BaseSystemFields<Texpand>
 export type ReportsResponse<Texpand = unknown> = Required<ReportsRecord> & BaseSystemFields<Texpand>
 export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>
 export type TotalUsersArticlesStatsResponse<Texpand = unknown> = Required<TotalUsersArticlesStatsRecord> & BaseSystemFields<Texpand>
@@ -301,7 +299,7 @@ export type CollectionRecords = {
 	key_words: KeyWordsRecord
 	key_words_stats: KeyWordsStatsRecord
 	latest_views: LatestViewsRecord
-	plugin_data: PluginDataRecord
+	plugins: PluginsRecord
 	reports: ReportsRecord
 	tags: TagsRecord
 	total_users_articles_stats: TotalUsersArticlesStatsRecord
@@ -321,7 +319,7 @@ export type CollectionResponses = {
 	key_words: KeyWordsResponse
 	key_words_stats: KeyWordsStatsResponse
 	latest_views: LatestViewsResponse
-	plugin_data: PluginDataResponse
+	plugins: PluginsResponse
 	reports: ReportsResponse
 	tags: TagsResponse
 	total_users_articles_stats: TotalUsersArticlesStatsResponse
@@ -344,7 +342,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'key_words'): RecordService<KeyWordsResponse>
 	collection(idOrName: 'key_words_stats'): RecordService<KeyWordsStatsResponse>
 	collection(idOrName: 'latest_views'): RecordService<LatestViewsResponse>
-	collection(idOrName: 'plugin_data'): RecordService<PluginDataResponse>
+	collection(idOrName: 'plugins'): RecordService<PluginsResponse>
 	collection(idOrName: 'reports'): RecordService<ReportsResponse>
 	collection(idOrName: 'tags'): RecordService<TagsResponse>
 	collection(idOrName: 'total_users_articles_stats'): RecordService<TotalUsersArticlesStatsResponse>

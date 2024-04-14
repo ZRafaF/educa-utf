@@ -7,7 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import {
 	ArticlesResponse,
-	PluginDataResponse,
+	PluginsResponse,
 	UsersResponse,
 } from '@/types/pocketbase-types';
 import { PluginDataType } from './PluginDataType';
@@ -16,7 +16,7 @@ interface AuthorInfoProps {
 	uniqueId: string;
 	article: ArticlesResponse;
 	user: UsersResponse | null;
-	pluginData: PluginDataResponse<PluginDataType>;
+	pluginData: PluginsResponse<PluginDataType>;
 }
 
 const AuthorInfo: FunctionComponent<AuthorInfoProps> = ({

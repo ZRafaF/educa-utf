@@ -15,7 +15,7 @@ import {
 import AuthorInfo from './AuthorInfo';
 import ArticleIdContext from '@/contexts/ArticleIdContext';
 import usePbAuth from '@/hooks/usePbAuth';
-import { PluginDataResponse } from '@/types/pocketbase-types';
+import { PluginsResponse } from '@/types/pocketbase-types';
 import { getPluginData } from '@/lib/apiHelpers/pluginDataAPI';
 import { PluginDataType } from './PluginDataType';
 import { toast } from 'react-toastify';
@@ -39,7 +39,7 @@ const RadialSelector: FunctionComponent<RadialSelectorProps> = ({
 	const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
 
 	const [pluginData, setPluginData] = useState<
-		PluginDataResponse<PluginDataType> | undefined
+		PluginsResponse<PluginDataType> | undefined
 	>(undefined);
 
 	useEffect(() => {
